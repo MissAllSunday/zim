@@ -11,5 +11,20 @@
 					</repeat>
 				</div>
 			</div>
+			<div class="row">
+				<nav aria-label="...">
+					<ul class="pager">
+						<check if="{{@pagination.next > 1}}">
+						<li>
+							<check if="{{@pagination.previous == 0}}">
+								<true><a href="{{@BASE}}">Previous</a></true>
+								<false><a href="{{@BASE}}/page/{{@pagination.previous}}">Previous</a></false>
+							</check>
+						</li>
+						</check>
+						<li><a href="{{@BASE}}/page/{{@pagination.next}}">Next</a></li>
+					</ul>
+				</nav>
+			</div>
 		</div>
 <include href="footer.html" />

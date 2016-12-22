@@ -19,6 +19,11 @@ class Blog
 			':start' => ($start * $limit)
 		)));
 
+		$f3->set('pagination', array(
+			'next' => $start + 1,
+			'previous' => ($start ? $start - 1 : 0),
+		));
+
 		echo \Template::instance()->render('home.html');
 	}
 }
