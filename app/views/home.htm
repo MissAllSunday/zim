@@ -1,0 +1,5 @@
+<repeat group="{{ @messages }}" value="{{ @item }}">
+    <p>{{ @item.title }}</p>
+	<span class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</span>
+           
+</repeat>
