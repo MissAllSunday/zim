@@ -10,6 +10,9 @@ $f3->mset(array(
 	'UI' => 'views/',
 	'SCHEME' => 'https',
 	'TZ' => 'America/Mexico_City',
+	'site' => array(
+		'title' => 'Miss All Sunday'
+	),
 ));
 
 $f3->config('setup.cfg');
@@ -22,6 +25,16 @@ $f3->set('DB', new DB\SQL(
 $f3->route(array(
 	'GET /',
 	'GET /page/@page',
-  ),'\Controllers\Blog->home');
+),'\Controllers\Blog->home');
+
+$f3->route('GET /minify/@type',
+	function($f3, $args)
+	{
+		$path = $f3->get('UI') . $args['type'].'/';
+		$files = preg_replace('/(\.+\/)/','', $f3->clean($f3->get('GET.files')));
+		echo Web::instance()->minify($files, null, true, $path);
+	},
+	3600*24
+);
 
 $f3->run();
