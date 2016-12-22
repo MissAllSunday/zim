@@ -7,7 +7,7 @@ $f3 = \Base::instance();
 
 $f3->mset(array(
 	'AUTOLOAD' => 'app/',
-	'UI' => 'app/views/',
+	'UI' => 'views/',
 	'SCHEME' => 'https',
 	'TZ' => 'America/Mexico_City',
 ));
