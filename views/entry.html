@@ -1,18 +1,16 @@
 <include href="header.html" />
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<include href="sidebar.html" />
-				<div class="col-md-8">
-					<p class="lead">
+				<div class="col-md-6 col-md-offset-1">
+					<div class="row lead">
 						{{ @entry.body | raw }}
-					</p>
-					<p>
+					</div>
+					<div class="row">
 						<hr>
 						some info about the entry. dunno
-					</p>
+					</div>
 				</div>
-			</div>
-			<div class="row">
 			</div>
 		</div>
 <include href="footer.html" />

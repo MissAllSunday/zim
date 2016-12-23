@@ -15,6 +15,10 @@ class CustomCodeDefinitionSet extends \JBBCode\DefaultCodeDefinitionSet implemen
 		$builder = new \JBBCode\CodeDefinitionBuilder('center', '<p class="text-center">{param}</p>');
 		array_push($this->definitions, $builder->build());
 
+		// Code tag
+		$builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre>{param}</pre>');
+		array_push($this->definitions, $builder->build());
+
 		// Overwrite the img tag.
 		$builder = new \JBBCode\CodeDefinitionBuilder('img', '<img class="img-responsive center-block" src="{param}" />');
 		$builder->setUseOption(false)->setParseContent(false)->setBodyValidator($urlValidator);
