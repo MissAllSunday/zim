@@ -13,6 +13,7 @@ $f3->mset(array(
 	'site' => array(
 		'title' => 'Miss All Sunday'
 	),
+	'parser' => new \JBBCode\Parser(),
 ));
 
 $f3->config('setup.cfg');
@@ -22,15 +23,23 @@ $f3->set('DB', new DB\SQL(
 	$f3->get('_db.password')
 ));
 
+// Home and pagination.
 $f3->route(array(
 	'GET /',
 	'GET /page/@page',
 ),'\Controllers\Blog->home');
 
+// Single page.
+$f3->route(array(
+	'GET /@blogTitle',
+	'GET /@blogTitle/page/@page',
+),'\Controllers\Blog->single');
+
+// JS and Css minification.
 $f3->route('GET /minify/@type',
 	function($f3, $args)
 	{
-		$path = $f3->get('UI') . $args['type'].'/';
+		$path = $f3->get('UI') . $args['type'] .'/';
 		$files = preg_replace('/(\.+\/)/','', $f3->clean($f3->get('GET.files')));
 		echo Web::instance()->minify($files, null, true, $path);
 	},

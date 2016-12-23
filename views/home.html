@@ -4,7 +4,7 @@
 				<include href="sidebar.html" />
 				<div class="col-md-8">
 					<repeat group="{{ @messages }}" value="{{ @item }}">
-					<h2>{{ @item.title }}
+					<h2><a href="{{@BASE}}/{{ @item.url }}">{{ @item.title }}</a>
 						<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
 					</h2>
 

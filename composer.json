@@ -6,6 +6,7 @@
 	},
 	"require": {
 		"bcosca/fatfree-core": "dev-master",
-		"respect/validation": "^0.9.1"
+		"respect/validation": "^0.9.1",
+		"jbbcode/jbbcode": "1.3.*"
 	}
 }
