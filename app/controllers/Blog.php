@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Services;
+
 class Blog
 {
 	function __construct()
