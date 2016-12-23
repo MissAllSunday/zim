@@ -30,7 +30,7 @@ class Blog
 	function single(\Base $f3, $params)
 	{
 		$entry = $this->msgs->load(array('url=?', $params['blogTitle']));
-		$f3->get('parser')->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
+		$f3->get('parser')->addCodeDefinitionSet(new \Services\CustomCodeDefinitionSet());
 		$f3->get('parser')->parse($entry['body']);
 		$entry['body'] = $f3->get('parser')->getAsHtml();
 
