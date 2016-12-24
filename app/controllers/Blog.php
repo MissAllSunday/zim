@@ -16,9 +16,11 @@ class Blog
 		$limit = 10;
 		$start = $params['page'] ? $params['page'] : 0;
 
-		$f3->set('messages', $f3->get('DB')->exec('SELECT msgTime, title, url FROM messages ORDER BY msgID DESC LIMIT :start, :limit', array(
-			':limit' => $limit,
-			':start' => ($start * $limit)
+		$f3->set('messages', $this->msgs->find(array('draft = ?', 0),
+			array(
+				'order' => 'msgID DESC',
+				'limit' => $limit,
+				'offset' => $start * $limit,
 		)));
 
 		$f3->set('pagination', array(

@@ -16,7 +16,7 @@ class CustomCodeDefinitionSet extends \JBBCode\DefaultCodeDefinitionSet implemen
 		array_push($this->definitions, $builder->build());
 
 		// Code tag
-		$builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre>{param}</pre>');
+		$builder = new \JBBCode\CodeDefinitionBuilder('code', '<p></p><pre>{param}</pre><p></p>');
 		array_push($this->definitions, $builder->build());
 
 		// Overwrite the img tag.
