@@ -31,9 +31,10 @@ class Blog
 
 	function single(\Base $f3, $params)
 	{
-		$entry = $this->msgs->load(array('url=?', $params['blogTitle']));
+		$single = $this->model->single(array('url=?', $params['blogTitle']));
 
-		$f3->set('entry', $entry);
+		$f3->set('single', $sinble);
+		$f3->set('comments', $this->model->getComments($entry['entry']->topicID));
 
 		echo \Template::instance()->render('entry.html');
 	}

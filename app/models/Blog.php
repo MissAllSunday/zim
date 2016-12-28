@@ -10,9 +10,18 @@ class Blog
 		$this->mapper = new \DB\SQL\Mapper($this->f3->get('DB'),'suki_c_message');
 	}
 
-	function getComments()
+	function single($params = array())
 	{
+		return $single = [
+			'entry' => $this->mapper->load($params),
+			'next' => $this->mapper->next(),
+			'prev' => $this->mapper->prev(),
+		];
+	}
 
+	function getComments($topicID, $offset = 0, $limit = 10)
+	{
+		return $this->mapper->paginate($offset, $limit, ['topicID = ?', $topicID]);
 	}
 
 	function getEntries($params = array())
