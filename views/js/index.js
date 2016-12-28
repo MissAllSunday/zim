@@ -1,4 +1,5 @@
 $(function() {
+	// highlight.js
 	hljs.configure({
 		tabReplace: '    ',
 		languages: ["PHP", "CoffeeScript", "CSS", "Diff", "JavaScript", "JSON"]
