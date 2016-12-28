@@ -24,6 +24,12 @@ $f3->route(array(
 	'GET /@blogTitle/page/@page',
 ),'\Controllers\Blog->single');
 
+// Forum.
+$f3->route(array(
+	'GET /forum/',
+	'GET /forum/page/@page',
+),'\Controllers\Forum->home');
+
 // JS and Css minification.
 $f3->route('GET /minify/@type',
 	function($f3, $args)
