@@ -8,7 +8,7 @@ class Blog
 {
 	function __construct()
 	{
-		$this->msgs = new \DB\SQL\Mapper(\Base::instance()->get('DB'),'messages');
+		$this->msgs = new \DB\SQL\Mapper(\Base::instance()->get('DB'),'suki_c_message');
 	}
 
 	function home(\Base $f3, $params)
@@ -16,11 +16,15 @@ class Blog
 		$limit = 10;
 		$start = $params['page'] ? $params['page'] : 0;
 
-		$f3->set('messages', $this->msgs->find(array('draft = ?', 0),
-			array(
-				'order' => 'msgID DESC',
-				'limit' => $limit,
-				'offset' => $start * $limit,
+		$f3->set('messages', $f3->get('DB')->exec('
+			SELECT m.msgTime, m.title, m.url
+			FROM suki_c_topic AS t
+			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			WHERE boardID = 1
+			ORDER BY m.msgID DESC
+			LIMIT :start, :limit', array(
+			':limit' => $limit,
+			':start' => ($start * $limit)
 		)));
 
 		$f3->set('pagination', array(
@@ -34,9 +38,6 @@ class Blog
 	function single(\Base $f3, $params)
 	{
 		$entry = $this->msgs->load(array('url=?', $params['blogTitle']));
-		$f3->get('parser')->addCodeDefinitionSet(new \Services\CustomCodeDefinitionSet());
-		$f3->get('parser')->parse($entry['body']);
-		$entry['body'] = $f3->get('parser')->getAsHtml();
 
 		$f3->set('entry', $entry);
 

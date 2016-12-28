@@ -13,7 +13,6 @@ $f3->mset(array(
 	'site' => array(
 		'title' => 'Miss All Sunday'
 	),
-	'parser' => new \JBBCode\Parser(),
 ));
 
 $f3->config('setup.cfg');
