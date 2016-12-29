@@ -51,14 +51,15 @@ class Blog
 		// The ID will always be the last key. Since we're here, remove it.
 		$id = array_pop($tags);
 
-		// Build some keywords!  This should be automatically set but meh... maybe later
-		$f3->set('site.keywords', implode(', ', $f3->get('Tools')->removeCommonWords($tags)));
-
 		// Get the entry Info.
 		$entryInfo = $this->model->entryInfo($id);
 		$entryInfo = $entryInfo[0];
 
 		$f3->set('entryInfo', $entryInfo);
+
+		// Build some keywords!  This should be automatically set but meh... maybe later
+		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
+		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
 
 		// Get the data.
 		$single = $this->model->paginate($start, $limit, array('topicID = ?', $id));

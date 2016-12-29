@@ -27,7 +27,7 @@ class Blog extends \DB\SQL\Mapper
 	function entryInfo($id = 0)
 	{
 		return $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.boardID
+			SELECT m.msgTime, m.title, m.url, m.boardID, m.body
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			WHERE t.topicID = :topic
