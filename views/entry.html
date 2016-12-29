@@ -1,42 +1,58 @@
 <include href="header.html" />
 		<div class="container">
 			<div class="row">
-				<include href="sidebar.html" />
-				<div class="col-md-6 col-md-offset-1">
+				<div class="col-md-10 col-md-offset-1">
+					<h1>
+						<a href="{{@BASE}}/{{@entryInfo.url}}">{{@entryInfo.title}}</a>
+					</h1>
+					<ol class="breadcrumb">
+						<li><a href="{{@BASE}}">{{@site.title}}</a></li>
+						<li><a href="#">{{@boards[@entryInfo.boardID]}}</a></li>
+						<li class="active">{{@entryInfo.title}}</li>
+					</ol>
+					<check if="{{ @entry }}">
 					<div class="row lead">
 						{{ @entry.body | raw }}
 					</div>
+					</check>
 					<div class="row">
-						<hr>
 						<repeat group="{{ @comments }}" value="{{ @item }}">
-						<h2><a href="{{@BASE}}/{{ @item.url }}">{{ @item.title }}</a>
+						<hr>
+						<check if="{{ @item.msgID != @entryInfo.fmsgID }}">
+						<h2>{{ @item.title }}
 							<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
 						</h2>
-{{ @item.body | raw }}
+						</check>
+						<div class="row">
+							{{ @item.body | raw }}
+						</div>
 					</repeat>
 					</div>
 					<div class="row">
+						<check if="{{ @pag.total >= @pag.limit }}">
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
-								<check if="{{ @pag.count < @pag.pos }}">
+								<li><a href="{{@BASE}}/{{@entryInfo.url}}">start</a></li>
+								<check if="{{ @pag.pos != 0 }}">
 								<li>
-									<a href="#" aria-label="Previous">
+									<a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@pag.pos - 1}}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
 								</check>
-								<loop from="{{ @i=1 }}" to="{{ @i <= @pag.count }}" step="{{ @i++ }}">
-								<li><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ @i }}</a></li>
+								<loop from="{{ @i = 1 }}" to="{{ @i <= @pag.count }}" step="{{ @i++ }}">
+								<li <check if="{{ @i == @pag.pos }}">class="active"</check>><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ @i }}</a></li>
 								</loop>
-								<check if="{{ @pag.count > @pag.pos }}">
+								<check if="{{@pag.count >= @pag.pos }}">
 								<li>
-									<a href="#" aria-label="Next">
+									<a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@pag.pos + 1}}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
 								</check>
 							</ul>
 						</nav>
+						</check>
 					</div>
 				</div>
 			</div>

@@ -34,19 +34,28 @@ class Blog
 	{
 		// Values for pagination.
 		$start = $params['page'] ? $params['page'] : 0;
-		$limit = 3;
+		$limit = 10;
 
 		// Ugly, I know...
 		$tags = explode('-', $params['title']);
+
+		// Temp, still haven't build the boards table...
+		$f3->set('boards',[
+			'1' => 'Blog',
+			'2' => 'Chit Chat',
+			'3' => 'Manga Releases',
+			'4' => 'Spoilers',
+			'5' => 'Support,'
+		]);
 
 		// The ID will always be the last key. Since we're here, remove it.
 		$id = array_pop($tags);
 
 		// Get the entry Info.
-		$f3->set('entryInfo', $this->model->load(['topicID = ?', $id], [
-			'order'=>'msgID DESC',
-			'limit' => 1,
-		], 300));
+		$entryInfo = $this->model->entryInfo($id);
+		$entryInfo = $entryInfo[0];
+
+		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
 		$single = $this->model->paginate($start, $limit, array('topicID = ?', $id));
@@ -61,7 +70,7 @@ class Blog
 
 		// Pass the rest of the info.
 		$f3->set('pag', $single);
-
+var_dump($f3->get('pag'));
 		echo \Template::instance()->render('entry.html');
 	}
 }

@@ -9,7 +9,7 @@ class Blog extends \DB\SQL\Mapper
 		parent::__construct($db, 'suki_c_message');
 	}
 
-	function entries($params = array())
+	function entries($params = [])
 	{
 		return $this->db->exec('
 			SELECT m.msgTime, m.title, m.url
@@ -17,10 +17,23 @@ class Blog extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			WHERE boardID = :board
 			ORDER BY m.msgID DESC
-			LIMIT :start, :limit', array(
+			LIMIT :start, :limit', [
 			':limit' => $params['limit'],
 			':start' => ($params['start'] * $params['limit']),
 			':board' => $params['board'],
-		));
+		]);
+	}
+
+	function entryInfo($id = 0)
+	{
+		return $this->db->exec('
+			SELECT m.msgTime, m.title, m.url, m.boardID
+			FROM suki_c_topic AS t
+			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			WHERE t.topicID = :topic
+			ORDER BY m.msgID DESC
+			LIMIT 1', [
+				':topic' => $id,
+			], 600);
 	}
 }
