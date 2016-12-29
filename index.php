@@ -30,6 +30,12 @@ $f3->route(array(
 	'GET /forum/page/@page',
 ),'\Controllers\Forum->home');
 
+// A single board.
+$f3->route(array(
+	'GET /board/@name',
+	'GET /forum/@name/page/@page',
+),'\Controllers\Board->home');
+
 // JS and Css minification.
 $f3->route('GET /minify/@type',
 	function($f3, $args)
