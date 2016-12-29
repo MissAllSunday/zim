@@ -9,11 +9,6 @@ class Blog extends \DB\SQL\Mapper
 		parent::__construct($db, 'suki_c_message');
 	}
 
-	function single($params = array())
-	{
-		return $this->load($params);
-	}
-
 	function entries($params = array())
 	{
 		return $this->db->exec('
