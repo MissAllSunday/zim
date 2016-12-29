@@ -66,11 +66,12 @@ class Blog
 
 		$f3->set('comments', $single['subset']);
 
+		// Yeah.. I'm lazy so...
 		unset($single['subset']);
 
 		// Pass the rest of the info.
 		$f3->set('pag', $single);
-var_dump($f3->get('pag'));
+
 		echo \Template::instance()->render('entry.html');
 	}
 }
