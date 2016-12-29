@@ -1,15 +1,15 @@
 <include href="header.html" />
 		<div class="container">
 			<div class="row">
+				<ol class="breadcrumb">
+					<li><a href="{{@BASE}}">{{@site.title}}</a></li>
+					<li><a href="#">{{@boards[@entryInfo.boardID]}}</a></li>
+					<li class="active">{{@entryInfo.title}}</li>
+				</ol>
 				<div class="col-md-10 col-md-offset-1">
 					<h1>
 						<a href="{{@BASE}}/{{@entryInfo.url}}">{{@entryInfo.title}}</a>
 					</h1>
-					<ol class="breadcrumb">
-						<li><a href="{{@BASE}}">{{@site.title}}</a></li>
-						<li><a href="#">{{@boards[@entryInfo.boardID]}}</a></li>
-						<li class="active">{{@entryInfo.title}}</li>
-					</ol>
 					<check if="{{ @entry }}">
 					<div class="row lead">
 						{{ @entry.body | raw }}
