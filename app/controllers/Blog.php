@@ -51,6 +51,9 @@ class Blog
 		// The ID will always be the last key. Since we're here, remove it.
 		$id = array_pop($tags);
 
+		// Build some keywords!  This should be automatically set but meh... maybe later
+		$f3->set('site.keywords', implode(', ', $f3->get('Tools')->removeCommonWords($tags)));
+
 		// Get the entry Info.
 		$entryInfo = $this->model->entryInfo($id);
 		$entryInfo = $entryInfo[0];

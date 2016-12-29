@@ -26,5 +26,7 @@ class Config
 				'title' => 'Miss All Sunday'
 			),
 		));
+
+		$this->f3->set('Tools', new \Services\Tools($this->f3));
 	}
 }
