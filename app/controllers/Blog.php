@@ -32,7 +32,9 @@ class Blog
 
 	function single(\Base $f3, $params)
 	{
+		// Values for pagination.
 		$start = $params['page'] ? $params['page'] : 0;
+		$limit = 3;
 
 		// Ugly, I know...
 		$tags = explode('-', $params['title']);
@@ -40,11 +42,25 @@ class Blog
 		// The ID will always be the last key. Since we're here, remove it.
 		$id = array_pop($tags);
 
-		$single = $this->model->paginate($start, 5, array('topicID = ?', $id));
+		// Get the entry Info.
+		$f3->set('entryInfo', $this->model->load(['topicID = ?', $id], [
+			'order'=>'msgID DESC',
+			'limit' => 1,
+		], 300));
 
-		$f3->set('entry', array_shift($single['subset']));
+		// Get the data.
+		$single = $this->model->paginate($start, $limit, array('topicID = ?', $id));
+
+		// The main message.
+		if (!$start)
+			$f3->set('entry', array_shift($single['subset']));
 
 		$f3->set('comments', $single['subset']);
+
+		unset($single['subset']);
+
+		// Pass the rest of the info.
+		$f3->set('pag', $single);
 
 		echo \Template::instance()->render('entry.html');
 	}

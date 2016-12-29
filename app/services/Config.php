@@ -12,6 +12,7 @@ class Config
 	function init()
 	{
 		$this->f3->config('setup.cfg');
+		$this->f3->set('CACHE',TRUE);
 		$this->f3->set('DB', new \DB\SQL(
 			$this->f3->get('_db.type') .':host='. $this->f3->get('_db.host') .';port='. $this->f3->get('_db.port') .';dbname='. $this->f3->get('_db.name') .'',
 			$this->f3->get('_db.user'),
