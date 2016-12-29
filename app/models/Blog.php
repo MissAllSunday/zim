@@ -2,31 +2,21 @@
 
 namespace Models;
 
-class Blog
+class Blog extends \DB\SQL\Mapper
 {
-	function __construct()
+	function __construct(\DB\SQL $db)
 	{
-		$this->f3 = \Base::instance();
-		$this->mapper = new \DB\SQL\Mapper($this->f3->get('DB'),'suki_c_message');
+		parent::__construct($db, 'suki_c_message');
 	}
 
 	function single($params = array())
 	{
-		return $single = [
-			'entry' => $this->mapper->load($params),
-			'next' => $this->mapper->next(),
-			'prev' => $this->mapper->prev(),
-		];
+		return $this->load($params);
 	}
 
-	function getComments($topicID, $offset = 0, $limit = 10)
+	function entries($params = array())
 	{
-		return $this->mapper->paginate($offset, $limit, ['topicID = ?', $topicID]);
-	}
-
-	function getEntries($params = array())
-	{
-		return $this->f3->get('DB')->exec('
+		return $this->db->exec('
 			SELECT m.msgTime, m.title, m.url
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)

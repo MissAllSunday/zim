@@ -20,8 +20,8 @@ $f3->route(array(
 
 // Single page.
 $f3->route(array(
-	'GET /@blogTitle',
-	'GET /@blogTitle/page/@page',
+	'GET /@title',
+	'GET /@title/page/@page',
 ),'\Controllers\Blog->single');
 
 // Forum.

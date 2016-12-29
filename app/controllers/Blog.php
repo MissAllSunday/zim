@@ -8,14 +8,14 @@ class Blog
 {
 	function __construct()
 	{
-		$this->model = new \Models\Blog();
+		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
 	}
 
 	function home(\Base $f3, $params)
 	{
 		$start = $params['page'] ? $params['page'] : 0;
 
-		$f3->set('messages', $this->model->getEntries([
+		$f3->set('messages', $this->model->entries([
 			'limit' => 10,
 			'start' => $start,
 			'board' => 1
@@ -31,10 +31,13 @@ class Blog
 
 	function single(\Base $f3, $params)
 	{
-		$single = $this->model->single(array('url=?', $params['blogTitle']));
+		// Ugly, I know...
+		$tags = explode('-', $params['title']);
 
-		$f3->set('single', $sinble);
-		$f3->set('comments', $this->model->getComments($entry['entry']->topicID));
+		// The ID will always be the last key. Since we're here, remove it.
+		$id = array_pop($tags);
+
+		$single = $this->model->single(array('topicID = ?', $id));
 
 		echo \Template::instance()->render('entry.html');
 	}
