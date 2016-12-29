@@ -58,6 +58,7 @@ class Blog
 		$f3->set('entryInfo', $entryInfo);
 
 		// Build some keywords!  This should be automatically set but meh... maybe later
+		$f3->set('site.metaTitle', $entryInfo['title']);
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
 
