@@ -13,17 +13,17 @@ class Board
 	function home(\Base $f3, $params)
 	{
 		// Another temp thing.
-		$boards = [
-			'Blog' => 1,
-			'Chit Chat' => 2,
-			'Manga Releases' => 3,
-			'Spoilers' => 4,
-			'Support' => 5,
-		];
+		$id = explode('-', $params['name']);
+		$id = array_pop($id);
 
-		// Safe check
-		if (empty($params['name']) || !isset($boards[$params['name']]))
-			return;
+		$boardInfo = $this->model->load(['boardID = ?', $id]);
+
+		// Get the data.
+		$entries = $this->model->topicList([
+			'limit' => 10,
+			'start' => 0,
+			'board' => $boardInfo->boardID,
+		]);
 
 		echo \Template::instance()->render('board.html');
 	}

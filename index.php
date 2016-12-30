@@ -33,7 +33,7 @@ $f3->route(array(
 // A single board.
 $f3->route(array(
 	'GET /board/@name',
-	'GET /forum/@name/page/@page',
+	'GET /board/@name/page/@page',
 ),'\Controllers\Board->home');
 
 // JS and Css minification.
