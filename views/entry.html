@@ -16,7 +16,7 @@
 					</div>
 					</check>
 					<div class="row">
-						<repeat group="{{ @comments }}" value="{{ @item }}">
+					<repeat group="{{ @comments }}" value="{{ @item }}">
 						<hr>
 						<check if="{{ @item.msgID != @entryInfo.fmsgID }}">
 						<h2>{{ @item.title }}

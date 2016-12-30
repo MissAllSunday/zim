@@ -16,14 +16,14 @@ class Board
 		$id = explode('-', $params['name']);
 		$id = array_pop($id);
 
-		$boardInfo = $this->model->load(['boardID = ?', $id]);
+		$f3->set('boardInfo', $this->model->load(['boardID = ?', $id]));
 
 		// Get the data.
-		$entries = $this->model->topicList([
+		$f3->set('entries', $this->model->topicList([
 			'limit' => 10,
 			'start' => 0,
-			'board' => $boardInfo->boardID,
-		]);
+			'board' => $f3->get('boardInfo')->boardID,
+		]));
 
 		echo \Template::instance()->render('board.html');
 	}
