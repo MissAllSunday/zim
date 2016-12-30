@@ -15,7 +15,7 @@ class Blog extends \DB\SQL\Mapper
 			SELECT m.msgTime, m.title, m.url
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
-			WHERE boardID = :board
+			WHERE t.boardID = :board
 			ORDER BY m.msgID DESC
 			LIMIT :start, :limit', [
 			':limit' => $params['limit'],
@@ -27,9 +27,10 @@ class Blog extends \DB\SQL\Mapper
 	function entryInfo($id = 0)
 	{
 		return $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.boardID, m.body
+			SELECT m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			WHERE t.topicID = :topic
 			ORDER BY m.msgID DESC
 			LIMIT 1', [

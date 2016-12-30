@@ -12,11 +12,15 @@ class Board
 
 	function home(\Base $f3, $params)
 	{
-		// Another temp thing.
-		$id = explode('-', $params['name']);
-		$id = array_pop($id);
+		// Get the ID.
+		$tags = explode('-', $params['name']);
+		$id = array_pop($tags);
 
 		$f3->set('boardInfo', $this->model->load(['boardID = ?', $id]));
+
+		$f3->set('site.metaTitle', $f3->get('boardInfo')->title);
+		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
+		$f3->set('site.description', $f3->get('Tools')->metaDescription($f3->get('boardInfo')->description), 3600);
 
 		// Get the data.
 		$f3->set('entries', $this->model->topicList([

@@ -39,15 +39,6 @@ class Blog
 		// Ugly, I know...
 		$tags = explode('-', $params['title']);
 
-		// Temp, still haven't build the boards table...
-		$f3->set('boards',[
-			'1' => 'Blog',
-			'2' => 'Chit Chat',
-			'3' => 'Manga Releases',
-			'4' => 'Spoilers',
-			'5' => 'Support,'
-		]);
-
 		// The ID will always be the last key. Since we're here, remove it.
 		$id = array_pop($tags);
 
