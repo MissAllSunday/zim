@@ -36,30 +36,16 @@
 						<check if="{{ @pag.total >= @pag.limit }}">
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
-								<check if="{{ @pag.pos != 0 }}">
-								<li>
-									<a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@pag.pos - 1}}" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</a>
-								</li>
-								</check>
 								<loop from="{{ @i = 0 }}" to="{{ @i < @pag.count }}" step="{{ @i++ }}">
 									<check if="{{ @i == 0 }}">
 										<true>
-											<li><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.start}}</a></li>
+											<li id="pag_{{@i}}" class="first"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
 										</true>
 										<false>
-											<li class="{{ (@i == @pag.pos ? 'active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ @i }}</a></li>
+											<li id="pag_{{@i}}" class="pag{{ (@i == @pag.pos ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>
 										</false>
 									</check>
 								</loop>
-								<check if="{{@pag.pos <= (@pag.count - 2) }}">
-									<li>
-										<a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@pag.pos + 1}}" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-								</check>
 							</ul>
 						</nav>
 						</check>
