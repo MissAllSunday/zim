@@ -27,7 +27,7 @@ class Blog extends \DB\SQL\Mapper
 	function entryInfo($id = 0)
 	{
 		return $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl
+			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
@@ -36,5 +36,16 @@ class Blog extends \DB\SQL\Mapper
 			LIMIT 1', [
 				':topic' => $id,
 			], 600);
+	}
+
+	function single($params = [])
+	{
+		return $this->db->exec('
+			SELECT topicID, body, title, url, tags, msgTime
+			FROM suki_c_message
+			WHERE topicID = :topic
+				AND msgID != :msg
+			ORDER BY msgID DESC
+			LIMIT :start, :limit', $params);
 	}
 }

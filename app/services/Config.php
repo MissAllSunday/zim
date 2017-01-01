@@ -18,14 +18,18 @@ class Config
 			$this->f3->get('_db.password')
 		));
 
-		$this->f3->mset(array(
+		$this->f3->mset([
+			'PREFIX' => 'txt.',
+			'ENCODING' => 'UTF-8',
+			'LOCALES' => 'dict/',
+			'LANGUAGE' => 'en-US',
 			'UI' => 'views/',
 			'SCHEME' => 'https',
 			'TZ' => 'America/Mexico_City',
 			'site' => array(
 				'title' => 'Miss All Sunday'
 			),
-		));
+		]);
 
 		$this->f3->set('Tools', new \Services\Tools($this->f3));
 	}

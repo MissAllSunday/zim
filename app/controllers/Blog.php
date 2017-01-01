@@ -48,11 +48,6 @@ class Blog
 
 		$f3->set('entryInfo', $entryInfo);
 
-		// Build some keywords!  This should be automatically set but meh... maybe later
-		$f3->set('site.metaTitle', $entryInfo['title']);
-		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
-		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
-
 		// Get the data.
 		$single = $this->model->paginate($start, $limit, array('topicID = ?', $id));
 
@@ -67,6 +62,12 @@ class Blog
 
 		// Pass the rest of the info.
 		$f3->set('pag', $single);
+
+		// Build some keywords!  This should be automatically set but meh... maybe later
+		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''));
+		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
+		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
+
 
 		echo \Template::instance()->render('entry.html');
 	}

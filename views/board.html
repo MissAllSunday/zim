@@ -13,10 +13,12 @@
 						</div>
 						<div class="media-body">
 							<h2 class="media-heading">
-								{{ @item.title }}
-								<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.fmsgTime | format }}</small>
+								<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
 							</h2>
-						<h4>Last message: {{ @item.last_title }}</h4>
+						<h4>
+							Last message: <a href="{{@BASE}}/{{@item.last_url}}">{{ @item.last_title }}</a>
+							<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.last_msgTime | format }}</small>
+						</h4>
 						</div>
 					</div>
 				</div>

@@ -17,7 +17,7 @@ class Board extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_message AS mf ON (mf.msgID = t.fmsgID)
 			LEFT JOIN suki_c_message AS ml ON (ml.msgID = t.lmsgID)
 			WHERE mf.boardID = :board
-			ORDER BY t.topicID DESC
+			ORDER BY last_msgTime DESC
 			LIMIT :start, :limit', [
 			':limit' => $params['limit'],
 			':start' => ($params['start'] * $params['limit']),
