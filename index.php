@@ -12,9 +12,6 @@ $f3->set('Config', new \Services\Config($f3));
 
 $f3->get('Config')->init();
 
-// Session.
-new Session();
-
 // Home and pagination.
 $f3->route(array(
 	'GET /',

@@ -1,12 +1,23 @@
+<check if="{{ @SESSION.loginErrors }}">
+	<div class="row">
+		<div class="alert alert-danger" role="alert">
+			<ul class="list-unstyled">
+				<repeat group="@SESSION.loginErrors" value="{{ @item }}">
+				<li>{{ @txt["error_". @item] }}</li>
+			</repeat>
+			</ul>
+		</div>
+	</div>
+</check>
 <div class="row">
 	<form class="form-signin" method="POST" action="{{ @BASE }}/login">
 		<div class="form-group">
-			<label for="exampleInputEmail1">Email address</label>
-			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email">
+			<label for="loginEmail">Email address</label>
+			<input type="email" class="form-control" id="loginEmail" placeholder="Email" name="email">
 		</div>
 		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label>
-			<input type="password" class="form-control" name="password" placeholder="Password">
+			<label for="loginPass">Password</label>
+			<input type="password" class="form-control" name="password" id="loginPass" placeholder="Password">
 			<input type="hidden" name="token" value="{{ @CSRF }}"/>
 		</div>
 		<button type="submit" class="btn btn-default">Submit</button>

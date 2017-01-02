@@ -14,5 +14,13 @@
 						<li>waid?</li>
 					</ul>
 				</div>
-				<include href="login.html" />
+				<check if="{{ @SESSION.userID }}">
+					<true>
+						{{ @txt.greet, @SESSION.name | format }}
+					</true>
+					<false>
+						<include href="login.html" />
+					</false>
+				</check>
+
 			</div>

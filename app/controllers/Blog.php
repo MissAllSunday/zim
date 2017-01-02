@@ -10,7 +10,7 @@ class Blog
 	{
 		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
 
-		$f3->get('Token')->set();
+		\Base::instance()->get('Token')->set();
 	}
 
 	function home(\Base $f3, $params)
