@@ -31,6 +31,8 @@ class Config
 			),
 		]);
 
+		// This should be automatically set.... @todo
 		$this->f3->set('Tools', new \Services\Tools($this->f3));
+		$this->f3->set('Token', new \Services\Token($this->f3));
 	}
 }

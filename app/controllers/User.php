@@ -9,6 +9,8 @@ class User
 	function __construct()
 	{
 		$this->model = new \Models\User(\Base::instance()->get('DB'));
+
+		$f3->get('Token')->set();
 	}
 
 	function loginPage
@@ -20,6 +22,12 @@ class User
 
 	function login(\Base $f3, $params)
 	{
+		// Token check.
+		if ($f3->get('POST.token')!= $f3->get('Token')->set())
+		{
+
+		}
+
 		$email = $f3->get('POST.email');
 		$password = $f3->get('POST.password');
 
