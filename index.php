@@ -12,6 +12,9 @@ $f3->set('Config', new \Services\Config($f3));
 
 $f3->get('Config')->init();
 
+// Session.
+new Session();
+
 // Home and pagination.
 $f3->route(array(
 	'GET /',
@@ -35,6 +38,16 @@ $f3->route(array(
 	'GET /board/@name',
 	'GET /board/@name/page/@page',
 ),'\Controllers\Board->home');
+
+// Login
+$f3->route(array(
+	'POST /login',
+),'\Controllers\User->login');
+
+// Full login page
+$f3->route(array(
+	'GET /login',
+),'\Controllers\User->loginPage');
 
 // JS and Css minification.
 $f3->route('GET /minify/@type',
