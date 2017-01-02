@@ -8,14 +8,15 @@ class User
 {
 	function __construct()
 	{
-		$this->model = new \Models\User(\Base::instance()->get('DB'));
-
-		\Base::instance()->get('Token')->set();
-		$this->userSes = new \Auth($this->model, array('id' => 'name', 'pw' => 'passwd'));
+		$f3 = \Base::instance();
+		$this->model = new \Models\User($f3->get('DB'));
+		$this->user = new \Auth($this->model, array('id' => 'name', 'pw' => 'passwd'));
 	}
 
-	function loginPage()
+	function loginPage(\Base $f3, $params)
 	{
+		\Base::instance()->get('Token')->set();
+
 		// Set the needed metatags stuff.
 
 		$f3->set('content','login.html');
@@ -28,7 +29,7 @@ class User
 		$error = [];
 
 		// Token check.
-		if ($f3->get('POST.token')!= $f3->get('Token')->set())
+		if ($f3->get('POST.token') != $f3->get('SESSION.csrf'))
 			$error[] = 'bad_token';
 
 		// Bot check.
@@ -58,25 +59,25 @@ class User
 			$error[] = 'no_user';
 
 		// Any errors?
-		if ($errors)
+		if ($error)
 		{
-			$f3->set('SESSION.loginErrors', $errors);
+			$f3->set('SESSION.loginErrors', $error);
 
-			return $f3->reroute('/login');
+			$f3->reroute('/login');
 		}
 
 		// Do the actual check.
 		if(password_verify($passwd, $this->model->passwd))
 		{
-			$this->userSes->login($this->model->name, $this->model->passwd);
+			$this->user->login($this->model->name, $this->model->passwd);
 
-			return $f3->reroute('/');
+			$f3->reroute('/');
 		}
 
 		else
 		{
 			$error[] = 'no_user';
-			$f3->set('SESSION.loginErrors', $errors);
+			$f3->set('SESSION.loginErrors', $error);
 
 			return $f3->reroute('/login');
 		}
