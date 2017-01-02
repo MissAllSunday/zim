@@ -12,6 +12,8 @@ $f3->set('Config', new \Services\Config($f3));
 
 $f3->get('Config')->init();
 
+$f3->set('USER', new \DB\SQL\Session($f3->get('DB'), 'user_ses'));
+
 // Home and pagination.
 $f3->route(array(
 	'GET /',

@@ -13,9 +13,9 @@
 		<li>waid?</li>
 	</ul>
 </div>
-<check if="{{ @SESSION.userID }}">
+<check if="{{ @SESSION.user }}">
 	<true>
-		{{ @txt.greet, @SESSION.name | format }}
+		something...
 	</true>
 	<false>
 		<include href="login.html" />
