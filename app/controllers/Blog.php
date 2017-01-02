@@ -8,9 +8,10 @@ class Blog
 {
 	function __construct()
 	{
-		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
+		$f3 = \Base::instance();
+		$this->model = new \Models\Blog($f3->get('DB'));
 
-		\Base::instance()->get('Token')->set();
+		$f3->get('Token')->set();
 	}
 
 	function home(\Base $f3, $params)

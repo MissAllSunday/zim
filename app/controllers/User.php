@@ -23,6 +23,7 @@ class User
 
 	function login(\Base $f3, $params)
 	{
+		$f3->set('SESSION.loginErrors', null);
 		$error = [];
 
 		// Token check.
