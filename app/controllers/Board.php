@@ -29,6 +29,7 @@ class Board
 			'board' => $f3->get('boardInfo')->boardID,
 		]));
 
-		echo \Template::instance()->render('board.html');
+		$f3->set('content','boards.html');
+		echo \Template::instance()->render('home.html');
 	}
 }

@@ -6,6 +6,24 @@
 		</div>
 
 		<div class="col-md-9">
+			<!-- Breadcrumb is a funny word. -->
+			<check if="{{ @site.breadcrumb }}">
+			<ol class="breadcrumb">
+				<li><a href="{{@BASE}}">{{@site.title}} </a></li>
+					<repeat group="{{ @site.breadcrumb }}" value="{{ @item }}">
+						<li {{ @item.active ? 'class="active"' : '' }}>
+						<check if="{{ @item.url }}">
+							<true>
+								<a href="{{@BASE}}/{{@item.url}}">{{@item.title}}</a>
+							</true>
+							<false>
+								{{@item.title}}
+							</false>
+						</check>
+						</li>
+					</repeat>
+			</ol>
+			</check>
 			<include href="{{ @content }}" />
 		</div>
 	</div>

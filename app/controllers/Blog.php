@@ -71,7 +71,10 @@ class Blog
 		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''));
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
-
+		$f3->set('site.breadcrumb', [
+			['url' => 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']], 
+			['url' => '', 'title' => '', 'active' => true], 
+		]);
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
