@@ -43,7 +43,7 @@ $f3->route(array(
 	'POST /login',
 ),'\Controllers\User->doLogin');
 
-// Login
+// Logout
 $f3->route(array(
 	'GET /logout',
 ),'\Controllers\User->doLogout');

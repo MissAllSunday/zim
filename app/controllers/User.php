@@ -72,8 +72,11 @@ class User
 		$f3->reroute('/login');
 	}
 
-	function doLogout()
+	function doLogout(\Base $f3, $params)
 	{
+		// Do some other stuff.
 
+		$f3->clear('SESSION');
+		$f3->reroute('/login');
 	}
 }
