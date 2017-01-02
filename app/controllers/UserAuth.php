@@ -4,7 +4,7 @@ namespace Controllers;
 
 use Services;
 
-class User
+class UserAuth extends Base
 {
 	function __construct()
 	{

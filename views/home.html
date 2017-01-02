@@ -6,6 +6,13 @@
 		</div>
 
 		<div class="col-md-8 col-md-offset-1">
+			<!-- Generic alert message.  -->
+			<check if="{{ @site.message }}">
+			<div class="alert alert-{{ @site.message[0] }}" role="alert">...</div>
+				<p>{{ @site.message[1] }}</p>
+			</div>
+			</check>
+
 			<!-- Breadcrumb is a funny word. -->
 			<check if="{{ @site.breadcrumb }}">
 			<ol class="breadcrumb">

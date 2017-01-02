@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class Blog
+class Blog extends Base
 {
 	function __construct()
 	{

@@ -41,17 +41,17 @@ $f3->route(array(
 // Login
 $f3->route(array(
 	'POST /login',
-),'\Controllers\User->doLogin');
+),'\Controllers\UserAuth->doLogin');
 
 // Logout
 $f3->route(array(
 	'GET /logout',
-),'\Controllers\User->doLogout');
+),'\Controllers\UserAuth->doLogout');
 
 // Full login page
 $f3->route(array(
 	'GET /login',
-),'\Controllers\User->loginPage');
+),'\Controllers\UserAuth->loginPage');
 
 // JS and Css minification.
 $f3->route('GET /minify/@type',
