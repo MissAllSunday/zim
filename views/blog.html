@@ -1,0 +1,20 @@
+<repeat group="{{ @messages }}" value="{{ @item }}">
+<h2><a href="{{@BASE}}/{{ @item.url }}">{{ @item.title }}</a>
+	<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
+</h2>
+</repeat>
+<div class="row">
+	<nav aria-label="...">
+		<ul class="pager">
+			<check if="{{@pagination.next > 1}}">
+			<li>
+				<check if="{{@pagination.previous == 0}}">
+					<true><a href="{{@BASE}}">Previous</a></true>
+					<false><a href="{{@BASE}}/page/{{@pagination.previous}}">Previous</a></false>
+				</check>
+			</li>
+			</check>
+			<li><a href="{{@BASE}}/page/{{@pagination.next}}">Next</a></li>
+		</ul>
+	</nav>
+</div>

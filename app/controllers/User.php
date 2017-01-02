@@ -18,10 +18,11 @@ class User
 	{
 		// Set the needed metatags stuff.
 
-		echo \Template::instance()->render('loginPage.html');
+		$f3->set('content','login.html');
+		echo \Template::instance()->render('home.html');
 	}
 
-	function login(\Base $f3, $params)
+	function doLogin(\Base $f3, $params)
 	{
 		$f3->set('SESSION.loginErrors', null);
 		$error = [];
@@ -81,7 +82,7 @@ class User
 		}
 	}
 
-	function doLogOut()
+	function doLogout()
 	{
 
 	}

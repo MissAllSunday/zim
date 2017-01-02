@@ -1,30 +1,13 @@
 <include href="header.html" />
-		<div class="container">
-			<div class="row">
-				<include href="sidebar.html" />
-				<div class="col-md-8">
-					<repeat group="{{ @messages }}" value="{{ @item }}">
-					<h2><a href="{{@BASE}}/{{ @item.url }}">{{ @item.title }}</a>
-						<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
-					</h2>
-
-					</repeat>
-				</div>
-			</div>
-			<div class="row">
-				<nav aria-label="...">
-					<ul class="pager">
-						<check if="{{@pagination.next > 1}}">
-						<li>
-							<check if="{{@pagination.previous == 0}}">
-								<true><a href="{{@BASE}}">Previous</a></true>
-								<false><a href="{{@BASE}}/page/{{@pagination.previous}}">Previous</a></false>
-							</check>
-						</li>
-						</check>
-						<li><a href="{{@BASE}}/page/{{@pagination.next}}">Next</a></li>
-					</ul>
-				</nav>
-			</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+		<include href="sidebar.html" />
 		</div>
+
+		<div class="col-md-9">
+			<include href="{{ @content }}" />
+		</div>
+	</div>
+</div>
 <include href="footer.html" />

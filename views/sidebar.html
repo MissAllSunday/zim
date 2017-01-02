@@ -1,26 +1,23 @@
-			<div class="col-md-4">
-				<div class="row">
-					<h1 class="pull-right">
-						<a href="{{@BASE}}">
-							<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail">
-						</a>
-					</h1>
-				</div>
-				<div class="row">
-					<ul class="list-unstyled text-uppercase text-right">
-						<li>About</li>
-						<li>Resources</li>
-						<li>One Piece</li>
-						<li>waid?</li>
-					</ul>
-				</div>
-				<check if="{{ @SESSION.userID }}">
-					<true>
-						{{ @txt.greet, @SESSION.name | format }}
-					</true>
-					<false>
-						<include href="login.html" />
-					</false>
-				</check>
-
-			</div>
+<div class="row">
+	<h1 class="pull-right">
+		<a href="{{@BASE}}">
+			<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail">
+		</a>
+	</h1>
+</div>
+<div class="row">
+	<ul class="list-unstyled text-uppercase text-right">
+		<li>About</li>
+		<li>Resources</li>
+		<li>One Piece</li>
+		<li>waid?</li>
+	</ul>
+</div>
+<check if="{{ @SESSION.userID }}">
+	<true>
+		{{ @txt.greet, @SESSION.name | format }}
+	</true>
+	<false>
+		<include href="login.html" />
+	</false>
+</check>

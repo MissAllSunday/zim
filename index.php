@@ -39,7 +39,12 @@ $f3->route(array(
 // Login
 $f3->route(array(
 	'POST /login',
-),'\Controllers\User->login');
+),'\Controllers\User->doLogin');
+
+// Login
+$f3->route(array(
+	'GET /logout',
+),'\Controllers\User->doLogout');
 
 // Full login page
 $f3->route(array(

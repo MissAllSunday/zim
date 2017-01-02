@@ -30,6 +30,7 @@ class Blog
 			'previous' => ($start ? $start - 1 : 0),
 		));
 
+		$f3->set('content','blog.html');
 		echo \Template::instance()->render('home.html');
 	}
 
@@ -72,6 +73,7 @@ class Blog
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
 
 
-		echo \Template::instance()->render('entry.html');
+		$f3->set('content','single.html');
+		echo \Template::instance()->render('home.html');
 	}
 }
