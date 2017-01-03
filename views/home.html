@@ -7,11 +7,12 @@
 
 		<div class="col-md-8 col-md-offset-1">
 			<!-- Generic alert message.  -->
-			<check if="{{ @site.message }}">
-			<div class="alert alert-{{ @site.message[0] }}" role="alert">...</div>
-				<p>{{ @site.message[1] }}</p>
-			</div>
-			</check>
+			<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+				<div class="alert alert-{{ @msg.status }} alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					{{ @msg.text | esc }}
+				</div>
+			</repeat>
 
 			<!-- Breadcrumb is a funny word. -->
 			<check if="{{ @site.breadcrumb }}">

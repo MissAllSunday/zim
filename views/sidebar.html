@@ -15,7 +15,7 @@
 </div>
 <check if="{{ @SESSION.user }}">
 	<true>
-		something...
+		<p><a href="{{@BASE}}/logout">{{ @txt.logout }}</a></p>
 	</true>
 	<false>
 		<include href="login.html" />

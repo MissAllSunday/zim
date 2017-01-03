@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-use Services;
-
 class UserAuth extends Base
 {
 	function __construct()
@@ -54,7 +52,7 @@ class UserAuth extends Base
 		if ($error)
 		{
 			$f3->set('loginErrors', $error);
-			$f3->reroute('/login');
+			return $f3->reroute('/login');
 		}
 
 		// Do the actual check.
@@ -62,7 +60,8 @@ class UserAuth extends Base
 		{
 			$f3->set('SESSION.user', $this->model->userID);
 
-			$f3->reroute('/');
+			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
+			return $f3->reroute('/');
 		}
 
 		// Set a default error.
@@ -77,6 +76,7 @@ class UserAuth extends Base
 		// Do some other stuff.
 
 		$f3->clear('SESSION');
-		$f3->reroute('/login');
+		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
+		$f3->reroute('/');
 	}
 }
