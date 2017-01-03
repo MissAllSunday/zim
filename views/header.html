@@ -23,7 +23,15 @@
 					<a class="navbar-brand" href="{{@BASE}}">{{@site.title}}</a>
 				</div>
 				<div class="collapse navbar-collapse" id="site-navbar-collapse-1">
-					<a href="{{@BASE}}/login"><button type="button" class="btn btn-default navbar-btn navbar-right">{{@txt.signin}}</button></a>
+					<check if="{{ @currentUser.userID }}">
+						<true>
+							<p class="navbar-text navbar-left">{{ @txt.greet, @currentUser.name | format}}</p>
+							<a href="{{@BASE}}/logout"><button type="button" class="btn btn-default navbar-btn navbar-right">{{ @txt.logout }}</button></a>
+						</true>
+						<false>
+							<a href="{{@BASE}}/login"><button type="button" class="btn btn-default navbar-btn navbar-right">{{@txt.signin}}</button></a>
+						</false>
+					</check>
 				</div>
 			</div>
 		</nav>

@@ -6,12 +6,15 @@ class UserAuth extends Base
 {
 	function __construct()
 	{
-		$f3 = \Base::instance();
-		$this->model = new \Models\User($f3->get('DB'));
+
 	}
 
 	function loginPage(\Base $f3, $params)
 	{
+		// Already logged come on...
+		if ($f3->exists('currentUser'))
+			return $f3->reroute('/');
+
 		// Set the needed metatags stuff.
 
 		$f3->set('content','login.html');
@@ -20,6 +23,10 @@ class UserAuth extends Base
 
 	function doLogin(\Base $f3, $params)
 	{
+		// Already logged come on...
+		if ($f3->exists('currentUser'))
+			return $f3->reroute('/');
+
 		$error = [];
 
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))

@@ -1,7 +1,14 @@
 <div class="row">
 	<h1>
 		<a href="{{@BASE}}">
-			<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail pull-right">
+			<check if="{{ @currentUser.userID &&  @currentUser.avatar }}">
+				<true>
+					<img src="{{@currentUser.avatar}}" alt="{{@currentUser.name}}" title="{{@currentUser.name}}" class="img-responsive img-thumbnail pull-right">
+				</true>
+				<false>
+					<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail pull-right">
+				</false>
+			</check>
 		</a>
 	</h1>
 </div>
@@ -12,7 +19,7 @@
 		<li>One Piece</li>
 		<li>waid?</li>
 	</ul>
-	<check if="{{ @SESSION.user }}">
+	<check if="{{ @currentUser.userID }}">
 		<true>
 			<p><a href="{{@BASE}}/logout">{{ @txt.logout }}</a></p>
 		</true>
