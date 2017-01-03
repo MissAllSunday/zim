@@ -29,6 +29,16 @@ $f3->route(array(
 	'GET /@title/page/@page',
 ),'\Controllers\Blog->single');
 
+// Posting.
+$f3->route(array(
+	'GET /post/@boardID/@topicID [sync]',
+),'\Controllers\Post->create');
+
+// Preview.
+$f3->route(array(
+	'GET /post/@boardID/@topicID [ajax]',
+),'\Controllers\Post->preview');
+
 // Forum.
 $f3->route(array(
 	'GET /forum/',

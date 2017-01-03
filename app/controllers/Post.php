@@ -9,7 +9,7 @@ class Post extends Auth
 		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
 	}
 
-	function post()
+	function create()
 	{
 
 	}
