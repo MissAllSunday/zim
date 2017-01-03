@@ -22,6 +22,9 @@ class UserAuth extends Base
 	{
 		$error = [];
 
+		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
+			$error[] = 'bad_token';
+
 		// Bot check.
 		if (\Audit::instance()->isbot())
 			$error[] = 'possible_bot';

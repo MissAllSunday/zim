@@ -14,8 +14,12 @@ return [
 	'error_bad_email' => 'The email you provided isn\'t valid, Dunno why.',
 	'error_no_user' => 'I am legally forced to tell you there are no records of an user ever registered here with the credentials you provided. <strong>Protip:</strong> Go back in time and register an account then come back and try again.',
 	'signup' => 'Not an user? mmm how about <a href="{0}">signing up?</a>',
+	'signin' => 'Sign in',
 	'logout' => 'logout',
 	'login' => 'login something',
 	'login_success' => 'Welcome aboard pal!',
 	'logout_success' => 'phew... are you glad is it over? yeah.. me too!',
+	'login_password' => 'Password',
+	'login_email' => 'Email',
+	'submit' => 'Submit',
 ];

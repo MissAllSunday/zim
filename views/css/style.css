@@ -68,3 +68,10 @@ div.gifv
  .media-avatar {
 	width: 64px;
 }
+.site-main{
+	margin-left:10px;
+}
+
+.site-login{
+	width:60%;
+}

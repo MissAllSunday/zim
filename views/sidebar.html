@@ -1,23 +1,23 @@
 <div class="row">
 	<h1>
 		<a href="{{@BASE}}">
-			<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail">
+			<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail pull-right">
 		</a>
 	</h1>
 </div>
-<div class="row">
+<div class="row text-right">
 	<ul class="list-unstyled text-uppercase">
 		<li>About</li>
 		<li>Resources</li>
 		<li>One Piece</li>
 		<li>waid?</li>
 	</ul>
+	<check if="{{ @SESSION.user }}">
+		<true>
+			<p><a href="{{@BASE}}/logout">{{ @txt.logout }}</a></p>
+		</true>
+		<false>
+			<p>{{ @txt.signup, @BASE ."/signup" | format, raw }}</p>
+		</false>
+	</check>
 </div>
-<check if="{{ @SESSION.user }}">
-	<true>
-		<p><a href="{{@BASE}}/logout">{{ @txt.logout }}</a></p>
-	</true>
-	<false>
-		<include href="login.html" />
-	</false>
-</check>

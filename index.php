@@ -14,6 +14,9 @@ $f3->get('Config')->init();
 
 $f3->set('USER', new \DB\SQL\Session($f3->get('DB'), 'user_ses'));
 
+if (!$f3->exists('SESSION.csrf'))
+	$f3->set('SESSION.csrf', $f3->get('USER')->csrf());
+
 // Home and pagination.
 $f3->route(array(
 	'GET /',

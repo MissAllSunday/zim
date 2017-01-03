@@ -2,35 +2,37 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-push-4">
-			<!-- Generic alert message.  -->
-			<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
-				<div class="alert alert-{{ @msg.status }} alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					{{ @msg.text | esc }}
-				</div>
-			</repeat>
+			<div class="site-main">
+				<!-- Generic alert message.  -->
+				<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+					<div class="alert alert-{{ @msg.status }} alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						{{ @msg.text | esc }}
+					</div>
+				</repeat>
 
-			<!-- Breadcrumb is a funny word. -->
-			<check if="{{ @site.breadcrumb }}">
-			<ol class="breadcrumb">
-				<li><a href="{{@BASE}}">{{@site.title}} </a></li>
-					<repeat group="{{ @site.breadcrumb }}" value="{{ @item }}">
-						<li {{ @item.active ? 'class="active"' : '' }}>
-						<check if="{{ @item.url }}">
-							<true>
-								<a href="{{@BASE}}/{{@item.url}}">{{@item.title}}</a>
-							</true>
-							<false>
-								{{@item.title}}
-							</false>
-						</check>
-						</li>
-					</repeat>
-			</ol>
-			</check>
-			<include href="{{ @content }}" />
+				<!-- Breadcrumb is a funny word. -->
+				<check if="{{ @site.breadcrumb }}">
+				<ol class="breadcrumb">
+					<li><a href="{{@BASE}}">{{@site.title}} </a></li>
+						<repeat group="{{ @site.breadcrumb }}" value="{{ @item }}">
+							<li {{ @item.active ? 'class="active"' : '' }}>
+							<check if="{{ @item.url }}">
+								<true>
+									<a href="{{@BASE}}/{{@item.url}}">{{@item.title}}</a>
+								</true>
+								<false>
+									{{@item.title}}
+								</false>
+							</check>
+							</li>
+						</repeat>
+				</ol>
+				</check>
+				<include href="{{ @content }}" />
+			</div>
 		</div>
-		<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-pull-8">
+		<div class="col-md-4 col-md-pull-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
 				<include href="sidebar.html" />
 		</div>
 	</div>
