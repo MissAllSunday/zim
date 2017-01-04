@@ -1,15 +1,3 @@
-<check if="{{ @loginErrors }}">
-	<div class="row">
-		<div class="alert alert-danger" role="alert">
-			<p>{{@txt.error_msg}}</p>
-			<ul class="list-unstyled">
-				<repeat group="@loginErrors" value="{{ @item }}">
-				<li>- {{ @txt["error_". @item] | raw }}</li>
-			</repeat>
-			</ul>
-		</div>
-	</div>
-</check>
 <div class="row">
 	<form class="form-signin" method="POST" action="{{ @BASE }}/login">
 		<div class="form-group">

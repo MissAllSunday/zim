@@ -13,7 +13,7 @@ class UserAuth extends Base
 	{
 		// Already logged come on...
 		if ($f3->exists('currentUser'))
-			return $f3->reroute($f3->get('BASE'));
+			return $f3->reroute('/');
 
 		// Set the needed metatags stuff.
 
@@ -25,7 +25,7 @@ class UserAuth extends Base
 	{
 		// Already logged come on...
 		if ($f3->exists('currentUser'))
-			return $f3->reroute($f3->get('BASE'));
+			return $f3->reroute('/');
 
 		$error = [];
 
@@ -90,6 +90,6 @@ class UserAuth extends Base
 
 		$f3->clear('SESSION');
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
-		$f3->reroute($f3->get('BASE'));
+		$f3->reroute('/');
 	}
 }
