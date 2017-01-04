@@ -13,7 +13,7 @@ class UserAuth extends Base
 	{
 		// Already logged come on...
 		if ($f3->exists('currentUser'))
-			return $f3->reroute('/');
+			return $f3->reroute($f3->get('BASE'));
 
 		// Set the needed metatags stuff.
 
@@ -25,7 +25,7 @@ class UserAuth extends Base
 	{
 		// Already logged come on...
 		if ($f3->exists('currentUser'))
-			return $f3->reroute('/');
+			return $f3->reroute($f3->get('BASE'));
 
 		$error = [];
 
@@ -61,7 +61,7 @@ class UserAuth extends Base
 		// Any errors?
 		if ($error)
 		{
-			$f3->set('loginErrors', $error);
+			\Flash::instance()->addMessage($error, 'danger');
 			return $f3->reroute('/login');
 		}
 
@@ -71,22 +71,22 @@ class UserAuth extends Base
 			$f3->set('SESSION.user', $this->model->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
-			return $f3->reroute('/');
+			return $f3->reroute($f3->get('BASE'));
 		}
 
 		// Set a default error.
 		$error[] = 'no_user';
 
-		$f3->set('loginErrors', $error);
+		\Flash::instance()->addMessage($error, 'danger');
 		$f3->reroute('/login');
 	}
 
 	function doLogout(\Base $f3, $params)
 	{
-		// Do some other stuff.
+		// Do some other stuff. Like setting a cookie for example...
 
 		$f3->clear('SESSION');
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
-		$f3->reroute('/');
+		$f3->reroute($f3->get('BASE'));
 	}
 }

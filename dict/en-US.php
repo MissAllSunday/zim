@@ -15,6 +15,7 @@ return [
 	'error_empty_email' => 'Empty email field. Seriously, how could you forgot to type it?',
 	'error_empty_password' => 'Empty password field. Nope, your password isn\'t 1234.',
 	'error_bad_email' => 'The email you provided isn\'t valid, Dunno why.',
+	'error_bad_captcha' => 'Invalid captcha. Perhaps Ctrl + would help?',
 	'error_no_user' => 'I am legally forced to tell you there are no records of an user ever registered here with the credentials you provided. <strong>Protip:</strong> Go back in time and register an account then come back and try again.',
 
 	// Login, logout, signup, etc.
@@ -26,6 +27,7 @@ return [
 	'logout_success' => 'phew... are you glad its over? yeah.. me too!',
 	'login_password' => 'Password',
 	'login_email' => 'Email',
+	'login_captcha' => 'Captcha',
 
 	// Default site texts
 	'site_desc' => 'You expect me to act like a lover

@@ -78,4 +78,14 @@ $f3->route('GET /minify/@type',
 	3600*24
 );
 
+// Captcha.
+$f3->route('GET /captcha',
+	function($f3, $args)
+	{
+		$img = new Image();
+		$img->captcha('fonts/Roboto-Regular.ttf',16,5,'SESSION.captcha_code');
+		$img->render();
+	});
+
+
 $f3->run();
