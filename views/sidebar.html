@@ -19,12 +19,4 @@
 		<li>One Piece</li>
 		<li>waid?</li>
 	</ul>
-	<check if="{{ @currentUser.userID }}">
-		<true>
-			<p><a href="{{@BASE}}/logout">{{ @txt.logout }}</a></p>
-		</true>
-		<false>
-			<p>{{ @txt.signup, @BASE ."/signup" | format, raw }}</p>
-		</false>
-	</check>
 </div>
