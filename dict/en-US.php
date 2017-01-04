@@ -35,9 +35,10 @@ Wait for something to happen...',
 	'site_keywords' => 'miss all sunday, one piece, theories, manga, capitulos, film gold, online, episodes, arcs, Suki, SMF, free, mods, php, jquery,',
 
 	// Posting.
-	'submit' => 'Submit',
-	'preview' => 'Preview',
-	'Title' => 'Title',
+	'post_submit' => 'Submit',
+	'post_preview' => 'Preview',
+	'post_title' => 'Title',
+	'post_tags' => 'Tags',
 
 	// Posting errors.
 	'empty_title' => 'A title is required',

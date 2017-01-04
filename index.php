@@ -32,6 +32,7 @@ $f3->route(array(
 // Posting.
 $f3->route(array(
 	'POST|GET /post/@boardID/@topicID [sync]',
+	'POST|GET /post/@boardID [sync]',
 ),'\Controllers\Post->create');
 
 // Preview.

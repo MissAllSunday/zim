@@ -28,6 +28,13 @@ $(function() {
 				['remove', ['removeMedia']]
 			],
 		},
-		lang: 'en-US'
+		lang: 'en-US',
+		toolbar: [
+			['para', ['style', 'ul', 'ol', 'paragraph']],
+			['insert', ['picture', 'link', 'table', 'hr']],
+			['height', ['height']],
+			['misc', ['undo', 'redo', 'help']],
+			['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
+		]
 	});
 });
