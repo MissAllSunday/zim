@@ -24,7 +24,7 @@ class Config
 			'LOCALES' => 'dict/',
 			'LANGUAGE' => 'en-US',
 			'UI' => 'views/',
-			'SCHEME' => 'https',
+			'SCHEME' => 'http',
 			'TZ' => 'America/Mexico_City',
 			'site' => array(
 				'title' => 'Miss All Sunday'
