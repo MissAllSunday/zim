@@ -5,7 +5,7 @@ $(function() {
 		languages: ["PHP", "CoffeeScript", "CSS", "Diff", "JavaScript", "JSON"]
 	});
 	hljs.initHighlighting();
-	$("pre").each(function(i, block) {
+	$('pre').each(function(i, block) {
 		hljs.highlightBlock(block);
 	});
 
@@ -17,4 +17,17 @@ $(function() {
 
 		prevHide.hide();
 		nextHide.hide();
+
+	// Summernote.
+	$('#summernote').summernote({
+		minHeight: 200,
+		popover: {
+			image: [
+				['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+				['float', ['floatLeft', 'floatRight', 'floatNone', 'imageAttributes', 'imageShape']],
+				['remove', ['removeMedia']]
+			],
+		},
+		lang: 'en-US'
+	});
 });
