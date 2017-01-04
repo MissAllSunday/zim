@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head itemscope itemtype="https://schema.org/WebSite">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="{{@BASE}}/minify/css?files=style.css" />
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +12,29 @@
 		<check if="{{ @site.description }}">
 		<meta name="description" content="{{ @site.description }}">
 		</check>
-		<check if="{{ @site.metaTitle }}">
-		<title>{{ @site.metaTitle }}</title>
-		</check>
-		<link rel="stylesheet" type="text/css" href="{{@BASE}}/minify/css?files=bootstrap.min.css,style.css" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<meta property="og:site_name" content="{{@title}}">
+		<meta property="og:title" content="{{ @site.metaTitle ? @site.metaTitle : @site.title }}">
+		<meta property="og:url" content="{{ @site.currentUrl ? @site.currentUrl : @BASE }}">
+		<meta property="og:description" content="{{ @site.description }}">
+		<meta name="theme-color" content="#222222">
+		<title itemprop="name">{{ @site.metaTitle ? @site.metaTitle : @site.title }}</title>
+		<link rel="canonical" href="{{@BASE}}" itemprop="url">
+		<link rel="contents" href="{{@BASE}}">
+		<link rel="search" href="{{@BASE}}/search">
 		</head>
 	<body>
 		<nav class="navbar navbar-default">

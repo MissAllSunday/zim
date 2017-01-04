@@ -22,4 +22,9 @@ return [
 	'login_password' => 'Password',
 	'login_email' => 'Email',
 	'submit' => 'Submit',
+	'site_desc' => 'You expect me to act like a lover
+Consider my moves and deserve the reward
+To hold you in my arms and wait, wait
+Wait for something to happen...',
+	'site_keywords' => 'miss all sunday, one piece, theories, manga, capitulos, film gold, online, episodes, arcs, Suki, SMF, free, mods, php, jquery,',
 ];
