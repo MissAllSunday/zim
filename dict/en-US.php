@@ -19,7 +19,8 @@ return [
 	'error_no_user' => 'I am legally forced to tell you there are no records of an user ever registered here with the credentials you provided. <strong>Protip:</strong> Go back in time and register an account then come back and try again.',
 
 	// Login, logout, signup, etc.
-	'signup' => 'Not an user? mmm how about <a href="{0}">signing up?</a>',
+	'signup_msg' => 'Not an user? mmm how about <a href="{0}">signing up?</a>',
+	'signup' => 'Sign up',
 	'signin' => 'Sign in',
 	'logout' => 'Logout',
 	'login' => 'Login',
@@ -28,6 +29,7 @@ return [
 	'login_password' => 'Password',
 	'login_email' => 'Email',
 	'login_captcha' => 'Captcha',
+	'login_remember' => 'Remember me (pretty please!)',
 
 	// Default site texts
 	'site_desc' => 'You expect me to act like a lover

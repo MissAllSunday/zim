@@ -54,7 +54,10 @@
 							<a href="{{@BASE}}/logout"><button type="button" class="btn btn-default navbar-btn navbar-right">{{ @txt.logout }}</button></a>
 						</true>
 						<false>
-							<a href="{{@BASE}}/login"><button type="button" class="btn btn-default navbar-btn navbar-right">{{@txt.signin}}</button></a>
+						<div class="navbar-right">
+							<a href="{{@BASE}}/login"><button type="button" class="btn btn-default navbar-btn">{{@txt.signin}}</button></a>
+							<a href="{{@BASE}}/signup"><button type="button" class="btn btn-default navbar-btn">{{@txt.signup}}</button></a>
+						</div>
 						</false>
 					</check>
 				</div>

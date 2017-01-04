@@ -32,6 +32,9 @@ class UserAuth extends Base
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
 			$error[] = 'bad_token';
 
+		if ($f3->get('POST.captcha')!= $f3->get('SESSION.captcha_code'))
+			$error[] = 'bad_captcha';
+
 		// Bot check.
 		if (\Audit::instance()->isbot())
 			$error[] = 'possible_bot';
@@ -52,10 +55,10 @@ class UserAuth extends Base
 			$error[] = 'bad_email';
 
 		// Get the user's data.
-		$this->model->getByEmail($email);
+		$this->userModel->getByEmail($email);
 
 		// No user was found, try again.
-		if($this->model->dry())
+		if($this->userModel->dry())
 			$error[] = 'no_user';
 
 		// Any errors?
@@ -66,12 +69,12 @@ class UserAuth extends Base
 		}
 
 		// Do the actual check.
-		elseif(password_verify($passwd, $this->model->passwd))
+		elseif(password_verify($passwd, $this->userModel->passwd))
 		{
-			$f3->set('SESSION.user', $this->model->userID);
+			$f3->set('SESSION.user', $this->userModel->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
-			return $f3->reroute($f3->get('BASE'));
+			return $f3->reroute('/');
 		}
 
 		// Set a default error.
