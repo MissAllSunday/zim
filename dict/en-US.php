@@ -41,5 +41,5 @@ Wait for something to happen...',
 
 	// Posting errors.
 	'empty_title' => 'A title is required',
-	'empty_body' => 'You kinda need to post something...',
+	'empty_body' => 'You kinda need to type something...',
 ];
