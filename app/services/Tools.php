@@ -137,4 +137,58 @@ class Tools
 
 		return $purifier->purify($str);
 	}
+
+	/**
+	 * Checks and returns a comma separated string.
+	 * @access public
+	 * @param string $string The string to check and format
+	 * @param string $type The type to check against. Accepts "numeric", "alpha" and "alphanumeric".
+	 * @param string $delimiter Used for explode/imploding the string.
+	 * @return string|bool
+	 */
+	public function commaSeparated($string, $type = 'alphanumeric', $delimiter = ',')
+	{
+		if (empty($string))
+			return false;
+
+		switch ($type) {
+			case 'numeric':
+				$t = '\d';
+				break;
+			case 'alpha':
+				$t = '[:alpha:]';
+				break;
+			case 'alphanumeric':
+			default:
+				$t = '[:alnum:]';
+				break;
+		}
+		return empty($string) ? false : implode($delimiter, array_filter(explode($delimiter, preg_replace(
+			array(
+				'/[^'. $t .',]/',
+				'/(?<='. $delimiter .')'. $delimiter .'+/',
+				'/^'. $delimiter .'+/',
+				'/'. $delimiter .'+$/'
+			), '', $string
+		))));
+	}
+
+	/**
+	 * Returns a formatted string.
+	 * @access public
+	 * @param string|int  $bytes A number of bytes.
+	 * @param bool $showUnits To show the unit symbol or not.
+	 * @param int  $log the log used, either 1024 or 1000.
+	 * @return string
+	 */
+	public function formatBytes($bytes, $showUnits = false, $log = 1024)
+	{
+		$units = array('B', 'KB', 'MB', 'GB', 'TB');
+		$bytes = max($bytes, 0);
+		$pow = floor(($bytes ? log($bytes) : 0) / log($log));
+		$pow = min($pow, count($units) - 1);
+		$bytes /= (1 << (10 * $pow));
+		return round($bytes, 2) . ($showUnits ? ' ' . $units[$pow] : '');
+	}
+
 }
