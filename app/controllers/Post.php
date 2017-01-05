@@ -39,6 +39,10 @@ class Post extends Auth
 			return $f3->get('Tools')->sanitize($var);
 		}, array_intersect_key($f3->get('POST'), $this->_fields));
 
+		// Token check.
+		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
+			$errors[] = 'bad_token';
+
 		// Moar handpicked!
 		foreach ($data as $k => $v)
 			if(empty($v))
@@ -48,8 +52,12 @@ class Post extends Auth
 		if (!empty($errors))
 		{
 			\Flash::instance()->addMessage($errors, 'danger');
-			return $f3->reroute('/login/'. $data['boardID'] .'/'. $data['topicID']);
+			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);
 		}
+
+		// Check that the board really exists.
+
+		// If theres a topic ID, make sure it really exists...
 	}
 
 	function preview(\Base $f3, $params)
