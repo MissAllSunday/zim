@@ -2,17 +2,17 @@
 	<form class="form-signin" method="POST" action="{{ @BASE }}/post/598/1">
 		<div class="form-group">
 			<label for="postTags">{{@txt.post_tags}}</label>
-			<input type="text" class="form-control" name="tags" id="postTags" placeholder="">
+			<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @post_tags }}">
 		</div>
 		<div class="form-group">
 			<label for="postTitle">{{@txt.post_title}}</label>
-			<input type="text" class="form-control" name="title" id="postTitle" placeholder="">
+			<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @post_title }}">
 			<input type="hidden" name="boardID" value="{{ @boardID }}"/>
 			<input type="hidden" name="topicID" value="{{ @topicID }}"/>
 			<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
 		</div>
 		<div class="form-group">
-			<textarea name="body" id="summernote"></textarea>
+			<textarea name="body" id="summernote">{{ @post_body }}</textarea>
 		</div>
 		<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
 	</form>

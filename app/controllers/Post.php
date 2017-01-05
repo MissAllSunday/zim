@@ -19,6 +19,12 @@ class Post extends Auth
 
 	function post(\Base $f3, $params)
 	{
+		// If theres SESSION data, use that.
+
+		// Check we got a valid boardID
+
+		// And a topic if needed.
+
 		// We need these for the editor stuff!
 		$f3->push('site.customJS', 'summernote.min.js');
 		$f3->push('site.customJS', 'summernote-image-attributes.js');
@@ -48,14 +54,27 @@ class Post extends Auth
 			if(empty($v))
 				$errors[] = 'empty_'. $k;
 
+		// Clean up the tags.
+		if(!empty($data['tags']))
+			$data['tags'] = $f3->get('Tools')->commaSeparated($data['tags'], 'alpha');
+
 		// Lets take five shall we?
 		if (!empty($errors))
 		{
+			// Save the data.
+			$f3->set('SESSION.posting', $data);
+
 			\Flash::instance()->addMessage($errors, 'danger');
 			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);
 		}
 
 		// Check that the board really exists.
+		if (!$this->model->findone(array('userID = ?', $id));
+		{
+			\Flash::instance()->addMessage($f3->get('txt.invalid_board'), 'danger');
+
+			return $f3->reroute('/');
+		}
 
 		// If theres a topic ID, make sure it really exists...
 	}
