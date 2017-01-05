@@ -29,10 +29,15 @@ $f3->route(array(
 	'GET /@title/page/@page',
 ),'\Controllers\Blog->single');
 
+// Posting page.
+$f3->route(array(
+	'GET /post/@boardID/@topicID [sync]',
+	'GET /post/@boardID [sync]',
+),'\Controllers\Post->post');
+
 // Posting.
 $f3->route(array(
-	'GET|POST /post/@boardID/@topicID [sync]',
-	'GET|POST /post/@boardID [sync]',
+	'POST /post',
 ),'\Controllers\Post->create');
 
 // Preview.

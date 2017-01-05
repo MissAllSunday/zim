@@ -8,9 +8,7 @@
 			<label for="postTitle">{{@txt.post_title}}</label>
 			<input type="text" class="form-control" name="title" id="postTitle" placeholder="">
 			<input type="hidden" name="boardID" value="{{ @boardID }}"/>
-			<check if="{{ @topicID }}">
 			<input type="hidden" name="topicID" value="{{ @topicID }}"/>
-			</check>
 			<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
 		</div>
 		<div class="form-group">
