@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "adf4fe92ba759e9988df675a2d222685",
-    "content-hash": "faaf05257e71a0dd9c662f3f72cdce6b",
+    "hash": "7075023cc8bbd1fb95d265e7a66716fa",
+    "content-hash": "cdfaa16884a7339439781ac73edb89a9",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "068ea88a913b1c438b55a778ad537ae338eb0f21"
+                "reference": "3c5792767add91cb933e2a30360598a92676fbef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/068ea88a913b1c438b55a778ad537ae338eb0f21",
-                "reference": "068ea88a913b1c438b55a778ad537ae338eb0f21",
+                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/3c5792767add91cb933e2a30360598a92676fbef",
+                "reference": "3c5792767add91cb933e2a30360598a92676fbef",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,54 @@
             ],
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
-            "time": "2016-12-21 23:19:23"
+            "time": "2017-01-01 01:12:30"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "5070404376d3b4287ce5c6bfae13e888b464742d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/5070404376d3b4287ce5c6bfae13e888b464742d",
+                "reference": "5070404376d3b4287ce5c6bfae13e888b464742d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "time": "2016-10-29 07:01:19"
         },
         {
             "name": "respect/validation",
@@ -99,52 +146,14 @@
                 "validator"
             ],
             "time": "2016-03-31 17:26:10"
-        },
-        {
-            "name": "vanilla/htmlawed",
-            "version": "v1.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vanilla/htmlawed.git",
-                "reference": "7c717dc95b62a69d8c6757ea61410d080891496b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vanilla/htmlawed/zipball/7c717dc95b62a69d8c6757ea61410d080891496b",
-                "reference": "7c717dc95b62a69d8c6757ea61410d080891496b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "tburry/pquery": "~1.0.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/Htmlawed.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Todd Burry",
-                    "email": "todd@vanillaforums.com"
-                }
-            ],
-            "description": "A composer wrapper for the htmLawed library to purify & filter HTML. Tested with PHPUnit and PhantomJS!",
-            "time": "2016-01-18 19:42:40"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bcosca/fatfree-core": 20
+        "bcosca/fatfree-core": 20,
+        "ezyang/htmlpurifier": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

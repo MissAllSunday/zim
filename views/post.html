@@ -1,22 +1,22 @@
 <div class="row">
-	<form class="form-signin" method="POST" action="{{ @BASE }}/post/{{@boardID}}">
-	<div class="form-group">
-		<label for="postTags">{{@txt.post_tags}}</label>
-		<input type="email" class="form-control" id="postTags" placeholder="">
-	</div>
-	<div class="form-group">
-		<label for="postTitle">{{@txt.post_title}}</label>
-		<input type="text" class="form-control" id="postTitle" placeholder="">
-		<input type="hidden" name="boardID" value="{{ @boardID }}"/>
-		<check if="{{ @site.breadcrumb }}">
-		<input type="hidden" name="topicID" value="{{ @topicID }}"/>
-		</check>
-		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
-	</div>
-	<div class="form-group">
-		<div id="summernote"></div>
-	</div>
-	<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
+	<form class="form-signin" method="POST" action="{{ @BASE }}/post/598/1">
+		<div class="form-group">
+			<label for="postTags">{{@txt.post_tags}}</label>
+			<input type="text" class="form-control" name="tags" id="postTags" placeholder="">
+		</div>
+		<div class="form-group">
+			<label for="postTitle">{{@txt.post_title}}</label>
+			<input type="text" class="form-control" name="title" id="postTitle" placeholder="">
+			<input type="hidden" name="boardID" value="{{ @boardID }}"/>
+			<check if="{{ @topicID }}">
+			<input type="hidden" name="topicID" value="{{ @topicID }}"/>
+			</check>
+			<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
+		</div>
+		<div class="form-group">
+			<textarea name="body" id="summernote"></textarea>
+		</div>
+		<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
 	</form>
 
 </div>

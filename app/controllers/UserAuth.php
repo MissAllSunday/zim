@@ -79,8 +79,7 @@ class UserAuth extends Base
 			// Wanna stay for a bit?
 			if (!empty($remember))
 			{
-				$c = \Bcrypt::instance()->hash($this->userModel->name . $this->userModel->userID);
-				$f3->set('COOKIE.'. $c, $c, 60 * 60 * 24 * 7);
+				$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->userModel->userID, 60 * 60 * 24 * 7);
 			}
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
@@ -96,9 +95,7 @@ class UserAuth extends Base
 
 	function doLogout(\Base $f3, $params)
 	{
-		$c = \Bcrypt::instance()->hash($this->userModel->name . $this->userModel->userID);
-
-		$f3->clear('COOKIE.'. $c);
+		$f3->clear('COOKIE.'. md5($f3->get('site.title')));
 		$this->userModel->reset();
 		$f3->clear('SESSION');
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');

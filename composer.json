@@ -7,6 +7,6 @@
 	"require": {
 		"bcosca/fatfree-core": "dev-master",
 		"respect/validation": "^0.9.1",
-		"vanilla/htmlawed": "~1.0"
+		"ezyang/htmlpurifier": "dev-master"
 	}
 }

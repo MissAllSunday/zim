@@ -43,7 +43,7 @@ class Config
 		$this->f3->set('site.customCSS', []);
 
 		// If theres an cookie, set the session.
-		$c = md5($this->f3->get('site.title');
+		$c = md5($this->f3->get('site.title'));
 
 		if ($this->f3->exists('COOKIE.'. $c))
 			$f3->set('SESSION.user', $this->f3->exists('COOKIE.'. $c));

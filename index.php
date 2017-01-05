@@ -31,13 +31,14 @@ $f3->route(array(
 
 // Posting.
 $f3->route(array(
-	'POST|GET /post/@boardID/@topicID [sync]',
-	'POST|GET /post/@boardID [sync]',
+	'GET|POST /post/@boardID/@topicID [sync]',
+	'GET|POST /post/@boardID [sync]',
 ),'\Controllers\Post->create');
 
 // Preview.
 $f3->route(array(
 	'GET /post/@boardID/@topicID [ajax]',
+	'GET /post/@boardID [ajax]',
 ),'\Controllers\Post->preview');
 
 // Forum.

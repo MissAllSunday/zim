@@ -128,5 +128,13 @@ class Tools
 		}
 
 		return $str;
-}
+	}
+
+	function sanitize($str = '')
+	{
+		$config = \HTMLPurifier_Config::createDefault();
+		$purifier = new \HTMLPurifier();
+
+		return $purifier->purify($str);
+	}
 }
