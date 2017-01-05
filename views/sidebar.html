@@ -1,16 +1,5 @@
 <div class="row">
-	<h1>
-		<a href="{{@BASE}}">
-			<check if="{{ @currentUser.userID &&  @currentUser.avatar }}">
-				<true>
-					<img src="{{@currentUser.avatar}}" alt="{{@currentUser.name}}" title="{{@currentUser.name}}" class="img-responsive img-thumbnail pull-right">
-				</true>
-				<false>
-					<img src="https://missallsunday.com/suki/me.php" alt="{{@site.title}}" title="{{@site.title}}" class="img-responsive img-thumbnail pull-right">
-				</false>
-			</check>
-		</a>
-	</h1>
+
 </div>
 <div class="row text-right">
 	<ul class="list-unstyled text-uppercase">

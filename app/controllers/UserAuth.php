@@ -29,10 +29,12 @@ class UserAuth extends Base
 
 		$error = [];
 
+		// Token check.
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
 			$error[] = 'bad_token';
 
-		if ($f3->get('POST.captcha')!= $f3->get('SESSION.captcha_code'))
+		// Captcha check.
+		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
 			$error[] = 'bad_captcha';
 
 		// Bot check.
@@ -42,6 +44,7 @@ class UserAuth extends Base
 		// Set the needed vars.
 		$email = $f3->get('POST.email');
 		$passwd = $f3->get('POST.password');
+		$remember = $f3->get('POST.remember');
 
 		// Check the POST fields.
 		if (empty($email))
@@ -73,6 +76,13 @@ class UserAuth extends Base
 		{
 			$f3->set('SESSION.user', $this->userModel->userID);
 
+			// Wanna stay for a bit?
+			if (!empty($remember))
+			{
+				$c = \Bcrypt::instance()->hash($this->userModel->name . $this->userModel->userID);
+				$f3->set('COOKIE.'. $c, $c, 60 * 60 * 24 * 7);
+			}
+
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
 		}
@@ -86,8 +96,10 @@ class UserAuth extends Base
 
 	function doLogout(\Base $f3, $params)
 	{
-		// Do some other stuff. Like setting a cookie for example...
+		$c = \Bcrypt::instance()->hash($this->userModel->name . $this->userModel->userID);
 
+		$f3->clear('COOKIE.'. $c);
+		$this->userModel->reset();
 		$f3->clear('SESSION');
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
 		$f3->reroute('/');
