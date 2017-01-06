@@ -29,7 +29,7 @@ class Post extends Auth
 		]);
 
 		// The board and topic IDs are tricky...
-		$boardID = ($f3->exists('SESSION.posting.boardID') ? $f3->get('SESSION.posting.tags') : (!empty($params['boardID']) ? $params['boardID'] : 0));
+		$boardID = ($f3->exists('SESSION.posting.boardID') ? $f3->get('SESSION.posting.boardID') : (!empty($params['boardID']) ? $params['boardID'] : 0));
 		$topicID = ($f3->exists('SESSION.posting.topicID') ? $f3->get('SESSION.posting.topic') : (!empty($params['topicID']) ? $params['topicID'] : 0));
 
 		$f3->mset([
@@ -107,11 +107,12 @@ class Post extends Auth
 	protected function checkBoard($id = 0)
 	{
 		// Check that the board really exists.
-		if (!$this->modelBoard->findone(array('boardID = ?', $id)))
+		if (!$this->boardModel->findone(array('boardID = ?', $id)))
 		{
-			\Flash::instance()->addMessage($f3->get('txt.invalid_board'), 'danger');
+			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_board'), 'danger');
+			$this->boardModel->reset();
 
-			return $f3->reroute('/');
+			return \Base::instance()->reroute('/');
 		}
 	}
 
@@ -120,9 +121,10 @@ class Post extends Auth
 		// Check that the topic really exists.
 		if (!$this->topicModel->findone(array('topicID = ?', $id)))
 		{
-			\Flash::instance()->addMessage($f3->get('txt.invalid_topic'), 'danger');
+			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_topic'), 'danger');
+			$this->topicModel->reset();
 
-			return $f3->reroute('/');
+			return \Base::instance()->reroute('/');
 		}
 	}
 }
