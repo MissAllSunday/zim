@@ -76,7 +76,7 @@ class Post extends Auth
 				$errors[] = 'empty_'. $k;
 
 		// Clean up the tags.
-		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags'), 'alpha') : '';
+		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags')) : '';
 
 		// Lets take five shall we?
 		if (!empty($errors))
@@ -96,7 +96,6 @@ class Post extends Auth
 			$this->checkTopic($data['topicID']);
 
 		// All good!
-
 	}
 
 	function preview(\Base $f3, $params)

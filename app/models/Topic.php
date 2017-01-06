@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class User extends \DB\SQL\Mapper
+class Topic extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{

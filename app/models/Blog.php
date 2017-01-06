@@ -7,8 +7,6 @@ class Blog extends \DB\SQL\Mapper
 	function __construct(\DB\SQL $db)
 	{
 		parent::__construct($db, 'suki_c_message');
-
-		$this->topicModel = new \Models\Topic($db);
 	}
 
 	function entries($params = [])
@@ -58,7 +56,9 @@ class Blog extends \DB\SQL\Mapper
 		if (empty($params))
 			return false;
 
+		// Need these. For reasons!
 		$f3 = \Base::instance();
+		$topicModel = new \Models\Topic($f3->get('DB'));
 
 		// Set some defaults.
 		$defaults = [
@@ -89,25 +89,25 @@ class Blog extends \DB\SQL\Mapper
 		// Is a reply?
 		if (!empty($params['topicID']))
 		{
-			$topicInfo = $this->topicModel->load(['topicID = ?', $params['topicID']]);
+			$topicInfo = $topicModel->load(['topicID = ?', $params['topicID']]);
 
-			$this->topicModel->lmsgID = $this->msgID;
+			$topicModel->lmsgID = $this->msgID;
 		}
 
 		// No? then create it.
-		$this->topicModel->fmsgID = $this->msgID;
-		$this->topicModel->lmsgID = $this->msgID;
+		$topicModel->fmsgID = $this->msgID;
+		$topicModel->lmsgID = $this->msgID;
 		$this->topicMode->boardID = $this->boardID;
-		$this->topicModel->solved = 0;
+		$topicModel->solved = 0;
 
 		// Done.
-		$this->topicModel->save();
+		$topicModel->save();
 
 		// Now that we have the message ID, create the slug.
 		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $this->msgID;
 
 		// And update the topic.
-		$this->topicID = $this->topicModel->topicID;
+		$this->topicID = $topicModel->topicID;
 
 		// Save again.
 		$this->save();
