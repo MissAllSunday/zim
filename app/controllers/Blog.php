@@ -68,8 +68,8 @@ class Blog extends Base
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
 		$f3->set('site.breadcrumb', [
-			['url' => 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']], 
-			['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''), 'active' => true], 
+			['url' => 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
+			['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''), 'active' => true],
 		]);
 
 		$f3->set('content','single.html');

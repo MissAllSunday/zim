@@ -48,4 +48,57 @@ class Blog extends \DB\SQL\Mapper
 			ORDER BY msgID DESC
 			LIMIT :start, :limit', $params);
 	}
+
+	function createEntry($params = [])
+	{
+		$this->reset();
+
+		if (empty($params))
+			return false;
+
+		$f3 = \Base::instance();
+
+		// Set some defaults.
+		$defaults = [
+			'msgTime' => time(),
+			'boardID' => 0,
+			'topicID' => 0,
+			'approved' => 1,
+			'userID' => 0,
+			'userName' => 'Guest',
+			'userIP' => $f3->get('IP'),
+			'title' => '',
+			'body' => '',
+			'tags' => '',
+			'url' => '',
+		];
+
+		$params = array_merge($defaults, $params);
+
+		// Clean up the tags.
+		$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
+
+		foreach($params as $k => $v)
+			$this->{$k} = $v;
+
+		// Save.
+		$this->save();
+
+		// Now that we have the message ID, create the slug.
+		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $this->msgID;
+
+		// And save again.
+		$this->save();
+
+		// Is this a new topic?
+		if (empty($params['topicID']))
+		{
+
+		}
+
+		// No? then update its info.
+
+		// Return the newly created msg ID.
+		return $this->msgID;
+	}
 }
