@@ -45,8 +45,8 @@ Wait for something to happen...',
 	'post_tags' => 'Tags',
 
 	// Posting errors.
-	'empty_title' => 'A title is required',
-	'empty_body' => 'You kinda need to type something...',
-	'invalid_board' => 'The board you requested doesn\'t exists.',
-	'invalid_topic' => 'The topic you requested doesn\'t exists.'
+	'error_empty_title' => 'A title is required',
+	'error_empty_body' => 'You kinda need to type something...',
+	'error_invalid_board' => 'The board you requested doesn\'t exists.',
+	'error_invalid_topic' => 'The topic you requested doesn\'t exists.'
 ];

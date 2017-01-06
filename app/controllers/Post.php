@@ -5,7 +5,6 @@ namespace Controllers;
 class Post extends Auth
 {
 	protected $_fields = [
-		'tags' => 'string',
 		'title' => 'string',
 		'body' => 'string',
 		'boardID' => 'int',
@@ -72,8 +71,7 @@ class Post extends Auth
 				$errors[] = 'empty_'. $k;
 
 		// Clean up the tags.
-		if(!empty($data['tags']))
-			$data['tags'] = $f3->get('Tools')->commaSeparated($data['tags'], 'alpha');
+		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags'), 'alpha') : '';
 
 		// Lets take five shall we?
 		if (!empty($errors))
