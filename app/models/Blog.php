@@ -7,6 +7,8 @@ class Blog extends \DB\SQL\Mapper
 	function __construct(\DB\SQL $db)
 	{
 		parent::__construct($db, 'suki_c_message');
+
+		$this->topicModel = new \Models\Topic($db);
 	}
 
 	function entries($params = [])
@@ -84,21 +86,33 @@ class Blog extends \DB\SQL\Mapper
 		// Save.
 		$this->save();
 
+		// Is a reply?
+		if (!empty($params['topicID']))
+		{
+			$topicInfo = $this->topicModel->load(['topicID = ?', $params['topicID']]);
+
+			$this->topicModel->lmsgID = $this->msgID;
+		}
+
+		// No? then create it.
+		$this->topicModel->fmsgID = $this->msgID;
+		$this->topicModel->lmsgID = $this->msgID;
+		$this->topicMode->boardID = $this->boardID;
+		$this->topicModel->solved = 0;
+
+		// Done.
+		$this->topicModel->save();
+
 		// Now that we have the message ID, create the slug.
 		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $this->msgID;
 
-		// And save again.
+		// And update the topic.
+		$this->topicID = $this->topicModel->topicID;
+
+		// Save again.
 		$this->save();
 
-		// Is this a new topic?
-		if (empty($params['topicID']))
-		{
-
-		}
-
-		// No? then update its info.
-
-		// Return the newly created msg ID.
-		return $this->msgID;
+		// Return the newly msg obj.
+		return $this;
 	}
 }
