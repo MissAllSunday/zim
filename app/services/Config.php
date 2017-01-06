@@ -15,7 +15,8 @@ class Config
 		$this->f3->set('DB', new \DB\SQL(
 			$this->f3->get('_db.type') .':host='. $this->f3->get('_db.host') .';port='. $this->f3->get('_db.port') .';dbname='. $this->f3->get('_db.name') .'',
 			$this->f3->get('_db.user'),
-			$this->f3->get('_db.password')
+			$this->f3->get('_db.password'),
+			[\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4;']
 		));
 
 		$this->f3->mset([
