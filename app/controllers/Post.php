@@ -4,6 +4,7 @@ namespace Controllers;
 
 class Post extends Auth
 {
+	// Required fields.
 	protected $_fields = [
 		'title' => 'string',
 		'body' => 'string',
@@ -15,6 +16,7 @@ class Post extends Auth
 	{
 		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
 		$this->topicModel = new \DB\SQL\Mapper(\Base::instance()->get('DB'),'suki_c_topic');
+		$this->boardModel = new \Models\Board(\Base::instance()->get('DB'));
 	}
 
 	function post(\Base $f3, $params)
@@ -37,9 +39,12 @@ class Post extends Auth
 
 		$f3->clear('SESSION.posting');
 
-		// Check we got a valid boardID
+		// Check that the board really exists.
+		$this->checkBoard($boardID);
 
-		// And a topic if needed.
+		// If theres a topic ID, make sure it really exists...
+		if (!empty($topicID))
+			$this->checkTopic($topicID);
 
 		// We need these for the editor stuff!
 		$f3->push('site.customJS', 'summernote.min.js');
@@ -84,24 +89,40 @@ class Post extends Auth
 		}
 
 		// Check that the board really exists.
-		if (!$this->model->findone(array('boardID = ?', $data['boardID'])));
-		{
-			\Flash::instance()->addMessage($f3->get('txt.invalid_board'), 'danger');
-
-			return $f3->reroute('/');
-		}
+		$this->checkBoard($data['boardID']);
 
 		// If theres a topic ID, make sure it really exists...
-		if (!empty($data['topicID']) && !$this->model->findone(array('topicID = ?', $data['topicID'])));
-		{
-			\Flash::instance()->addMessage($f3->get('txt.invalid_topic'), 'danger');
+		if (!empty($data['topicID']))
+			$this->checkTopic($data['topicID']);
 
-			return $f3->reroute('/');
-		}
+		// All good!
+
 	}
 
 	function preview(\Base $f3, $params)
 	{
 
+	}
+
+	protected function checkBoard($id = 0)
+	{
+		// Check that the board really exists.
+		if (!$this->modelBoard->findone(array('boardID = ?', $id)))
+		{
+			\Flash::instance()->addMessage($f3->get('txt.invalid_board'), 'danger');
+
+			return $f3->reroute('/');
+		}
+	}
+
+	protected function checkTopic($id = 0)
+	{
+		// Check that the topic really exists.
+		if (!$this->topicModel->findone(array('topicID = ?', $id)))
+		{
+			\Flash::instance()->addMessage($f3->get('txt.invalid_topic'), 'danger');
+
+			return $f3->reroute('/');
+		}
 	}
 }
