@@ -11,7 +11,7 @@ class Auth
 
 		// Get current user data.
 		$this->userModel = new \Models\User($f3->get('DB'));
-		$f3->set('currentUser', ($f3->exists('SESSION.user') ? $this->userModel->load(array('userID' => $f3->get('SESSION.user')))));
+		$f3->set('currentUser', $this->userModel->load(array('userID' => $f3->get('SESSION.user'))));
 		$this->userModel->reset();
 	}
 }

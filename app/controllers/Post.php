@@ -5,10 +5,11 @@ namespace Controllers;
 class Post extends Auth
 {
 	protected $_fields = [
-		'tags',
-		'title',
-		'body',
-		'boardID',
+		'tags' => 'string',
+		'title' => 'string',
+		'body' => 'string',
+		'boardID' => 'int',
+		'topicID' => 'int',
 	];
 
 	function __construct()
@@ -20,6 +21,22 @@ class Post extends Auth
 	function post(\Base $f3, $params)
 	{
 		// If theres SESSION data, use that.
+		$f3->mset([
+			'post_tags' => ($f3->exists('SESSION.posting.tags') ? $f3->get('SESSION.posting.tags') : ''),
+			'post_title' => ($f3->exists('SESSION.posting.title') ? $f3->get('SESSION.posting.title') : ''),
+			'post_body' => ($f3->exists('SESSION.posting.body') ? $f3->get('SESSION.posting.body') : ''),
+		]);
+
+		// The board and topic IDs are tricky...
+		$boardID = ($f3->exists('SESSION.posting.boardID') ? $f3->get('SESSION.posting.tags') : (!empty($params['boardID']) ? $params['boardID'] : 0));
+		$topicID = ($f3->exists('SESSION.posting.topicID') ? $f3->get('SESSION.posting.topic') : (!empty($params['topicID']) ? $params['topicID'] : 0));
+
+		$f3->mset([
+			'post_boardID' => $boardID,
+			'post_topicID' => $topicID,
+		]);
+
+		$f3->clear('SESSION.posting');
 
 		// Check we got a valid boardID
 
@@ -69,7 +86,7 @@ class Post extends Auth
 		}
 
 		// Check that the board really exists.
-		if (!$this->model->findone(array('userID = ?', $id));
+		if (!$this->model->findone(array('boardID = ?', $data['boardID'])));
 		{
 			\Flash::instance()->addMessage($f3->get('txt.invalid_board'), 'danger');
 
@@ -77,6 +94,12 @@ class Post extends Auth
 		}
 
 		// If theres a topic ID, make sure it really exists...
+		if (!empty($data['topicID']) && !$this->model->findone(array('topicID = ?', $data['topicID'])));
+		{
+			\Flash::instance()->addMessage($f3->get('txt.invalid_topic'), 'danger');
+
+			return $f3->reroute('/');
+		}
 	}
 
 	function preview(\Base $f3, $params)
