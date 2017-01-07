@@ -11,7 +11,7 @@
 	<repeat group="{{ @comments }}" value="{{ @item }}">
 		<hr>
 		<check if="{{ @item.msgID != @entryInfo.fmsgID }}">
-		<h2>{{ @item.title }}
+		<h2 id="msg{{@item.msgID}}">{{ @item.title }}
 			<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
 		</h2>
 		</check>

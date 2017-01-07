@@ -24,10 +24,12 @@ class Blog extends \DB\SQL\Mapper
 		]);
 	}
 
-	function entryInfo($id = 0)
+	function entryInfo($id = 0, $limit = 10)
 	{
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl
+			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, (SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE topicID  = t.topicID) as max_count
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
@@ -37,7 +39,18 @@ class Blog extends \DB\SQL\Mapper
 				':topic' => $id,
 			], 600);
 
-		return $r[0];
+		// No associative array.
+		$r = $r[0];
+
+		// Build the last msg url if needed.
+		if ($r['max_count'] > $limit)
+			$r['url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
+
+		// No? then just build an anchor tag.
+		else
+			$r['url'] = $r['url'] . '#msg'. $r['msgID'];
+
+		return $r;
 	}
 
 	function single($params = [])
@@ -80,10 +93,10 @@ class Blog extends \DB\SQL\Mapper
 		$params = array_merge($defaults, $params);
 
 		// Clean up the tags.
-		$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
+		if (!empty($params['tags']))
+			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
 
-		foreach($params as $k => $v)
-			$this->{$k} = $v;
+		$this->copyFrom($params);
 
 		// Save.
 		$this->save();
