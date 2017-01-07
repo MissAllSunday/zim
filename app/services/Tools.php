@@ -18,16 +18,13 @@ class Tools
 		$str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
 
 		// @todo build an admin setting for this.
-		$defaults = array(
+		$options = array(
 			'delimiter' => '-',
 			'limit' => 250,
 			'lowercase' => true,
 			'replacements' => array(),
 			'transliterate' => false,
 		);
-
-		// Merge options
-		$options = array_merge($defaults, $options);
 
 		$char_map = array(
 			// Latin

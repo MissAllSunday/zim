@@ -102,6 +102,11 @@ class Post extends Auth
 		if (!empty($data['topicID']))
 			$this->checkTopic($data['topicID']);
 
+		// Fill up the user data.
+		$data['userID'] = $f3->get('currentUser')->userID;
+		$data['userName'] = $f3->get('currentUser')->name;
+		$data['userEmail'] = $f3->get('currentUser')->userEmail;
+
 		// All good!
 		$newEntry =  $this->model->createEntry($data);
 

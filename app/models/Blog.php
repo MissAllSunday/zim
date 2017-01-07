@@ -66,8 +66,6 @@ class Blog extends \DB\SQL\Mapper
 
 	function createEntry($params = [])
 	{
-		$this->reset();
-
 		if (empty($params))
 			return false;
 
@@ -110,22 +108,26 @@ class Blog extends \DB\SQL\Mapper
 		}
 
 		// No? then create it.
-		$topicModel->fmsgID = $this->msgID;
-		$topicModel->lmsgID = $this->msgID;
-		$this->topicMode->boardID = $this->boardID;
-		$topicModel->solved = 0;
+		else
+		{
+			$topicModel->fmsgID = $this->msgID;
+			$topicModel->lmsgID = $this->msgID;
+			$this->topicModel->boardID = $this->boardID;
+			$topicModel->solved = 0;
+		}
 
 		// Done.
 		$topicModel->save();
 
 		// Now that we have the message ID, create the slug.
-		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $topicModel->topicID;
+		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID .'#'. $this->msgID;
 
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;
 
 		// Save again.
 		$this->save();
+		$this->reset();
 
 		// Return the newly msg obj.
 		return $this;
