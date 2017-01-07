@@ -19,22 +19,23 @@ $(function() {
 		nextHide.hide();
 
 	// Summernote.
-	$('#summernote').summernote({
-		minHeight: 200,
-		popover: {
-			image: [
-				['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-				['float', ['floatLeft', 'floatRight', 'floatNone', 'imageAttributes', 'imageShape']],
-				['remove', ['removeMedia']]
-			],
-		},
-		lang: 'en-US',
-		toolbar: [
-			['para', ['style', 'ul', 'ol', 'paragraph']],
-			['insert', ['picture', 'link', 'table', 'hr']],
-			['height', ['height']],
-			['misc', ['undo', 'redo', 'help']],
-			['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
-		]
-	});
+	if (typeof $.summernote !== 'undefined')
+		$('#summernote').summernote({
+			minHeight: 200,
+			popover: {
+				image: [
+					['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+					['float', ['floatLeft', 'floatRight', 'floatNone', 'imageAttributes', 'imageShape']],
+					['remove', ['removeMedia']]
+				],
+			},
+			lang: 'en-US',
+			toolbar: [
+				['para', ['style', 'ul', 'ol', 'paragraph']],
+				['insert', ['picture', 'link', 'table', 'hr']],
+				['height', ['height']],
+				['misc', ['undo', 'redo', 'help']],
+				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
+			]
+		});
 });
