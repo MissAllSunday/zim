@@ -44,7 +44,6 @@ class Blog extends Base
 
 		// Get the entry Info.
 		$entryInfo = $this->model->entryInfo($id);
-		$entryInfo = $entryInfo[0];
 
 		$f3->set('entryInfo', $entryInfo);
 

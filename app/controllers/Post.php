@@ -96,6 +96,15 @@ class Post extends Auth
 			$this->checkTopic($data['topicID']);
 
 		// All good!
+		$newEntry =  $this->model->createEntry($data);
+
+		// Get the entry info.
+		$topicInfo = $this->model->entryInfo($newEntry->topicID);
+
+		\Flash::instance()->addMessage($f3->get('txt.post_done'), 'success');
+
+		// Reroute.
+		return $f3->reroute('/'. $entryInfo['url']);
 	}
 
 	function preview(\Base $f3, $params)

@@ -43,6 +43,7 @@ Wait for something to happen...',
 	'post_preview' => 'Preview',
 	'post_title' => 'Title',
 	'post_tags' => 'Tags',
+	'post_done' => 'Your message was successfully posted. Let us feast upon such magnificent achievement!',
 
 	// Posting errors.
 	'error_empty_title' => 'A title is required',

@@ -26,7 +26,7 @@ class Blog extends \DB\SQL\Mapper
 
 	function entryInfo($id = 0)
 	{
-		return $this->db->exec('
+		$r = $this->db->exec('
 			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
@@ -36,6 +36,8 @@ class Blog extends \DB\SQL\Mapper
 			LIMIT 1', [
 				':topic' => $id,
 			], 600);
+
+		return $r[0];
 	}
 
 	function single($params = [])
@@ -104,7 +106,7 @@ class Blog extends \DB\SQL\Mapper
 		$topicModel->save();
 
 		// Now that we have the message ID, create the slug.
-		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $this->msgID;
+		$this->url = $f3->get('Tools')->slug($this->title) .'-'. $topicModel->topicID;
 
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;

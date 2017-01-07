@@ -47,6 +47,6 @@ class Config
 		$c = md5($this->f3->get('site.title'));
 
 		if ($this->f3->exists('COOKIE.'. $c))
-			$f3->set('SESSION.user', $this->f3->exists('COOKIE.'. $c));
+			$this->f3->set('SESSION.user', $this->f3->exists('COOKIE.'. $c));
 	}
 }

@@ -1,9 +1,11 @@
 <div class="row">
 	<form class="form-signin" method="POST" action="{{ @BASE }}/post">
-		<div class="form-group">
-			<label for="postTags">{{@txt.post_tags}}</label>
-			<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @post_tags }}">
-		</div>
+		<check if="{{ @post_topicID  == 0}}">
+			<div class="form-group">
+				<label for="postTags">{{@txt.post_tags}}</label>
+				<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @post_tags }}">
+			</div>
+		</check>
 		<div class="form-group">
 			<label for="postTitle">{{@txt.post_title}}</label>
 			<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @post_title }}">
