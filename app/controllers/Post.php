@@ -44,7 +44,14 @@ class Post extends Auth
 
 		// If theres a topic ID, make sure it really exists...
 		if (!empty($topicID))
+		{
 			$this->checkTopic($topicID);
+
+			$topicInfo = $this->model->entryInfo($topicID);
+
+			if ($f3->get('post_title') == '')
+				$f3->set('post_title', $f3->get('txt.re'). $topicInfo['title']);
+		}
 
 		// We need these for the editor stuff!
 		$f3->push('site.customJS', 'summernote.min.js');

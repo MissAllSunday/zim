@@ -7,6 +7,7 @@ return [
 	'first' => 'First',
 	'last' => 'Last',
 	'greet' => 'Hello there {0} one!',
+	're' => 'Re: ',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',
