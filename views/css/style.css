@@ -26,6 +26,8 @@ body {
 	transition: all 200ms ease-out;
 	cursor: pointer;
 	position: relative;
+	max-width: 480px;
+	max-height: 270px;
 }
 
 /* imgur gifv */

@@ -188,4 +188,23 @@ class Tools
 		return round($bytes, 2) . ($showUnits ? ' ' . $units[$pow] : '');
 	}
 
+	public function parser($str = '')
+	{
+		$regex = '~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>  | <\/a>  ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix';
+
+		return preg_replace_callback(
+			$regex,
+			function ($matches)
+			{
+				if (!empty($matches) && !empty($matches[1]))
+				{
+					$params = urlencode(json_encode(['video_id' => $matches[1], 'title' => '']));
+
+					return '<div class="oharaEmbed youtube" data-ohara_youtube="'. $params .'" id="oh_youtube_'. $matches[1] .'"></div>';
+				}
+			},
+			$str
+		);
+	}
+
 }
