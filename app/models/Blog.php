@@ -37,7 +37,7 @@ class Blog extends \DB\SQL\Mapper
 			ORDER BY m.msgID DESC
 			LIMIT 1', [
 				':topic' => $id,
-			], 600);
+			]);
 
 		// No associative array.
 		$r = $r[0];
