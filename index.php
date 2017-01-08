@@ -73,6 +73,11 @@ $f3->route(array(
 	'GET /login',
 ),'\Controllers\UserAuth->loginPage');
 
+// pseudo-crons.
+$f3->route(array(
+	'GET /cron',
+),'\Controllers\Cron->init');
+
 // JS and Css minification.
 $f3->route('GET /minify/@type',
 	function($f3, $args)

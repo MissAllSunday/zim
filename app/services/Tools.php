@@ -206,5 +206,4 @@ class Tools
 			$str
 		);
 	}
-
 }
