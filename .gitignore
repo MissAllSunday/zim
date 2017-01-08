@@ -28,6 +28,7 @@
 *.sqlite
 *.session
 *.cfg
+*.ini
 
 # OS generated files #
 ######################
