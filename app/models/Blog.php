@@ -89,6 +89,9 @@ class Blog extends \DB\SQL\Mapper
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
 
+		// Be nice.
+		$params['body'] = $f3->get('Tools')->sanitize($f3->get('Tools')->parser($params['body']));
+
 		$this->copyFrom($params);
 
 		// Save.
