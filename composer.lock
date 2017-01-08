@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7075023cc8bbd1fb95d265e7a66716fa",
-    "content-hash": "cdfaa16884a7339439781ac73edb89a9",
+    "hash": "ddec7765de8228f9f9a27caab0bae165",
+    "content-hash": "d6d962d67bf2d044e9c78628fbf4db39",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "3c5792767add91cb933e2a30360598a92676fbef"
+                "reference": "25d76740d52738976dcc8a9aa1e3e59cef967dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/3c5792767add91cb933e2a30360598a92676fbef",
-                "reference": "3c5792767add91cb933e2a30360598a92676fbef",
+                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/25d76740d52738976dcc8a9aa1e3e59cef967dcb",
+                "reference": "25d76740d52738976dcc8a9aa1e3e59cef967dcb",
                 "shasum": ""
             },
             "require": {
@@ -36,7 +36,7 @@
             ],
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
-            "time": "2017-01-01 01:12:30"
+            "time": "2017-01-08 01:44:03"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -86,66 +86,64 @@
             "time": "2016-10-29 07:01:19"
         },
         {
-            "name": "respect/validation",
-            "version": "0.9.8",
+            "name": "simplepie/simplepie",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Respect/Validation.git",
-                "reference": "7d978d64e33e522b060ef82d1d41c39e60f28959"
+                "url": "https://github.com/simplepie/simplepie.git",
+                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/7d978d64e33e522b060ef82d1d41c39e60f28959",
-                "reference": "7d978d64e33e522b060ef82d1d41c39e60f28959",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/2a24b6e74aa9bf33243020f52895fe77efe94ccf",
+                "reference": "2a24b6e74aa9bf33243020f52895fe77efe94ccf",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "egulias/email-validator": "~1.2",
-                "malkusch/bav": "~1.0",
-                "phpunit/phpunit": "~4.0",
-                "symfony/validator": "~2.6.9",
-                "zendframework/zend-validator": "~2.3"
+                "phpunit/phpunit": "~4 || ~5"
             },
             "suggest": {
-                "egulias/email-validator": "Strict (RFC compliant) email validation",
-                "ext-bcmath": "Arbitrary Precision Mathematics",
-                "ext-mbstring": "Multibyte String Functions",
-                "malkusch/bav": "German bank account validation",
-                "symfony/validator": "Use Symfony validator through Respect\\Validation",
-                "zendframework/zend-validator": "Use Zend Framework validator through Respect\\Validation"
+                "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.9-dev"
-                }
-            },
             "autoload": {
-                "psr-4": {
-                    "Respect\\Validation\\": "library/"
+                "psr-0": {
+                    "SimplePie": "library"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD Style"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Respect/Validation Contributors",
-                    "homepage": "https://github.com/Respect/Validation/graphs/contributors"
+                    "name": "Ryan Parman",
+                    "homepage": "http://ryanparman.com/",
+                    "role": "Creator, alumnus developer"
+                },
+                {
+                    "name": "Geoffrey Sneddon",
+                    "homepage": "http://gsnedders.com/",
+                    "role": "Alumnus developer"
+                },
+                {
+                    "name": "Ryan McCue",
+                    "email": "me@ryanmccue.info",
+                    "homepage": "http://ryanmccue.info/",
+                    "role": "Developer"
                 }
             ],
-            "description": "The most awesome validation engine ever created for PHP",
-            "homepage": "http://respect.li",
+            "description": "A simple Atom/RSS parsing library for PHP",
+            "homepage": "http://simplepie.org/",
             "keywords": [
-                "respect",
-                "validation",
-                "validator"
+                "atom",
+                "feeds",
+                "rss"
             ],
-            "time": "2016-03-31 17:26:10"
+            "time": "2016-11-27 01:39:18"
         }
     ],
     "packages-dev": [],

@@ -6,6 +6,7 @@
 	},
 	"require": {
 		"bcosca/fatfree-core": "dev-master",
-		"ezyang/htmlpurifier": "dev-master"
+		"ezyang/htmlpurifier": "dev-master",
+		"simplepie/simplepie": "1.4.3"
 	}
 }
