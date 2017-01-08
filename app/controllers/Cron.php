@@ -8,6 +8,7 @@ class Blog extends Base
 	{
 		$this->f3 = \Base::instance();
 		$this->model = new \Models\Cron($this->f3->get('DB'));
+		$this->cronLogModel = new \DB\SQL\Mapper($this->f3->get('DB'),'suki_c_cronlog');
 
 		$this->simplePie = new SimplePie;
 
@@ -39,8 +40,8 @@ class Blog extends Base
 					continue;
 
 				// Keyword search??
-					if ($this->model->keywords && !$this->_keywords($this->model->keywords, $item->get_title() . ($item->get_content() !== null ? ' ' . $item->get_content() : '')))
-						continue;
+				if ($this->model->keywords && !$this->_keywords($this->model->keywords, $item->get_title() . ($item->get_content() !== null ? ' ' . $item->get_content() : '')))
+					continue;
 		}
 	}
 
