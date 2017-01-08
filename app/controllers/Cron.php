@@ -24,6 +24,7 @@ class Blog extends Base
 		if ($this->simplePie->error())
 			return false;
 
+		$blogModel = $this->model = new \Models\Blog($this->f3->get('DB'));
 		$itemCount = 0;
 		$getItems = $rss_data->get_items();
 		krsort($getItems);
@@ -49,6 +50,14 @@ class Blog extends Base
 			if (!$this->cronLogModel->dry())
 				continue;
 
+			$params = [
+				'boardID' => $this->model->boardID,
+				'topicID' => ($this->model->topicID ?: 0),
+				'userID' => $this->model->userID,
+				'userName' => $this->model->userName,
+				'userIP' => '127.0.0.0',
+			];
+
 			// Start setting some values.
 			$feedTitle = $this->simplePie->get_title() !== null ? $this->simplePie->get_title() : '';
 			$body = $item->get_content() !== null ? $item->get_content() : $item->get_title();
@@ -64,6 +73,8 @@ class Blog extends Base
 			// Might have to update the subject for the single topic people
 			$params['title'] = ($this->model->topicPrefix) ? $this->model->topicPrefix . ' ' : '') . ($this->model->singleTopic && !$this->model->topicID && !empty($feedTitle) ? $feedTitle : $title);
 
+			$blogModel->createEntry($data);
+			$blogModel->reset();
 		}
 	}
 
