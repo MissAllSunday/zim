@@ -72,6 +72,14 @@ class Blog extends Base
 			$body = $item->get_content() !== null ? $item->get_content() : $item->get_title();
 			$title = $item->get_title();
 
+			// These should be set as callbacks but I don't care!
+			if($this->f3->exists('CRON.spoilerReference') && $path = stristr($body, $this->f3->get('CRON.spoilerReference'), true))
+				$body = $path;
+
+			// Is this an op topic?
+			if (strpos($title, $this->f3->get('CRON.opFeed')) !== false)
+				$body = $this->f3->get('txt.opLogo'). $body;
+
 			$params['body'] =
 	($item->get_permalink() !== null ? '<a href="' . $item->get_permalink() . '">' . $title . '</a>' : $title) . '
 	' . ($item->get_date() !== null ? '<strong>' . $item->get_date() . '</strong>
