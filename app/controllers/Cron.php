@@ -45,10 +45,19 @@ class Blog extends Base
 				continue;
 
 			// Check if this item has already been posted.
+			$hash = md5($item->get_title());
 			$this->cronLogModel->reset();
-			$this->cronLogModel->load(['hash = ?', md5($item->get_title())])
+			$this->cronLogModel->load(['hash = ?', $hash])
 			if (!$this->cronLogModel->dry())
 				continue;
+
+			// No? then log it.
+			else
+			{
+				$this->cronLogModel->hash = $hash;
+				$this->cronLogModel->save();
+				$this->cronLogModel->reset();
+			}
 
 			$params = [
 				'boardID' => $this->model->boardID,
@@ -84,7 +93,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing. @todo log it. How? I dunno...
-		if ($this->model->dry())
+		if ($this->model->dry() || !$this->model->enbled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -98,7 +107,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry())
+		if ($this->model->dry() || !$this->model->enbled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -112,7 +121,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry())
+		if ($this->model->dry() || !$this->model->enbled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
