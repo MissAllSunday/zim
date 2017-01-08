@@ -101,7 +101,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing. @todo log it. How? I dunno...
-		if ($this->model->dry() || !$this->model->enbled)
+		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -115,7 +115,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->model->enbled)
+		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -129,7 +129,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->model->enbled)
+		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
