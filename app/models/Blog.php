@@ -29,7 +29,7 @@ class Blog extends \DB\SQL\Mapper
 		$r = $this->db->exec('
 			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, (SELECT COUNT(*)
 				FROM suki_c_message
-				WHERE topicID  = t.topicID) as max_count
+				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
@@ -39,16 +39,11 @@ class Blog extends \DB\SQL\Mapper
 				':topic' => $id,
 			]);
 
-		// No associative array.
 		$r = $r[0];
 
-		// Build the last msg url if needed.
+		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
 			$r['url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
-
-		// No? then just build an anchor tag.
-		else
-			$r['url'] = $r['url'] . '#msg'. $r['msgID'];
 
 		return $r;
 	}
@@ -120,16 +115,12 @@ class Blog extends \DB\SQL\Mapper
 		$topicModel->save();
 
 		// Now that we have the message ID, create the slug.
-		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID .'#'. $this->msgID;
+		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID .'#msg'. $this->msgID;
 
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;
 
 		// Save again.
 		$this->save();
-		$this->reset();
-
-		// Return the newly msg obj.
-		return $this;
 	}
 }

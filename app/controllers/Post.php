@@ -108,10 +108,10 @@ class Post extends Auth
 		$data['userEmail'] = $f3->get('currentUser')->userEmail;
 
 		// All good!
-		$newEntry =  $this->model->createEntry($data);
+		$this->model->createEntry($data);
 
 		// Get the entry info.
-		$topicInfo = $this->model->entryInfo($newEntry->topicID);
+		$topicInfo = $this->model->entryInfo($this->model->topicID);
 
 		\Flash::instance()->addMessage($f3->get('txt.post_done'), 'success');
 
