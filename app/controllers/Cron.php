@@ -101,7 +101,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing. @todo log it. How? I dunno...
-		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
+		if ($this->model->dry() || !$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -115,7 +115,7 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
+		if ($this->model->dry() || !$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
@@ -129,13 +129,46 @@ class Blog extends Base
 		$this->model->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->f3->get('ENCODING')$this->model->enabled)
+		if ($this->model->dry() || !$this->model->enabled)
 			return false;
 
 		$this->simplePie->set_feed_url($this->model->url);
 
 		// Run.
 		$this->run();
+	}
+
+	function blog()
+	{
+		$doc = new DOMDocument;
+		$doc->load($this->f3->get('CRON.blogFile'));
+
+		$message = $doc->documentElement->getElementsByTagName('message')->item(0);
+
+		$news = [
+			'boardID' => $this->f3->get('CRON.blog'),
+			'topicID' => ($this->model->topicID ?: 0),
+			'userID' => $this->model->userID,
+			'userName' => $this->model->userName,
+			'userIP' => '127.0.0.0',
+		];
+
+		if (!empty($message) && is_object($message))
+		{
+			$news['title'] = $message->getElementsByTagName('title')->item(0)->nodeValue;
+			$news['body'] = $message->getElementsByTagName('body')->item(0)->nodeValue;
+			$news['tags'] = $message->getElementsByTagName('tags')->item(0)->nodeValue;
+		}
+
+		else
+			return false;
+
+		// Remove the message.
+		$doc->documentElement->removeChild($message);
+
+		// Save it.
+		$doc->saveXML();
+		$doc->save($file);
 	}
 
 	protected function _keywords($keywords, $string)
