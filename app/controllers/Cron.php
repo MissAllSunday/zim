@@ -140,25 +140,23 @@ class Blog extends Base
 
 	function blog()
 	{
+		$file = $this->f3->get('CRON.blogFile');
 		$doc = new DOMDocument;
-		$doc->load($this->f3->get('CRON.blogFile'));
+		$doc->load($file);
 
 		$message = $doc->documentElement->getElementsByTagName('message')->item(0);
 
+		if (!empty($message) && is_object($message))
 		$news = [
-			'boardID' => $this->f3->get('CRON.blog'),
-			'topicID' => ($this->model->topicID ?: 0),
-			'userID' => $this->model->userID,
-			'userName' => $this->model->userName,
+			'title' => $message->getElementsByTagName('title')->item(0)->nodeValue,
+			'body' => $message->getElementsByTagName('body')->item(0)->nodeValue,
+			'tags' => $message->getElementsByTagName('tags')->item(0)->nodeValue,
+			'boardID' => $this->f3->get('CRON.blogBoardID'),
+			'topicID' => $this->f3->get('CRON.blogTopicID'),
+			'userID' => $this->f3->get('CRON.blogUserID'),
+			'userName' => $this->f3->get('CRON.blogUserName'),
 			'userIP' => '127.0.0.0',
 		];
-
-		if (!empty($message) && is_object($message))
-		{
-			$news['title'] = $message->getElementsByTagName('title')->item(0)->nodeValue;
-			$news['body'] = $message->getElementsByTagName('body')->item(0)->nodeValue;
-			$news['tags'] = $message->getElementsByTagName('tags')->item(0)->nodeValue;
-		}
 
 		else
 			return false;
@@ -169,6 +167,8 @@ class Blog extends Base
 		// Save it.
 		$doc->saveXML();
 		$doc->save($file);
+		$blogModel->createEntry($news);
+		$blogModel->reset();
 	}
 
 	protected function _keywords($keywords, $string)
