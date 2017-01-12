@@ -4,7 +4,17 @@ html {
 }
 body {
 	margin-bottom: 60px;
+	color:#594F4F;
 }
+
+a {
+	color:#586875;
+}
+
+a:hover{
+	color:#8D9D93;
+}
+
 .footer {
 	position: absolute;
 	bottom: 0;

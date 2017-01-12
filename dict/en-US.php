@@ -8,7 +8,7 @@ return [
 	'last' => 'Last',
 	'greet' => 'Hello there {0} one!',
 	're' => 'Re: ',
-	'opLogo' => '<div class="centertext"><div itemprop="image" itemscope itemtype="//schema.org/ImageObject" class="center-block"><img src="//i.imgur.com/pmbxkUa.png" alt="One Piece" title="One Piece" class="img-responsive img-rounded center-block"><meta itemprop="url" content="//i.imgur.com/pmbxkUa.png"><meta itemprop="height" content="179" /><meta itemprop="width" content="409" /></div></div><br>'
+	'opLogo' => '<div class="centertext"><div itemprop="image" itemscope itemtype="//schema.org/ImageObject" class="center-block"><img src="//i.imgur.com/pmbxkUa.png" alt="One Piece" title="One Piece" class="img-responsive img-rounded center-block"><meta itemprop="url" content="//i.imgur.com/pmbxkUa.png"><meta itemprop="height" content="179" /><meta itemprop="width" content="409" /></div></div><br>',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',

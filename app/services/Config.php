@@ -20,7 +20,7 @@ class Config
 		));
 
 		$this->f3->mset([
-			'CACHE' => true,
+			'CACHE' => false,
 			'DEBUG' => 3,
 			'PREFIX' => 'txt.',
 			'ENCODING' => 'UTF-8',

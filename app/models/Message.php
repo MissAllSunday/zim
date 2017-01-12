@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Blog extends \DB\SQL\Mapper
+class Message extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
