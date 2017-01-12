@@ -14,9 +14,9 @@ class Post extends Auth
 
 	function __construct()
 	{
-		$this->model = new \Models\Blog(\Base::instance()->get('DB'));
-		$this->topicModel = new \DB\SQL\Mapper(\Base::instance()->get('DB'),'suki_c_topic');
-		$this->boardModel = new \Models\Board(\Base::instance()->get('DB'));
+		// Need some more goodies.
+		$this->_defaultModels[] = 'topic';
+		$this->_defaultModels[] = 'board';
 	}
 
 	function post(\Base $f3, $params)
@@ -47,7 +47,7 @@ class Post extends Auth
 		{
 			$this->checkTopic($topicID);
 
-			$topicInfo = $this->model->entryInfo($topicID);
+			$topicInfo = $this->_models['message']->entryInfo($topicID);
 
 			if ($f3->get('post_title') == '')
 				$f3->set('post_title', $f3->get('txt.re'). $topicInfo['title']);
@@ -66,7 +66,7 @@ class Post extends Auth
 	{
 		$errors = [];
 
-		$this->model->reset();
+		$this->_models['message']->reset();
 
 		// Validation and sanitization
 		$data = array_map(function($var) use($f3){
@@ -108,10 +108,10 @@ class Post extends Auth
 		$data['userEmail'] = $f3->get('currentUser')->userEmail;
 
 		// All good!
-		$this->model->createEntry($data);
+		$this->_models['message']->createEntry($data);
 
 		// Get the entry info.
-		$topicInfo = $this->model->entryInfo($this->model->topicID);
+		$topicInfo = $this->_models['message']->entryInfo($this->_models['message']->topicID);
 
 		\Flash::instance()->addMessage($f3->get('txt.post_done'), 'success');
 

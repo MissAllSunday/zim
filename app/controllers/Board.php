@@ -3,11 +3,12 @@
 namespace Controllers;
 
 
-class Board
+class Board extends Base
 {
 	function __construct()
 	{
-		$this->model = new \Models\Board(\Base::instance()->get('DB'));
+		// Need some extra stuff.
+		$this->_defaultModels[] = 'board';
 	}
 
 	function home(\Base $f3, $params)
@@ -16,14 +17,14 @@ class Board
 		$tags = explode('-', $params['name']);
 		$id = array_pop($tags);
 
-		$f3->set('boardInfo', $this->model->load(['boardID = ?', $id]));
+		$f3->set('boardInfo', $this->_models['board']->load(['boardID = ?', $id]));
 
 		$f3->set('site.metaTitle', $f3->get('boardInfo')->title);
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($f3->get('boardInfo')->description), 3600);
 
 		// Get the data.
-		$f3->set('entries', $this->model->topicList([
+		$f3->set('entries', $this->_models['board']->topicList([
 			'limit' => 10,
 			'start' => 0,
 			'board' => $f3->get('boardInfo')->boardID,
