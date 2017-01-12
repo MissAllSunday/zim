@@ -9,14 +9,12 @@ class Base
 
 	public function beforeRoute($f3)
 	{
-		$defaultModels = ['message', 'user'];
-
 		// Gotta stay classy...
 		foreach ($this->_defaultModels as $m)
 		{
 			// ...OK no....
 			$class = '\Models\\'. ucfirst($m);
-			$this->_models[$m] = new {$class}($f3->get('DB'));
+			$this->_models[$m] = new $class($f3->get('DB'));
 		}
 
 		// Get current user data. For guest currentUser will be false.

@@ -4,17 +4,11 @@ namespace Controllers;
 
 class Blog extends Base
 {
-	function __construct()
-	{
-		$f3 = \Base::instance();
-		$this->model = new \Models\Blog($f3->get('DB'));
-	}
-
 	function home(\Base $f3, $params)
 	{
 		$start = $params['page'] ? $params['page'] : 0;
 
-		$f3->set('messages', $this->model->entries([
+		$f3->set('messages',$this->_models['message']->entries([
 			'limit' => 10,
 			'start' => $start,
 			'board' => 1
@@ -43,12 +37,12 @@ class Blog extends Base
 		$id = array_pop($tags);
 
 		// Get the entry Info.
-		$entryInfo = $this->model->entryInfo($id);
+		$entryInfo =$this->_models['message']->entryInfo($id);
 
 		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
-		$single = $this->model->paginate($start, $limit, array('topicID = ?', $id));
+		$single =$this->_models['message']->paginate($start, $limit, array('topicID = ?', $id));
 
 		// The main message.
 		if (!$start)
