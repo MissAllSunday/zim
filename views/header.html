@@ -37,6 +37,13 @@
 		<meta property="og:description" content="{{ @site.description }}">
 		<meta name="theme-color" content="#222222">
 		<title itemprop="name">{{ @site.metaTitle ? @site.metaTitle : @site.title }}</title>
+		<!-- Accessibility levels -->
+		<meta itemprop="accessibilityControl" content="fullKeyboardControl">
+		<meta itemprop="accessibilityControl" content="fullMouseControl">
+		<meta itemprop="accessibilityHazard" content="noFlashing">
+		<meta itemprop="accessibilityHazard" content="noMotionSimulation">
+		<meta itemprop="accessibilityHazard" content="noSound">
+		<meta itemprop="accessibilityAPI" content="ARIA">
 		<link rel="canonical" href="{{@BASE}}" itemprop="url">
 		<link rel="contents" href="{{@BASE}}">
 		<link rel="search" href="{{@BASE}}/search">

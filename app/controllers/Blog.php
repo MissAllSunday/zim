@@ -44,9 +44,11 @@ class Blog extends Base
 		// Get the data.
 		$single = $this->_models['message']->paginate($start, $limit, array('topicID = ?', $id));
 
+		$f3->set('entry', $entryInfo);
+
 		// The main message.
 		if (!$start)
-			$f3->set('entry', array_shift($single['subset']));
+			array_shift($single['subset']);
 
 		$f3->set('comments', $single['subset']);
 

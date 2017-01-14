@@ -27,12 +27,13 @@ class Message extends \DB\SQL\Mapper
 	function entryInfo($id = 0, $limit = 10)
 	{
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, (SELECT COUNT(*)
+			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.displayName, u.avatar, u.avatarType, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE t.topicID = :topic
 			ORDER BY m.msgID DESC
 			LIMIT 1', [
