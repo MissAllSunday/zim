@@ -5,7 +5,8 @@
 			<a href="{{@BASE}}/{{@entryInfo.url}}">{{@entryInfo.title}}</a>
 			<small class="meta date">
 				<i class="glyphicon glyphicon-calendar"></i>
-				<time datetime="2015-03-26T10:43:39Z" itemprop="datePublished dateModified"> {{ '{0,date}', @entryInfo.msgTime | format }}</time></small>
+				<time datetime="{{ date('c', @entryInfo.msgTime) }}" itemprop="datePublished dateModified">{{ '{0,date,custom,%d/%m/%Y}', @entryInfo.msgTime | format }}</time>
+			</small>
 		</h1>
 		<div class="row lead" itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
