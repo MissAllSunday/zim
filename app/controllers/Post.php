@@ -116,7 +116,7 @@ class Post extends Auth
 		\Flash::instance()->addMessage($f3->get('txt.post_done'), 'success');
 
 		// Reroute.
-		return $f3->reroute('/'. $topicInfo['url']);
+		return $f3->reroute('/'. $topicInfo['last_url']);
 	}
 
 	function preview(\Base $f3, $params)

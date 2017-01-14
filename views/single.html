@@ -27,7 +27,7 @@
 				<loop from="{{ @i = 0 }}" to="{{ @i < @pag.count }}" step="{{ @i++ }}">
 					<check if="{{ @i == 0 }}">
 						<true>
-							<li id="pag_{{@i}}" class="first"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
+							<li id="pag_{{@i}}" class="first pag{{ (@i == @pag.pos ? ' active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
 						</true>
 						<false>
 							<li id="pag_{{@i}}" class="pag{{ (@i == @pag.pos ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>

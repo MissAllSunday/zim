@@ -43,7 +43,10 @@ class Message extends \DB\SQL\Mapper
 
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
-			$r['url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
+			$r['last_url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
+
+		else
+			$r['last_url'] = $r['url'] . '#msg'. $r['msgID'];
 
 		return $r;
 	}
