@@ -19,7 +19,7 @@ $(function() {
 		nextHide.hide();
 
 	// Summernote.
-	if (typeof $.summernote !== 'undefined')
+	if (typeof $.summernote !== 'undefined'){
 		$('#summernote').summernote({
 			minHeight: 200,
 			popover: {
@@ -38,4 +38,5 @@ $(function() {
 				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
 			]
 		});
+	}
 });

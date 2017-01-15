@@ -127,10 +127,10 @@ class Post extends Auth
 	protected function checkBoard($id = 0)
 	{
 		// Check that the board really exists.
-		if (!$this->boardModel->findone(array('boardID = ?', $id)))
+		if (!$this->_models['board']->findone(array('boardID = ?', $id)))
 		{
 			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_board'), 'danger');
-			$this->boardModel->reset();
+			$this->_models['board']->reset();
 
 			return \Base::instance()->reroute('/');
 		}
@@ -139,10 +139,10 @@ class Post extends Auth
 	protected function checkTopic($id = 0)
 	{
 		// Check that the topic really exists.
-		if (!$this->topicModel->findone(array('topicID = ?', $id)))
+		if (!$this->_models['topic']->findone(array('topicID = ?', $id)))
 		{
 			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_topic'), 'danger');
-			$this->topicModel->reset();
+			$this->_models['topic']->reset();
 
 			return \Base::instance()->reroute('/');
 		}
