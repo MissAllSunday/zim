@@ -20,6 +20,83 @@ $(function() {
 
 	// Summernote.
 	if (typeof $.summernote !== 'undefined'){
+		$.extend($.summernote.options,{
+			microDataImg:{
+				icon:'<i class="note-icon-pencil"/>',
+				removeEmpty:true
+			}
+		});
+		$.extend($.summernote.plugins,{
+			'microDataImg' : function (context) {
+				var self = this,
+					ui = $.summernote.ui,
+					$note = context.layoutInfo.note,
+					$editor = context.layoutInfo.editor,
+					$editable = context.layoutInfo.editable,
+					options = context.options,
+					lang = options.langInfo;
+
+				context.memo('button.microDataImg',function(){
+					var button = ui.button({
+						contents: options.microDataImg.icon,
+						tooltip: 'microDataImg',
+						click: function () {
+							context.invoke('microDataImg.show');
+						}
+					});
+					return button.render();
+				});
+				this.initialize = function(){
+					var $container = options.dialogsInBody ? $(document.body) : $editor,
+						body =
+					'<div class="form-group">' +
+					'<label>' + lang.link.url + '</label>' +
+					'<input class="note-link-imgUrl form-control" type="text" /></div>';
+					var footer = '<button href="#" class="btn btn-primary note-link-btn">' + lang.link.insert + '</button>';
+
+					this.$dialog = ui.dialog({
+						className: 'link-dialog',
+						title: lang.link.insert,
+						fade: options.dialogsFade,
+						body: body,
+						footer: footer
+					}).render().appendTo($container);
+				};
+				this.destroy = function(){
+					ui.hideDialog(this.$dialog);
+					this.$dialog.remove();
+				};
+				this.show = function(){
+					ui.showDialog(self.$dialog);
+					var $imgUrl = self.$dialog.find('.note-link-imgUrl'),
+						$editBtn= self.$dialog.find('.note-link-btn').click(function(e){
+							e.preventDefault();
+							self.buildImg($imgUrl.val());
+							return false;
+						});
+					ui.onDialogHidden(self.$dialog,function(){
+						$editBtn.off('click');
+					});
+				};
+				this.buildImg = function(imgUrl){
+					var imgDom = new Image();
+						imgDom.src = imgUrl;
+					img = $(imgDom).load(function(){
+						jQuery('<div/>', {
+							class: 'centertext',
+							itemprop: 'image',
+							itemscope: true,
+							itemtype:'ttps://schema.org/ImageObject'
+						}).append(this + '<meta itemprop="url" content="'+ this.src +'"><meta itemprop="width" content="'+ this.width +'"><meta itemprop="height" content="'+ this.height +'">');
+					}).attr({
+						class: 'img-responsive img-rounded center-block'
+					});
+					$('#summernote').summernote('insertNode', img[0]);
+					ui.hideDialog(self.$dialog);
+				};
+			}
+		});
+
 		$('#summernote').summernote({
 			minHeight: 200,
 			popover: {
@@ -32,7 +109,7 @@ $(function() {
 			lang: 'en-US',
 			toolbar: [
 				['para', ['style', 'ul', 'ol', 'paragraph']],
-				['insert', ['picture', 'link', 'table', 'hr']],
+				['insert', ['microDataImg', 'picture', 'link', 'table', 'hr']],
 				['height', ['height']],
 				['misc', ['undo', 'redo', 'help']],
 				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
