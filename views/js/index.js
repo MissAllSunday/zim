@@ -81,17 +81,19 @@ $(function() {
 				this.buildImg = function(imgUrl){
 					var imgDom = new Image();
 						imgDom.src = imgUrl;
-					img = $(imgDom).load(function(){
-						jQuery('<div/>', {
+					$(imgDom).load(function(){
+						idom = $('<div/>', {
 							class: 'centertext',
 							itemprop: 'image',
-							itemscope: true,
-							itemtype:'ttps://schema.org/ImageObject'
-						}).append(this + '<meta itemprop="url" content="'+ this.src +'"><meta itemprop="width" content="'+ this.width +'"><meta itemprop="height" content="'+ this.height +'">');
+							itemscope: '',
+							itemtype:'https://schema.org/ImageObject'
+						}).append('<meta itemprop="url" content="'+ this.src +'"><meta itemprop="width" content="'+ this.width +'"><meta itemprop="height" content="'+ this.height +'">');
+						$(this).appendTo(idom);
+
+						$('#summernote').summernote('insertNode', idom.get(0));
 					}).attr({
 						class: 'img-responsive img-rounded center-block'
 					});
-					$('#summernote').summernote('insertNode', img[0]);
 					ui.hideDialog(self.$dialog);
 				};
 			}
