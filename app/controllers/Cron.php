@@ -7,9 +7,7 @@ class Cron extends Base
 	function __construct()
 	{
 		$this->f3 = \Base::instance();
-		$this->model = new \Models\Cron($this->f3->get('DB'));
-		$this->cronLogModel = new \DB\SQL\Mapper($this->f3->get('DB'),'suki_c_cronlog');
-
+		$this->_defaultModels[] = 'cron';
 		$this->simplePie = new SimplePie;
 
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
@@ -24,7 +22,6 @@ class Cron extends Base
 		if ($this->simplePie->error())
 			return false;
 
-		$blogModel = $this->model = new \Models\Message($this->f3->get('DB'));
 		$itemCount = 0;
 		$getItems = $rss_data->get_items();
 		krsort($getItems);
@@ -33,7 +30,7 @@ class Cron extends Base
 		foreach ($get_items as $item)
 		{
 			// Do we have a cap on how many to import?
-			if ($this->model->itemLimit && $itemCount >= $this->model->itemLimit)
+			if ($this->_models['cron']->itemLimit && $itemCount >= $this->_models['cron']->itemLimit)
 				continue 1;
 
 			// If this item doesn't have a link or title, let's skip it
@@ -41,29 +38,26 @@ class Cron extends Base
 				continue;
 
 			// Keyword search??
-			if ($this->model->keywords && !$this->_keywords($this->model->keywords, $item->get_title() . ($item->get_content() !== null ? ' ' . $item->get_content() : '')))
+			if ($this->_models['cron']->keywords && !$this->_keywords($this->_models['cron']->keywords, $item->get_title() . ($item->get_content() !== null ? ' ' . $item->get_content() : '')))
 				continue;
 
 			// Check if this item has already been posted.
 			$hash = md5($item->get_title());
-			$this->cronLogModel->reset();
-			$this->cronLogModel->load(['hash = ?', $hash]);
-			if (!$this->cronLogModel->dry())
+			if ($this->_models['cron']->hash == $hash)
 				continue;
 
 			// No? then log it.
 			else
 			{
-				$this->cronLogModel->hash = $hash;
-				$this->cronLogModel->save();
-				$this->cronLogModel->reset();
+				$this->_models['cron']->hash = $hash;
+				$this->_models['cron']->hash->save();
 			}
 
 			$params = [
-				'boardID' => $this->model->boardID,
-				'topicID' => ($this->model->topicID ?: 0),
-				'userID' => $this->model->userID,
-				'userName' => $this->model->userName,
+				'boardID' => $this->_models['cron']->boardID,
+				'topicID' => ($this->_models['cron']->topicID ?: 0),
+				'userID' => $this->_models['cron']->userID,
+				'userName' => $this->_models['cron']->userName,
 				'userIP' => '127.0.0.0',
 			];
 
@@ -85,57 +79,59 @@ class Cron extends Base
 	' . ($item->get_date() !== null ? '<strong>' . $item->get_date() . '</strong>
 	' : '') . '
 	' . $body . '
-	' . (!empty($this->model->footer) ? $this->model->footer : '');
+	' . (!empty($this->_models['cron']->footer) ? $this->_models['cron']->footer : '');
 
 			// Might have to update the subject for the single topic people
-			$params['title'] = ($this->model->topicPrefix ? $this->model->topicPrefix . ' ' : '') . ($this->model->singleTopic && !$this->model->topicID && !empty($feedTitle) ? $feedTitle : $title);
+			$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . ( !$this->_models['cron']->topicID && !empty($feedTitle) ? $feedTitle : $title);
 
-			$blogModel->createEntry($data);
-			$blogModel->reset();
+			$this->_models['message']->createEntry($data);
+			$this->_models['message']->reset();
 		}
+
+		$this->_models['cron']->reset();
 	}
 
 	function github()
 	{
 		// Yes, I am THAT lazy.
-		$this->model->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing. @todo log it. How? I dunno...
-		if ($this->model->dry() || !$this->model->enabled)
+		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
 			return false;
 
-		$this->simplePie->set_feed_url($this->model->url);
+		$this->simplePie->set_feed_url($this->_models['cron']->url);
 
 		// Run.
-		$this->run();
+		$this->init();
 	}
 
 	function manga()
 	{
-		$this->model->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->model->enabled)
+		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
 			return false;
 
-		$this->simplePie->set_feed_url($this->model->url);
+		$this->simplePie->set_feed_url($this->_models['cron']->url);
 
 		// Run.
-		$this->run();
+		$this->init();
 	}
 
 	function spoiler()
 	{
-		$this->model->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
 
 		// Theres no such thing.
-		if ($this->model->dry() || !$this->model->enabled)
+		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
 			return false;
 
-		$this->simplePie->set_feed_url($this->model->url);
+		$this->simplePie->set_feed_url($this->_models['cron']->url);
 
 		// Run.
-		$this->run();
+		$this->init();
 	}
 
 	function blog()
@@ -169,8 +165,8 @@ class Cron extends Base
 		// Save it.
 		$doc->saveXML();
 		$doc->save($file);
-		$blogModel->createEntry($news);
-		$blogModel->reset();
+		$this->_models['message']->createEntry($news);
+		$this->_models['message']->reset();
 	}
 
 	protected function _keywords($keywords, $string)
