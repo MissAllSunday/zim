@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-class Blog extends Base
-
+class Cron extends Base
+{
 	function __construct()
 	{
 		$this->f3 = \Base::instance();
@@ -24,7 +24,7 @@ class Blog extends Base
 		if ($this->simplePie->error())
 			return false;
 
-		$blogModel = $this->model = new \Models\Blog($this->f3->get('DB'));
+		$blogModel = $this->model = new \Models\Message($this->f3->get('DB'));
 		$itemCount = 0;
 		$getItems = $rss_data->get_items();
 		krsort($getItems);
@@ -47,7 +47,7 @@ class Blog extends Base
 			// Check if this item has already been posted.
 			$hash = md5($item->get_title());
 			$this->cronLogModel->reset();
-			$this->cronLogModel->load(['hash = ?', $hash])
+			$this->cronLogModel->load(['hash = ?', $hash]);
 			if (!$this->cronLogModel->dry())
 				continue;
 
@@ -88,7 +88,7 @@ class Blog extends Base
 	' . (!empty($this->model->footer) ? $this->model->footer : '');
 
 			// Might have to update the subject for the single topic people
-			$params['title'] = ($this->model->topicPrefix) ? $this->model->topicPrefix . ' ' : '') . ($this->model->singleTopic && !$this->model->topicID && !empty($feedTitle) ? $feedTitle : $title);
+			$params['title'] = ($this->model->topicPrefix ? $this->model->topicPrefix . ' ' : '') . ($this->model->singleTopic && !$this->model->topicID && !empty($feedTitle) ? $feedTitle : $title);
 
 			$blogModel->createEntry($data);
 			$blogModel->reset();
@@ -124,7 +124,7 @@ class Blog extends Base
 		$this->run();
 	}
 
-	function spoilers()
+	function spoiler()
 	{
 		$this->model->load(['title = ?'], __FUNCTION__);
 
@@ -140,7 +140,7 @@ class Blog extends Base
 
 	function blog()
 	{
-		$file = $this->f3->get('CRON.blogFile');
+		$file = $this->f3->get('BASE') .'/'. $this->f3->get('CRON.blogFile');
 		$doc = new DOMDocument;
 		$doc->load($file);
 
@@ -160,6 +160,8 @@ class Blog extends Base
 
 		else
 			return false;
+
+		$this->_models['message']->createEntry($news);
 
 		// Remove the message.
 		$doc->documentElement->removeChild($message);
