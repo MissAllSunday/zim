@@ -18,7 +18,10 @@ class Base
 		}
 
 		// Get current user data. For guest currentUser will be false.
-		$f3->set('currentUser', ($f3->exists('SESSION.user') ? $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))) : null));
+		$f3->set('currentUser', ($f3->exists('SESSION.user') ? $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))) : [
+			'userID' => 0,
+			'userName' => 'guest',
+		]));
 		$this->_models['user']->reset();
 	}
 }

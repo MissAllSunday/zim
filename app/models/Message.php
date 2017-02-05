@@ -11,8 +11,11 @@ class Message extends \DB\SQL\Mapper
 
 	function entries($params = [])
 	{
-		return $this->db->exec('
-			SELECT m.msgTime, m.title, m.url
+		$f3 = \Base::instance();
+		$toLoad = [];
+
+		$entries = $this->db->exec('
+			SELECT m.msgTime, m.title, m.url, m.body, m.userID
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			WHERE t.boardID = :board
@@ -22,6 +25,19 @@ class Message extends \DB\SQL\Mapper
 			':start' => ($params['start'] * $params['limit']),
 			':board' => $params['board'],
 		]);
+
+		// Add a nice description and a real date.
+		foreach ($entries as $k => $m)
+			{
+				$entries[$k]['desc'] = $f3->get('Tools')->metaDescription($m['body'], 60);
+
+				$toLoad[] = $m['userID'];
+			}
+
+		if (!empty($toLoad))
+		{
+			$userModel = new \Models\User($f3->get('DB'));
+		}
 	}
 
 	function entryInfo($id = 0, $limit = 10)

@@ -1,7 +1,7 @@
 <include href="header.html" />
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-md-8 col-md-push-4">
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			<div class="site-main">
 				<!-- Generic alert message.  -->
 				<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
@@ -43,9 +43,6 @@
 				</check>
 				<include href="{{ @content }}" />
 			</div>
-		</div>
-		<div class="col-md-4 col-md-pull-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
-				<include href="sidebar.html" />
 		</div>
 	</div>
 </div>

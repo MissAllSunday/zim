@@ -1,7 +1,16 @@
 <repeat group="{{ @messages }}" value="{{ @item }}">
-<h2><a href="{{@BASE}}/{{ @item.url }}">{{ @item.title }}</a>
-	<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.msgTime | format }}</small>
-</h2>
+	<div class="post-preview">
+		<a href="{{@BASE}}/{{ @item.url }}">
+			<h2 class="post-title">
+				{{ @item.title }}
+			</h2>
+			<h3 class="post-subtitle">
+				{{ @item.desc }}
+			</h3>
+		</a>
+		<p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p>
+	</div>
+	<hr>
 </repeat>
 <div class="row">
 	<nav aria-label="...">

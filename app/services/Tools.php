@@ -2,11 +2,21 @@
 
 namespace Services;
 
-class Tools
+class Tools extends \Prefab
 {
 	function __construct(\Base $f3)
 	{
 		$this->f3 = $f3;
+	}
+
+	function realdate($val)
+	{
+		return date("c", $val);
+	}
+
+	function microdatadate($val)
+	{
+		return date("c", $val);
 	}
 
 	function slug($str = '')
@@ -116,7 +126,7 @@ class Tools
 
 	function metaDescription($str = '', $limit = 150)
 	{
-		$str = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($str))))));
+		$str = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($str), ENT_NOQUOTES)))));
 
 		if (strlen ($str) > $limit)
 		{

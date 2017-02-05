@@ -7,12 +7,13 @@ class Blog extends Base
 	function home(\Base $f3, $params)
 	{
 		$start = $params['page'] ? $params['page'] : 0;
-
-		$f3->set('messages', $this->_models['message']->entries([
+		$entries = $this->_models['message']->entries([
 			'limit' => 10,
 			'start' => $start,
 			'board' => 1
-		]));
+		]);
+
+		$f3->set('messages', $entries);
 
 		// Don't need no fancy pagination.
 		$f3->set('pagination', array(
