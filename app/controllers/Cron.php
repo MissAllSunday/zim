@@ -8,7 +8,11 @@ class Cron extends Base
 	{
 		$this->f3 = \Base::instance();
 		$this->_defaultModels[] = 'cron';
-		$this->simplePie = new SimplePie;
+
+		// Fake the route.
+		$this->beforeRoute($this->f3);
+
+		$this->simplePie = new \SimplePie;
 
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
 		$this->simplePie->strip_htmltags(false);
@@ -108,7 +112,7 @@ class Cron extends Base
 
 	function manga()
 	{
-		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?', __FUNCTION__]);
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
@@ -167,6 +171,7 @@ class Cron extends Base
 		$doc->save($file);
 		$this->_models['message']->createEntry($news);
 		$this->_models['message']->reset();
+		$this->_models['cron']->reset();
 	}
 
 	protected function _keywords($keywords, $string)
