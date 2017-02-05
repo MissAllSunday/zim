@@ -15,6 +15,7 @@ class Cron extends Base
 		$this->simplePie = new \SimplePie;
 
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
+		$this->simplePie->enable_cache(false);
 		$this->simplePie->strip_htmltags(false);
 	}
 
@@ -27,11 +28,11 @@ class Cron extends Base
 			return false;
 
 		$itemCount = 0;
-		$getItems = $rss_data->get_items();
+		$getItems = $this->simplePie->get_items();
 		krsort($getItems);
 
 		// Go get'em tiger!
-		foreach ($get_items as $item)
+		foreach ($getItems as $item)
 		{
 			// Do we have a cap on how many to import?
 			if ($this->_models['cron']->itemLimit && $itemCount >= $this->_models['cron']->itemLimit)
@@ -54,7 +55,7 @@ class Cron extends Base
 			else
 			{
 				$this->_models['cron']->hash = $hash;
-				$this->_models['cron']->hash->save();
+				$this->_models['cron']->save();
 			}
 
 			$params = [
