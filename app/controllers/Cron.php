@@ -141,8 +141,8 @@ class Cron extends Base
 
 	function blog()
 	{
-		$file = $this->f3->get('BASE') .'/'. $this->f3->get('CRON.blogFile');
-		$doc = new DOMDocument;
+		$file = $this->f3->get('CRON.blogFile');
+		$doc = new \DOMDocument;
 		$doc->load($file);
 
 		$message = $doc->documentElement->getElementsByTagName('message')->item(0);

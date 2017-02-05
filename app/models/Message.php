@@ -98,9 +98,6 @@ class Message extends \DB\SQL\Mapper
 
 		$this->copyFrom($params);
 
-		// Save.
-		$this->save();
-
 		// Is a reply?
 		if (!empty($params['topicID']))
 		{
@@ -114,7 +111,7 @@ class Message extends \DB\SQL\Mapper
 		{
 			$topicModel->fmsgID = $this->msgID;
 			$topicModel->lmsgID = $this->msgID;
-			$this->topicModel->boardID = $this->boardID;
+			$topicModel->boardID = $this->boardID;
 			$topicModel->solved = 0;
 		}
 
@@ -127,7 +124,7 @@ class Message extends \DB\SQL\Mapper
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;
 
-		// Save again.
+		// Save.
 		$this->save();
 	}
 }
