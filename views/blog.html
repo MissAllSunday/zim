@@ -11,12 +11,14 @@
 		</a>
 		<p class="post-meta">{{@txt.postedby}}
 				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+					<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
 					<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @item.userName | format}}">
 						<span itemprop="name">{{@item.userName}}</span>
 					</a>
 				</span>
-				{{@txt.on}} <meta itemprop="datePublished" content="{{@item.microDate}}" />{{@item.date}}</p>
-			{{@txt.on}} <meta itemprop="dateModified" content="{{@item.microDate}}" />{{@item.date}}
+				{{@txt.on}} {{@item.date}}
+				<meta itemprop="datePublished" content="{{@item.microDate}}" />
+				<meta itemprop="dateModified" content="{{@item.microDate}}" />
 		</p>
 		<span class="hidden" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
 			<a rel="author" itemprop="url" href="{{@BASE}}">
@@ -28,8 +30,8 @@
 			</span>
 		</span>
 		<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<img src="https://i.imgur.com/pmbxkUa.png"/>
-			<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
+			<img src="http://i.imgur.com/6CnW7sL.jpg"/>
+			<meta itemprop="url" content="http://i.imgur.com/6CnW7sL.jpg">
 			<meta itemprop="width" content="400">
 			<meta itemprop="height" content="175">
 		</span>

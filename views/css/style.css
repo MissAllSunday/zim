@@ -80,6 +80,10 @@ div.gifv
  .media-avatar {
 	width: 64px;
 }
+.mini-avatar {
+   width: 32px;
+}
+
 .site-main{
 	margin-left:10px;
 }
