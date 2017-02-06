@@ -31,4 +31,44 @@ class User extends \DB\SQL\Mapper
 	{
 		return $this->load(array('userEmail = ?', $email));
 	}
+
+	function loadUsers($users = [])
+	{
+		$loaded = $data = [];
+		$data = $this->db->exec('
+			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID
+			FROM suki_c_user AS t
+			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			WHERE userID IN(:users)
+			AND is_active = 1', [
+			':users' => implode(',', $users),
+		]);
+
+		if (!empty($data))
+			foreach ($data as $d)
+			{
+				# code...
+			}
+
+		return $loaded;
+	}
+
+	function generateData($user = [])
+	{
+		$data = [];
+
+		// Set a proper avatar.
+		switch ($user['avatarType'])
+		{
+			case 'value':
+				# code...
+				break;
+
+			default:
+				# code...
+				break;
+		}
+
+		return $data;
+	}
 }
