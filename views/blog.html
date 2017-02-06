@@ -1,15 +1,39 @@
 <repeat group="{{ @messages }}" value="{{ @item }}">
-	<div class="post-preview">
-		<a href="{{@BASE}}/{{ @item.url }}">
-			<h2 class="post-title">
+	<article class="post-preview" itemscope itemType="http://schema.org/BlogPosting">
+		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{ @item.url }}" />
+		<a href="{{@BASE}}/{{ @item.url }}" rel="bookmark">
+			<h2 class="post-title" itemprop="name headline">
 				{{ @item.title }}
 			</h2>
-			<h3 class="post-subtitle">
+			<h3 class="post-subtitle" itemprop="description">
 				{{ @item.desc }}
 			</h3>
 		</a>
-		<p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 24, 2014</p>
-	</div>
+		<p class="post-meta">{{@txt.postedby}}
+				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+					<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @item.userName | format}}">
+						<span itemprop="name">{{@item.userName}}</span>
+					</a>
+				</span>
+				{{@txt.on}} <meta itemprop="datePublished" content="{{@item.microDate}}" />{{@item.date}}</p>
+			{{@txt.on}} <meta itemprop="dateModified" content="{{@item.microDate}}" />{{@item.date}}
+		</p>
+		<span class="hidden" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+			<a rel="author" itemprop="url" href="{{@BASE}}">
+				<span itemprop="name">{{@site.title}}</span>
+			</a>
+			<span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+			<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
+			<meta itemprop="width" content="400"><meta itemprop="height" content="175">
+			</span>
+		</span>
+		<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			<img src="https://i.imgur.com/pmbxkUa.png"/>
+			<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
+			<meta itemprop="width" content="400">
+			<meta itemprop="height" content="175">
+		</span>
+	</article>
 	<hr>
 </repeat>
 <div class="row">

@@ -93,14 +93,14 @@ $f3->route('GET /captcha',
 		$img->render();
 	});
 
-// Identicon
-$f3->route('GET /identicon/@u',
+// Generic identicon
+$f3->route('GET /identicon/@str',
 	function($f3, $args)
 	{
 		$img = new \Image();
-		$str = isset($args['u']) ? $f3->get('Tools')->slug($f3->get('Tools')->sanitize($args['u'])) : $f3->get('Tools')->randomWord());
-		$img->identicon($args['u']);
+		$img->identicon(\Web::instance()->slug($f3->clean($args['str'])));
 		$img->render('jpeg',NULL,90);
+		unset($img);
 	},
 	3600*24
 );

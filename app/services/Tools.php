@@ -9,12 +9,12 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
-	function realdate($val)
+	function realDate($val)
 	{
-		return date("c", $val);
+		return date("F t, Y", $val);
 	}
 
-	function microdatadate($val)
+	function microdataDate($val)
 	{
 		return date("c", $val);
 	}

@@ -46,9 +46,7 @@ class User extends \DB\SQL\Mapper
 
 		if (!empty($data))
 			foreach ($data as $d)
-			{
-				# code...
-			}
+				$loaded[$d['userID']] = $d;
 
 		return $loaded;
 	}

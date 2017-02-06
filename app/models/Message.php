@@ -12,12 +12,13 @@ class Message extends \DB\SQL\Mapper
 	function entries($params = [])
 	{
 		$f3 = \Base::instance();
-		$toLoad = [];
+		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.body, m.userID
+			SELECT m.msgTime, m.title, m.url, m.body, m.userID, u.avatar, u.userName
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE t.boardID = :board
 			ORDER BY m.msgID DESC
 			LIMIT :start, :limit', [
@@ -30,14 +31,11 @@ class Message extends \DB\SQL\Mapper
 		foreach ($entries as $k => $m)
 			{
 				$entries[$k]['desc'] = $f3->get('Tools')->metaDescription($m['body'], 60);
-
-				$toLoad[] = $m['userID'];
+				$entries[$k]['date'] = $f3->get('Tools')->realDate($m['msgTime']);
+				$entries[$k]['microDate'] =  $f3->get('Tools')->microdataDate($m['msgTime']);
 			}
 
-		if (!empty($toLoad))
-		{
-			$userModel = new \Models\User($f3->get('DB'));
-		}
+			return $entries;
 	}
 
 	function entryInfo($id = 0, $limit = 10)
