@@ -59,14 +59,14 @@
 						<span class="sr-only">Toggle navigation</span>
 						Menu <i class="fa fa-bars"></i>
 					</button>
-					<a class="navbar-brand" href="{{BASE}}">{{ @txt.greet, @currentUser.userName | format}}</a>
+					<a class="navbar-brand" href="#">{{ @txt.greet, @currentUser.userName | format}}</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="{{@BASE}}">Home</a>
+							<a href="{{@BASE}}/board/one-piece-3">{{@txt.onepiece}}</a>
 						</li>
 						<check if="{{ !@currentUser.userID }}">
 						<li>
@@ -84,16 +84,16 @@
 		</nav>
 
 		<!-- Page Header -->
-	    <header class="intro-header" style="background-image: url('{{@BASE}}/views/img/home-bg.jpg')">
-	        <div class="container">
-	            <div class="row">
-	                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-	                    <div class="site-heading">
-	                        <h1>{{@site.title}}</h1>
-	                        <hr class="small">
-	                        <span class="subheading">Because reasons!</span>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </header>
+	<header class="intro-header" style="background-image: url('{{@BASE}}/views/img/home-bg.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="site-heading">
+						<h1><a href="{{@BASE}}">{{@site.title}}</a></h1>
+						<hr class="small">
+						<span class="subheading">{{ @txt.randomLines[mt_rand(0, count(@txt.randomLines) - 1)]}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>

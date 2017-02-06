@@ -84,10 +84,7 @@ div.gifv
    width: 32px;
 }
 
-.site-main{
-	margin-left:10px;
-}
-
-.site-login{
-	width:60%;
+.site-heading h1 a
+{
+	color:#fff;
 }
