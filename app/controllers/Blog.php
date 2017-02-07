@@ -28,7 +28,7 @@ class Blog extends Base
 	function single(\Base $f3, $params)
 	{
 		// Values for pagination.
-		$start = $params['page'] ? $params['page'] : 0;
+		$start = (int) $params['page'] ?: 0;
 		$limit = 10;
 
 		// Ugly, I know...
@@ -43,23 +43,22 @@ class Blog extends Base
 		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
-		$comments = $this->_models['message']->single([
+		$f3->set('comments', $this->_models['message']->single([
 			':topic' => $id,
 			':start' => $start,
 			':limit' => $limit,
 			':msg' => $entryInfo['msgID']
-		]);
-
-		$f3->set('comments', $comments);
+		]));
 
 		// Build some keywords!  This should be automatically set but meh... maybe later
-		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''));
+		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''));
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));
 		$f3->set('site.description', $f3->get('Tools')->metaDescription($entryInfo['body']), 3600);
 		$f3->set('site.breadcrumb', [
 			['url' => 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
-			['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''), 'active' => true],
+			['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 		]);
+
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');

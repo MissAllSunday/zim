@@ -26,7 +26,7 @@
 				<article itemscope itemtype="http://schema.org/Comment">
 					<h3 id="msg{{@item.msgID}}">
 						<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
-						<a href="{{@item.url}}">{{ @item.title }}</a>
+						<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
 						<span class="post-meta">
 							{{@item.date}}
 						</span>
@@ -43,16 +43,16 @@
 		</div>
 	</article>
 	<div class="row">
-		<check if="{{ @pag.total >= @pag.limit }}">
+		<check if="{{@entryInfo.max_count >= @PARAMS.page }}">
 		<nav aria-label="Page navigation">
 			<ul class="pagination">
-				<loop from="{{ @i = 0 }}" to="{{ @i < @pag.count }}" step="{{ @i++ }}">
+				<loop from="{{ @i = 0 }}" to="{{ @i < @entryInfo.max_count }}" step="{{ @i++ }}">
 					<check if="{{ @i == 0 }}">
 						<true>
-							<li id="pag_{{@i}}" class="first pag{{ (@i == @pag.pos ? ' active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
+							<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@BASE}}/{{@PARAMS.title}}">{{@txt.first}}</a></li>
 						</true>
 						<false>
-							<li id="pag_{{@i}}" class="pag{{ (@i == @pag.pos ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>
+							<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@PARAMS.title}}/page/{{@i}}">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>
 						</false>
 					</check>
 				</loop>

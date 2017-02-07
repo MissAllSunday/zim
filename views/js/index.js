@@ -1,4 +1,5 @@
 $(function() {
+
 	// highlight.js
 	hljs.configure({
 		tabReplace: '    ',

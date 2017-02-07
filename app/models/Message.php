@@ -76,9 +76,11 @@ class Message extends \DB\SQL\Mapper
 	{
 		$f3 = \Base::instance();
 		$data = [];
+		$page = $params[':start'];
+		$params[':start'] = $params[':start'] * $params[':limit'];
 
 		$data = $this->db->exec('
-			SELECT m.topicID, m.body, m.title, m.url, m.msgTime, u.userID, u.userName, u.avatar
+			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, u.userID, u.userName, u.avatar
 			FROM suki_c_message AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
@@ -88,6 +90,9 @@ class Message extends \DB\SQL\Mapper
 
 		foreach ($data as $k => $v)
 		{
+			if (!empty($page))
+				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
+
 			$data[$k]['date'] = $f3->get('Tools')->realDate($v['msgTime']);
 			$data[$k]['microDate'] =  $f3->get('Tools')->microdataDate($v['msgTime']);
 		}
