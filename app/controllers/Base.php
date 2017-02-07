@@ -23,6 +23,9 @@ class Base
 			'userName' => 'Guest',
 			'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
 		]));
+
+		// Is it a bot? fill it up for registered users too to avoid checking for its existance.
+		$f3->set('currentUser.isBot', ($f3->exists('SESSION.user') ? false : \Audit::instance()->isbot()));
 		$this->_models['user']->reset();
 	}
 }
