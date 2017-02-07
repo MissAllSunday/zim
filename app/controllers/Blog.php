@@ -55,7 +55,7 @@ class Blog extends Base
 		{
 			$comments[$k]['date'] = $f3->get('Tools')->realDate($c['msgTime']);
 			$comments[$k]['microDate'] =  $f3->get('Tools')->microdataDate($c['msgTime']);
-		}var_dump($comments);
+		}
 		$f3->set('comments', $comments);
 
 		// Yeah.. I'm lazy so...

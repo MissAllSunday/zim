@@ -17,15 +17,18 @@ class Base
 			$this->_models[$m] = new $class($f3->get('DB'));
 		}
 
-		// Get current user data. For guest currentUser will be false.
-		$f3->set('currentUser', ($f3->exists('SESSION.user') ? $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))) : [
+		// Get current user data.
+		$currentUser = $f3->exists('SESSION.user') ? $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))) : [
 			'userID' => 0,
 			'userName' => 'Guest',
 			'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
-		]));
+		];
 
-		// Is it a bot? fill it up for registered users too to avoid checking for its existance.
-		$f3->set('currentUser.isBot', ($f3->exists('SESSION.user') ? false : \Audit::instance()->isbot()));
+		$currentUser = (object) $currentUser;
+
+		$currentUser->isBot = \Audit::instance()->isbot();
+
+		$f3->set('currentUser', $currentUser);
 		$this->_models['user']->reset();
 	}
 }

@@ -1,9 +1,9 @@
-		<footer>
+		<footer class="footer">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<ul class="list-inline text-center">
-							<check if="{{ !@currentUser.isBot }}">
+							<check if="{{ !@currentUser->isBot }}">
 								<li>
 									<a href="mailto:suki@missallsunday.com">
 										<span class="fa-stack fa-lg">
@@ -29,8 +29,10 @@
 									</span>
 								</a>
 							</li>
+							<li class="copyright text-muted">
+								Copyright &copy; Jessica González {{date('Y')}}
+							</li>
 						</ul>
-						<p class="copyright text-muted">Copyright &copy; Jessica González {{date('Y')}}</p>
 					</div>
 				</div>
 			</div>
