@@ -80,16 +80,19 @@ class Message extends \DB\SQL\Mapper
 		$params[':start'] = $params[':start'] * $params[':limit'];
 
 		$data = $this->db->exec('
-			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, u.userID, u.userName, u.avatar
+			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_message AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
 				AND msgID != :msg
-			ORDER BY msgID ASC
+			ORDER BY msgID DESC
 			LIMIT :start, :limit', $params);
 
 		foreach ($data as $k => $v)
 		{
+			if (empty($v['avatar']))
+				$data[$k]['avatar'] = $f3->get('BASE') .'/identicon/'. $v['userName'];
+
 			if (!empty($page))
 				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
 
