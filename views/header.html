@@ -54,7 +54,7 @@
 		<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header page-scroll">
+				<div class="navbar-header page-scroll bg-link">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
 						Menu <i class="fa fa-bars"></i>
@@ -64,7 +64,7 @@
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right bg-link">
 						<li>
 							<a href="{{@BASE}}/board/one-piece-3">{{@txt.onepiece}}</a>
 						</li>
@@ -84,14 +84,14 @@
 		</nav>
 
 		<!-- Page Header -->
-	<header class="intro-header" style="background-image: url('{{@BASE}}/views/img/home-bg.jpg')">
+	<header class="intro-header" style="background-image: url('{{@BASE}}/background')">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<div class="site-heading">
 						<h1><a href="{{@BASE}}">{{@site.title}}</a></h1>
 						<hr class="small">
-						<span class="subheading">{{ @txt.randomLines[mt_rand(0, count(@txt.randomLines) - 1)]}}</span>
+						<span class="subheading bg-link">{{ @txt.randomLines[mt_rand(0, count(@txt.randomLines) - 1)]}}</span>
 					</div>
 				</div>
 			</div>

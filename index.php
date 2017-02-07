@@ -105,6 +105,24 @@ $f3->route('GET /identicon/@str',
 	3600*24
 );
 
+// Background
+$f3->route('GET /background',
+	function($f3, $args)
+	{
+		$bg = md5('bg'. $f3->get('site.title'));
+		if (!$f3->exists('COOKIE.'. $bg))
+		{
+			$f3->set('COOKIE.'. $bg, rand(1, 24), 259200);
+		}
+
+		$file = $f3->get('UI') .'img/'. $f3->get('COOKIE.'. $bg) .'.jpg';
+
+		header('Content-Type: image/jpeg');
+		echo $f3->read($file);
+	},
+	259200
+);
+
 // Crons.
 Cron::instance();
 

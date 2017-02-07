@@ -11,15 +11,7 @@
 		<div class="row lead" itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
 		</div>
-		<span class="hidden" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-			<a rel="author" itemprop="url" href="{{@BASE}}">
-				<span itemprop="name">{{@site.title}}</span>
-			</a>
-			<span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-			<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
-			<meta itemprop="width" content="400"><meta itemprop="height" content="175">
-			</span>
-		</span>
+		{{@txt.microData.publisher | raw}}
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @entryInfo.displayName | format}}">
 				<span itemprop="name">{{@entryInfo.displayName}}</span>

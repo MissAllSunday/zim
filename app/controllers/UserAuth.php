@@ -12,7 +12,7 @@ class UserAuth extends Base
 	function loginPage(\Base $f3, $params)
 	{
 		// Already logged come on...
-		if ($f3->exists('currentUser'))
+		if ($f3->get('currentUser.userID'))
 			return $f3->reroute('/');
 
 		// Set the needed metatags stuff.
@@ -24,7 +24,7 @@ class UserAuth extends Base
 	function doLogin(\Base $f3, $params)
 	{
 		// Already logged come on...
-		if ($f3->exists('currentUser'))
+		if ($f3->get('currentUser.userID'))
 			return $f3->reroute('/');
 
 		$error = [];

@@ -81,10 +81,11 @@ div.gifv
 	width: 64px;
 }
 .mini-avatar {
-   width: 32px;
+	width: 32px;
 }
 
-.site-heading h1 a
+.bg-link a, .site-heading h1 a, .site-heading h2, span.bg-link
 {
 	color:#fff;
+	text-shadow: 0 1px grey, 0 1px grey, 1px 0 grey, 0 -1px grey;
 }

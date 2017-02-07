@@ -131,4 +131,23 @@ Wait for something to happen...',
 		'Hey, maybe you should write a book',
 		'Why is it pretty girls think they can treat people like crap and get away with it?'
 	],
+
+	// Structured data stuff.
+	'microData' => [
+		'publisher' => '<span class="hidden" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+		<a rel="author" itemprop="url" href="{{@BASE}}">
+			<span itemprop="name">{{@site.title}}</span>
+		</a>
+		<span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+		<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
+		<meta itemprop="width" content="400"><meta itemprop="height" content="175">
+		</span>
+	</span>',
+		'image' => '<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			<img src="http://i.imgur.com/6CnW7sL.jpg"/>
+			<meta itemprop="url" content="http://i.imgur.com/6CnW7sL.jpg">
+			<meta itemprop="width" content="400">
+			<meta itemprop="height" content="175">
+		</span>',
+	],
 ];
