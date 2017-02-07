@@ -20,7 +20,7 @@
 				<meta itemprop="datePublished" content="{{@item.microDate}}" />
 				<meta itemprop="dateModified" content="{{@item.microDate}}" />
 		</p>
-		{{@txt.microData.publisher | raw}}
+		{{@txt.microData.publisher,  @BASE, @item.userName | format,raw}}
 		{{@txt.microData.image | raw}}
 	</article>
 	<hr>

@@ -134,17 +134,17 @@ Wait for something to happen...',
 
 	// Structured data stuff.
 	'microData' => [
-		'publisher' => '<span class="hidden" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-		<a rel="author" itemprop="url" href="{{@BASE}}">
-			<span itemprop="name">{{@site.title}}</span>
+		'publisher' => '<span class="hidden" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+		<a rel="author" itemprop="url" href="{0}">
+			<span itemprop="name">{1}</span>
 		</a>
-		<span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+		<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
 		<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
 		<meta itemprop="width" content="400"><meta itemprop="height" content="175">
 		</span>
 	</span>',
 		'image' => '<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<img src="http://i.imgur.com/6CnW7sL.jpg"/>
+			<img src="https://i.imgur.com/6CnW7sL.jpg"/>
 			<meta itemprop="url" content="http://i.imgur.com/6CnW7sL.jpg">
 			<meta itemprop="width" content="400">
 			<meta itemprop="height" content="175">
