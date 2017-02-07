@@ -44,7 +44,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.userName, u.avatar, (SELECT COUNT(*)
+			SELECT m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.userName, u.avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -64,7 +64,7 @@ class Message extends \DB\SQL\Mapper
 			$r['last_url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
 
 		else
-			$r['last_url'] = $r['url'] . '#msg'. $r['msgID'];
+			$r['last_url'] = $r['url'];
 
 		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
 		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
@@ -74,13 +74,25 @@ class Message extends \DB\SQL\Mapper
 
 	function single($params = [])
 	{
-		return $this->db->exec('
-			SELECT topicID, body, title, url, tags, msgTime
-			FROM suki_c_message
+		$f3 = \Base::instance();
+		$data = [];
+
+		$data = $this->db->exec('
+			SELECT m.topicID, m.body, m.title, m.url, m.msgTime, u.userID, u.userName, u.avatar
+			FROM suki_c_message AS m
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
 				AND msgID != :msg
-			ORDER BY msgID DESC
+			ORDER BY msgID ASC
 			LIMIT :start, :limit', $params);
+
+		foreach ($data as $k => $v)
+		{
+			$data[$k]['date'] = $f3->get('Tools')->realDate($v['msgTime']);
+			$data[$k]['microDate'] =  $f3->get('Tools')->microdataDate($v['msgTime']);
+		}
+
+		return $data;
 	}
 
 	function createEntry($params = [])

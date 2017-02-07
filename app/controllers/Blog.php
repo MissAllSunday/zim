@@ -43,26 +43,14 @@ class Blog extends Base
 		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
-		$single = $this->_models['message']->paginate($start, $limit, array('topicID = ?', $id));
+		$comments = $this->_models['message']->single([
+			':topic' => $id,
+			':start' => $start,
+			':limit' => $limit,
+			':msg' => $entryInfo['msgID']
+		]);
 
-		// The main message.
-		if (!$start)
-			array_shift($single['subset']);
-
-		$comments = $single['subset'];
-
-		foreach ($comments as $k => $c)
-		{
-			$comments[$k]['date'] = $f3->get('Tools')->realDate($c['msgTime']);
-			$comments[$k]['microDate'] =  $f3->get('Tools')->microdataDate($c['msgTime']);
-		}
 		$f3->set('comments', $comments);
-
-		// Yeah.. I'm lazy so...
-		unset($single['subset']);
-
-		// Pass the rest of the info.
-		$f3->set('pag', $single);
 
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $single['pos']) : ''));

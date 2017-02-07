@@ -16,31 +16,31 @@
 				<meta itemprop="datePublished" content="{{@entryInfo.microDate}}" />
 				<meta itemprop="dateModified" content="{{@entryInfo.microDate}}" />
 		</p>
-		<div class="row lead" itemprop="articleBody">
+		<hr>
+		<div class="row" itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
 		</div>
-		<hr>
-		<repeat group="{{ @comments }}" value="{{ @item }}">
-		<section class="row">
-			<check if="{{ @item.msgID != @entryInfo.fmsgID }}">
-			<article itemscope itemtype="http://schema.org/Comment">
-				<h3 id="msg{{@item.msgID}}">
-					<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
-					{{ @item.title }}
-					<span class="post-meta">
-						{{@item.date}}
-					</span>
-				</h2>
-				<meta itemprop="datePublished" content="{{@item.microDate}}" />
-				<meta itemprop="dateModified" content="{{@item.microDate}}" />
-				<div class="row" itemprop="text">
-					{{ @item.body | raw }}
-				</div>
-			</article>
-			</check>
-			<hr>
-		</section>
-		</repeat>
+		<div class="row comments">
+			<repeat group="{{ @comments }}" value="{{ @item }}">
+			<section>
+				<article itemscope itemtype="http://schema.org/Comment">
+					<h3 id="msg{{@item.msgID}}">
+						<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
+						<a href="{{@item.url}}">{{ @item.title }}</a>
+						<span class="post-meta">
+							{{@item.date}}
+						</span>
+					</h3>
+					<hr>
+					<meta itemprop="datePublished" content="{{@item.microDate}}" />
+					<meta itemprop="dateModified" content="{{@item.microDate}}" />
+					<div itemprop="text">
+						{{ @item.body | raw }}
+					</div>
+				</article>
+			</section>
+			</repeat>
+		</div>
 	</article>
 	<div class="row">
 		<check if="{{ @pag.total >= @pag.limit }}">
