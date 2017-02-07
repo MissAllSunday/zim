@@ -40,8 +40,11 @@ class Message extends \DB\SQL\Mapper
 
 	function entryInfo($id = 0, $limit = 10)
 	{
+		$f3 = \Base::instance();
+		$r = [];
+
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.displayName, u.avatar, u.avatarType, (SELECT COUNT(*)
+			SELECT m.msgID, m.msgTime, m.title, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.userName, u.avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -62,6 +65,9 @@ class Message extends \DB\SQL\Mapper
 
 		else
 			$r['last_url'] = $r['url'] . '#msg'. $r['msgID'];
+
+		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
+		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
 
 		return $r;
 	}

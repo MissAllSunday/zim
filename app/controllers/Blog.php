@@ -49,7 +49,14 @@ class Blog extends Base
 		if (!$start)
 			array_shift($single['subset']);
 
-		$f3->set('comments', $single['subset']);
+		$comments = $single['subset'];
+
+		foreach ($comments as $k => $c)
+		{
+			$comments[$k]['date'] = $f3->get('Tools')->realDate($c['msgTime']);
+			$comments[$k]['microDate'] =  $f3->get('Tools')->microdataDate($c['msgTime']);
+		}var_dump($comments);
+		$f3->set('comments', $comments);
 
 		// Yeah.. I'm lazy so...
 		unset($single['subset']);

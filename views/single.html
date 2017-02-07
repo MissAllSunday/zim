@@ -1,38 +1,44 @@
 <main aria-label="Main content" itemscope itemtype="http://schema.org/Blog">
 	<article itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting" class="col-md-10 col-md-offset-1">
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{@entryInfo.url}}" />
-		<h1 itemprop="name headline">
-			<a href="{{@BASE}}/{{@entryInfo.url}}">{{@entryInfo.title}}</a>
-			<small class="meta date">
-				<i class="glyphicon glyphicon-calendar"></i>
-				<time datetime="{{ date('c', @entryInfo.msgTime) }}" itemprop="datePublished dateModified">{{ '{0,date,custom,%d/%m/%Y}', @entryInfo.msgTime | format }}</time>
-			</small>
-		</h1>
+			<h2 class="post-title" itemprop="name headline">
+				<a href="{{@BASE}}/{{@entryInfo.url}}" rel="bookmark">{{@entryInfo.title}}</a>
+			</h2>
+		</a>
+		<p class="post-meta">{{@txt.postedby}}
+				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+					<img src="{{@entryInfo.avatar}}" alt="{{@txt.view_profile, @entryInfo.userName | format}}" class="img-circle mini-avatar">
+					<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @entryInfo.userName | format}}">
+						<span itemprop="name">{{@entryInfo.userName}}</span>
+					</a>
+				</span>
+				{{@txt.on}} {{@entryInfo.date}}
+				<meta itemprop="datePublished" content="{{@entryInfo.microDate}}" />
+				<meta itemprop="dateModified" content="{{@entryInfo.microDate}}" />
+		</p>
 		<div class="row lead" itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
 		</div>
-		{{@txt.microData.publisher | raw}}
-		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
-			<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @entryInfo.displayName | format}}">
-				<span itemprop="name">{{@entryInfo.displayName}}</span>
-			</a>
-		</span>
+		<hr>
 		<repeat group="{{ @comments }}" value="{{ @item }}">
 		<section class="row">
-			<hr>
 			<check if="{{ @item.msgID != @entryInfo.fmsgID }}">
 			<article itemscope itemtype="http://schema.org/Comment">
-				<h2 id="msg{{@item.msgID}}">{{ @item.title }}
-					<small class="meta date">
-						<i class="glyphicon glyphicon-calendar"></i>
-						<time datetime="2015-01-26T16:55:03Z" itemprop="dateCreated">{{ '{0,date}', @item.msgTime | format }}</time>
-					</small>
+				<h3 id="msg{{@item.msgID}}">
+					<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
+					{{ @item.title }}
+					<span class="post-meta">
+						{{@item.date}}
+					</span>
 				</h2>
-				</check>
+				<meta itemprop="datePublished" content="{{@item.microDate}}" />
+				<meta itemprop="dateModified" content="{{@item.microDate}}" />
 				<div class="row" itemprop="text">
 					{{ @item.body | raw }}
 				</div>
 			</article>
+			</check>
+			<hr>
 		</section>
 		</repeat>
 	</article>
