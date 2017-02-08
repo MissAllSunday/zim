@@ -15,7 +15,7 @@ class Message extends \DB\SQL\Mapper
 		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.body, m.userID, u.avatar, u.userName
+			SELECT m.msgTime, m.title, m.url, m.body, m.userID, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -33,6 +33,9 @@ class Message extends \DB\SQL\Mapper
 				$entries[$k]['desc'] = $f3->get('Tools')->metaDescription($m['body'], 60);
 				$entries[$k]['date'] = $f3->get('Tools')->realDate($m['msgTime']);
 				$entries[$k]['microDate'] =  $f3->get('Tools')->microdataDate($m['msgTime']);
+
+				if (empty($m['avatar']))
+					$entries[$k]['avatar'] = $f3->get('BASE') .'/identicon/'. $m['userName'];
 			}
 
 			return $entries;
@@ -44,7 +47,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, u.userID, u.userName, u.avatar, (SELECT COUNT(*)
+			SELECT m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -68,6 +71,9 @@ class Message extends \DB\SQL\Mapper
 
 		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
 		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
+
+		if (empty($r['avatar']))
+			$r['avatar'] = $f3->get('BASE') .'/identicon/'. $r['userName'];
 
 		return $r;
 	}
