@@ -1,5 +1,9 @@
 $(function() {
 
+	// Tooltip
+	 $('[data-toggle="tooltip"]').tooltip();
+
+
 	// highlight.js
 	hljs.configure({
 		tabReplace: '    ',

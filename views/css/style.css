@@ -106,6 +106,9 @@ div.gifv
 .mini-avatar {
 	width: 32px;
 }
+span.board_date {
+	font-weight: 600;
+}
 
 .bg-link a, .site-heading h1 a, .site-heading h2, span.bg-link
 {

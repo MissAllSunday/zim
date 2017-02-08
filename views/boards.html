@@ -6,20 +6,21 @@
 				<div class="media panel-body">
 					<div class="media-left media-middle">
 						<a href="#">
-							<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-avatar">
+							<img src="{{@item.avatar}}" class="media-avatar">
 						</a>
 					</div>
 					<div class="media-body">
 						<h2 class="media-heading">
-							<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
+							<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a> <span class="board_date" data-toggle="tooltip" data-placement="top" title="{{@item.date}}">{{@txt.postedby}} {{@item.userName}}</span>
 						</h2>
 					<h4>
-						Last message: <a href="{{@BASE}}/{{@item.last_url}}">{{ @item.last_title }}</a>
-						<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{ '{0,date}', @item.last_msgTime | format }}</small>
+						{{@txt.lastmessage}} <img src="{{@item.last_avatar}}" class="mini-avatar img-circle"><a href="{{@BASE}}/{{@item.last_url}}">{{ @item.last_title }}</a>
+						<small class="meta date"><i class="glyphicon glyphicon-calendar"></i> {{@item.last_date}}</small>
 					</h4>
 					</div>
 				</div>
 			</div>
+			<hr>
 		</repeat>
 	</div>
 </div>
