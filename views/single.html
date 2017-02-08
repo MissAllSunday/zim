@@ -1,5 +1,5 @@
 <main aria-label="Main content" itemscope itemtype="http://schema.org/Blog">
-	<article itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting" class="col-md-10 col-md-offset-1">
+	<article itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{@entryInfo.url}}" />
 			<h2 class="post-title" itemprop="name headline">
 				<a href="{{@BASE}}/{{@entryInfo.url}}" rel="bookmark">{{@entryInfo.title}}</a>
@@ -21,7 +21,7 @@
 			{{ @entryInfo.body | raw }}
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
 		</div>
-		<div class="row comments">
+		<div class="row" id="comments">
 			<repeat group="{{ @comments }}" value="{{ @item }}">
 			<section>
 				<article itemscope itemtype="http://schema.org/Comment">
@@ -42,17 +42,17 @@
 			</section>
 			</repeat>
 		</div>
-		<check if="{{@entryInfo.max_count >= @PARAMS.page }}">
+		<check if="{{@entryInfo.max_count >= @pag.limit }}">
 		<div class="row">
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
 					<loop from="{{ @i = 0 }}" to="{{ @i < @entryInfo.max_count }}" step="{{ @i++ }}">
 						<check if="{{ @i == 0 }}">
 							<true>
-								<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@BASE}}/{{@PARAMS.title}}">{{@txt.first}}</a></li>
+								<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
 							</true>
 							<false>
-								<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@PARAMS.title}}/page/{{@i}}">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>
+								<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}#comments">{{ (@i == (@pag.count - 1) ? @txt.last :  @i) }}</a></li>
 							</false>
 						</check>
 					</loop>

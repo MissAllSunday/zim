@@ -50,6 +50,10 @@ class Blog extends Base
 			':msg' => $entryInfo['msgID']
 		]));
 
+		$f3->set('pag', [
+			'start' => $start,
+			'limit' => $limit,
+		]);
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''));
 		$f3->set('site.keywords', $f3->get('Tools')->metaKeywords($tags));

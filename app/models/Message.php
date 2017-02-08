@@ -85,7 +85,7 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
 				AND msgID != :msg
-			ORDER BY msgID DESC
+			ORDER BY msgID ASC
 			LIMIT :start, :limit', $params);
 
 		foreach ($data as $k => $v)
