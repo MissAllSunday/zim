@@ -15,7 +15,7 @@ class Message extends \DB\SQL\Mapper
 		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.body, m.userID, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
+			SELECT m.msgTime, m.title, m.url, m.body, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -34,7 +34,7 @@ class Message extends \DB\SQL\Mapper
 				$entries[$k]['date'] = $f3->get('Tools')->realDate($m['msgTime']);
 				$entries[$k]['microDate'] =  $f3->get('Tools')->microdataDate($m['msgTime']);
 
-				if (empty($m['avatar']))
+				if (empty($entries[$k]['avatar']))
 					$entries[$k]['avatar'] = $f3->get('BASE') .'/identicon/'. $m['userName'];
 			}
 
