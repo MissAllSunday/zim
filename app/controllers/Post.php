@@ -26,7 +26,6 @@ class Post extends Base
 	{
 		// Check for permissions and that stuff.
 
-
 		// The board and topic IDs are tricky...
 		$this->_fields = array_merge($this->_fields, $params);
 
@@ -44,7 +43,7 @@ class Post extends Base
 		// If theres a topic ID, make sure it really exists...
 		if (!empty($this->_fields['topicID']))
 		{
-			$this->checkTopic($topicID);
+			$this->checkTopic($this->_fields['topicID']);
 
 			$topicInfo = $this->_models['message']->entryInfo($this->_fields['topicID']);
 
@@ -78,7 +77,7 @@ class Post extends Base
 
 		// Captcha.
 		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
-			$error[] = 'bad_captcha';
+			$errors[] = 'bad_captcha';
 
 		// Token check.
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
@@ -105,7 +104,7 @@ class Post extends Base
 
 		// Did you provide an email? is it valid?
 		if (!empty($data['userEmail']) && !$audit->email($data['userEmail']))
-			$errors[] = 'error_bad_email';
+			$errors[] = 'bad_email';
 
 		// Clean up the tags.
 		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags')) : '';
