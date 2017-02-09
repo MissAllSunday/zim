@@ -4,6 +4,20 @@ namespace Models;
 
 class Message extends \DB\SQL\Mapper
 {
+	public static $rows = [
+		'msgTime' => 0,
+		'boardID' => 0,
+		'topicID' => 0,
+		'approved' => 1,
+		'userID' => 0,
+		'userName' => 'Guest',
+		'userIP' => '',
+		'title' => '',
+		'body' => '',
+		'tags' => '',
+		'url' => '',
+	];
+
 	function __construct(\DB\SQL $db)
 	{
 		parent::__construct($db, 'suki_c_message');
@@ -102,6 +116,9 @@ class Message extends \DB\SQL\Mapper
 			if (!empty($page))
 				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
 
+			else
+				$data[$k]['url'] .= '#msg'. $v['msgID'];
+
 			$data[$k]['date'] = $f3->get('Tools')->realDate($v['msgTime']);
 			$data[$k]['microDate'] =  $f3->get('Tools')->microdataDate($v['msgTime']);
 		}
@@ -118,29 +135,20 @@ class Message extends \DB\SQL\Mapper
 		$f3 = \Base::instance();
 		$topicModel = new \Models\Topic($f3->get('DB'));
 
-		// Set some defaults.
-		$defaults = [
-			'msgTime' => time(),
-			'boardID' => 0,
-			'topicID' => 0,
-			'approved' => 1,
-			'userID' => 0,
-			'userName' => 'Guest',
-			'userIP' => $f3->get('IP'),
-			'title' => '',
-			'body' => '',
-			'tags' => '',
-			'url' => '',
-		];
-
-		$params = array_merge($defaults, $params);
+		$params = array_merge(self::$rows, $params);
 
 		// Clean up the tags.
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
 
 		// Be nice.
-		$params['body'] = $f3->get('Tools')->sanitize($f3->get('Tools')->parser($params['body']));
+		$params = array_map(function($var) use($f3){
+			return $f3->get('Tools')->sanitize($var);
+		}, array_intersect_key(self::$rows));
+
+		// These pesky fields need to be assigned at this point and place in time!
+		$params['msgTime'] = time();
+		$params['userIP'] = $f3->ip();
 
 		$this->copyFrom($params);
 

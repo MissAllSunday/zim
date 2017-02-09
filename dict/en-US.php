@@ -51,7 +51,8 @@ Wait for something to happen...',
 	'post_preview' => 'Preview',
 	'post_title' => 'Title',
 	'post_tags' => 'Tags',
-	'post_desc' => 'Quick reply, Basic HTML tags are allowed',
+	'post_desc' => 'Quick reply, Basic HTML tags are allowed.',
+	'post_guest_desc' => 'An username and a valid email are required.',
 	'post_done' => 'Your message was successfully posted. Let us feast upon such magnificent achievement!',
 
 	// Posting errors.

@@ -5,54 +5,51 @@ namespace Controllers;
 class Post extends Base
 {
 	// Required fields.
-	protected $_fields = [
-		'title' => '',
-		'body' => '',
-		'boardID' => 0,
-		'topicID' => 0,
-		'userName' => '',
-		'userEmail' => '',
-		'tags' => '',
-	];
+	protected $_rows = [];
 
 	function __construct()
 	{
 		// Need some more goodies.
 		$this->_defaultModels[] = 'topic';
 		$this->_defaultModels[] = 'board';
+
+		// Get the default fields.
+		$this->_rows = \Models\Message::$rows;
 	}
 
 	function post(\Base $f3, $params)
 	{
 		// Check for permissions and that stuff.
 
-		// The board and topic IDs are tricky...
-		$this->_fields = array_merge($this->_fields, $params);
+		// The board and topic IDs.
+		$this->_rows = array_merge($this->_rows, $params);
+
+		// Check if we are editing.
 
 		// If theres SESSION data, use that.
 		if ($f3->exists('SESSION.posting'))
 		{
-			$this->_fields = array_merge($this->_fields, $f3->get('SESSION.posting'));
+			$this->_rows = array_merge($this->_rows, $f3->get('SESSION.posting'));
 
 			$f3->clear('SESSION.posting');
 		}
 
 		// Check that the board really exists.
-		$this->checkBoard($this->_fields['boardID']);
+		$this->checkBoard($this->_rows['boardID']);
 
 		// If theres a topic ID, make sure it really exists...
-		if (!empty($this->_fields['topicID']))
+		if (!empty($this->_rows['topicID']))
 		{
-			$this->checkTopic($this->_fields['topicID']);
+			$this->checkTopic($this->_rows['topicID']);
 
-			$topicInfo = $this->_models['message']->entryInfo($this->_fields['topicID']);
+			$topicInfo = $this->_models['message']->entryInfo($this->_rows['topicID']);
 
-			if (empty($this->_fields['title']))
-				$this->_fields['title'] =  $f3->get('txt.re') . $topicInfo['title'];
+			if (empty($this->_rows['title']))
+				$this->_rows['title'] =  $f3->get('txt.re') . $topicInfo['title'];
 		}
 
 		// All good.
-		$f3->set('posting', $this->_fields);
+		$f3->set('posting', $this->_rows);
 		$f3->set('quickReply', false);
 
 		// We need these for the editor stuff!
@@ -88,7 +85,7 @@ class Post extends Base
 		// Validation and sanitization
 		$data = array_map(function($var) use($f3){
 			return $f3->get('Tools')->sanitize($var);
-		}, array_intersect_key($f3->get('POST'), $this->_fields));
+		}, array_intersect_key($f3->get('POST'), $this->_rows));
 
 		// Check that the board really exists.
 		$this->checkBoard($data['boardID']);
