@@ -68,6 +68,7 @@ class Blog extends Base
 			'post_topicID' => $id,
 			'post_boardID' => $entryInfo['boardID'],
 			'post_quickReply' => true,
+			'post_title' =>  $f3->get('txt.re'). $entryInfo['title'],
 		]);
 
 

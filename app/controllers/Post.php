@@ -2,14 +2,17 @@
 
 namespace Controllers;
 
-class Post extends Auth
+class Post extends Base
 {
 	// Required fields.
 	protected $_fields = [
-		'title' => 'string',
-		'body' => 'string',
-		'boardID' => 'int',
-		'topicID' => 'int',
+		'title' => '',
+		'body' => '',
+		'boardID' => 0,
+		'topicID' => 0,
+		'userName' => '',
+		'userEmail' => '',
+		'tags' => '',
 	];
 
 	function __construct()
@@ -21,38 +24,37 @@ class Post extends Auth
 
 	function post(\Base $f3, $params)
 	{
-		// If theres SESSION data, use that.
-		$f3->mset([
-			'post_tags' => ($f3->exists('SESSION.posting.tags') ? $f3->get('SESSION.posting.tags') : ''),
-			'post_title' => ($f3->exists('SESSION.posting.title') ? $f3->get('SESSION.posting.title') : ''),
-			'post_body' => ($f3->exists('SESSION.posting.body') ? $f3->get('SESSION.posting.body') : ''),
-			'post_quickReply' => false,
-		]);
+		// Check for permissions and that stuff.
+
 
 		// The board and topic IDs are tricky...
-		$boardID = ($f3->exists('SESSION.posting.boardID') ? $f3->get('SESSION.posting.boardID') : (!empty($params['boardID']) ? $params['boardID'] : 0));
-		$topicID = ($f3->exists('SESSION.posting.topicID') ? $f3->get('SESSION.posting.topic') : (!empty($params['topicID']) ? $params['topicID'] : 0));
+		$this->_fields = array_merge($this->_fields, $params);
 
-		$f3->mset([
-			'post_boardID' => $boardID,
-			'post_topicID' => $topicID,
-		]);
+		// If theres SESSION data, use that.
+		if ($f3->exists('SESSION.posting'))
+		{
+			$this->_fields = array_merge($this->_fields, $f3->get('SESSION.posting'));
 
-		$f3->clear('SESSION.posting');
+			$f3->clear('SESSION.posting');
+		}
 
 		// Check that the board really exists.
-		$this->checkBoard($boardID);
+		$this->checkBoard($this->_fields['boardID']);
 
 		// If theres a topic ID, make sure it really exists...
-		if (!empty($topicID))
+		if (!empty($this->_fields['topicID']))
 		{
 			$this->checkTopic($topicID);
 
-			$topicInfo = $this->_models['message']->entryInfo($topicID);
+			$topicInfo = $this->_models['message']->entryInfo($this->_fields['topicID']);
 
-			if ($f3->get('post_title') == '')
-				$f3->set('post_title', $f3->get('txt.re'). $topicInfo['title']);
+			if (empty($this->_fields['title']))
+				$this->_fields['title'] =  $f3->get('txt.re'). $topicInfo['title']);
 		}
+
+		// All good.
+		$f3->set('posting', $this->_fields);
+		$f3->set('quickReply', false);
 
 		// We need these for the editor stuff!
 		$f3->push('site.customJS', 'summernote.min.js');
@@ -65,7 +67,22 @@ class Post extends Auth
 
 	function create(\Base $f3, $params)
 	{
+		// Need this for those pesky guests!
+		$audit = \Audit::instance();
+
+		// Lets end this quick and painless.
+		if ($audit->isbot())
+			return $f3->reroute('/');
+
 		$errors = [];
+
+		// Captcha.
+		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
+			$error[] = 'bad_captcha';
+
+		// Token check.
+		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
+			$errors[] = 'bad_token';
 
 		$this->_models['message']->reset();
 
@@ -74,14 +91,21 @@ class Post extends Auth
 			return $f3->get('Tools')->sanitize($var);
 		}, array_intersect_key($f3->get('POST'), $this->_fields));
 
-		// Token check.
-		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
-			$errors[] = 'bad_token';
+		// Check that the board really exists.
+		$this->checkBoard($data['boardID']);
+
+		// If theres a topic ID, make sure it really exists...
+		if (!empty($data['topicID']))
+			$this->checkTopic($data['topicID']);
 
 		// Moar handpicked!
 		foreach ($data as $k => $v)
 			if(empty($v))
 				$errors[] = 'empty_'. $k;
+
+		// Did you provide an email? is it valid?
+		if (!empty($data['userEmail']) && !$audit->email($data['userEmail']))
+			$errors[] = 'error_bad_email';
 
 		// Clean up the tags.
 		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags')) : '';
@@ -96,17 +120,15 @@ class Post extends Auth
 			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);
 		}
 
-		// Check that the board really exists.
-		$this->checkBoard($data['boardID']);
-
-		// If theres a topic ID, make sure it really exists...
-		if (!empty($data['topicID']))
-			$this->checkTopic($data['topicID']);
-
 		// Fill up the user data.
-		$data['userID'] = $f3->get('currentUser')->userID;
-		$data['userName'] = $f3->get('currentUser')->name;
-		$data['userEmail'] = $f3->get('currentUser')->userEmail;
+		if ($f3->get('currentUser')->userID)
+		{
+			$data['userID'] = $f3->get('currentUser')->userID;
+			$data['userName'] = $f3->get('currentUser')->userName;
+			$data['userEmail'] = $f3->get('currentUser')->userEmail;
+		}
+
+		 $f3->get('currentUser')->userID;
 
 		// All good!
 		$this->_models['message']->createEntry($data);

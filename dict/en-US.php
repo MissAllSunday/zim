@@ -35,6 +35,7 @@ return [
 	'logout_success' => 'phew... are you glad its over? yeah.. me too!',
 	'login_password' => 'Password',
 	'login_email' => 'Email',
+	'login_username' => 'Username',
 	'login_captcha' => 'Captcha',
 	'login_remember' => 'Remember me (pretty please!)',
 
@@ -50,13 +51,14 @@ Wait for something to happen...',
 	'post_preview' => 'Preview',
 	'post_title' => 'Title',
 	'post_tags' => 'Tags',
-	'post_email' => 'Email',
 	'post_desc' => 'Quick reply, Basic HTML tags are allowed',
 	'post_done' => 'Your message was successfully posted. Let us feast upon such magnificent achievement!',
 
 	// Posting errors.
-	'error_empty_title' => 'A title is required',
-	'error_empty_body' => 'You kinda need to type something...',
+	'error_empty_title' => 'A title is required. I am Bruce Almighty. My will be done!',
+	'error_empty_body' => 'You kinda need to type something... I mean, thats why you are here... how could you forget it?',
+	'error_empty_userName' => 'You forgot to type your awesome username... if you don\'t have any, how about this one: brony for life!',
+	'error_empty_userEmail' => 'I need an email, any email, a Yahoo one or even an AOL one...',
 	'error_invalid_board' => 'The board you requested doesn\'t exists.',
 	'error_invalid_topic' => 'The topic you requested doesn\'t exists.',
 

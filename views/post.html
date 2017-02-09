@@ -1,37 +1,37 @@
-<div class="row">
-	<form class="form-horizontal" method="POST" action="{{ @BASE }}/post">
-		<check if="{{ @post_topicID  == 0}}">
-			<div class="form-group">
-				<label for="postTags">{{@txt.post_tags}}</label>
-				<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @post_tags }}">
-			</div>
+<form class="form-horizontal content" method="POST" action="{{ @BASE }}/post">
+	<check if="{{ !@posting.topicID}}">
+		<div class="form-group">
+			<label for="postTags">{{@txt.post_tags}}</label>
+			<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @posting.tags }}">
+		</div>
+	</check>
+	<div class="form-group">
+		<check if="{{ !@quickReply }}">
+			<true><label for="postTitle">{{@txt.post_title}}</label>
+			<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @posting.title }}"></true>
+			<false><input type="hidden" name="title" value="{{ @posting.title }}"/></false>
 		</check>
-		<div class="form-group">
-			<check if="{{ !@post_quickReply }}">
-				<label for="postTitle">{{@txt.post_title}}</label>
-				<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @post_title }}">
-			</check>
-			<input type="hidden" name="boardID" value="{{ @post_boardID }}"/>
-			<input type="hidden" name="topicID" value="{{ @post_topicID }}"/>
-			<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
-		</div>
-		<check if="{{ !@currentUser->userID }}">
-		<div class="form-group">
-			<label for="postEmail">{{@txt.post_email}}</label>
-			<input type="email" class="form-control" name="email" id="postEmail" placeholder="" value="{{ @post_email }}">
-			<label for="loginCaptcha">{{@txt.login_captcha}}</label>
-			<div class="panel panel-default site-login">
-				<div class="panel-body">
-					<img src="{{@BASE}}/captcha" />
-				</div>
+		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
+		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>
+		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
+	</div>
+	<check if="{{ !@currentUser->userID }}">
+	<div class="form-group">
+		<label for="postUsername">{{@txt.login_username}}</label>
+		<input type="text" class="form-control" name="userName" id="postUsername" placeholder="" value="{{ @posting.userName }}">
+		<label for="postEmail">{{@txt.login_email}}</label>
+		<input type="email" class="form-control" name="userEmail" id="postEmail" placeholder="" value="{{ @posting.email }}">
+		<label for="loginCaptcha">{{@txt.login_captcha}}</label>
+		<div class="panel panel-default site-login">
+			<div class="panel-body">
+				<img src="{{@BASE}}/captcha" />
 			</div>
-			<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
 		</div>
-		</check>
-		<div class="form-group">
-			<textarea name="body"  class="form-control" rows="6">{{ @post_body }}</textarea>
-		</div>
-		<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
-	</form>
-
-</div>
+		<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
+	</div>
+	</check>
+	<div class="form-group">
+		<textarea name="body"  class="form-control" rows="6">{{ @posting.body }}</textarea>
+	</div>
+	<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
+</form>
