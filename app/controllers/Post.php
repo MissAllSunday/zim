@@ -49,7 +49,7 @@ class Post extends Base
 			$topicInfo = $this->_models['message']->entryInfo($this->_fields['topicID']);
 
 			if (empty($this->_fields['title']))
-				$this->_fields['title'] =  $f3->get('txt.re'). $topicInfo['title']);
+				$this->_fields['title'] =  $f3->get('txt.re') . $topicInfo['title'];
 		}
 
 		// All good.

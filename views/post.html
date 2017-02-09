@@ -7,9 +7,12 @@
 	</check>
 	<div class="form-group">
 		<check if="{{ !@quickReply }}">
-			<true><label for="postTitle">{{@txt.post_title}}</label>
-			<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @posting.title }}"></true>
-			<false><input type="hidden" name="title" value="{{ @posting.title }}"/></false>
+			<true>
+				<label for="postTitle">{{@txt.post_title}}</label>
+				<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @posting.title }}"></true>
+			<false>
+				<input type="hidden" name="title" value="{{ @posting.title }}"/>
+			</false>
 		</check>
 		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
 		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>

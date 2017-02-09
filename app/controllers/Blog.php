@@ -67,10 +67,9 @@ class Blog extends Base
 		$f3->set('posting',[
 			'topicID' => $id,
 			'boardID' => $entryInfo['boardID'],
-			'_title' =>  $f3->get('txt.re'). $entryInfo['title'],
+			'title' =>  $f3->get('txt.re'). $entryInfo['title'],
 		]);
 		$f3->set('quickReply', true);
-
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
