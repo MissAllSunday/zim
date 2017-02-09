@@ -23,19 +23,27 @@
 		</div>
 		<div class="row" id="comments">
 			<repeat group="{{ @comments }}" value="{{ @item }}">
-			<section>
+			<section class="comment">
 				<article itemscope itemtype="http://schema.org/Comment">
-					<h3 id="msg{{@item.msgID}}">
-						<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
-						<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
-						<span class="post-meta">
-							{{@item.date}}
-						</span>
-					</h3>
+					<div class="media">
+						<div class="media-left">
+							<a href="#">
+								<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle media-object media-avatar">
+							</a>
+						</div>
+						<div class="media-body">
+							<h3 id="msg{{@item.msgID}}" class="media-heading">
+								<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
+							</h3>
+							<h4 class="">
+								{{@txt.postedby}} <a href="#">{{@item.userName}}</a> {{@txt.on}} {{@item.date}}
+							</h4>
+						</div>
+					</div>
 					<hr>
 					<meta itemprop="datePublished" content="{{@item.microDate}}" />
 					<meta itemprop="dateModified" content="{{@item.microDate}}" />
-					<div itemprop="text">
+					<div itemprop="text" class="body">
 						{{ @item.body | raw }}
 					</div>
 				</article>
