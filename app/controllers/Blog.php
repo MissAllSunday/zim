@@ -64,12 +64,12 @@ class Blog extends Base
 		]);
 
 		// Set some vars for the quick Reply option.
-		$f3->mset([
-			'post_topicID' => $id,
-			'post_boardID' => $entryInfo['boardID'],
-			'post_quickReply' => true,
-			'post_title' =>  $f3->get('txt.re'). $entryInfo['title'],
+		$f3->set('posting',[
+			'topicID' => $id,
+			'boardID' => $entryInfo['boardID'],
+			'_title' =>  $f3->get('txt.re'). $entryInfo['title'],
 		]);
+		$f3->set('quickReply', true);
 
 
 		$f3->set('content','single.html');
