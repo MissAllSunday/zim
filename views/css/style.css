@@ -7,6 +7,10 @@ body {
 	color:#594F4F;
 }
 
+.intro-header .site-heading {
+	padding: 100px 0;
+}
+
 .footer {
 	background-color: #EEEBE2;
 	border-top: 2px solid #444;
