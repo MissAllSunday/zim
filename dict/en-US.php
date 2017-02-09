@@ -50,6 +50,8 @@ Wait for something to happen...',
 	'post_preview' => 'Preview',
 	'post_title' => 'Title',
 	'post_tags' => 'Tags',
+	'post_email' => 'Email',
+	'post_desc' => 'Quick reply, Basic HTML tags are allowed',
 	'post_done' => 'Your message was successfully posted. Let us feast upon such magnificent achievement!',
 
 	// Posting errors.

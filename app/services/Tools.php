@@ -140,6 +140,8 @@ class Tools extends \Prefab
 	function sanitize($str = '')
 	{
 		$config = \HTMLPurifier_Config::createDefault();
+		$config->set('Core', 'Encoding', 'UTF-8');
+		$config->set('HTML', 'Doctype', 'HTML 4.01 Transitional');
 		$purifier = new \HTMLPurifier();
 
 		return $purifier->purify($str);

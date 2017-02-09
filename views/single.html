@@ -17,7 +17,7 @@
 				<meta itemprop="dateModified" content="{{@entryInfo.microDate}}" />
 		</p>
 		<hr>
-		<div class="row" itemprop="articleBody">
+		<div  itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
 		</div>
@@ -50,6 +50,14 @@
 			</section>
 			</repeat>
 		</div>
+		<div class="row quickReply">
+			<div class="col-md-3 col-md-offset-0 hidden-xs">
+				<p class="content"><small>{{@txt.post_desc}}</small></p>
+			</div>
+			<div class="col-md-8 col-md-offset-0 col-xs-8 col-xs-offset-1">
+				<include href="post.html" />
+			</div>
+	</div>
 		<check if="{{@entryInfo.max_count >= @pag.limit }}">
 		<div class="row">
 			<nav aria-label="Page navigation">

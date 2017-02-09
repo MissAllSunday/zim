@@ -1,5 +1,5 @@
 <div class="row">
-	<form class="form-signin" method="POST" action="{{ @BASE }}/post">
+	<form class="form-horizontal" method="POST" action="{{ @BASE }}/post">
 		<check if="{{ @post_topicID  == 0}}">
 			<div class="form-group">
 				<label for="postTags">{{@txt.post_tags}}</label>
@@ -7,14 +7,29 @@
 			</div>
 		</check>
 		<div class="form-group">
-			<label for="postTitle">{{@txt.post_title}}</label>
-			<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @post_title }}">
+			<check if="{{ !@post_quickReply }}">
+				<label for="postTitle">{{@txt.post_title}}</label>
+				<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @post_title }}">
+			</check>
 			<input type="hidden" name="boardID" value="{{ @post_boardID }}"/>
 			<input type="hidden" name="topicID" value="{{ @post_topicID }}"/>
 			<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
 		</div>
+		<check if="{{ !@currentUser->userID }}">
 		<div class="form-group">
-			<textarea name="body" id="summernote">{{ @post_body }}</textarea>
+			<label for="postEmail">{{@txt.post_email}}</label>
+			<input type="email" class="form-control" name="email" id="postEmail" placeholder="" value="{{ @post_email }}">
+			<label for="loginCaptcha">{{@txt.login_captcha}}</label>
+			<div class="panel panel-default site-login">
+				<div class="panel-body">
+					<img src="{{@BASE}}/captcha" />
+				</div>
+			</div>
+			<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
+		</div>
+		</check>
+		<div class="form-group">
+			<textarea name="body"  class="form-control" rows="6">{{ @post_body }}</textarea>
 		</div>
 		<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
 	</form>

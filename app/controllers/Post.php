@@ -26,6 +26,7 @@ class Post extends Auth
 			'post_tags' => ($f3->exists('SESSION.posting.tags') ? $f3->get('SESSION.posting.tags') : ''),
 			'post_title' => ($f3->exists('SESSION.posting.title') ? $f3->get('SESSION.posting.title') : ''),
 			'post_body' => ($f3->exists('SESSION.posting.body') ? $f3->get('SESSION.posting.body') : ''),
+			'post_quickReply' => false,
 		]);
 
 		// The board and topic IDs are tricky...

@@ -63,6 +63,13 @@ class Blog extends Base
 			['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 		]);
 
+		// Set some vars for the quick Reply option.
+		$f3->mset([
+			'post_topicID' => $id,
+			'post_boardID' => $entryInfo['boardID'],
+			'post_quickReply' => true,
+		]);
+
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
