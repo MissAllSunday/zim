@@ -64,10 +64,10 @@ class Message extends \DB\SQL\Mapper
 
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit));
+			$r['last_url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit)) .'#msg'. $r['msgID'];
 
 		else
-			$r['last_url'] = $r['url'];
+			$r['last_url'] = $r['url'] .'#msg'. $r['msgID'];
 
 		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
 		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
