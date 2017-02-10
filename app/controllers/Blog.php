@@ -28,7 +28,7 @@ class Blog extends Base
 	function single(\Base $f3, $params)
 	{
 		// Values for pagination.
-		$start = (int) $params['page'] ?: 0;
+		$start = !empty($params['page']) ? $params['page'] : 0;
 		$limit = 10;
 
 		// Ugly, I know...
@@ -49,10 +49,11 @@ class Blog extends Base
 			':limit' => $limit,
 			':msg' => $entryInfo['msgID']
 		]));
-
+var_dump($entryInfo);
 		$f3->set('pag', [
 			'start' => $start,
 			'limit' => $limit,
+			'pages' => $entryInfo['pages'],
 		]);
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site.metaTitle', $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''));

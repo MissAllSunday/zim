@@ -119,12 +119,11 @@ class Post extends Base
 		// Fill up the user data.
 		if ($f3->get('currentUser')->userID)
 		{
-			$data['userID'] = $f3->get('currentUser')->userID;
 			$data['userName'] = $f3->get('currentUser')->userName;
 			$data['userEmail'] = $f3->get('currentUser')->userEmail;
 		}
 
-		 $f3->get('currentUser')->userID;
+		$data['userID'] = $f3->get('currentUser')->userID;
 
 		// All good!
 		$this->_models['message']->createEntry($data);
@@ -148,7 +147,7 @@ class Post extends Base
 		// Check that the board really exists.
 		if (!$this->_models['board']->findone(array('boardID = ?', $id)))
 		{
-			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_board'), 'danger');
+			\Flash::instance()->addMessage('invalid_board', 'danger');
 			$this->_models['board']->reset();
 
 			return \Base::instance()->reroute('/');
@@ -160,7 +159,7 @@ class Post extends Base
 		// Check that the topic really exists.
 		if (!$this->_models['topic']->findone(array('topicID = ?', $id)))
 		{
-			\Flash::instance()->addMessage(\Base::instance()->get('txt.invalid_topic'), 'danger');
+			\Flash::instance()->addMessage('invalid_topics', 'danger');
 			$this->_models['topic']->reset();
 
 			return \Base::instance()->reroute('/');

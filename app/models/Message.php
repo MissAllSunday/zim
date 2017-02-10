@@ -11,6 +11,7 @@ class Message extends \DB\SQL\Mapper
 		'approved' => 1,
 		'userID' => 0,
 		'userName' => 'Guest',
+		'userEmail' => '',
 		'userIP' => '',
 		'title' => '',
 		'body' => '',
@@ -61,7 +62,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+			SELECT t.lmsgID, m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -76,12 +77,16 @@ class Message extends \DB\SQL\Mapper
 
 		$r = $r[0];
 
+		// Lets avoid issues.
+		$r['max_count'] = (int) $r['max_count'];
+		$r['pages'] = (int) ceil($r['max_count'] / $limit);
+
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . '/page/' . (int) ($r['max_count'] / ($limit)) .'#msg'. $r['msgID'];
+			$r['last_url'] = $r['url'] . '/page/' . $r['pages'] .'#msg'. $r['lmsgID'];
 
 		else
-			$r['last_url'] = $r['url'] .'#msg'. $r['msgID'];
+			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
 
 		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
 		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
@@ -131,6 +136,9 @@ class Message extends \DB\SQL\Mapper
 		if (empty($params))
 			return false;
 
+		// Make sure we are working with fresh data.
+		$this->reset();
+
 		// Need these. For reasons!
 		$f3 = \Base::instance();
 		$topicModel = new \Models\Topic($f3->get('DB'));
@@ -144,13 +152,16 @@ class Message extends \DB\SQL\Mapper
 		// Be nice.
 		$params = array_map(function($var) use($f3){
 			return $f3->get('Tools')->sanitize($var);
-		}, array_intersect_key(self::$rows));
+		}, array_intersect_key($params, self::$rows));
 
 		// These pesky fields need to be assigned at this point and place in time!
 		$params['msgTime'] = time();
 		$params['userIP'] = $f3->ip();
 
 		$this->copyFrom($params);
+
+		// Get the newly created msgID.
+		$this->save();
 
 		// Is a reply?
 		if (!empty($params['topicID']))
@@ -172,13 +183,14 @@ class Message extends \DB\SQL\Mapper
 		// Done.
 		$topicModel->save();
 
-		// Now that we have the message ID, create the slug.
-		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID .'#msg'. $this->msgID;
+		// Now that we have the topic ID, create the slug.
+		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID;
 
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;
 
-		// Save.
+		// Clean up.
 		$this->save();
+		$topicModel->reset();
 	}
 }
