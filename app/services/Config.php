@@ -30,7 +30,7 @@ class Config
 			'SCHEME' => 'http',
 			'TZ' => 'America/Mexico_City',
 			'site' => array(
-				'title' => 'Miss All Sunday'
+				'home' => 'Miss All Sunday'
 			),
 		]);
 

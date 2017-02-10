@@ -26,7 +26,7 @@
 				<!-- Breadcrumb is a funny word. -->
 				<check if="{{ @site.breadcrumb }}">
 				<ol class="breadcrumb">
-					<li><a href="{{@BASE}}">{{@site.title}} </a></li>
+					<li><a href="{{@BASE}}">{{@site.home}} </a></li>
 						<repeat group="{{ @site.breadcrumb }}" value="{{ @item }}">
 							<li {{ @item.active ? 'class="active"' : '' }}>
 							<check if="{{ @item.url }}">

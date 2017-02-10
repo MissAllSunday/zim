@@ -56,7 +56,7 @@ class Blog extends Base
 			'pages' => $entryInfo['pages'],
 		]);
 		// Build some keywords!  This should be automatically set but meh... maybe later
-		$f3->set('site', [
+		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
 			'description' => $entryInfo['desc'],
 			'keywords' => $f3->get('Tools')->metaKeywords($tags),
@@ -65,7 +65,7 @@ class Blog extends Base
 				['url' => 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
 				['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 			],
-		], 3600);
+		]));
 
 		// Set some vars for the quick Reply option.
 		$f3->set('posting',[

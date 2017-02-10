@@ -43,7 +43,7 @@ class Message extends \DB\SQL\Mapper
 		]);
 
 		// Add a nice description and a real date.
-		foreach ($entries as $k => $m)
+		foreach ($entries as $k => $v)
 			$entries[$k] = $this->prepareData($v);
 
 			return $entries;
