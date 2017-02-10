@@ -44,14 +44,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Add a nice description and a real date.
 		foreach ($entries as $k => $m)
-			{
-				$entries[$k]['desc'] = $f3->get('Tools')->metaDescription($m['body'], 60);
-				$entries[$k]['date'] = $f3->get('Tools')->realDate($m['msgTime']);
-				$entries[$k]['microDate'] =  $f3->get('Tools')->microdataDate($m['msgTime']);
-
-				if (empty($entries[$k]['avatar']))
-					$entries[$k]['avatar'] = $f3->get('BASE') .'/identicon/'. $m['userName'];
-			}
+			$entries[$k] = $this->prepareData($v);
 
 			return $entries;
 	}
@@ -88,11 +81,7 @@ class Message extends \DB\SQL\Mapper
 		else
 			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
 
-		$r['date'] = $f3->get('Tools')->realDate($r['msgTime']);
-		$r['microDate'] =  $f3->get('Tools')->microdataDate($r['msgTime']);
-
-		if (empty($r['avatar']))
-			$r['avatar'] = $f3->get('BASE') .'/identicon/'. $r['userName'];
+		$r = $this->prepareData($r);
 
 		return $r;
 	}
@@ -115,18 +104,38 @@ class Message extends \DB\SQL\Mapper
 
 		foreach ($data as $k => $v)
 		{
-			if (empty($v['avatar']))
-				$data[$k]['avatar'] = $f3->get('BASE') .'/identicon/'. $v['userName'];
+			$data[$k] = $this->prepareData($v);
 
 			if (!empty($page))
 				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
 
 			else
 				$data[$k]['url'] .= '#msg'. $v['msgID'];
-
-			$data[$k]['date'] = $f3->get('Tools')->realDate($v['msgTime']);
-			$data[$k]['microDate'] =  $f3->get('Tools')->microdataDate($v['msgTime']);
 		}
+
+		return $data;
+	}
+
+	function prepareData($d = [])
+	{
+		$f3 = \Base::instance();
+
+		// Provide a generic avatar
+		if (empty($d['avatar']))
+			$d['avatar'] = $f3->get('BASE') .'/identicon/'. $d['userName'];
+
+		// Parse the body
+		if (!empty($d['body']))
+		{
+			// Create a description
+			$d['desc'] = $f3->get('Tools')->metaDescription($d['body'], 60);
+
+			$d['body'] = $f3->get('Tools')->parser($d['body']);
+		}
+
+		// Get the detes
+		$d['date'] = $f3->get('Tools')->realDate($d['msgTime']);
+		$d['microDate'] =  $f3->get('Tools')->microdataDate($d['msgTime']);
 
 		return $data;
 	}

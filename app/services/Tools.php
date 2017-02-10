@@ -232,9 +232,9 @@ class Tools extends \Prefab
 		// Links.
 		$str =  preg_replace_callback(
 			'~((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[\p{L}0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[\p{L}0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)~u',
-			function ($matches) use ($f3)
+			function ($matches) use($f3)
 			{
-				if (!empty($matches)))
+				if (!empty($matches))
 					return '<a href="'. $matches[0] .'" '. ($f3->get('currentUser')->userID ? '' : 'rel="nofollow"') .'>'. $matches[0] .'</a>';
 			},
 			$str
