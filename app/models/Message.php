@@ -137,7 +137,7 @@ class Message extends \DB\SQL\Mapper
 		$d['date'] = $f3->get('Tools')->realDate($d['msgTime']);
 		$d['microDate'] =  $f3->get('Tools')->microdataDate($d['msgTime']);
 
-		return $data;
+		return $d;
 	}
 
 	function createEntry($params = [])
@@ -157,8 +157,6 @@ class Message extends \DB\SQL\Mapper
 		// Clean up the tags.
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
-
-		$params['body'] = $f3->get('Tools')->preparser($params['body']);
 
 		// Be nice.
 		$params = array_map(function($var) use($f3){
