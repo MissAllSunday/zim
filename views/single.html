@@ -68,8 +68,8 @@
 		<div class="row">
 			<nav aria-label="Page navigation">
 				<ul class="pagination">
-					<loop from="{{ @i = 1 }}" to="{{ @i <= @entryInfo.pages }}" step="{{ @i++ }}">
-						<check if="{{ @i == 1}}">
+					<loop from="{{ @i = 0 }}" to="{{ @i < @entryInfo.pages }}" step="{{ @i++ }}">
+						<check if="{{ @i == 0}}">
 							<true>
 								<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.first}}</a></li>
 							</true>

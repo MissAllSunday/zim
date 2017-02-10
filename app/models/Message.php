@@ -83,7 +83,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . '/page/' . $r['pages'] .'#msg'. $r['lmsgID'];
+			$r['last_url'] = $r['url'] . '/page/' . ($r['pages'] - 1) .'#msg'. $r['lmsgID'];
 
 		else
 			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
@@ -148,6 +148,8 @@ class Message extends \DB\SQL\Mapper
 		// Clean up the tags.
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
+
+		$params['body'] = $f3->get('Tools')->preparser($params['body']);
 
 		// Be nice.
 		$params = array_map(function($var) use($f3){

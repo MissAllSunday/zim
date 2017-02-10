@@ -49,7 +49,7 @@ class Blog extends Base
 			':limit' => $limit,
 			':msg' => $entryInfo['msgID']
 		]));
-var_dump($entryInfo);
+
 		$f3->set('pag', [
 			'start' => $start,
 			'limit' => $limit,

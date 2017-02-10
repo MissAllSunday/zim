@@ -212,10 +212,11 @@ class Tools extends \Prefab
 
 	public function parser($str = '')
 	{
-		$regex = '~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>  | <\/a>  ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix';
+		$f3 = \Base::instance();
 
-		return preg_replace_callback(
-			$regex,
+		// Youtube.
+		$str =  preg_replace_callback(
+			'~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>  | <\/a>  ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix',
 			function ($matches)
 			{
 				if (!empty($matches) && !empty($matches[1]))
@@ -227,5 +228,18 @@ class Tools extends \Prefab
 			},
 			$str
 		);
+
+		// Links.
+		$str =  preg_replace_callback(
+			'~((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[\p{L}0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[\p{L}0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)~u',
+			function ($matches) use ($f3)
+			{
+				if (!empty($matches)))
+					return '<a href="'. $matches[0] .'" '. ($f3->get('currentUser')->userID ? '' : 'rel="nofollow"') .'>'. $matches[0] .'</a>';
+			},
+			$str
+		);
+
+		return $str;
 	}
 }
