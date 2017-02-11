@@ -229,19 +229,29 @@ class Tools extends \Prefab
 			$str
 		);
 
+		$find = [];
+		$replace = [];
+		$base = strip_tags($str);
+		$noFollow = $f3->get('currentUser')->userID ? '' : 'rel="nofollow"';
+
 		// Monster regex is monster.
-		$str =  preg_replace_callback(
+		 preg_match_all(
 			'/(?:(?:(?:
 \b[a-z][\w\-]+:|(?<=^|\W)(?=\/\/))(?:\/\/(?:localhost|[\p{L}\p{M}\p{N}\-.:@]+\.(?:(?>xxx|qa|a(?>c|d|e(?>ro|)|f|g|i|l|m|n|o|q|r|s(?>ia|)|t|u|w|x|z)|b(?>a|b|d|e|f|g|h|i(?>z|)|j|m|n|o|r|s|t|v|w|y|z)|c(?>a(?>t|)|c|d|f|g|h|i|k|l|m|n|o(?>op|m|)|r|s|u|v|x|y|z)|d(?>d|e|j|k|m|o|z)|e(?>du|c|e|g|h|r|s|t|u)|f(?>i|j|k|m|o|r)|g(?>ov|a|b|d|e|f|g|h|i|l|m|n|p|q|r|s|t|u|w|y)|h(?>k|m|n|r|t|u)|i(?>d|e|l|m|n(?>fo|t|)|o|q|r|s|t)|j(?>a|e|m|o(?>bs|)|p)|k(?>e|g|h|i|m|n|p|r|w|y|z)|l(?>a|b|c|i|k|r|s|t|u|v|y)|m(?>il|a|c|d|e|g|h|k|l|m|n|o(?>bi|)|p|q|r|s|t|u(?>seum|)|v|w|x|y|z)|n(?>a(?>me|)|c|e(?>t|)|f|g|i|l|o|p|r|u|z)|o(?>rg|m)|p(?>ost|a|e|f|g|h|k|l|m|n|r(?>o|)|s|t|w|y)|r(?>e|o|s|u|w)|s(?>a|b|c|d|e|g|h|i|j|k|l|m|n|o|r|s|t|u|v|x|y|z)|t(?>el|c|d|f|g|h|j|k|l|m|n|o|p|r(?>avel|)|t|v|w|z)|u(?>a|g|k|s|y|z)|v(?>a|c|e|g|i|n|u)|w(?>f|s)|y(?>e|t|u)|z(?>a|m|w))|local))(?=[^\p{L}\p{N}\-.]|$)|
-[\p{L}\p{N}][\p{L}\p{M}\p{N}\-.:@]+[\p{L}\p{M}\p{N}]\.[\p{L}\p{M}\p{N}\-]+))|(?:(?<=^|[^\p{L}\p{M}\p{N}\-:@])[\p{L}\p{N}][\p{L}\p{M}\p{N}\-.]+[\p{L}\p{M}\p{N}]\.(?>xxx|qa|a(?>c|d|e(?>ro|)|f|g|i|l|m|n|o|q|r|s(?>ia|)|t|u|w|x|z)|b(?>a|b|d|e|f|g|h|i(?>z|)|j|m|n|o|r|s|t|v|w|y|z)|c(?>a(?>t|)|c|d|f|g|h|i|k|l|m|n|o(?>op|m|)|r|s|u|v|x|y|z)|d(?>d|e|j|k|m|o|z)|e(?>du|c|e|g|h|r|s|t|u)|f(?>i|j|k|m|o|r)|g(?>ov|a|b|d|e|f|g|h|i|l|m|n|p|q|r|s|t|u|w|y)|h(?>k|m|n|r|t|u)|i(?>d|e|l|m|n(?>fo|t|)|o|q|r|s|t)|j(?>a|e|m|o(?>bs|)|p)|k(?>e|g|h|i|m|n|p|r|w|y|z)|l(?>a|b|c|i|k|r|s|t|u|v|y)|m(?>il|a|c|d|e|g|h|k|l|m|n|o(?>bi|)|p|q|r|s|t|u(?>seum|)|v|w|x|y|z)|n(?>a(?>me|)|c|e(?>t|)|f|g|i|l|o|p|r|u|z)|o(?>rg|m)|p(?>ost|a|e|f|g|h|k|l|m|n|r(?>o|)|s|t|w|y)|r(?>e|o|s|u|w)|s(?>a|b|c|d|e|g|h|i|j|k|l|m|n|o|r|s|t|u|v|x|y|z)|t(?>el|c|d|f|g|h|j|k|l|m|n|o|p|r(?>avel|)|t|v|w|z)|u(?>a|g|k|s|y|z)|v(?>a|c|e|g|i|n|u)|w(?>f|s)|y(?>e|t|u)|z(?>a|m|w))(?=$|[^\p{L}\p{N}\-]|\.(?=$|[^\p{L}\p{N}\-]))))(?:\/(?:(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’\/]|(?<!\/)\/))?)?/xiu',
-			function ($matches) use ($f3)
-			{
-				if (!empty($matches))
-					return '<a href="'. $matches[0] .'" '. ($f3->get('currentUser')->userID ? '' : 'rel="nofollow"') .'>'. $matches[0] .'</a>';
-			},
-			$str
-		);
+[\p{L}\p{N}][\p{L}\p{M}\p{N}\-.:@]+[\p{L}\p{M}\p{N}]\.[\p{L}\p{M}\p{N}\-]+))|(?:(?<=^|[^\p{L}\p{M}\p{N}\-:@])[\p{L}\p{N}][\p{L}\p{M}\p{N}\-.]+[\p{L}\p{M}\p{N}]\.(?>xxx|qa|a(?>c|d|e(?>ro|)|f|g|i|l|m|n|o|q|r|s(?>ia|)|t|u|w|x|z)|b(?>a|b|d|e|f|g|h|i(?>z|)|j|m|n|o|r|s|t|v|w|y|z)|c(?>a(?>t|)|c|d|f|g|h|i|k|l|m|n|o(?>op|m|)|r|s|u|v|x|y|z)|d(?>d|e|j|k|m|o|z)|e(?>du|c|e|g|h|r|s|t|u)|f(?>i|j|k|m|o|r)|g(?>ov|a|b|d|e|f|g|h|i|l|m|n|p|q|r|s|t|u|w|y)|h(?>k|m|n|r|t|u)|i(?>d|e|l|m|n(?>fo|t|)|o|q|r|s|t)|j(?>a|e|m|o(?>bs|)|p)|k(?>e|g|h|i|m|n|p|r|w|y|z)|l(?>a|b|c|i|k|r|s|t|u|v|y)|m(?>il|a|c|d|e|g|h|k|l|m|n|o(?>bi|)|p|q|r|s|t|u(?>seum|)|v|w|x|y|z)|n(?>a(?>me|)|c|e(?>t|)|f|g|i|l|o|p|r|u|z)|o(?>rg|m)|p(?>ost|a|e|f|g|h|k|l|m|n|r(?>o|)|s|t|w|y)|r(?>e|o|s|u|w)|s(?>a|b|c|d|e|g|h|i|j|k|l|m|n|o|r|s|t|u|v|x|y|z)|t(?>el|c|d|f|g|h|j|k|l|m|n|o|p|r(?>avel|)|t|v|w|z)|u(?>a|g|k|s|y|z)|v(?>a|c|e|g|i|n|u)|w(?>f|s)|y(?>e|t|u)|z(?>a|m|w))(?=$|[^\p{L}\p{N}\-]|\.(?=$|[^\p{L}\p{N}\-]))))(?:\/(?:(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’\/]|(?<!\/)\/))?)?/xiu',$base, $matches, PREG_PATTERN_ORDER);
 
+		if (!empty($matches[0]))
+		{
+			foreach ($matches[0] as $match)
+			{
+				$find[] = $match;
+				$replace[] = '<a href="'. $match .'" '. $noFollow .'>'. $match .'</a>';
+			}
+
+			$str = str_replace($find, $replace, $str);
+		}
+
+		unset($base);
 		return $str;
 	}
 }
