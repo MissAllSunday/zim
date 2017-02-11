@@ -6,6 +6,7 @@ return [
 	'start' => 'Start',
 	'first' => 'First',
 	'last' => 'Last',
+	'home' => 'Home',
 	'greet' => 'Hello there {0} one!',
 	'postedby' => 'Posted by',
 	'on' => 'on',
