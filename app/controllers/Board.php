@@ -25,13 +25,11 @@ class Board extends Base
 			'start' => 0,
 			'board' => $f3->get('boardInfo')->boardID,
 		]));
-var_dump($f3->get('tags'));
-		$tags = $f3->merge($f3->get('tags'), $tags);
 
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('boardInfo')->title,
 			'description' => $f3->get('Tools')->metaDescription($f3->get('boardInfo')->description),
-			'keywords' => $f3->get('Tools')->metaKeywords($tags),
+			'keywords' => $f3->get('Tools')->metaKeywords(array_merge($tags, $f3->get('tags'))),
 			'currentUrl' => $f3->get('boardInfo')->url,
 			'breadcrumb' => [
 				['url' => 'board/'. $f3->get('boardInfo')->url , 'title' => $f3->get('boardInfo')->title],

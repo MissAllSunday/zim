@@ -59,7 +59,7 @@ class Board extends \DB\SQL\Mapper
 			$topics[$v['topicID']] = $v;
 		}
 
-		$f3->set('tags', explode(',', $tags));
+		$f3->set('tags', array_filter(array_unique(!empty($tags) ? explode(',', trim($tags)) : [])));
 		unset($r);
 		return $topics;
 	}
