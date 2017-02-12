@@ -30,7 +30,7 @@ class Message extends \DB\SQL\Mapper
 		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.body, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
+			SELECT m.msgTime, m.title, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -55,7 +55,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT t.lmsgID, m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+			SELECT t.lmsgID, m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -94,7 +94,7 @@ class Message extends \DB\SQL\Mapper
 		$params[':start'] = $params[':start'] * $params[':limit'];
 
 		$data = $this->db->exec('
-			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
+			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_message AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
@@ -122,7 +122,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Provide a generic avatar
 		if (empty($d['avatar']))
-			$d['avatar'] = $f3->get('BASE') .'/identicon/'. $d['userName'];
+			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('BASE') .'/identicon/'. $d['userName'];
 
 		// Parse the body
 		if (!empty($d['body']))
@@ -157,6 +157,8 @@ class Message extends \DB\SQL\Mapper
 		// Clean up the tags.
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
+
+		$params['body'] = $f3->get('Tools')->preparser($params['body']);
 
 		// Be nice.
 		$params = array_map(function($var) use($f3){
