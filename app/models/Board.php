@@ -9,6 +9,18 @@ class Board extends \DB\SQL\Mapper
 		parent::__construct($db, 'suki_c_board');
 	}
 
+	function countTopics($id)
+	{
+		$data = $this->db->exec('
+			SELECT t.topicID
+			FROM suki_c_topic AS t
+			WHERE t.boardID = :board', [
+			':board' => $id,
+		], 300);
+
+		return count($data);
+	}
+
 	function topicList($params = [])
 	{
 		$f3 = \Base::instance();

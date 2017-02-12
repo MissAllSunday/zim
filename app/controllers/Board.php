@@ -13,6 +13,9 @@ class Board extends Base
 
 	function home(\Base $f3, $params)
 	{
+		$start = !empty($params['page']) ? $params['page'] : 0;
+		$limit = 10;
+
 		// Get the ID.
 		$tags = explode('-', $params['name']);
 		$id = array_pop($tags);
@@ -21,10 +24,16 @@ class Board extends Base
 
 		// Get the data.
 		$f3->set('entries', $this->_models['board']->topicList([
-			'limit' => 10,
-			'start' => 0,
+			'limit' => $limit,
+			'start' => $start,
 			'board' => $f3->get('boardInfo')->boardID,
 		]));
+
+		$f3->set('pag', [
+			'start' => $start,
+			'limit' => $limit,
+			'pages' => ceil($this->_models['board']->countTopics($id) / $limit),
+		]);
 
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('boardInfo')->title,
