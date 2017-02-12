@@ -55,6 +55,7 @@ class Blog extends Base
 			'limit' => $limit,
 			'pages' => $entryInfo['pages'],
 		]);
+
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
@@ -74,6 +75,14 @@ class Blog extends Base
 			'title' =>  $f3->get('txt.re'). $entryInfo['title'],
 		]);
 		$f3->set('quickReply', true);
+
+		// Registered users get a nice editor to play with
+		if ($f3->get('currentUser')->userID)
+		{
+			$f3->push('site.customJS', 'summernote.min.js');
+			$f3->push('site.customJS', 'summernote-image-attributes.js');
+			$f3->push('site.customCSS', 'summernote.css');
+		}
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
