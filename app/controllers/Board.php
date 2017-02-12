@@ -32,9 +32,12 @@ class Board extends Base
 			'keywords' => $f3->get('Tools')->metaKeywords(array_merge($tags, $f3->get('tags'))),
 			'currentUrl' => $f3->get('boardInfo')->url,
 			'breadcrumb' => [
-				['url' => 'board/'. $f3->get('boardInfo')->url , 'title' => $f3->get('boardInfo')->title],
+				['url' => 'board/'. $f3->get('boardInfo')->url, 'title' => $f3->get('boardInfo')->title],
 			],
 		]));
+
+		// Pretty tags!
+		$f3->push('site.customJS', 'randomColor.js');
 
 		$f3->set('content','boards.html');
 		echo \Template::instance()->render('home.html');

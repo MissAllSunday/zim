@@ -3,6 +3,56 @@ $(function() {
 	// Tooltip
 	 $('[data-toggle="tooltip"]').tooltip();
 
+	// Tags.
+	if (typeof randomColor !== "undefined")
+	{
+		var tags = [];
+		$('.topic').each(function( index, value ) {
+			_thisTopic = $(this);
+
+			$.each(_thisTopic.data('tags'), function( index, value ) {
+				_thisTopic.addClass('tag_' + value.replace(' ', ''));
+			});
+		});
+
+		$('span.tag').each(function( index, value ) {
+			_this = $(this);
+			_this.randomColor = randomColor();
+			_this.uniqueTag = _this.find('a').html().replace(' ', '');
+			_this.css('background-color', _this.randomColor);
+			tags[_this.uniqueTag] = _this.randomColor;
+		});
+
+		$('span.tag').on('click', function() {
+			_this = $(this);
+			_this.uniqueTag = _this.find('a').html().replace(' ', '');
+
+			// Hide everything.
+			$('.topic').hide('slow', function() {});
+
+			// Show the topics that has this tag.
+			$('.tag_'+ _this.uniqueTag).show('slow', function() {});
+		});
+
+		$('span.tag').on('mouseenter', function() {
+			_this = $(this);
+			_this.uniqueTag = _this.find('a').html().replace(' ', '');
+
+			// Show the topics that has this tag.
+			$('.tag_'+ _this.uniqueTag).css('border-left', '2px solid ' + tags[_this.uniqueTag]);
+		});
+
+		$('span.tag').on('mouseleave', function() {
+			_this = $(this);
+			_this.uniqueTag = _this.find('a').html().replace(' ', '');
+			$('.tag_'+ _this.uniqueTag).css('border-left', 'none');
+		});
+
+		// Reset
+		$('#resetTags').on('click', function(){
+			$('.topic').show('slow', function() {});
+		});
+	}
 
 	// highlight.js
 	hljs.configure({

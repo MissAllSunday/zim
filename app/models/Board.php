@@ -12,7 +12,7 @@ class Board extends \DB\SQL\Mapper
 	function topicList($params = [])
 	{
 		$f3 = \Base::instance();
-		$tags = '';
+		$tags = [];
 
 		$topics = [];
 		$r = $this->db->exec('
@@ -36,7 +36,8 @@ class Board extends \DB\SQL\Mapper
 		foreach ($r as $v)
 		{
 			// Tags
-			$tags .= $v['tags'];
+			$v['tags'] = empty($v['tags']) ? [] : array_filter(array_unique(explode(',', $v['tags'])));
+			$tags = array_merge($tags, $v['tags']);
 
 			// Date
 			$v['date'] = $f3->get('Tools')->realDate($v['msgTime']);
@@ -59,7 +60,7 @@ class Board extends \DB\SQL\Mapper
 			$topics[$v['topicID']] = $v;
 		}
 
-		$f3->set('tags', array_filter(array_unique(!empty($tags) ? explode(',', trim($tags)) : [])));
+		$f3->set('tags', array_filter(array_unique($tags)));
 		unset($r);
 		return $topics;
 	}
