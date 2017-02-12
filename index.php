@@ -18,60 +18,60 @@ if (!$f3->exists('SESSION.csrf'))
 	$f3->set('SESSION.csrf', $f3->get('USER')->csrf());
 
 // Home and pagination.
-$f3->route(array(
+$f3->route([
 	'GET /',
 	'GET /page/@page',
-),'\Controllers\Blog->home');
+),'\Controllers\Blog->home'];
 
 // Single page.
-$f3->route(array(
+$f3->route([
 	'GET /@title',
 	'GET /@title/page/@page',
-),'\Controllers\Blog->single');
+),'\Controllers\Blog->single'];
 
 // Posting page.
-$f3->route(array(
+$f3->route([
 	'GET /post/@boardID/@topicID [sync]',
 	'GET /post/@boardID [sync]',
-),'\Controllers\Post->post');
+),'\Controllers\Post->post'];
 
 // Posting.
-$f3->route(array(
+$f3->route([
 	'POST /post',
-),'\Controllers\Post->create');
+),'\Controllers\Post->create'];
 
 // Preview.
-$f3->route(array(
+$f3->route([
 	'GET /post/@boardID/@topicID [ajax]',
 	'GET /post/@boardID [ajax]',
-),'\Controllers\Post->preview');
+),'\Controllers\Post->preview'];
 
 // Forum.
-$f3->route(array(
+$f3->route([
 	'GET /forum/',
 	'GET /forum/page/@page',
-),'\Controllers\Forum->home');
+),'\Controllers\Forum->home'];
 
 // A single board.
-$f3->route(array(
+$f3->route([
 	'GET /board/@name',
 	'GET /board/@name/page/@page',
-),'\Controllers\Board->home');
+),'\Controllers\Board->home'];
 
 // Login
-$f3->route(array(
+$f3->route([
 	'POST /login',
-),'\Controllers\UserAuth->doLogin');
+),'\Controllers\UserAuth->doLogin'];
 
 // Logout
-$f3->route(array(
+$f3->route([
 	'GET /logout',
-),'\Controllers\UserAuth->doLogout');
+),'\Controllers\UserAuth->doLogout'];
 
 // Full login page
-$f3->route(array(
+$f3->route([
 	'GET /login',
-),'\Controllers\UserAuth->loginPage');
+),'\Controllers\UserAuth->loginPage'];
 
 // JS and Css minification.
 $f3->route('GET /minify/@type',
