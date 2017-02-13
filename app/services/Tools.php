@@ -231,7 +231,7 @@ class Tools extends \Prefab
 
 		$find = [];
 		$replace = [];
-		$base = strip_tags($str);
+		$base = strip_tags(preg_replace(array('"<a href(.*?)>(.*?)<"', '"/a>"'), array('',''), $str));
 		$noFollow = $f3->get('currentUser')->userID ? '' : 'rel="nofollow"';
 
 		// Monster regex is monster.
@@ -244,8 +244,9 @@ class Tools extends \Prefab
 		{
 			foreach ($matches[0] as $match)
 			{
+				$scheme = parse_url($match, PHP_URL_SCHEME);
 				$find[] = $match;
-				$replace[] = '<a href="'. $match .'" '. $noFollow .'>'. $match .'</a>';
+				$replace[] = '<a href="'. $match .'" '. $noFollow .'>'. str_replace($scheme .'://', '', $match) .'</a>';
 			}
 
 			$str = str_replace($find, $replace, $str);

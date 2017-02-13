@@ -6,6 +6,17 @@ body {
 	margin-bottom: 90px;
 	color:#594F4F;
 }
+a {
+	color:#000;
+}
+
+img {
+	max-width: 500px;
+}
+
+div.note-btn-group button.btn {
+	padding: 12px;
+}
 
 .intro-header .site-heading {
 	padding: 100px 0;
