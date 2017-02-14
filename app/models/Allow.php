@@ -20,7 +20,7 @@ class Allow extends \DB\SQL\Mapper
 		return $perms;
 	}
 
-	function can($names = [])
+	function can($names = [], $reroute = false)
 	{
 		$f3 = \Base::instance();
 
@@ -52,6 +52,14 @@ class Allow extends \DB\SQL\Mapper
 				$allowed = true;
 				break;
 			}
+		}
+
+		if ($reroute && !$allowed)
+		{
+			\Flash::instance()->addMessage($f3->get('txt.perm_error_'. $names[0]), 'danger');
+
+			// Reroute.
+			return $f3->reroute('/');
 		}
 
 		return $allowed;

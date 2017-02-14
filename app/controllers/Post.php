@@ -12,6 +12,7 @@ class Post extends Base
 		// Need some more goodies.
 		$this->_defaultModels[] = 'topic';
 		$this->_defaultModels[] = 'board';
+		$this->_defaultModels[] = 'allow';
 
 		// Get the default fields.
 		$this->_rows = \Models\Message::$rows;
@@ -19,10 +20,11 @@ class Post extends Base
 
 	function post(\Base $f3, $params)
 	{
-		// Check for permissions and that stuff.
-
 		// The board and topic IDs.
 		$this->_rows = array_merge($this->_rows, $params);
+
+		// Check for permissions and that stuff.
+		$this->_models['allow']->can('post'. (!empty($this->_rows['topicID']) ? 'Topic' : ''), true);
 
 		// Check if we are editing.
 
@@ -94,6 +96,9 @@ class Post extends Base
 		if (!empty($data['topicID']))
 			$this->checkTopic($data['topicID']);
 
+		// Check for permissions and that stuff.
+		$this->_models['allow']->can('post'. (!empty($data['topicID']) ? 'Topic' : ''), true);
+
 		// Moar handpicked!
 		foreach ($data as $k => $v)
 			if(empty($v))
@@ -149,6 +154,7 @@ class Post extends Base
 			return $f3->reroute('/');
 
 		// Check for permisisons.
+		$this->_models['allow']->can('deleteTopic', true);
 
 		// Check that the topic really does exists.
 		$this->checkTopic($params['topicID']);
@@ -174,7 +180,8 @@ class Post extends Base
 
 	function delete(\Base $f3, $params)
 	{
-
+		// Check for permisisons.
+		$this->_models['allow']->can('delete', true);
 	}
 
 	protected function checkBoard($id = 0)

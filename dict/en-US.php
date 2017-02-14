@@ -64,6 +64,12 @@ Wait for something to happen...',
 	'error_invalid_board' => 'The board you requested doesn\'t exists.',
 	'error_invalid_topic' => 'The topic you requested doesn\'t exists.',
 
+	// Permissions error messages.
+	'perm_error_post' => 'You aren\'t allowed to post messages.',
+	'perm_error_postTopic' => 'You aren\'t allowed to post topics.',
+	'perm_error_delete' => 'You aren\'t allowed to delete messages.',
+	'perm_error_deleteTopic' => 'You aren\'t allowed to delete topics.',
+
 	// Random lines.
 	'randomLines' => [
 		'La Patria es primero',
