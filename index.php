@@ -46,6 +46,11 @@ $f3->route([
 	'GET /post/@boardID [ajax]',
 ],'\Controllers\Post->preview');
 
+// Delete topic.
+$f3->route([
+	'GET /deleteTopic/@boardID/@topicID',
+],'\Controllers\Post->deleteTopic');
+
 // Forum.
 $f3->route([
 	'GET /forum/',

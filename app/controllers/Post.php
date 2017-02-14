@@ -142,6 +142,41 @@ class Post extends Base
 
 	}
 
+	function deleteTopic(\Base $f3, $params)
+	{
+		// Don't waste my time.
+		if (!isset($params['topicID']))
+			return $f3->reroute('/');
+
+		// Check for permisisons.
+
+		// Check that the topic really does exists.
+		$this->checkTopic($params['topicID']);
+
+		// A valid board is also needed.
+		// Check that the board really exists.
+		$this->checkBoard($params['boardID']);
+
+		// OK then, load the info at once!
+		$this->_models['topic']->load(['topicID = ?', $params['topicID']]);
+
+		// Delete all messages associated with this topic.
+		$this->_models['topic']->deleteMessages($this->_models['message']->getMessageIDs($params['topicID']));
+
+		// Delete the topic itself.
+		$this->_models['topic']->erase();
+
+		// All done, get the board info and lets get the hell out of here!
+		$this->_models['board']->load(['boardID = ?', $params['boardID']]);
+
+		return $f3->reroute('/board/'. $this->_models['board']->url);
+	}
+
+	function delete(\Base $f3, $params)
+	{
+
+	}
+
 	protected function checkBoard($id = 0)
 	{
 		// Check that the board really exists.

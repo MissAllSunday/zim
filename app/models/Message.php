@@ -116,6 +116,22 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
+	function deleteMessages($ids = [])
+	{
+		$this->db->exec('DELETE FROM suki_c_message WHERE topicID IN(:ids)', [':ids' => implode(',', $ids)]);
+	}
+
+	function getMessageIDs($id = 0)
+	{
+		return $this->db->exec('
+			SELECT msgID
+			FROM suki_c_message
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			WHERE topicID = :topic',[
+				':topic' => $id,
+			]);
+	}
+
 	function prepareData($d = [])
 	{
 		$f3 = \Base::instance();
