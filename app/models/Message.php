@@ -126,7 +126,6 @@ class Message extends \DB\SQL\Mapper
 		return $this->db->exec('
 			SELECT msgID
 			FROM suki_c_message
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic',[
 				':topic' => $id,
 			]);
