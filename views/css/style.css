@@ -1,3 +1,9 @@
+@media only screen and (min-width : 992px) {
+		img.img-responsive {
+			max-width: 500px;
+		}
+    }
+
 html {
 	position: relative;
 	min-height: 100%;
@@ -8,10 +14,6 @@ body {
 }
 a {
 	color:#000;
-}
-
-img {
-	max-width: 500px;
 }
 
 div.note-btn-group button.btn {

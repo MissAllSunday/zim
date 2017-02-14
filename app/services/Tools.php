@@ -210,7 +210,7 @@ class Tools extends \Prefab
 		return round($bytes, 2) . ($showUnits ? ' ' . $units[$pow] : '');
 	}
 
-	public function parser($str = '')
+	public function preparser($str = '')
 	{
 		$f3 = \Base::instance();
 
@@ -228,6 +228,13 @@ class Tools extends \Prefab
 			},
 			$str
 		);
+
+		return $str;
+	}
+
+	public function parser($str = '')
+	{
+		$f3 = \Base::instance();
 
 		$find = [];
 		$replace = [];
