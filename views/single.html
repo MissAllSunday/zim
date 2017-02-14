@@ -50,21 +50,23 @@
 			</section>
 			</repeat>
 		</div>
-		<div class="row quickReply">
-			<div class="col-md-12 col-md-offset-0 col-xs-11">
-				<include href="post.html" />
+		<check if="{{@can.post }}">
+			<div class="row quickReply">
+				<div class="col-md-12 col-md-offset-0 col-xs-11">
+					<include href="post.html" />
+				</div>
+				<div class="col-md-8 col-md-offset-0 col-xs-11">
+					<p class="content box">
+						<small>
+							{{@txt.post_desc}}
+							<check if="{{ !@currentUser->userID }}">
+								 {{@txt.post_guest_desc}}
+							</check>
+						</small>
+					</p>
+				</div>
 			</div>
-			<div class="col-md-8 col-md-offset-0 col-xs-11">
-				<p class="content box">
-					<small>
-						{{@txt.post_desc}}
-						<check if="{{ !@currentUser->userID }}">
-							 {{@txt.post_guest_desc}}
-						</check>
-					</small>
-				</p>
-			</div>
-	</div>
+		</check>
 		<check if="{{@entryInfo.max_count >= @pag.limit }}">
 		<div class="row">
 			<nav aria-label="Page navigation">

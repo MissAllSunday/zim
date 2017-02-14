@@ -12,7 +12,6 @@ class Post extends Base
 		// Need some more goodies.
 		$this->_defaultModels[] = 'topic';
 		$this->_defaultModels[] = 'board';
-		$this->_defaultModels[] = 'allow';
 
 		// Get the default fields.
 		$this->_rows = \Models\Message::$rows;
@@ -99,7 +98,7 @@ class Post extends Base
 			$this->checkTopic($data['topicID']);
 
 		// Check for permissions and that stuff.
-		$this->_models['allow']->can('post'. (!empty($data['topicID']) ? 'Topic' : ''), true);
+		$this->_models['allow']->can('post'. (empty($data['topicID']) ? 'Topic' : ''), true);
 
 		// Moar handpicked!
 		foreach ($data as $k => $v)

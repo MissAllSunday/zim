@@ -68,20 +68,25 @@ class Blog extends Base
 			],
 		]));
 
-		// Set some vars for the quick Reply option.
-		$f3->set('posting',[
-			'topicID' => $id,
-			'boardID' => $entryInfo['boardID'],
-			'title' =>  $f3->get('txt.re'). $entryInfo['title'],
-		]);
-		$f3->set('quickReply', true);
+		$f3->set('can.post', $this->_models['allow']->can('post'));
 
-		// Registered users get a nice editor to play with
-		if ($f3->get('currentUser')->userID)
+		// Set some vars for the quick Reply option.
+		if ($this->_models['allow']->can('post'))
 		{
-			$f3->push('site.customJS', 'summernote.min.js');
-			$f3->push('site.customJS', 'summernote-image-attributes.js');
-			$f3->push('site.customCSS', 'summernote.css');
+			$f3->set('posting',[
+				'topicID' => $id,
+				'boardID' => $entryInfo['boardID'],
+				'title' =>  $f3->get('txt.re'). $entryInfo['title'],
+			]);
+			$f3->set('quickReply', true);
+
+			// Registered users get a nice editor to play with
+			if ($f3->get('currentUser')->userID)
+			{
+				$f3->push('site.customJS', 'summernote.min.js');
+				$f3->push('site.customJS', 'summernote-image-attributes.js');
+				$f3->push('site.customCSS', 'summernote.css');
+			}
 		}
 
 		$f3->set('content','single.html');

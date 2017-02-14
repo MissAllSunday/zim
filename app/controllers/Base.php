@@ -5,7 +5,7 @@ namespace Controllers;
 class Base
 {
 	protected $_models = [];
-	protected $_defaultModels = ['message', 'user'];
+	protected $_defaultModels = ['message', 'user', 'allow'];
 
 	public function beforeRoute($f3)
 	{

@@ -5,7 +5,7 @@ namespace Controllers;
 class Auth
 {
 	protected $_models = [];
-	protected $_defaultModels = ['message', 'user'];
+	protected $_defaultModels = ['message', 'user', 'allow'];
 
 	function beforeRoute($f3)
 	{
