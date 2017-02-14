@@ -22,6 +22,8 @@ class Base
 			'userID' => 0,
 			'userName' => 'Guest',
 			'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
+			'groupID' => 0,
+			'groups' => '',
 		];
 
 		$currentUser = (object) $currentUser;
