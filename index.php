@@ -29,9 +29,10 @@ $f3->route([
 	'GET /@title/page/@page',
 ],'\Controllers\Blog->single');
 
-// Posting page.
+// Posting/Editing page.
 $f3->route([
 	'GET /post/@boardID/@topicID [sync]',
+	'GET /edit/@boardID/@topicID [sync]',
 	'GET /post/@boardID [sync]',
 ],'\Controllers\Post->post');
 

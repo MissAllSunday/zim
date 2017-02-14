@@ -26,7 +26,9 @@ class Post extends Base
 		// Check for permissions and that stuff.
 		$this->_models['allow']->can('post'. (!empty($this->_rows['topicID']) ? 'Topic' : ''), true);
 
-		// Check if we are editing.
+		// Are we editing? if so, load the data.
+		if (!empty($params['edit']));
+			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
 
 		// If theres SESSION data, use that.
 		if ($f3->exists('SESSION.posting'))
