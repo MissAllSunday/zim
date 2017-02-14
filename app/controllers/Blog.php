@@ -41,7 +41,7 @@ class Blog extends Base
 		$entryInfo = $this->_models['message']->entryInfo($id);
 
 		$f3->set('entryInfo', $entryInfo);
-
+var_dump($entryInfo);
 		// Get the data.
 		$f3->set('comments', $this->_models['message']->single([
 			':topic' => $id,
@@ -68,10 +68,8 @@ class Blog extends Base
 			],
 		]));
 
-		$f3->set('can.post', $this->_models['allow']->can('post'));
-
 		// Set some vars for the quick Reply option.
-		if ($this->_models['allow']->can('post'))
+		if ($f3->get('can.post'))
 		{
 			$f3->set('posting',[
 				'topicID' => $id,

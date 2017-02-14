@@ -21,6 +21,9 @@
 			{{ @entryInfo.body | raw }}
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
 		</div>
+		<div class="row">
+			<include href="buttons.html" />
+		</div>
 		<div class="row" id="comments">
 			<repeat group="{{ @comments }}" value="{{ @item }}">
 			<section class="comment">
@@ -50,6 +53,7 @@
 			</section>
 			</repeat>
 		</div>
+		<include href="buttons.html" />
 		<check if="{{@can.post }}">
 			<div class="row quickReply">
 				<div class="col-md-12 col-md-offset-0 col-xs-11">

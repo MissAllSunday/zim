@@ -55,7 +55,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT t.lmsgID, m.msgID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t

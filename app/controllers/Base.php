@@ -32,5 +32,13 @@ class Base
 
 		$f3->set('currentUser', $currentUser);
 		$this->_models['user']->reset();
+
+		// Permissions.
+		$can = [];
+
+		foreach ($this->_models['allow']->getAll() as $name => $groups)
+			$can[$name] = $this->_models['allow']->can($name);
+
+		$f3->set('can', $can);
 	}
 }

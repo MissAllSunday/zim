@@ -24,5 +24,13 @@ class Auth
 		// Get current user data.
 		$f3->set('currentUser', $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))));
 		$this->_models['user']->reset();
+
+		// Permissions.
+		$can = [];
+
+		foreach ($this->_models['allow']->getAll() as $name => $groups)
+			$can[$name] = $this->_models['allow']->can($name);
+
+		$f3->set('can', $can);
 	}
 }
