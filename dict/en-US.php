@@ -58,7 +58,10 @@ Wait for something to happen...',
 	'post_tags' => 'Tags',
 	'post_desc' => 'Quick reply, Basic HTML tags are allowed.',
 	'post_guest_desc' => 'An username and a valid email are required.',
-	'post_done' => 'Your message was successfully posted. Let us feast upon such magnificent achievement!',
+	'post_done' => 'Your message was successfully {0}. Let us feast upon such magnificent achievement!',
+	'post_action_deleted' => 'deleted',
+	'post_action_edited' => 'edited',
+	'post_action_posted' => 'posted',
 
 	// Posting errors.
 	'error_empty_title' => 'A title is required. I am Bruce Almighty. My will be done!',

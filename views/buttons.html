@@ -1,6 +1,6 @@
 <div class="btn-group content pull-right" role="group" aria-label="...">
 	<check if="{{@can.post }}">
-		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
+		<a href="{{@BASE}}/post/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
 	</check>
 	<check if="{{@can.editTopic }}">
 		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>

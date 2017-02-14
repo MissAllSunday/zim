@@ -49,12 +49,12 @@
 							<ul class="dropdown-menu" aria-labelledby="options{{@item.msgID}}">
 								<check if="{{@can.edit}}">
 									<li class="text-center">
-										<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}">{{@txt.modify}}</a>
+										<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@item.msgID}}">{{@txt.modify}}</a>
 									</li>
 								</check>
 								<check if="{{ @can.delete }}">
 									<li class="text-center">
-										<a href="{{@BASE}}/delete/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}">
+										<a href="{{@BASE}}/delete/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@item.msgID}}">
 										{{@txt.delete}}
 										</a>
 									</li>

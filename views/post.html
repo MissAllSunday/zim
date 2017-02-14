@@ -17,6 +17,9 @@
 		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
 		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>
 		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
+		<check if="{{ @posting.msgID }}">
+			<input type="hidden" name="msgID" value="{{ @posting.msgID }}"/>
+		</check>
 	</div>
 	<check if="{{ !@currentUser->userID }}">
 	<div class="form-group">

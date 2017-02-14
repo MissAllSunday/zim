@@ -6,6 +6,8 @@ class Message extends \DB\SQL\Mapper
 {
 	public static $rows = [
 		'msgTime' => 0,
+		'msgModified' => 0,
+		'reason' => '',
 		'boardID' => 0,
 		'topicID' => 0,
 		'approved' => 1,
@@ -180,13 +182,28 @@ class Message extends \DB\SQL\Mapper
 			return $f3->get('Tools')->sanitize($var);
 		}, array_intersect_key($params, self::$rows));
 
-		// These pesky fields need to be assigned at this point and place in time!
-		$params['msgTime'] = time();
+		// These pesky fields need to be assigned at this point and place in time!s
+		if (empty($params['msgID']))
+			$params['msgTime'] = time();
+
+		else
+		{
+			$params['msgModified'] = time();
+			$params['reasonBy'] = $f3->get('currentUser')->userName;
+		}
+
 		$params['userIP'] = $f3->ip();
 
 		$this->copyFrom($params);
 
-		// Get the newly created msgID.
+		// Are we editing?
+		if (!empty($params['msgID']))
+		{
+			$this->load(['msgID = ?', $params['msgID']]));
+			$this->copyFrom($params);
+		}
+
+		// Save.
 		$this->save();
 
 		// Is a reply?
