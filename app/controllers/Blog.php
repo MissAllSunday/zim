@@ -41,7 +41,7 @@ class Blog extends Base
 		$entryInfo = $this->_models['message']->entryInfo($id);
 
 		$f3->set('entryInfo', $entryInfo);
-var_dump($entryInfo);
+
 		// Get the data.
 		$f3->set('comments', $this->_models['message']->single([
 			':topic' => $id,

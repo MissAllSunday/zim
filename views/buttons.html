@@ -1,5 +1,13 @@
 <div class="btn-group content pull-right" role="group" aria-label="...">
-	<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
-	<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>
-	<button type="button" class="btn btn-sm">{{@txt.delete}}</button>
+	<check if="{{@can.post }}">
+		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
+	</check>
+	<check if="{{@can.editTopic }}">
+		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>
+	</check>
+	<check if="{{@can.deleteTopic }}">
+		<a href="{{@BASE}}/deleteTopic/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">
+		<button type="button" class="btn btn-sm">{{@txt.delete}}</button>
+		</a>
+	</check>
 </div>
