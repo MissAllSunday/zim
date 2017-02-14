@@ -27,7 +27,7 @@ class Post extends Base
 		$this->_models['allow']->can('post'. (!empty($this->_rows['topicID']) ? 'Topic' : ''), true);
 
 		// Are we editing? if so, load the data.
-		if (!empty($params['edit']));
+		if (!empty($params['edit']) && !empty($params['msgID']));
 			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
 
 		// If theres SESSION data, use that.
