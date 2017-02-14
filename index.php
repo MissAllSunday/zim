@@ -32,7 +32,7 @@ $f3->route([
 // Posting/Editing page.
 $f3->route([
 	'GET /post/@boardID/@topicID [sync]',
-	'GET /edit/@boardID/@topicID [sync]',
+	'GET /edit/@boardID/@topicID/@msgID [sync]',
 	'GET /post/@boardID [sync]',
 ],'\Controllers\Post->post');
 
