@@ -189,7 +189,16 @@ Wait for something to happen...',
 		'Y es que tengo un corazon tan necio que no comprende, que no entiende que le hace daño amarte tanto no comprende que lo has olvidado sigue aferrado a tu recuerdo, y a tu amor',
 		'Nomás por tu soberbia no das explicaciones y encima me condenas, sin escuchar razones',
 		'más de lo que te imaginas, me estoy portando mal y me fascina ie ie oi oi o',
-		'Ahora cuentan por ahí que cambiaste hasta tu forma de vestir que a alguien adornas con tu sonreir'
+		'Ahora cuentan por ahí que cambiaste hasta tu forma de vestir que a alguien adornas con tu sonreir',
+		'Tell me to relax I just stare maybe I don\'t know if I should change',
+		'I can\'t take my eyes off you take my eyes off you give your eyes my view for a second'
+		'You don\'t exist if I don\'t see you',
+		'And it\'s lonely, lonely, lonely by your side',
+		'My friends say I should act my age, what\'s my age again?',
+		'Oh baby, oh baby then it fell apart, it fell apart',
+		'Wish there was something real wish there was something true',
+		'Slowly repeating, no-one else has heard me say, nothing really'
+		'Nelly, I am Heathcliff!'
 	],
 
 	// Structured data stuff.
