@@ -2,6 +2,7 @@ $(function() {
 
 	// Tooltip
 	 $('[data-toggle="tooltip"]').tooltip();
+	 $('.dropdown-toggle').dropdown();
 
 	// Tags.
 	if (typeof randomColor !== "undefined")

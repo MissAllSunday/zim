@@ -43,6 +43,25 @@
 							</h4>
 						</div>
 					</div>
+					<check if="{{@can.edit || @can.delete }}">
+						<div class="content msgOptions pull-right dropdown">
+							<button id="options{{@item.msgID}}" type="button" class="btn btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i> <span class="caret"></span></button>
+							<ul class="dropdown-menu" aria-labelledby="options{{@item.msgID}}">
+								<check if="{{@can.edit}}">
+									<li class="text-center">
+										<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}">{{@txt.modify}}</a>
+									</li>
+								</check>
+								<check if="{{ @can.delete }}">
+									<li class="text-center">
+										<a href="{{@BASE}}/delete/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}">
+										{{@txt.delete}}
+										</a>
+									</li>
+								</check>
+							</ul>
+						</div>
+					</check>
 					<hr>
 					<meta itemprop="datePublished" content="{{@item.microDate}}" />
 					<meta itemprop="dateModified" content="{{@item.microDate}}" />

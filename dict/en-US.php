@@ -18,6 +18,7 @@ return [
 	'reply' => 'Reply',
 	'modify' => 'Modify',
 	'delete' => 'Delete',
+	'options' => 'Options',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',

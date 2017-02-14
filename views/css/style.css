@@ -20,6 +20,10 @@ div.note-btn-group button.btn {
 	padding: 12px;
 }
 
+div.msgOptions button.btn{
+	padding:0 5px;
+}
+
 .intro-header .site-heading {
 	padding: 100px 0;
 }
