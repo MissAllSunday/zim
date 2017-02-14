@@ -200,6 +200,12 @@ Wait for something to happen...',
 		'Slowly repeating, no-one else has heard me say, nothing really',
 		'Nelly, I am Heathcliff!',
 		'Constantly talking isn\'t necessarily communicating',
+		' Too many guys think I\'m a concept, or I complete them, or I\'m gonna make them alive. But I\'m just a fucked-up girl who\'s lookin\' for my own peace of mind; don\'t assign me yours',
+		'You don\'t tell me things, Joel. I\'m an open book. I tell you everything, every damn, embarrassing thing',
+		'Are we like those bored couples you feel sorry for in restaurants? Are we the dining dead? I can\'t stand the idea of us being a couple people think that about',
+		'I don\'t need nice. I don\'t need myself to be it, and I don\'t need anybody else to be it at me',
+		'I want to read some of those journals you\'re constantly scribbling in. What do you write in there if you don\'t have any thoughts or passions or... love?',
+		'You\'re not a stalker, or anything, right?',
 	],
 
 	// Structured data stuff.
