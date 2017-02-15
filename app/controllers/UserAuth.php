@@ -12,7 +12,7 @@ class UserAuth extends Base
 	function loginPage(\Base $f3, $params)
 	{
 		// Already logged come on...
-		if ($f3->get('currentUser.userID'))
+		if ($f3->get('currentUser.userID') || \Audit::instance()->isbot())
 			return $f3->reroute('/');
 
 		// Set the needed metatags stuff.
@@ -24,8 +24,14 @@ class UserAuth extends Base
 	function doLogin(\Base $f3, $params)
 	{
 		// Already logged come on...
-		if ($f3->get('currentUser.userID'))
+		if ($f3->get('currentUser.userID') || \Audit::instance()->isbot())
 			return $f3->reroute('/');
+
+		$data = [
+			'email' => '',
+			'passwd' => '',
+			'remember' => 0,
+		];
 
 		$error = [];
 
@@ -37,28 +43,22 @@ class UserAuth extends Base
 		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
 			$error[] = 'bad_captcha';
 
-		// Bot check.
-		if (\Audit::instance()->isbot())
-			$error[] = 'possible_bot';
-
 		// Set the needed vars.
-		$email = $f3->get('POST.email');
-		$passwd = $f3->get('POST.password');
-		$remember = $f3->get('POST.remember');
+		$data = array_intersect_key($f3->clean($f3->get('POST')), $data);
 
 		// Check the POST fields.
-		if (empty($email))
+		if (empty($data['email']))
 			$error[] = 'empty_email';
 
-		if (empty($passwd))
+		if (empty($data['passwd']))
 			$error[] = 'empty_password';
 
 		// Need a valid email.
-		if (!\Audit::instance()->email($email))
+		if (!\Audit::instance()->email($data['email']))
 			$error[] = 'bad_email';
 
 		// Get the user's data.
-		$this->_models['user']->getByEmail($email);
+		$this->_models['user']->getByEmail($data['email']);
 
 		// No user was found, try again.
 		if($this->_models['user']->dry())
@@ -72,12 +72,12 @@ class UserAuth extends Base
 		}
 
 		// Do the actual check.
-		elseif(password_verify($passwd, $this->_models['user']->passwd))
+		elseif(password_verify($data['passwd'], $this->_models['user']->passwd))
 		{
 			$f3->set('SESSION.user', $this->_models['user']->userID);
 
 			// Wanna stay for a bit?
-			if (!empty($remember))
+			if (!empty($data['remember']))
 			{
 				$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->_models['user']->userID, 60 * 60 * 24 * 7);
 			}
