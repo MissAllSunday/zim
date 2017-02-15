@@ -1,8 +1,16 @@
 $(function() {
 
 	// Tooltip
-	 $('[data-toggle="tooltip"]').tooltip();
-	 $('.dropdown-toggle').dropdown();
+	$('[data-toggle="tooltip"]').tooltip();
+
+	//  Dropdown
+	$('.dropdown-toggle').dropdown();
+
+	// Generic "you sure?  really you sure?" message
+	$(document).on('click', '.you_sure', function()
+	{
+		return confirm($(this).attr('data-confirm'));
+	});
 
 	// Tags.
 	if (typeof randomColor !== "undefined")

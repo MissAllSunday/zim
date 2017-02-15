@@ -58,7 +58,7 @@
 								</check>
 								<check if="{{ @can.delete }}">
 									<li class="text-center">
-										<a href="{{@BASE}}/delete/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@item.msgID}}">
+										<a class="you_sure" data-confirm="{{@txt.confirm}}" href="{{@BASE}}/delete/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@item.msgID}}">
 										{{@txt.delete}}
 										</a>
 									</li>

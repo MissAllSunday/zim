@@ -19,6 +19,7 @@ return [
 	'modify' => 'Modify',
 	'delete' => 'Delete',
 	'options' => 'Options',
+	'confirm' => 'Are you sure?',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',
