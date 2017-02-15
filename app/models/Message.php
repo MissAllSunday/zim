@@ -191,6 +191,7 @@ class Message extends \DB\SQL\Mapper
 			$params['reasonBy'] = $f3->get('currentUser')->userName;
 		}
 
+		$params['msgTime'] = time();
 		$params['userIP'] = $f3->ip();
 
 		// Are we editing?

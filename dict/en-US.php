@@ -73,6 +73,7 @@ Wait for something to happen...',
 	'error_empty_userEmail' => 'I need an email, any email, a Yahoo one or even an AOL one...',
 	'error_invalid_board' => 'The board you requested doesn\'t exists.',
 	'error_invalid_topic' => 'The topic you requested doesn\'t exists.',
+	'error_invalid_message' => 'The message you requested doesn\'t exists.',
 
 	// Permissions error messages.
 	'perm_error_post' => 'You aren\'t allowed to post messages.',

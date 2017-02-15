@@ -52,6 +52,11 @@ $f3->route([
 	'GET /deleteTopic/@boardID/@topicID',
 ],'\Controllers\Post->deleteTopic');
 
+// Delete message.
+$f3->route([
+	'GET /delete/@boardID/@topicID/@msgID',
+],'\Controllers\Post->delete');
+
 // Forum.
 $f3->route([
 	'GET /forum/',

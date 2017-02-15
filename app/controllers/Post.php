@@ -172,7 +172,6 @@ class Post extends Base
 		$this->checkTopic($params['topicID']);
 
 		// A valid board is also needed.
-		// Check that the board really exists.
 		$this->checkBoard($params['boardID']);
 
 		// OK then, load the info at once!
@@ -187,13 +186,45 @@ class Post extends Base
 		// All done, get the board info and lets get the hell out of here!
 		$this->_models['board']->load(['boardID = ?', $params['boardID']]);
 
+		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+
 		return $f3->reroute('/board/'. $this->_models['board']->url);
 	}
 
 	function delete(\Base $f3, $params)
 	{
+		// Don't waste my time.
+		if (!isset($params['msgID']))
+			return $f3->reroute('/');
+
 		// Check for permisisons.
 		$this->_models['allow']->can('delete', true);
+
+		// Check that the topic really does exists.
+		$this->checkTopic($params['topicID']);
+
+		// A valid board is also needed.
+		$this->checkBoard($params['boardID']);
+
+		$this->_models['message']->load(['msgID = ?', $params['msgID']]);
+
+		// Does it exists?
+		if ($this->_models['message']->dry())
+		{
+			\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+
+			return $f3->reroute('/');
+		}
+
+		// Perform.
+		$this->_models['message']->erase();
+
+		// Get the topic info and be done already.
+		$entryInfo = $this->_models['message']->entryInfo($params['topicID']);
+
+		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+
+		return $f3->reroute('/'. $entryInfo['last_url']);
 	}
 
 	protected function checkBoard($id = 0)
