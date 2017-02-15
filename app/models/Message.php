@@ -5,9 +5,11 @@ namespace Models;
 class Message extends \DB\SQL\Mapper
 {
 	public static $rows = [
+		'msgID' => 0,
 		'msgTime' => 0,
 		'msgModified' => 0,
 		'reason' => '',
+		'reasonby' => '',
 		'boardID' => 0,
 		'topicID' => 0,
 		'approved' => 1,
@@ -32,7 +34,7 @@ class Message extends \DB\SQL\Mapper
 		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT m.msgTime, m.title, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
+			SELECT m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -57,7 +59,7 @@ class Message extends \DB\SQL\Mapper
 		$r = [];
 
 		$r = $this->db->exec('
-			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
@@ -96,7 +98,7 @@ class Message extends \DB\SQL\Mapper
 		$params[':start'] = $params[':start'] * $params[':limit'];
 
 		$data = $this->db->exec('
-			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
+			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar
 			FROM suki_c_message AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE topicID = :topic
@@ -151,8 +153,8 @@ class Message extends \DB\SQL\Mapper
 		}
 
 		// Get the detes
-		$d['date'] = $f3->get('Tools')->realDate($d['msgTime']);
-		$d['microDate'] =  $f3->get('Tools')->microdataDate($d['msgTime']);
+		$d['date'] =date("j, M, Y", $d['msgTime']);
+		$d['microDate'] =  date("c", $d['msgTime']);
 
 		return $d;
 	}
@@ -182,11 +184,8 @@ class Message extends \DB\SQL\Mapper
 			return $f3->get('Tools')->sanitize($var);
 		}, array_intersect_key($params, self::$rows));
 
-		// These pesky fields need to be assigned at this point and place in time!s
-		if (empty($params['msgID']))
-			$params['msgTime'] = time();
-
-		else
+		// These pesky fields need to be assigned at this point and place in time!
+		if (!empty($params['msgID']))
 		{
 			$params['msgModified'] = time();
 			$params['reasonBy'] = $f3->get('currentUser')->userName;
@@ -194,14 +193,14 @@ class Message extends \DB\SQL\Mapper
 
 		$params['userIP'] = $f3->ip();
 
-		$this->copyFrom($params);
-
 		// Are we editing?
 		if (!empty($params['msgID']))
 		{
-			$this->load(['msgID = ?', $params['msgID']]));
-			$this->copyFrom($params);
+			$this->load(['msgID = ?', $params['msgID']]);
+			$params['msgTime'] = $this->msgTime;
 		}
+
+		$this->copyFrom($params);
 
 		// Save.
 		$this->save();

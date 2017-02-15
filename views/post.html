@@ -17,27 +17,29 @@
 		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
 		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>
 		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
-		<check if="{{ @posting.msgID }}">
-			<input type="hidden" name="msgID" value="{{ @posting.msgID }}"/>
-		</check>
 	</div>
 	<check if="{{ !@currentUser->userID }}">
-	<div class="form-group">
-		<label for="postUsername">{{@txt.login_username}}</label>
-		<input type="text" class="form-control" name="userName" id="postUsername" placeholder="" value="{{ @posting.userName }}">
-		<label for="postEmail">{{@txt.login_email}}</label>
-		<input type="email" class="form-control" name="userEmail" id="postEmail" placeholder="" value="{{ @posting.email }}">
-		<label for="loginCaptcha">{{@txt.login_captcha}}</label>
-		<div class="panel panel-default site-login">
-			<div class="panel-body">
-				<img src="{{@BASE}}/captcha" />
+		<div class="form-group">
+			<label for="postUsername">{{@txt.login_username}}</label>
+			<input type="text" class="form-control" name="userName" id="postUsername" placeholder="" value="{{ @posting.userName }}">
+			<label for="postEmail">{{@txt.login_email}}</label>
+			<input type="email" class="form-control" name="userEmail" id="postEmail" placeholder="" value="{{ @posting.email }}">
+			<label for="loginCaptcha">{{@txt.login_captcha}}</label>
+			<div class="panel panel-default site-login">
+				<div class="panel-body">
+					<img src="{{@BASE}}/captcha" />
+				</div>
 			</div>
+			<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
 		</div>
-		<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
-	</div>
 	</check>
 	<div class="form-group">
 		<textarea name="body"  class="form-control" rows="6" id="summernote">{{ @posting.body }}</textarea>
+		<check if="{{ @posting.msgID }}">
+			<label for="postReason">{{@txt.post_reason}}</label>
+			<input type="text" class="form-control" name="reason" id="postReason" placeholder="" value="{{ @posting.reason }}">
+			<input type="hidden" name="msgID" value="{{ @posting.msgID }}"/>
+		</check>
 	</div>
 	<button type="submit" class="btn btn-default">{{@txt.post_submit}}</button>
 </form>

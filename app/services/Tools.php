@@ -9,16 +9,6 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
-	function realDate($val)
-	{
-		return date("F t, Y", $val);
-	}
-
-	function microdataDate($val)
-	{
-		return date("c", $val);
-	}
-
 	function slug($str = '')
 	{
 		if (empty($str) || !is_string($str))

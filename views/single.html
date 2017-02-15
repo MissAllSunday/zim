@@ -67,6 +67,10 @@
 					<meta itemprop="dateModified" content="{{@item.microDate}}" />
 					<div itemprop="text" class="body">
 						{{ @item.body | raw }}
+						<check if="{{ @item.reason }}">
+							<hr>
+							<small>{{@txt.post_last_edited, @item.reasonBy, @item.reason, date("j, M, Y, g:i a", @item.msgModified) | format}}</small>
+						</check>
 					</div>
 				</article>
 			</section>

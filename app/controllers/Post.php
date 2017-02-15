@@ -51,6 +51,17 @@ class Post extends Base
 				$this->_rows['title'] =  $f3->get('txt.re') . $topicInfo['title'];
 		}
 
+		$this->_models['board']->load(['boardID = ?', $this->_rows['boardID']]);
+
+		$f3->set('site', $f3->merge('site', [
+			'metaTitle' => $f3->get('txt.post_editing', $this->_rows['title']),
+			'currentUrl' => $f3->get('BASE') .'/edit/'. $this->rows['topicID'] .(!empty($this->_rows['msgID']) ? '/'. $this->rows['msgID'] : ''),
+			'breadcrumb' => [
+				['url' => 'board/'. $this->_models['board']->url, 'title' => $this->_models['board']->title],
+				['url' => '', 'title' => $f3->get('txt.post_editing', $this->_rows['title']), 'active' => true],
+			],
+		]));
+
 		// All good.
 		$f3->set('posting', $this->_rows);
 		$f3->set('quickReply', false);
