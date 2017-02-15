@@ -52,8 +52,8 @@ class Board extends \DB\SQL\Mapper
 			$tags = array_merge($tags, $v['tags']);
 
 			// Date
-			$v['date'] = $f3->get('Tools')->realDate($v['msgTime']);
-			$v['last_date'] =  $f3->get('Tools')->realDate($v['last_msgTime']);
+			$v['date'] = date("j, M, Y", $v['msgTime']);
+			$v['last_date'] =  date("j, M, Y", $v['last_msgTime']);
 
 			// Build the last msg url if needed.
 			if ($v['max_count'] > $params['limit'])

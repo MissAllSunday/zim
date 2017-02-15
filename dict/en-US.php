@@ -8,7 +8,7 @@ return [
 	'last' => 'Last',
 	'home' => 'Home',
 	'greet' => 'Hello there {0} one!',
-	'postedby' => 'Posted by',
+	'postedby' => 'By',
 	'on' => 'on',
 	'lastmessage' => 'Last message:',
 	'onepiece' => 'One Piece',
