@@ -148,7 +148,7 @@ class Post extends Base
 		// Get the entry info.
 		$topicInfo = $this->_models['message']->entryInfo($this->_models['message']->topicID);
 
-		\Flash::instance()->addMessage($f3->get('txt.post_done'), 'success');
+		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('txt.post_action_'. (!empty($data['msgID']) ? 'edited' : 'posted'))), 'success');
 
 		// Reroute.
 		return $f3->reroute('/'. $topicInfo['last_url']);
@@ -186,7 +186,7 @@ class Post extends Base
 		// All done, get the board info and lets get the hell out of here!
 		$this->_models['board']->load(['boardID = ?', $params['boardID']]);
 
-		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('txt.post_action_deleted')), 'success');
 
 		return $f3->reroute('/board/'. $this->_models['board']->url);
 	}
@@ -211,7 +211,7 @@ class Post extends Base
 		// Does it exists?
 		if ($this->_models['message']->dry())
 		{
-			\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+			\Flash::instance()->addMessage($f3->get('txt.error_invalid_message'), 'danger');
 
 			return $f3->reroute('/');
 		}
@@ -222,7 +222,7 @@ class Post extends Base
 		// Get the topic info and be done already.
 		$entryInfo = $this->_models['message']->entryInfo($params['topicID']);
 
-		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('post_action_deleted')), 'success');
+		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('txt.post_action_deleted')), 'success');
 
 		return $f3->reroute('/'. $entryInfo['last_url']);
 	}
