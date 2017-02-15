@@ -69,6 +69,16 @@ $f3->route([
 	'GET /board/@name/page/@page',
 ],'\Controllers\Board->home');
 
+// Sign up page
+$f3->route([
+	'GET /signup',
+],'\Controllers\UserAuth->signupPage');
+
+// Sign up page
+$f3->route([
+	'POST /signup',
+],'\Controllers\UserAuth->signup');
+
 // Login
 $f3->route([
 	'POST /login',
