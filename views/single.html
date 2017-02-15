@@ -20,6 +20,10 @@
 		<div  itemprop="articleBody">
 			{{ @entryInfo.body | raw }}
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
+			<check if="{{ @entryInfo.msgModified }}">
+				<hr>
+				<small>{{@txt.post_last_edited, @entryInfo.reasonBy, @entryInfo.reason, date("j, M, Y, g:i a", @entryInfo.msgModified) | format}}</small>
+			</check>
 		</div>
 		<div class="row">
 			<include href="buttons.html" />
@@ -67,7 +71,7 @@
 					<meta itemprop="dateModified" content="{{@item.microDate}}" />
 					<div itemprop="text" class="body">
 						{{ @item.body | raw }}
-						<check if="{{ @item.reason }}">
+						<check if="{{ @item.msgModified }}">
 							<hr>
 							<small>{{@txt.post_last_edited, @item.reasonBy, @item.reason, date("j, M, Y, g:i a", @item.msgModified) | format}}</small>
 						</check>
@@ -76,7 +80,9 @@
 			</section>
 			</repeat>
 		</div>
-		<include href="buttons.html" />
+		<check if="{{ @comments }}">
+			<include href="buttons.html" />
+		</check>
 		<check if="{{@can.post }}">
 			<div class="row quickReply">
 				<div class="col-md-12 col-md-offset-0 col-xs-11">
