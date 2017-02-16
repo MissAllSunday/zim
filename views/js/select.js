@@ -6,8 +6,7 @@ $(function() {
 
 		do
 		{
-			// End the loop if quick edit is detected.
-			if (el.nodeName === 'TEXTAREA' || el.nodeName === 'INPUT' || el.id === 'error_box')
+			if (el.nodeName === 'TEXTAREA' || el.nodeName === 'INPUT')
 				break;
 
 			if (el.id === divID)
