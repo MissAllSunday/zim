@@ -68,7 +68,7 @@ $(function() {
 		}
 	});
 
-	$('.selectText').on( 'click', function( event ) {
+	$('.selectText').on( 'click', function(e) {
 		var thisButton = $(this),
 			msgID = thisButton.attr('id').replace('selectText', '');
 

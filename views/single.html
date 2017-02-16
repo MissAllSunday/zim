@@ -51,6 +51,7 @@
 					</div>
 					<check if="{{@can.edit || @can.delete }}">
 						<div class="content msgOptions pull-right dropdown">
+							<button type="button" class="btn btn-default btn-xs hidden selectText" id="selectText{{@item.msgID}}">{{@txt.quote_select}}</button>
 							<button id="options{{@item.msgID}}" type="button" class="btn btn-default btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i> <span class="caret"></span></button>
 							<ul class="dropdown-menu" aria-labelledby="options{{@item.msgID}}">
 								<check if="{{@can.edit}}">
