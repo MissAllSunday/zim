@@ -22,7 +22,7 @@
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
 			<check if="{{ @entryInfo.msgModified }}">
 				<hr>
-				<small>{{@txt.post_last_edited, @entryInfo.reasonBy, @entryInfo.reason, date("j, M, Y, g:i a", @entryInfo.msgModified) | format}}</small>
+				<small>{{@txt.post_last_edited, @entryInfo.reasonBy, @entryInfo.reason, date("j M Y, g:i a", @entryInfo.msgModified) | format}}</small>
 			</check>
 		</div>
 		<div class="row">
@@ -73,7 +73,7 @@
 						{{ @item.body | raw }}
 						<check if="{{ @item.msgModified }}">
 							<hr>
-							<small>{{@txt.post_last_edited, @item.reasonBy, @item.reason, date("j, M, Y, g:i a", @item.msgModified) | format}}</small>
+							<small>{{@txt.post_last_edited, @item.reasonBy, @item.reason, date("j M Y, g:i a", @item.msgModified) | format}}</small>
 						</check>
 					</div>
 				</article>

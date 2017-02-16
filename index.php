@@ -77,7 +77,7 @@ $f3->route([
 // Sign up page
 $f3->route([
 	'POST /signup',
-],'\Controllers\UserAuth->signup');
+],'\Controllers\UserAuth->doSignup');
 
 // Login
 $f3->route([

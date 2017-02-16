@@ -111,7 +111,6 @@ class UserAuth extends Base
 		];
 		$form = \Form::instance();
 		$form->setOptions([
-			'prefix' => 'sign_',
 			'action' => 'signup',
 		]);
 
@@ -121,6 +120,12 @@ class UserAuth extends Base
 				'value' => '',
 				'text' => $f3->get('txt.login_'. $f),
 			]);
+
+		$form->addCaptcha([
+			'name' => 'captcha',
+			'url' => 'captcha',
+			'text' => $f3->get('txt.login_captcha'),
+		]);
 
 		$form->addHiddenField('token', $f3->get('SESSION.csrf'));
 
@@ -132,5 +137,10 @@ class UserAuth extends Base
 
 		$f3->set('content','form.html');
 		echo \Template::instance()->render('home.html');
+	}
+
+	function doSignup(\Base $f3, $params)
+	{
+		var_dump($f3->get('POST'));die;
 	}
 }

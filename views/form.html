@@ -1,4 +1,4 @@
-<form class="form-{{@_form.options.type}}" action="/{{@_form.options.action}}" accept-charset="{{@_form.options.charset}}" method="{{@_form.options.method}}" enctype="{{@_form.options.enctype}}" target="{{@_form.options.target}}">
+<form class="form-{{@_form.options.type}}" action="{{@BASE}}/{{@_form.options.action}}" accept-charset="{{@_form.options.charset}}" method="{{@_form.options.method}}" enctype="{{@_form.options.enctype}}" target="{{@_form.options.target}}">
 	<repeat group="{{ @_form.items }}" value="{{ @item }}">
 		<div class="form-group">
 		<switch expr="{{ @item.type }}">
@@ -22,6 +22,24 @@
 			</case>
 			<case value="hidden" break="{{ TRUE }}">
 				{{@item.html | raw}}
+			</case>
+			<case value="captcha" break="{{ TRUE }}">
+				<label for="{{@item.id}}" class="col-sm-2 control-label">
+					{{@item.text}}
+				</label>
+				<div class="col-sm-10">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<img src="{{@BASE}}/{{@item.url}}" />
+						</div>
+					</div>
+					{{@item.html | raw}}
+				<check if="{{ @item.desc }}">
+					<span id="helpBlock" class="help-block">
+						{{ @item.desc }}
+					</span>
+				</check>
+				</div>
 			</case>
 			<default>
 				<label for="{{@item.id}}" class="col-sm-2 control-label">
