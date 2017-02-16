@@ -101,4 +101,34 @@ class UserAuth extends Base
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
 		$f3->reroute('/');
 	}
+
+	function signupPage(\Base $f3, $params)
+	{
+		$fields = [
+			'userName',
+			'userEmail',
+			'passwd',
+		];
+		$form = \Form::instance();
+		$form->setOptions([
+			'prefix' => 'sign_',
+			'action' => 'signup',
+		]);
+
+		foreach ($fields as $f)
+			$form->addText([
+				'name' => $f,
+				'value' => '',
+				'text' => $f3->get('txt.login_'. $f),
+			]);
+
+		$form->addButton([
+			'text' => 'submit',
+		]);
+
+		$form->build();
+
+		$f3->set('content','form.html');
+		echo \Template::instance()->render('home.html');
+	}
 }

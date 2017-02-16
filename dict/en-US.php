@@ -39,9 +39,9 @@ return [
 	'login' => 'Login',
 	'login_success' => 'Welcome aboard pal!',
 	'logout_success' => 'phew... are you glad its over? yeah.. me too!',
-	'login_password' => 'Password',
-	'login_email' => 'Email',
-	'login_username' => 'Username',
+	'login_passwd' => 'Password',
+	'login_userEmail' => 'Email',
+	'login_userName' => 'Username',
 	'login_captcha' => 'Captcha',
 	'login_remember' => 'Remember me (pretty please!)',
 
