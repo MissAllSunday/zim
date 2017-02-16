@@ -20,6 +20,9 @@
 					</div>
 				</div>
 			</case>
+			<case value="hidden" break="{{ TRUE }}">
+				{{@item.html | raw}}
+			</case>
 			<default>
 				<label for="{{@item.id}}" class="col-sm-2 control-label">
 					{{@item.text}}

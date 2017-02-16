@@ -122,6 +122,8 @@ class UserAuth extends Base
 				'text' => $f3->get('txt.login_'. $f),
 			]);
 
+		$form->addHiddenField('token', $f3->get('SESSION.csrf'));
+
 		$form->addButton([
 			'text' => 'submit',
 		]);
