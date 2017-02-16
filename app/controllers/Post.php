@@ -178,7 +178,7 @@ class Post extends Base
 		$this->_models['topic']->load(['topicID = ?', $params['topicID']]);
 
 		// Delete all messages associated with this topic.
-		$this->_models['topic']->deleteMessages($this->_models['message']->getMessageIDs($params['topicID']));
+		$this->_models['message']->deleteMessages($this->_models['message']->getMessageIDs($params['topicID']));
 
 		// Delete the topic itself.
 		$this->_models['topic']->erase();

@@ -7,7 +7,7 @@
 		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>
 	</check>
 	<check if="{{@can.deleteTopic }}">
-		<a href="{{@BASE}}/deleteTopic/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">
+		<a href="{{@BASE}}/deleteTopic/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}" class="you_sure" data-confirm="{{@txt.confirm}}">
 		<button type="button" class="btn btn-sm">{{@txt.delete}}</button>
 		</a>
 	</check>

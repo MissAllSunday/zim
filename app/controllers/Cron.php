@@ -99,7 +99,7 @@ class Cron extends Base
 	function github()
 	{
 		// Yes, I am THAT lazy.
-		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
 
 		// Theres no such thing. @todo log it. How? I dunno...
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
@@ -113,7 +113,7 @@ class Cron extends Base
 
 	function manga()
 	{
-		$this->_models['cron']->load(['title = ?', __FUNCTION__]);
+		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
@@ -127,7 +127,7 @@ class Cron extends Base
 
 	function spoiler()
 	{
-		$this->_models['cron']->load(['title = ?'], __FUNCTION__);
+		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
