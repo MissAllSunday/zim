@@ -19,6 +19,7 @@ return [
 	'modify' => 'Modify',
 	'delete' => 'Delete',
 	'options' => 'Options',
+	'quote_select' => 'Quote selected text',
 	'confirm' => 'Are you sure?',
 
 	// Login errors

@@ -18,7 +18,9 @@
 		</p>
 		<hr>
 		<div  itemprop="articleBody">
-			{{ @entryInfo.body | raw }}
+			<div class="body" id="body{{@entryInfo.msgID}}">
+				{{ @entryInfo.body | raw }}
+			</body>
 			{{@txt.microData.publisher,  @BASE, @entryInfo.userName | format,raw}}
 			<check if="{{ @entryInfo.msgModified }}">
 				<hr>
@@ -69,7 +71,7 @@
 					<hr>
 					<meta itemprop="datePublished" content="{{@item.microDate}}" />
 					<meta itemprop="dateModified" content="{{@item.microDate}}" />
-					<div itemprop="text" class="body">
+					<div itemprop="text" class="body" id="body{{@item.msgID}}">
 						{{ @item.body | raw }}
 						<check if="{{ @item.msgModified }}">
 							<hr>
