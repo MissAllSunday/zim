@@ -6,12 +6,13 @@
 		</div>
 	</check>
 	<div class="form-group">
-		<check if="{{ !@quickReply }}">
+		<check if="{{ @quickReply }}">
 			<true>
-				<label for="postTitle">{{@txt.post_title}}</label>
-				<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @posting.title }}"></true>
-			<false>
 				<input type="hidden" name="title" value="{{ @posting.title }}"/>
+			</true>
+			<false>
+				<label for="postTitle">{{@txt.post_title}}</label>
+				<input type="text" class="form-control" name="title" id="postTitle" placeholder="" value="{{ @posting.title }}">
 			</false>
 		</check>
 		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
@@ -20,9 +21,9 @@
 	</div>
 	<check if="{{ !@currentUser->userID }}">
 		<div class="form-group">
-			<label for="postUsername">{{@txt.login_username}}</label>
+			<label for="postUsername">{{@txt.login_userName}}</label>
 			<input type="text" class="form-control" name="userName" id="postUsername" placeholder="" value="{{ @posting.userName }}">
-			<label for="postEmail">{{@txt.login_email}}</label>
+			<label for="postEmail">{{@txt.login_userEmail}}</label>
 			<input type="email" class="form-control" name="userEmail" id="postEmail" placeholder="" value="{{ @posting.email }}">
 			<label for="loginCaptcha">{{@txt.login_captcha}}</label>
 			<div class="panel panel-default site-login">

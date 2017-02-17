@@ -77,10 +77,14 @@ class Post extends Base
 
 	function create(\Base $f3, $params)
 	{
-		$exclude = [
-			'msg' => ['msgID'],
-			'topic' => ['topicID'],
-		];
+		$toCheck = ['title', 'body'];
+
+		// Guest need some more checks
+		if (!$f3->get('currentUser')->userID)
+		{
+			$toCheck[] = 'userEmail';
+			$toCheck[] = 'userName';
+		}
 
 		// Need this for those pesky guests!
 		$audit = \Audit::instance();
@@ -117,12 +121,12 @@ class Post extends Base
 		$this->_models['allow']->can('post'. (empty($data['topicID']) ? 'Topic' : ''), true);
 
 		// Moar handpicked!
-		foreach (['title', 'body'] as $v)
+		foreach ($toCheck as $v)
 			if(empty($data[$v]))
 				$errors[] = 'empty_'. $v;
 
 		// Did you provide an email? is it valid?
-		if (!empty($data['userEmail']) && !$audit->email($data['userEmail']))
+		if (!empty($data['userEmail']) && !$audit->email($data['userEmail'], true))
 			$errors[] = 'bad_email';
 
 		// Clean up the tags.

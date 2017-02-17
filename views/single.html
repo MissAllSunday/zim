@@ -86,7 +86,7 @@
 		<check if="{{ @comments }}">
 			<include href="buttons.html" />
 		</check>
-		<check if="{{@can.post }}">
+		<check if="{{@can.post && !@currentUser->isBot }}">
 			<div class="row quickReply">
 				<div class="col-md-12 col-md-offset-0 col-xs-11">
 					<include href="post.html" />
