@@ -20,17 +20,19 @@ class Config
 		));
 
 		$this->f3->mset([
-			'CACHE' => false,
-			'DEBUG' => 3,
+			'Logs' => 'logs/',
+			'CACHE' => $this->f3->get('_memcache'),
+			'DEBUG' => 0,
 			'PREFIX' => 'txt.',
 			'ENCODING' => 'UTF-8',
 			'LOCALES' => 'dict/',
 			'LANGUAGE' => 'en-US',
 			'UI' => 'views/',
-			'SCHEME' => 'http',
+			'SCHEME' => 'https',
 			'TZ' => 'America/Mexico_City',
 			'site' => array(
-				'home' => 'Miss All Sunday'
+				'home' => 'Miss All Sunday',
+				'title' => 'Miss All Sunday',
 			),
 		]);
 
@@ -38,6 +40,7 @@ class Config
 		$this->f3->set('Tools', new \Services\Tools($this->f3));
 
 		// Set default metadata tags and/or other common HTML tags.
+		$this->f3->set('site.metaTitle', 'Miss All Sunday');
 		$this->f3->set('site.keywords', $this->f3->get('txt.site_keywords'));
 		$this->f3->set('site.description', $this->f3->get('txt.site_desc'));
 

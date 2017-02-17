@@ -5,7 +5,7 @@ require_once('lib/autoload.php');
 
 /** @var \Base $f3 */
 $f3 = \Base::instance();
-
+$f3->config('setup.ini');
 $f3->set('AUTOLOAD', 'app/');
 
 $f3->set('Config', new \Services\Config($f3));
@@ -28,6 +28,12 @@ $f3->route([
 	'GET /@title',
 	'GET /@title/page/@page',
 ],'\Controllers\Blog->single');
+
+// A single board.
+$f3->route([
+	'GET /board/@name',
+	'GET /board/@name/page/@page',
+],'\Controllers\Board->home');
 
 // Posting/Editing page.
 $f3->route([
@@ -62,12 +68,6 @@ $f3->route([
 	'GET /forum/',
 	'GET /forum/page/@page',
 ],'\Controllers\Forum->home');
-
-// A single board.
-$f3->route([
-	'GET /board/@name',
-	'GET /board/@name/page/@page',
-],'\Controllers\Board->home');
 
 // Sign up page
 $f3->route([
@@ -140,9 +140,7 @@ $f3->route('GET /background',
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);
-	},
-	259200
-);
+	});
 
 // Crons.
 Cron::instance();
