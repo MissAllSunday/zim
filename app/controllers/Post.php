@@ -23,10 +23,10 @@ class Post extends Base
 		$this->_rows = array_merge($this->_rows, $params);
 
 		// Check for permissions and that stuff.
-		$this->_models['allow']->can('post'. (!empty($this->_rows['topicID']) ? 'Topic' : ''), true);
+		$this->_models['allow']->can('post'. (empty($this->_rows['topicID']) ? 'Topic' : ''), true);
 
 		// Are we editing? if so, load the data.
-		if (!empty($params['edit']) && !empty($params['msgID']));
+		if (!empty($params['edit']) && !empty($params['msgID']))
 			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
 
 		// If theres SESSION data, use that.
@@ -77,6 +77,11 @@ class Post extends Base
 
 	function create(\Base $f3, $params)
 	{
+		$exclude = [
+			'msg' => ['msgID'],
+			'topic' => ['topicID'],
+		];
+
 		// Need this for those pesky guests!
 		$audit = \Audit::instance();
 
@@ -87,7 +92,7 @@ class Post extends Base
 		$errors = [];
 
 		// Captcha.
-		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
+		if ($f3->exists('POST.captcha') && $f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
 			$errors[] = 'bad_captcha';
 
 		// Token check.
@@ -112,16 +117,16 @@ class Post extends Base
 		$this->_models['allow']->can('post'. (empty($data['topicID']) ? 'Topic' : ''), true);
 
 		// Moar handpicked!
-		foreach ($data as $k => $v)
-			if(empty($v))
-				$errors[] = 'empty_'. $k;
+		foreach (['title', 'body'] as $v)
+			if(empty($data[$v]))
+				$errors[] = 'empty_'. $v;
 
 		// Did you provide an email? is it valid?
 		if (!empty($data['userEmail']) && !$audit->email($data['userEmail']))
 			$errors[] = 'bad_email';
 
 		// Clean up the tags.
-		$data['tags'] = $f3->exists('POST.tags') ? $f3->get('Tools')->commaSeparated($f3->get('POST.tags')) : '';
+		$data['tags'] = !empty($data['tags']) ? $f3->get('Tools')->commaSeparated($data['tags']) : '';
 
 		// Lets take five shall we?
 		if (!empty($errors))

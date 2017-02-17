@@ -170,6 +170,7 @@ class Message extends \DB\SQL\Mapper
 		// Need these. For reasons!
 		$f3 = \Base::instance();
 		$topicModel = new \Models\Topic($f3->get('DB'));
+		$userModel = new \Models\User($f3->get('DB'));
 
 		$params = array_merge(self::$rows, $params);
 
@@ -231,6 +232,15 @@ class Message extends \DB\SQL\Mapper
 
 		// And update the topic.
 		$this->topicID = $topicModel->topicID;
+
+		// Lastly, if theres an user, update the user table.
+		if($this->userID)
+		{
+			$userModel->load(['userID = ?', $this->userID]);
+			$userModel->posts++;
+			$userModel->lmsgID = $this->msgID;
+			$userModel->save();
+		}
 
 		// Clean up.
 		$this->save();
