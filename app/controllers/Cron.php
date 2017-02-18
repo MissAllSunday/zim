@@ -61,6 +61,7 @@ class Cron extends Base
 				'userID' => $this->_models['cron']->userID,
 				'userName' => $this->_models['cron']->userName,
 				'userIP' => '127.0.0.0',
+				'tags' => $this->_models['cron']->tags,
 			];
 
 			// Start setting some values.
