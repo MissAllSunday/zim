@@ -122,7 +122,7 @@ class Message extends \DB\SQL\Mapper
 			$data[$k] = $this->prepareData($r);
 		}
 
-		return array_reverse($data);
+		return $data;
 	}
 
 	function single($params = [])
