@@ -53,10 +53,7 @@ class Cron extends Base
 
 			// No? then log it.
 			else
-			{
 				$this->_models['cron']->hash = $hash;
-				$this->_models['cron']->save();
-			}
 
 			$params = [
 				'boardID' => $this->_models['cron']->boardID,
@@ -87,12 +84,14 @@ class Cron extends Base
 	' . (!empty($this->_models['cron']->footer) ? $this->_models['cron']->footer : '');
 
 			// Might have to update the subject for the single topic people
-			$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . ( !$this->_models['cron']->topicID && !empty($feedTitle) ? $feedTitle : $title);
+			$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . $title;
 
 			$this->_models['message']->createEntry($params);
 			$this->_models['message']->reset();
 		}
 
+		$this->_models['cron']->itemCount++;
+		$this->_models['cron']->save();
 		$this->_models['cron']->reset();
 	}
 
@@ -114,7 +113,7 @@ class Cron extends Base
 
 	function manga()
 	{
-		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
+		$this->_models['cron']->load(['title = ?',  'manga']);
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
@@ -128,7 +127,7 @@ class Cron extends Base
 
 	function spoiler()
 	{
-		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
+		$this->_models['cron']->load(['title = ?',  'spoiler']);
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
