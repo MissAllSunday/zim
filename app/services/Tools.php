@@ -130,8 +130,32 @@ class Tools extends \Prefab
 	function sanitize($str = '')
 	{
 		$config = \HTMLPurifier_Config::createDefault();
+		$config->set('Cache.DefinitionImpl', null);
 		$config->set('Core', 'Encoding', 'UTF-8');
 		$config->set('HTML', 'Doctype', 'HTML 4.01 Transitional');
+		$def = $config->getHTMLDefinition(true);
+		$meta = $def->addElement(
+			'meta',
+			'Inline',
+			'Flow',
+			'Common',
+			[
+				'itemprop' => 'Text',
+				'content' => 'URI|Number',
+				'itemscope' => 'Bool',
+				'itemtype' => 'URI',
+			]
+		);
+		$div = $def->addElement(
+			'div',
+			'Block',
+			'Flow',
+			'Common',
+			[ // attributes
+				'itemprop' => 'Text',
+				'content' => 'URI|Number',
+			]
+		);
 		$purifier = new \HTMLPurifier();
 
 		return $purifier->purify($str);
