@@ -57,6 +57,8 @@ Wait for something to happen...',
 	// Posting.
 	'post_submit' => 'Submit',
 	'post_preview' => 'Preview',
+	'post_message' => 'Message',
+	'post_quickreply' => 'Quick reply',
 	'post_title' => 'Title',
 	'post_tags' => 'Tags',
 	'post_editing' => 'Editing {0}',

@@ -143,6 +143,6 @@ $f3->route('GET /background',
 	});
 
 // Crons.
-Cron::instance();
+\Cron::instance();
 
 $f3->run();

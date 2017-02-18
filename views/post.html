@@ -35,6 +35,14 @@
 		</div>
 	</check>
 	<div class="form-group">
+		<check if="{{ @quickReply && @currentUser->userID }}">
+			<true>
+				<label for="summernote">{{@txt.post_quickreply}}</label>
+			</true>
+			<false>
+				<label for="summernote">{{@txt.post_message}}</label>
+			</false>
+		</check>
 		<textarea name="body"  class="form-control" rows="6" id="summernote">{{ @posting.body }}</textarea>
 		<check if="{{ @posting.msgID }}">
 			<label for="postReason">{{@txt.post_reason}}</label>

@@ -25,7 +25,7 @@ class Cron extends Base
 
 		// Is there a error? @todo log it.
 		if ($this->simplePie->error())
-			return false;
+			return 'error:'. $this->simplePie->error();
 
 		$itemCount = 0;
 		$getItems = $this->simplePie->get_items();
@@ -89,7 +89,7 @@ class Cron extends Base
 			// Might have to update the subject for the single topic people
 			$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . ( !$this->_models['cron']->topicID && !empty($feedTitle) ? $feedTitle : $title);
 
-			$this->_models['message']->createEntry($data);
+			$this->_models['message']->createEntry($params);
 			$this->_models['message']->reset();
 		}
 
@@ -99,13 +99,14 @@ class Cron extends Base
 	function github()
 	{
 		// Yes, I am THAT lazy.
-		$this->_models['cron']->load(['title = ?',  __FUNCTION__]);
+		$this->_models['cron']->load(['title = ?',  'github']);
 
 		// Theres no such thing. @todo log it. How? I dunno...
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
-			return false;
+			return 'github cron disabled';
 
 		$this->simplePie->set_feed_url($this->_models['cron']->url);
+		echo 'set url: '. $this->_models['cron']->url . PHP_EOL;
 
 		// Run.
 		$this->init();
