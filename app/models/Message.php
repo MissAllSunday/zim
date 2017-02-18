@@ -97,7 +97,7 @@ class Message extends \DB\SQL\Mapper
 		$data = $this->db->exec('
 			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
-				WHERE topicID = t.topicID) as max_count
+				WHERE topicID = m.topicID) as max_count
 			FROM suki_c_message AS m
 			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
@@ -114,7 +114,7 @@ class Message extends \DB\SQL\Mapper
 
 			// Build the pagination stuff.
 			if ($r['max_count'] > $f3->get('paginationLimit'))
-				$r['last_url'] = $r['url'] . '/page/' . ($r['pages'] - 1) .'#msg'. $r['lmsgID'];
+				$r['last_url'] = $r['url'] . '/page/' . ($r['pages'] - 1) .'#msg'. $r['msgID'];
 
 			else
 				$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
@@ -122,7 +122,7 @@ class Message extends \DB\SQL\Mapper
 			$data[$k] = $this->prepareData($r);
 		}
 
-		return $data;
+		return array_reverse($data);
 	}
 
 	function single($params = [])

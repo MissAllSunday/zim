@@ -45,7 +45,7 @@
 		<script async src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
 		<check if="{{ @site.customJS }}">
 			<repeat group="{{ @site.customJS }}" value="{{ @item }}">
-		<script async type="text/javascript" src="{{@BASE}}/{{@UI}}/js/{{ @item }}"></script>
+		<script async type="text/javascript" src="{{@BASE}}/{{@UI}}js/{{ @item }}"></script>
 			</repeat>
 		</check>
 		<script async type="text/javascript" src="{{@BASE}}/minify/js?files=index.js,ohvideos.min.js,select.js"></script>
