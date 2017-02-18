@@ -110,8 +110,7 @@ class Message extends \DB\SQL\Mapper
 		foreach ($data as $k => $r)
 		{
 			// Lets avoid issues.
-			$r['max_count'] = (int) $r['max_count'];
-			$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
+			$r['pages'] = (int) ceil((int) $r['max_count'] / $f3->get('paginationLimit'));
 
 			// Build the pagination stuff.
 			if ($r['max_count'] > $f3->get('paginationLimit'))
