@@ -1,5 +1,5 @@
 <form class="form-horizontal content" method="POST" action="{{ @BASE }}/post/{{!@posting.topicID ? 'topic' : 'msg'}}">
-	<check if="{{ !@posting.topicID}}">
+	<check if="{{ !@posting.topicID || @isTopic}}">
 		<div class="form-group">
 			<label for="postTags">{{@txt.post_tags}}</label>
 			<input type="text" class="form-control" name="tags" id="postTags" placeholder="" value="{{ @posting.tags }}">

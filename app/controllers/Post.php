@@ -21,16 +21,10 @@ class Post extends Base
 	{
 		// The board and topic IDs.
 		$this->_rows = array_merge($this->_rows, $params);
+		$this->_rows['_action'] = 'posting';
 
 		// Check for permissions and that stuff.
 		$this->_models['allow']->can('post'. (empty($this->_rows['topicID']) ? 'Topic' : ''), true);
-
-		// Are we editing? if so, load the data.
-		if (strpos($params[0], 'edit') !== false && !empty($params['msgID']))
-		{
-			$this->_models['message']->reset();
-			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
-		}
 
 		// If theres SESSION data, use that.
 		if ($f3->exists('SESSION.posting'))
@@ -52,6 +46,14 @@ class Post extends Base
 
 			if (empty($this->_rows['title']))
 				$this->_rows['title'] =  $f3->get('txt.re') . $topicInfo['title'];
+		}
+
+		// Are we editing? if so, load the data.
+		if (strpos($params[0], 'edit') !== false && !empty($params['msgID']))
+		{
+			$this->_models['message']->reset();
+			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
+			$f3->set('isTopic', ($this->_rows['msgID'] == $topicInfo['msgID']));
 		}
 
 		$this->_models['board']->load(['boardID = ?', $this->_rows['boardID']]);
