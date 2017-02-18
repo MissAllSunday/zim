@@ -37,6 +37,14 @@ div.msgOptions button.btn{
 	height: 80px;
 }
 
+ul.latestMessages{
+	font-size: 14px;
+}
+ul.latestMessages li{
+	border: none;
+	background-color: transparent;
+}
+
 #comments {
 	margin-top: 20px;
 }

@@ -40,5 +40,7 @@ class Base
 			$can[$name] = $this->_models['allow']->can($name);
 
 		$f3->set('can', $can);
+
+		$f3->set('latestMessages', $this->_models['message']->latestMessages());
 	}
 }

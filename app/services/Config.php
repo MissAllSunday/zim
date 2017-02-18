@@ -34,6 +34,7 @@ class Config
 				'home' => 'Miss All Sunday',
 				'title' => 'Miss All Sunday',
 			),
+			'paginationLimit' => 10,
 		]);
 
 		// This should be automatically set.... @todo

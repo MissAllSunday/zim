@@ -53,7 +53,7 @@ class Message extends \DB\SQL\Mapper
 			return $entries;
 	}
 
-	function entryInfo($id = 0, $limit = 10)
+	function entryInfo($id = 0)
 	{
 		$f3 = \Base::instance();
 		$r = [];
@@ -76,7 +76,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Lets avoid issues.
 		$r['max_count'] = (int) $r['max_count'];
-		$r['pages'] = (int) ceil($r['max_count'] / $limit);
+		$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
 
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
@@ -88,6 +88,42 @@ class Message extends \DB\SQL\Mapper
 		$r = $this->prepareData($r);
 
 		return $r;
+	}
+
+	function latestMessages($limit = 5)
+	{
+		$f3 = \Base::instance();
+
+		$data = $this->db->exec('
+			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE topicID = t.topicID) as max_count
+			FROM suki_c_topic AS t
+			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			ORDER BY m.msgID DESC
+			LIMIT :limit', [
+				':limit' => $limit,
+			], 3600);
+
+		foreach ($data as $k => $r)
+		{
+			// Lets avoid issues.
+			$r['max_count'] = (int) $r['max_count'];
+			$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
+
+			// Build the pagination stuff.
+			if ($r['max_count'] > $f3->get('paginationLimit'))
+				$r['last_url'] = $r['url'] . '/page/' . ($r['pages'] - 1) .'#msg'. $r['lmsgID'];
+
+			else
+				$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
+
+			$data[$k] = $this->prepareData($r);
+		}
+
+		return $data;
 	}
 
 	function single($params = [])
