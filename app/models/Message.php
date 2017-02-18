@@ -98,8 +98,8 @@ class Message extends \DB\SQL\Mapper
 			SELECT t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = t.topicID) as max_count
-			FROM suki_c_topic AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			FROM suki_c_message AS m
+			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			ORDER BY m.msgID DESC
