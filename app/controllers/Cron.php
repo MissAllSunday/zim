@@ -47,7 +47,7 @@ class Cron extends Base
 				continue;
 
 			// Check if this item has already been posted.
-			$hash = md5($item->get_title());
+			$hash = md5($item->get_title() . $item->get_date());
 			if ($this->_models['cron']->hash == $hash)
 				continue;
 
