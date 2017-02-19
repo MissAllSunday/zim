@@ -239,7 +239,11 @@ class Tools extends \Prefab
 
 		$find = [];
 		$replace = [];
-		$base = strip_tags(preg_replace(array('"<a href(.*?)>(.*?)<"', '"/a>"'), array('',''), $str));
+		$base = strip_tags(preg_replace(
+			['"<a href(.*?)>(.*?)<"', '"/a>"', '"img (.*?)>"'],
+			['','',''],
+			$str
+		));
 		$noFollow = $f3->get('currentUser')->userID ? '' : 'rel="nofollow"';
 
 		// Monster regex is monster.
