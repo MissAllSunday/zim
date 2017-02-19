@@ -5,7 +5,7 @@ namespace Controllers;
 class Base
 {
 	protected $_models = [];
-	protected $_defaultModels = ['message', 'user', 'allow'];
+	protected $_defaultModels = ['message', 'user', 'allow', 'board'];
 
 	public function beforeRoute($f3)
 	{
@@ -41,6 +41,10 @@ class Base
 
 		$f3->set('can', $can);
 
-		$f3->set('latestMessages', $this->_models['message']->latestMessages());
+		// Latest messages
+		$f3->set('latestMessages', $this->_models['message']->latestMessages(), 3600);
+
+		// Boards
+		$f3->set('boards', $this->_models['board']->find(null, null, 604800));
 	}
 }

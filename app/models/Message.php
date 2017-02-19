@@ -105,7 +105,7 @@ class Message extends \DB\SQL\Mapper
 			ORDER BY m.msgID DESC
 			LIMIT :limit', [
 				':limit' => $limit,
-			], 3600);
+			]);
 
 		foreach ($data as $k => $r)
 		{
