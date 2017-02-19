@@ -135,7 +135,35 @@ $f3->route('GET /background',
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);
-	}, 259200);
+	}, 432000);
+
+// Me!
+$f3->route('GET /me',
+	function($f3, $args)
+	{
+		$day = date('j');$month = date('F');
+		$path = $f3->get('_rootPath') .'suki/';
+		$image = $day <= 15 ? '1' : '2';
+		$file = '';
+
+		// Independence Day
+		if (($day == 14 || $day == 15 || $day == 16) && $month == 'September')
+			$file = 'mexico.gif';
+
+		// Marceline!
+		if (in_array($day, array(27, 28, 29, 30, 31)) && $month == 'October')
+			$file = 'marceline.gif';
+
+		// Día de muertos
+		else if (($day == 1 || $day == 2) && $month == 'November')
+			$file = 'catrina.jpg';
+
+		else
+			$file =  $month . '-0'. $image . '.gif';
+
+		header('Content-Type: image/gif');
+		echo $f3->read($path . $file);
+	}, 86400);
 
 // Crons.
 \Cron::instance();
