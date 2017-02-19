@@ -149,16 +149,16 @@ class Cron extends Base
 		$message = $doc->documentElement->getElementsByTagName('message')->item(0);
 
 		if (!empty($message) && is_object($message))
-		$news = [
-			'title' => $message->getElementsByTagName('title')->item(0)->nodeValue,
-			'body' => $message->getElementsByTagName('body')->item(0)->nodeValue,
-			'tags' => $message->getElementsByTagName('tags')->item(0)->nodeValue,
-			'boardID' => $this->f3->get('CRON.blogBoardID'),
-			'topicID' => $this->f3->get('CRON.blogTopicID'),
-			'userID' => $this->f3->get('CRON.blogUserID'),
-			'userName' => $this->f3->get('CRON.blogUserName'),
-			'userIP' => '127.0.0.0',
-		];
+			$news = [
+				'title' => $message->getElementsByTagName('title')->item(0)->nodeValue,
+				'body' => $message->getElementsByTagName('body')->item(0)->nodeValue,
+				'tags' => $message->getElementsByTagName('tags')->item(0)->nodeValue,
+				'boardID' => $this->f3->get('CRON.blogBoardID'),
+				'topicID' => $this->f3->get('CRON.blogTopicID'),
+				'userID' => $this->f3->get('CRON.blogUserID'),
+				'userName' => $this->f3->get('CRON.blogUserName'),
+				'userIP' => '127.0.0.0',
+			];
 
 		else
 			return false;

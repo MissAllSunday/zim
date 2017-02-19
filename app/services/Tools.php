@@ -141,22 +141,16 @@ class Tools extends \Prefab
 			'Common',
 			[
 				'itemprop' => 'Text',
-				'content' => 'URI|Number',
+				'content' => 'URI',
 				'itemscope' => 'Bool',
 				'itemtype' => 'URI',
 			]
 		);
-		$div = $def->addElement(
-			'div',
-			'Block',
-			'Flow',
-			'Common',
-			[ // attributes
-				'itemprop' => 'Text',
-				'content' => 'URI|Number',
-			]
-		);
-		$purifier = new \HTMLPurifier();
+		$def->addAttribute('div', 'itemprop', 'Text');
+		$def->addAttribute('div', 'content', 'URI');
+		$def->addAttribute('div', 'data-ohara_youtube', 'CDATA');
+
+		$purifier = new \HTMLPurifier($config);
 
 		return $purifier->purify($str);
 	}

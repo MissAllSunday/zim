@@ -80,7 +80,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Build the pagination stuff.
 		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . '/page/' . ($r['pages'] - 1) .'#msg'. $r['lmsgID'];
+			$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
 
 		else
 			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
