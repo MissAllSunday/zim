@@ -130,14 +130,12 @@ class Tools extends \Prefab
 	function sanitize($str = '')
 	{
 		$config = \HTMLPurifier_Config::createDefault();
-		$config->set('Cache.DefinitionImpl', null);
 		$config->set('Core', 'Encoding', 'UTF-8');
-		$config->set('HTML', 'Doctype', 'HTML 4.01 Transitional');
 		$def = $config->getHTMLDefinition(true);
 		$meta = $def->addElement(
 			'meta',
 			'Inline',
-			'Flow',
+			'Empty',
 			'Common',
 			[
 				'itemprop' => 'Text',
@@ -147,6 +145,8 @@ class Tools extends \Prefab
 			]
 		);
 		$def->addAttribute('div', 'itemprop', 'Text');
+		$def->addAttribute('div', 'itemscope', 'Bool');
+		$def->addAttribute('div', 'itemtype', 'URI');
 		$def->addAttribute('div', 'content', 'URI');
 		$def->addAttribute('div', 'data-ohara_youtube', 'CDATA');
 
@@ -218,13 +218,13 @@ class Tools extends \Prefab
 		return round($bytes, 2) . ($showUnits ? ' ' . $units[$pow] : '');
 	}
 
-	public function preparser($str = '')
+	public function parser($str = '')
 	{
 		$f3 = \Base::instance();
 
 		// Youtube.
 		$str =  preg_replace_callback(
-			'~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>  | <\/a>  ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix',
+			'~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a> ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix',
 			function ($matches)
 			{
 				if (!empty($matches) && !empty($matches[1]))
@@ -236,13 +236,6 @@ class Tools extends \Prefab
 			},
 			$str
 		);
-
-		return $str;
-	}
-
-	public function parser($str = '')
-	{
-		$f3 = \Base::instance();
 
 		$find = [];
 		$replace = [];

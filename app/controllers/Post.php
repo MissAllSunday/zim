@@ -110,10 +110,8 @@ class Post extends Base
 
 		$this->_models['message']->reset();
 
-		// Validation and sanitization
-		$data = array_map(function($var) use($f3){
-			return $f3->get('Tools')->sanitize($var);
-		}, array_intersect_key($f3->get('POST'), $this->_rows));
+		// Validation
+		$data = array_intersect_key($f3->get('POST'), $this->_rows);
 
 		// Check that the board really exists.
 		$this->checkBoard($data['boardID']);
@@ -141,7 +139,9 @@ class Post extends Base
 		if (!empty($errors))
 		{
 			// Save the data.
-			$f3->set('SESSION.posting', $data);
+			$f3->set('SESSION.posting', array_map(function($var) use($f3){
+				return $f3->get('Tools')->sanitize($var);
+			}, array_intersect_key($f3->get('POST'), $this->_rows)));
 
 			\Flash::instance()->addMessage($errors, 'danger');
 			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);

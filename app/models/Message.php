@@ -213,8 +213,6 @@ class Message extends \DB\SQL\Mapper
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
 
-		$params['body'] = $f3->get('Tools')->preparser($params['body']);
-
 		// Be nice.
 		$params = array_map(function($var) use($f3){
 			return $f3->get('Tools')->sanitize($var);

@@ -143,7 +143,7 @@ $(function() {
 					});
 				};
 				this.buildImg = function(imgUrl){
-					var imgDom = new Image(),
+					var imgDom = new Image();
 						imgDom.src = imgUrl;
 					$(imgDom).load(function(){
 						idom = $('<div/>', {

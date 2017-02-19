@@ -14,7 +14,7 @@
 				</span>
 				{{@txt.on}} {{@entryInfo.date}}
 				<meta itemprop="datePublished" content="{{@entryInfo.microDate}}" />
-				<meta itemprop="dateModified" content="{{@entryInfo.microDate}}" />
+				<meta itemprop="dateModified" content="{{@entryInfo.msgModified ? date('c', @entryInfo.msgModified) : @entryInfo.microDate}}" />
 		</p>
 		<hr>
 		<div  itemprop="articleBody">
@@ -71,7 +71,7 @@
 					</check>
 					<hr>
 					<meta itemprop="datePublished" content="{{@item.microDate}}" />
-					<meta itemprop="dateModified" content="{{@item.microDate}}" />
+					<meta itemprop="dateModified" content="{{@item.msgModified ? date('c', @item.msgModified) : @item.microDate}}" />
 					<div itemprop="text" class="body" id="body{{@item.msgID}}">
 						{{ @item.body | raw }}
 						<check if="{{ @item.msgModified }}">
