@@ -102,8 +102,7 @@ $f3->route('GET /minify/@type',
 		$files = preg_replace('/(\.+\/)/','', $f3->clean($f3->get('GET.files')));
 		echo Web::instance()->minify($files, null, true, $path);
 	},
-	0
-	// 3600*24
+	3600*24
 );
 
 // Captcha.
