@@ -45,6 +45,7 @@ $f3->route([
 // Posting.
 $f3->route([
 	'POST /post/@type',
+	'POST /edit/@type',
 ],'\Controllers\Post->create');
 
 // Preview.

@@ -1,4 +1,4 @@
-<form class="form-horizontal content" method="POST" action="{{ @BASE }}/post/{{!@posting.topicID ? 'topic' : 'msg'}}">
+<form class="form-horizontal content" method="POST" action="{{ @BASE }}/{{ @isEditing ? 'edit' : 'post'}}/{{!@posting.topicID ? 'topic' : 'msg'}}">
 	<check if="{{ !@posting.topicID || @isTopic}}">
 		<div class="form-group">
 			<label for="postTags">{{@txt.post_tags}}</label>
@@ -17,6 +17,7 @@
 		</check>
 		<input type="hidden" name="boardID" value="{{ @posting.boardID }}"/>
 		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>
+		<input type="hidden" name="msgID" value="{{ @posting.msgID }}"/>
 		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
 	</div>
 	<check if="{{ !@currentUser->userID }}">

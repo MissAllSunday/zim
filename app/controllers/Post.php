@@ -21,7 +21,7 @@ class Post extends Base
 	{
 		// The board and topic IDs.
 		$this->_rows = array_merge($this->_rows, $params);
-		$this->_rows['_action'] = 'posting';
+		$f3->set('isEditing', strpos($params[0], 'edit') !== false);
 
 		// Check for permissions and that stuff.
 		$this->_models['allow']->can('post'. (empty($this->_rows['topicID']) ? 'Topic' : ''), true);
@@ -49,7 +49,7 @@ class Post extends Base
 		}
 
 		// Are we editing? if so, load the data.
-		if (strpos($params[0], 'edit') !== false && !empty($params['msgID']))
+		if ($f3->get('isEditing') && !empty($params['msgID']))
 		{
 			$this->_models['message']->reset();
 			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
@@ -83,6 +83,8 @@ class Post extends Base
 	function create(\Base $f3, $params)
 	{
 		$toCheck = ['title', 'body'];
+
+		$f3->set('isEditing', strpos($params[0], 'edit') !== false);
 
 		// Guest need some more checks
 		if (!$f3->get('currentUser')->userID)
@@ -147,14 +149,19 @@ class Post extends Base
 			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);
 		}
 
-		// Fill up the user data.
-		if ($f3->get('currentUser')->userID)
+		// Are we editing? if so, load the data.
+		if ($f3->get('isEditing') && !empty($data['msgID']))
 		{
-			$data['userName'] = $f3->get('currentUser')->userName;
-			$data['userEmail'] = $f3->get('currentUser')->userEmail;
+			$this->_models['message']->reset();
+			$editedData = $this->_models['message']->load(['msgID = ?', $data['msgID']]);
+			$f3->set('isTopic', ($editedData['msgID'] == $topicInfo['msgID']));
+			$data = array_merge($data, [
+				'userName' => $editedData->userName,
+				'userEmail' => $editedData->userEmail,
+				'userID' => $editedData->userID,
+			]);
+			unset($editedData);
 		}
-
-		$data['userID'] = $f3->get('currentUser')->userID;
 
 		// All good!
 		$this->_models['message']->createEntry($data);
