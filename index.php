@@ -165,7 +165,4 @@ $f3->route('GET /me',
 		echo $f3->read($path . $file);
 	}, 86400);
 
-// Crons.
-\Cron::instance();
-
 $f3->run();
