@@ -37,6 +37,6 @@ class Auth
 		$f3->set('latestMessages', $this->_models['message']->latestMessages(), 3600);
 
 		// Boards
-		$f3->set('boards', $this->_models['board']->find(null, null, 604800));
+		$f3->set('boards', $this->_models['board']->getBoards());
 	}
 }

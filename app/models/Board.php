@@ -9,6 +9,13 @@ class Board extends \DB\SQL\Mapper
 		parent::__construct($db, 'suki_c_board');
 	}
 
+	function getBoards()
+	{
+		return $this->db->exec('
+			SELECT *
+			FROM suki_c_board', null, 604800);
+	}
+
 	function countTopics($id)
 	{
 		$data = $this->db->exec('
