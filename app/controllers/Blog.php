@@ -77,6 +77,8 @@ class Blog extends Base
 				'title' =>  $f3->get('txt.re'). $entryInfo['title'],
 			]);
 			$f3->set('quickReply', true);
+			$f3->set('isEditing', false);
+			$f3->set('isTopic', false);
 
 			// Registered users get a nice editor to play with
 			if ($f3->get('currentUser')->userID)
