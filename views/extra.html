@@ -10,7 +10,7 @@
 	<h4>{{@txt.boards}}</h4>
 	<ul class="list-group latestMessages">
 	<repeat group="{{ @boards }}" value="{{ @item }}">
-		<li class="list-group-item"><a href="{{@BASE}}/{{@item.url}}">{{@item.title}}</a></li>
+		<li class="list-group-item"><a href="{{@BASE}}/board/{{@item.url}}">{{@item.title}}</a></li>
 	</repeat>
 	</ul>
 </div>
