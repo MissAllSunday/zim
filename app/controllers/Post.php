@@ -161,8 +161,15 @@ class Post extends Base
 				'userEmail' => $editedData->userEmail,
 				'userID' => $editedData->userID,
 			]);
-			unset($editedData);
 		}
+
+		// topic/reply then, fill up the user stuff fom the currnet user
+		else
+			$data = array_merge($data, [
+				'userName' => $f3->get('currentUser')->userName,
+				'userEmail' => $f3->get('currentUser')->userEmail,
+				'userID' => $f3->get('currentUser')->userID,
+			]);
 
 		// All good!
 		$this->_models['message']->createEntry($data);
