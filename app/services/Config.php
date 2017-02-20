@@ -40,7 +40,8 @@ class Config
 		$this->f3->set('Tools', new \Services\Tools($this->f3));
 
 		// Set default metadata tags and/or other common HTML tags.
-		$this->f3->set('site.metaTitle', 'Miss All Sunday');
+		$this->f3->set('site.currentUrl', 'http://missallsunday.com');
+		$this->f3->set('site.metaTitle', 'Miss All Sunday - Index');
 		$this->f3->set('site.keywords', $this->f3->get('txt.site_keywords'));
 		$this->f3->set('site.description', $this->f3->get('txt.site_desc'));
 

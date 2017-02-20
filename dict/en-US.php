@@ -220,7 +220,7 @@ Wait for something to happen...',
 		'Slowly repeating, no-one else has heard me say, nothing really',
 		'Nelly, I am Heathcliff!',
 		'Constantly talking isn\'t necessarily communicating',
-		' Too many guys think I\'m a concept, or I complete them, or I\'m gonna make them alive. But I\'m just a fucked-up girl who\'s lookin\' for my own peace of mind; don\'t assign me yours',
+		'Too many guys think I\'m a concept, or I complete them, or I\'m gonna make them alive. But I\'m just a fucked-up girl who\'s lookin\' for my own peace of mind; don\'t assign me yours',
 		'You don\'t tell me things, Joel. I\'m an open book. I tell you everything, every damn, embarrassing thing',
 		'Are we like those bored couples you feel sorry for in restaurants? Are we the dining dead? I can\'t stand the idea of us being a couple people think that about',
 		'I don\'t need nice. I don\'t need myself to be it, and I don\'t need anybody else to be it at me',
@@ -250,7 +250,7 @@ Wait for something to happen...',
 		</span>
 	</span>',
 		'image' => '<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<img src="https://i.imgur.com/6CnW7sL.jpg"/>
+			<img src="https://i.imgur.com/6CnW7sL.jpg" alt="Miss All Sunday"/>
 			<meta itemprop="url" content="http://i.imgur.com/6CnW7sL.jpg">
 			<meta itemprop="width" content="400">
 			<meta itemprop="height" content="175">

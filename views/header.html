@@ -34,8 +34,10 @@
 		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 		<link rel="manifest" href="/manifest.json">
-		<meta property="og:site_name" content="{{@title}}">
+		<meta property="og:site_name" content="{{@site.title}}">
 		<meta property="og:title" content="{{ @site.metaTitle ? @site.metaTitle : @site.title }}">
+		<meta property="og:image" content="https://i.imgur.com/6CnW7sL.jpg">
+		<meta property="og:type" content="website" />
 		<meta property="og:url" content="{{ @site.currentUrl ? @site.currentUrl : @BASE }}">
 		<meta property="og:description" content="{{ @site.description }}">
 		<meta name="theme-color" content="#0085A1">
@@ -47,7 +49,7 @@
 		<meta itemprop="accessibilityHazard" content="noMotionSimulation">
 		<meta itemprop="accessibilityHazard" content="noSound">
 		<meta itemprop="accessibilityAPI" content="ARIA">
-		<link rel="canonical" href="{{ @site.currentUrl ? @site.currentUrl : @BASE }}" itemprop="url">
+		<link rel="canonical" href="{{ @site.currentUrl }}" itemprop="url">
 		<link rel="contents" href="{{ @site.currentUrl ? @site.currentUrl : @BASE }}">
 		<link rel="search" href="{{@BASE}}/search">
 	</head>
