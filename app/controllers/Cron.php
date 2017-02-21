@@ -29,14 +29,15 @@ class Cron extends Base
 
 		$itemCount = 0;
 		$getItems = $this->simplePie->get_items();
-		krsort($getItems);
 
 		// Go get'em tiger!
 		foreach ($getItems as $item)
 		{
+			$itemCount++;
+
 			// Do we have a cap on how many to import?
 			if ($this->_models['cron']->itemLimit && $itemCount >= $this->_models['cron']->itemLimit)
-				continue 1;
+				break;
 
 			// If this item doesn't have a link or title, let's skip it
 			if ($item->get_title() === null)
@@ -98,6 +99,8 @@ class Cron extends Base
 
 	function github()
 	{
+		return;
+
 		// Yes, I am THAT lazy.
 		$this->_models['cron']->load(['title = ?',  'github']);
 
