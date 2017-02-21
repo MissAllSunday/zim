@@ -95,6 +95,19 @@ $f3->route([
 	'GET /login',
 ],'\Controllers\UserAuth->loginPage');
 
+// Error page
+$f3->set('ONERROR',function($f3){
+
+	$f3->set('site', $f3->merge('site', [
+		'metaTitle' => urldecode($f3->get('ERROR.text')),
+		'breadcrumb' => [
+			['url' => '', 'title' => $f3->get('ERROR.code'), 'active' => true],
+		],
+	]));
+
+	echo \Template::instance()->render('error.html');
+});
+
 // JS and Css minification.
 $f3->route('GET /minify/@type',
 	function($f3, $args)
@@ -132,6 +145,16 @@ $f3->route('GET /background',
 	function($f3, $args)
 	{
 		$file = $f3->get('UI') .'img/'. rand(1, 24) .'.jpg';
+
+		header('Content-Type: image/jpeg');
+		echo $f3->read($file);
+	}, 432000);
+
+// img error
+$f3->route('GET /imgerror',
+	function($f3, $args)
+	{
+		$file = $f3->get('UI') .'img/error.jpg';
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);

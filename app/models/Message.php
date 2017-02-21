@@ -72,6 +72,9 @@ class Message extends \DB\SQL\Mapper
 				':topic' => $id,
 			]);
 
+		if (empty($r))
+			return [];
+
 		$r = $r[0];
 
 		// Lets avoid issues.

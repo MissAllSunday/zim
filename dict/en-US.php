@@ -238,6 +238,9 @@ Wait for something to happen...',
 		'What if everything around you, isn\'t quite as it seems? What if all the world you think you know, is an elaborate dream?',
 	],
 
+	// 404 text.
+	'text404' => 'Looks like you borked something, shame on you!',
+
 	// Structured data stuff.
 	'microData' => [
 		'publisher' => '<span class="hidden" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">

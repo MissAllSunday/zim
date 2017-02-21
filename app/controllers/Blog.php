@@ -40,6 +40,9 @@ class Blog extends Base
 		// Get the entry Info.
 		$entryInfo = $this->_models['message']->entryInfo($id);
 
+		if (empty($entryInfo))
+			$f3->error(404);
+
 		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
