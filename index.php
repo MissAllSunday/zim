@@ -165,6 +165,23 @@ $f3->route('GET /me',
 		echo $f3->read($path . $file);
 	}, 86400);
 
+$f3->route('GET /testing', function($f3, $args){
+	$sp = new \SimplePie;
+	$sp->set_output_encoding($f3->get('ENCODING'));
+	$sp->enable_cache(false);
+	$sp->strip_htmltags(false);
+	$sp->set_feed_url('https://github.com/MissAllSunday.atom');
+	$sp->init();
+echo '<pre>';
+
+
+
+list($h, $d) = explode('|', $sp->get_items()[1]->get_id() .'|'. $sp->get_items()[1]->get_date('U'));
+
+echo $h . PHP_EOL;
+echo $d . PHP_EOL;
+});
+
 // Crons.
 \Cron::instance();
 
