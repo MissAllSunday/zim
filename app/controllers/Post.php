@@ -194,7 +194,7 @@ class Post extends Base
 		if (!isset($params['topicID']))
 			return $f3->reroute('/');
 
-		// Check for permisisons.
+		// Check for permissions.
 		$this->_models['allow']->can('deleteTopic', true);
 
 		// Check that the topic really does exists.
