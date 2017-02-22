@@ -26,16 +26,26 @@
 
 				<!-- Breadcrumb is a funny word. -->
 				<check if="{{ @site.breadcrumb }}">
-				<ol class="breadcrumb">
-					<li><a href="{{@BASE}}/">{{@site.home}} </a></li>
+				<set breadCount="{{ 0 }}" />
+				<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+					<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+						<a href="{{@BASE}}/" itemprop="item">
+							<span itemprop="name">{{@site.home}}</span>
+						</a>
+						<meta itemprop="position" content="{{++@breadCount}}" />
+					</li>
 						<repeat group="{{ @site.breadcrumb }}" value="{{ @item }}">
-							<li {{ @item.active ? 'class="active"' : '' }}>
+							<li {{ @item.active ? 'class="active"' : '' }} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 							<check if="{{ @item.url }}">
 								<true>
-									<a href="{{@BASE}}/{{@item.url}}">{{@item.title}}</a>
+									<a href="{{@BASE}}/{{@item.url}}" itemprop="item">
+										<span itemprop="name">{{@item.title}}</span>
+									</a>
+									<meta itemprop="position" content="{{++@breadCount}}" />
 								</true>
 								<false>
-									{{@item.title}}
+									<span itemprop="item name">{{@item.title}}</span>
+									<meta itemprop="position" content="{{++@breadCount}}" />
 								</false>
 							</check>
 							</li>

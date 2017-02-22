@@ -30,7 +30,8 @@ class Cron extends Base
 		$itemCount = 0;
 
 		// Oldest first!
-		$getItems = array_reverse($this->simplePie->get_items());
+		$getItems = $this->simplePie->get_items();
+		$toPost = [];
 
 		// Go get'em tiger!
 		foreach ($getItems as $item)
@@ -45,51 +46,60 @@ class Cron extends Base
 
 			// Check if this item has already been posted.
 			$hash = $item->get_date('U');
-			if ($this->_models['cron']->hash < $hash)
+			if ($this->_models['cron']->hash > $hash)
 				continue;
 
 			// No? then log it BUT only if the item is newer!
-			elseif ($hash >= $this->_models['cron']->hash)
-			{
-				$this->_models['cron']->hash = $hash;
-
-				$params = [
-					'boardID' => $this->_models['cron']->boardID,
-					'topicID' => ($this->_models['cron']->topicID ?: 0),
-					'userID' => $this->_models['cron']->userID,
-					'userName' => $this->_models['cron']->userName,
-					'userIP' => '127.0.0.0',
-					'tags' => $this->_models['cron']->tags,
-				];
-
-				// Start setting some values.
-				$feedTitle = $this->simplePie->get_title() !== null ? $this->simplePie->get_title() : '';
-				$body = $item->get_content() !== null ? $item->get_content() : $item->get_title();
-				$title = $item->get_title();
-
-				// These should be set as callbacks but I don't care!
-				if($this->f3->exists('CRON.spoilerReference') && $path = stristr($body, $this->f3->get('CRON.spoilerReference'), true))
-					$body = $path;
-
-				// Is this an op topic?
-				if (strpos($title, $this->f3->get('CRON.opFeed')) !== false)
-					$body = $this->f3->get('txt.opLogo'). $body;
-
-				$params['body'] =
-		($item->get_permalink() !== null ? '<a href="' . $item->get_permalink() . '">' . $title . '</a>' : $title) . '
-		' . ($item->get_date() !== null ? '<strong>' . $item->get_date() . '</strong>
-		' : '') . '
-		' . $body . '
-		' . (!empty($this->_models['cron']->footer) ? $this->_models['cron']->footer : '');
-
-				// Might have to update the subject for the single topic people
-				$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . $title;
-
-				$this->_models['message']->createEntry($params);
-				$this->_models['message']->reset();
-			}
+			elseif ($hash < $this->_models['cron']->hash)
+				$toPost[] = $item;
 		}
 
+		// Nothing to post.
+		if (empty($toPost))
+			return;
+
+		// Get the oldest new item.
+		$toPost = array_reverse($toPost);
+		$item = array_pop($toPost);
+
+		$this->_models['cron']->hash = $item->get_date('U');
+
+		$params = [
+			'boardID' => $this->_models['cron']->boardID,
+			'topicID' => ($this->_models['cron']->topicID ?: 0),
+			'userID' => $this->_models['cron']->userID,
+			'userName' => $this->_models['cron']->userName,
+			'userIP' => '127.0.0.0',
+			'tags' => $this->_models['cron']->tags,
+		];
+
+		// Start setting some values.
+		$feedTitle = $this->simplePie->get_title() !== null ? $this->simplePie->get_title() : '';
+		$body = $item->get_content() !== null ? $item->get_content() : $item->get_title();
+		$title = $item->get_title();
+
+		// These should be set as callbacks but I don't care!
+		if($this->f3->exists('CRON.spoilerReference') && $path = stristr($body, $this->f3->get('CRON.spoilerReference'), true))
+			$body = $path;
+
+		// Is this an op topic?
+		if (strpos($title, $this->f3->get('CRON.opFeed')) !== false)
+			$body = $this->f3->get('txt.opLogo'). $body;
+
+		$params['body'] =
+($item->get_permalink() !== null ? '<a href="' . $item->get_permalink() . '">' . $title . '</a>' : $title) . '
+' . ($item->get_date() !== null ? '<strong>' . $item->get_date() . '</strong>
+' : '') . '
+' . $body . '
+' . (!empty($this->_models['cron']->footer) ? $this->_models['cron']->footer : '');
+
+		// Might have to update the subject for the single topic people
+		$params['title'] = ($this->_models['cron']->topicPrefix ? $this->_models['cron']->topicPrefix . ' ' : '') . $title;
+
+		$this->_models['message']->createEntry($params);
+		$this->_models['message']->reset();
+
+		// Lastly, save the last posted item.
 		$this->_models['cron']->itemCount++;
 		$this->_models['cron']->save();
 		$this->_models['cron']->reset();
