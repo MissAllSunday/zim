@@ -96,17 +96,7 @@ $f3->route([
 ],'\Controllers\UserAuth->loginPage');
 
 // Error page
-$f3->set('ONERROR',function($f3){
-
-	$f3->set('site', $f3->merge('site', [
-		'metaTitle' => urldecode($f3->get('ERROR.text')),
-		'breadcrumb' => [
-			['url' => '', 'title' => $f3->get('ERROR.code'), 'active' => true],
-		],
-	]));
-
-	echo \Template::instance()->render('error.html');
-});
+$f3->set('ONERROR', '\Controllers\Blog->error');
 
 // JS and Css minification.
 $f3->route('GET /minify/@type',

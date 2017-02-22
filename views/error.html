@@ -3,9 +3,22 @@
 		<h3 class="center-block">
 			{{ urldecode(@ERROR.text) }}<br>
 		</h3>
-		<p class="text-center">{{@txt.text404}}</p>
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			<img src="{{@BASE}}/imgerror" alt="error" title="error" class="img-responsive img-rounded center-block" />
+		<p>{{@txt.text404}}</p>
+		<div class="">
+			<check if="{{ !empty(@similarTopics) }}">
+				<true>
+					<h4>{{@txt.similar404}}</h4>
+					<ul class="list-group latestMessages">
+					<repeat group="{{ @similarTopics }}" value="{{ @item }}">
+						<li class="list-group-item"><a href="{{@BASE}}/{{@item->url}}">{{@item->title}}</a></li>
+					</repeat>
+					</ul>
+				</true>
+				<false>
+					<img src="{{@BASE}}/imgerror" alt="error" title="error" class="img-responsive img-rounded center-block" />
+				</false>
+			</check>
+		</div>
 	</div>
-	</div>
+	<include href="extra.html" />
 <include href="footer.html" />

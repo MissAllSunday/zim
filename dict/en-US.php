@@ -240,6 +240,7 @@ Wait for something to happen...',
 
 	// 404 text.
 	'text404' => 'Looks like you borked something, shame on you!',
+	'similar404' => 'Heres a list of similar topics:',
 
 	// Structured data stuff.
 	'microData' => [

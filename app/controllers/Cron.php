@@ -97,6 +97,8 @@ class Cron extends Base
 
 	function github()
 	{
+		return;
+
 		// Yes, I am THAT lazy.
 		$this->_models['cron']->load(['title = ?',  'github']);
 
