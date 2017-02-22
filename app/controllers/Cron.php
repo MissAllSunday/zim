@@ -50,7 +50,7 @@ class Cron extends Base
 				continue;
 
 			// No? then log it BUT only if the item is newer!
-			elseif ($hash < $this->_models['cron']->hash)
+			elseif ($hash != $this->_models['cron']->hash)
 				$toPost[] = $item;
 		}
 
@@ -58,11 +58,9 @@ class Cron extends Base
 		if (empty($toPost))
 			return;
 
-		// Get the oldest new item.
-		$toPost = array_reverse($toPost);
+		// Get the last item.
 		$item = array_pop($toPost);
 
-		echo 'item'. $item->get_title() .' was posted';
 		$this->_models['cron']->hash = $item->get_date('U');
 
 		$params = [
