@@ -62,6 +62,7 @@ class Cron extends Base
 		$toPost = array_reverse($toPost);
 		$item = array_pop($toPost);
 
+		echo 'item'. $item->get_title() .' was posted';
 		$this->_models['cron']->hash = $item->get_date('U');
 
 		$params = [
@@ -107,8 +108,6 @@ class Cron extends Base
 
 	function github()
 	{
-		return;
-
 		// Yes, I am THAT lazy.
 		$this->_models['cron']->load(['title = ?',  'github']);
 
