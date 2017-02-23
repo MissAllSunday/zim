@@ -59,13 +59,11 @@ class Post extends Base
 		$this->_models['board']->load(['boardID = ?', $this->_rows['boardID']]);
 
 		// The title one is tricky
-		$f3->set('site.metaTitle', !$this->_rows['title'] ? $f3->get('txt.newtopic') : ($f3->get('isEditing') ? $f3->get('txt.post_editing', $this->_rows['title']) : $f3->get('txt.post_replyto', $this->_rows['title'])));
-
-		$f3->set('site.currentUrl', $f3->get('BASE') .'/'. ($f3->get('isEditing') ? 'edit' : 'post') .'/'. $this->rows['topicID'] .(!empty($this->_rows['msgID']) ? '/'. $this->rows['msgID'] : ''));
+		$f3->set('site.metaTitle', !$this->_rows['title'] ? $f3->get('txt.newtopic') : ($f3->get('isEditing') ? $f3->get('txt.post_editing', $this->_rows['title']) : $f3->get('txt.post_replyto', $topicInfo['title'])));
 
 		$f3->set('site.breadcrumb', [
 			['url' => 'board/'. $this->_models['board']->url, 'title' => $this->_models['board']->title],
-			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('site.metaTitle'), 'active' => true],
+			['url' => '', 'title' => $f3->get('site.metaTitle'), 'active' => true],
 		]);
 
 		// All good.
@@ -163,8 +161,8 @@ class Post extends Base
 			]);
 		}
 
-		// topic/reply then, fill up the user stuff fom the currnet user
-		else
+		// topic/reply then, fill up the user stuff from the current user
+		elseif ($f3->get('currentUser')->userID)
 			$data = array_merge($data, [
 				'userName' => $f3->get('currentUser')->userName,
 				'userEmail' => $f3->get('currentUser')->userEmail,
