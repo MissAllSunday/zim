@@ -197,7 +197,7 @@ class Message extends \DB\SQL\Mapper
 		}
 
 		// Get the detes
-		$d['date'] =date("j, M, Y", $d['msgTime']);
+		$d['date'] =date("j M Y", $d['msgTime']);
 		$d['microDate'] =  date("c", $d['msgTime']);
 
 		return $d;
