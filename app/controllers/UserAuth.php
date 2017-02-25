@@ -4,6 +4,12 @@ namespace Controllers;
 
 class UserAuth extends Base
 {
+	protected $_requiredFields = [
+		'userName',
+		'userEmail',
+		'passwd',
+	];
+
 	function __construct()
 	{
 
@@ -104,17 +110,12 @@ class UserAuth extends Base
 
 	function signupPage(\Base $f3, $params)
 	{
-		$fields = [
-			'userName',
-			'userEmail',
-			'passwd',
-		];
 		$form = \Form::instance();
 		$form->setOptions([
 			'action' => 'signup',
 		]);
 
-		foreach ($fields as $f)
+		foreach ($this->_requiredFields as $f)
 			$form->addText([
 				'name' => $f,
 				'value' => '',
@@ -140,7 +141,44 @@ class UserAuth extends Base
 	}
 
 	function doSignup(\Base $f3, $params)
-	{
-		var_dump($f3->get('POST'));die;
+	{var_dump($this->_models['user']->fields());die;
+		$errors = [];
+
+		// Get the needed data.
+		$data = array_intersect_key($f3->clean($f3->get('POST')), $this->_requiredFields);
+
+		// Captcha.
+		if ($f3->exists('POST.captcha') && $f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
+			$errors[] = 'bad_captcha';
+
+		// Check for empty fields.
+		foreach ($this->_requiredFields as $v)
+			if(empty($data[$v]))
+				$errors[] = 'empty_'. $v;
+
+		// Is there already an user with this email'
+		$this->_models['user']->findone(['userEmail = ?', $data['userEmail']]));
+
+		if (!$this->_models['user']->dry())
+			$errors[] = 'signup_userName_used';
+
+		// Or perhaps the same userName?
+		$this->_models['user']->findone(['userName = ?', $data['userName']]);
+
+		if (!$this->_models['user']->dry())
+			$errors[] = 'signup_userEmail_used';
+
+		$this->_models['user']->reset();
+
+		// Go back and try again.
+		if (!empty($errors))
+		{
+			// Save the data.
+			$f3->set('SESSION.signup', $data);
+
+			\Flash::instance()->addMessage($errors, 'danger');
+			return $f3->reroute('/signup');
+		}
+
 	}
 }

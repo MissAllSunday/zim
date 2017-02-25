@@ -74,6 +74,10 @@ Wait for something to happen...',
 	'post_action_edited' => 'edited',
 	'post_action_posted' => 'posted',
 
+	// Signup errors
+	'signup_userName_used' => 'It appears that the username you want to use is of high demand for some unknown reasons. Try a different one like: ottersarecool',
+	'signup_userEmail_used', => 'Theres an account already registered with this email. If you are a spammer that means you are already in you ignoramus badly coded piece of poo. If you aren\'t a spammer, disregard the last sentence and try to remember your password or use a different email.',
+
 	// Posting errors.
 	'error_empty_title' => 'A title is required. I am Bruce Almighty. My will be done!',
 	'error_empty_body' => 'You kinda need to type something... I mean, thats why you are here... how could you forget it?',
