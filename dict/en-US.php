@@ -49,9 +49,10 @@ return [
 	'login_captcha' => 'Captcha',
 	'login_remember' => 'Remember me (pretty please!)',
 	'login_avatar' => 'Avatar',
-	'login_avatar_desc' => 'Select the type of avatar you want to use. <br>- Url An external image
-	<br>- Gravatar Will use your provided email to generate a gravatar
-	<br>- Generic Will use your provided username to create a generic identicon, this is the default option.',
+	'login_avatar_desc' => "Select the type of avatar you want to use.
+	- Url An external image
+	- Gravatar Will use your provided email to generate a gravatar
+	- Generic Will use your provided username to create a generic identicon, this is the default option.",
 	'login_url' => 'Url',
 	'login_avatar_gravatar' => 'Gravatar',
 	'login_avatar_generic' => 'Generic',

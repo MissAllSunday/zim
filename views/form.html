@@ -27,8 +27,8 @@
 				<div class="col-sm-10">
 				<repeat group="{{ @item.values }}" key="{{@key}}" value="{{ @i }}">
 					<div class="radio">
-						<label>
-						<input type="radio" name="{{@item.name}}" id="radio_{{@key}}" value="{{@key}}" {{@i.1 ? 'checked' : ''}}>
+						<label id="radio_{{@key}}">
+						<input type="radio" name="{{@item.name}}" value="{{@key}}" {{@i.1 ? 'checked' : ''}}>
 						{{@i.0}}
 						</label>
 						</div>

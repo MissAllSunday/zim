@@ -113,6 +113,7 @@ class UserAuth extends Base
 		$form = \Form::instance();
 		$form->setOptions([
 			'action' => 'signup',
+			'group' => 'data',
 		]);
 
 		foreach ($this->_requiredFields as $f)
@@ -147,6 +148,9 @@ class UserAuth extends Base
 		]);
 
 		$form->build();
+
+		// Custom JS bits.
+		$f3->push('site.customJS', 'signup.js');
 
 		$f3->set('content','form.html');
 		echo \Template::instance()->render('home.html');
