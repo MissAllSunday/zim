@@ -7,7 +7,7 @@ $(function() {
 		id: 'url_field'
 	}).insertAfter('#radio_url');
 	$("input[name='data[avatarType]']:radio").on('change', function()
-	{console.log(this);
+	{
 		if (this.value == 'url') {
 			$('#url_field').removeClass('hidden').addCalss('show');
 		}
