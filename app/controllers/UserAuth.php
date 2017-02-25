@@ -122,6 +122,18 @@ class UserAuth extends Base
 				'text' => $f3->get('txt.login_'. $f),
 			]);
 
+		// Avatar
+		$form->addRadios([
+			'name' => 'avatarType',
+			'values' => [
+				'identicon' => [$f3->get('txt.login_avatar_generic'), true],
+				'gravatar' => [$f3->get('txt.login_avatar_gravatar')],
+				'url' => [$f3->get('txt.login_url')]
+			],
+			'text' => $f3->get('txt.login_avatar'),
+			'desc' => $f3->get('txt.login_avatar_desc'),
+		]);
+
 		$form->addCaptcha([
 			'name' => 'captcha',
 			'url' => 'captcha',
@@ -157,7 +169,7 @@ class UserAuth extends Base
 				$errors[] = 'empty_'. $v;
 
 		// Is there already an user with this email'
-		$this->_models['user']->findone(['userEmail = ?', $data['userEmail']]));
+		$this->_models['user']->findone(['userEmail = ?', $data['userEmail']]);
 
 		if (!$this->_models['user']->dry())
 			$errors[] = 'signup_userName_used';

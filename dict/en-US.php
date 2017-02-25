@@ -48,6 +48,14 @@ return [
 	'login_userName' => 'Username',
 	'login_captcha' => 'Captcha',
 	'login_remember' => 'Remember me (pretty please!)',
+	'login_avatar' => 'Avatar',
+	'login_avatar_desc' => 'Select the type of avatar you want to use. <br>- Url An external image
+	<br>- Gravatar Will use your provided email to generate a gravatar
+	<br>- Generic Will use your provided username to create a generic identicon, this is the default option.',
+	'login_url' => 'Url',
+	'login_avatar_gravatar' => 'Gravatar',
+	'login_avatar_generic' => 'Generic',
+
 
 	// Default site texts
 	'site_desc' => 'You expect me to act like a lover
@@ -76,7 +84,7 @@ Wait for something to happen...',
 
 	// Signup errors
 	'signup_userName_used' => 'It appears that the username you want to use is of high demand for some unknown reasons. Try a different one like: ottersarecool',
-	'signup_userEmail_used', => 'Theres an account already registered with this email. If you are a spammer that means you are already in you ignoramus badly coded piece of poo. If you aren\'t a spammer, disregard the last sentence and try to remember your password or use a different email.',
+	'signup_userEmail_used' => 'Theres an account already registered with this email. If you are a spammer that means you are already in you ignoramus badly coded piece of poo. If you aren\'t a spammer, disregard the last sentence and try to remember your password or use a different email.',
 
 	// Posting errors.
 	'error_empty_title' => 'A title is required. I am Bruce Almighty. My will be done!',
