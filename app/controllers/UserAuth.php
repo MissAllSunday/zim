@@ -157,7 +157,7 @@ class UserAuth extends Base
 	}
 
 	function doSignup(\Base $f3, $params)
-	{var_dump($this->_models['user']->fields());die;
+	{
 		$errors = [];
 
 		// Get the needed data.
@@ -172,7 +172,7 @@ class UserAuth extends Base
 			if(empty($data[$v]))
 				$errors[] = 'empty_'. $v;
 
-		// Is there already an user with this email'
+		// Is there already an user with this email?
 		$this->_models['user']->findone(['userEmail = ?', $data['userEmail']]);
 
 		if (!$this->_models['user']->dry())
@@ -186,6 +186,10 @@ class UserAuth extends Base
 
 		$this->_models['user']->reset();
 
+		// Avatar stuff is not required but needs to be included anyway.
+		$data['avatar'] = $f3->clean($f3->get('POST.avatar'));
+		$data['avatarType'] = $f3->clean($f3->get('POST.avatarType'));
+
 		// Go back and try again.
 		if (!empty($errors))
 		{
@@ -196,5 +200,42 @@ class UserAuth extends Base
 			return $f3->reroute('/signup');
 		}
 
+		// What kind of avatar do you want to use?
+		if (empty($data['avatar']))
+		{
+			if ($data['avatarType'] == 'gravatar')
+				$data['avatar'] = \Form::instance->get($data['userEmail']);
+
+			$data['avatar'] = $f3->get('BASE') .'/identicon/'. $data['userName'];
+		}
+
+		$data['passwd'] = password_hash($data['passwd']);
+
+		// Lets fill up some things.
+		$this->_models['user']->createUser(array_merge([
+			'userIP' => $f3->ip(),
+			'title' => '',
+			'registered' => time(),
+			'posts' => 0,
+			'groupID' => 0
+			'groups' => '',
+			'lastLogin' => time(),
+			'webUrl' => '',
+			'webSite' => '',
+			'passwdSalt	' => '',
+			'lmsgID' => 0,
+			'is_active' => 1,
+		], $data));
+
+		// User was created, set the cookie
+		if($this->_models['user']->userID)
+		{
+			$f3->set('SESSION.user', $this->_models['user']->userID);
+
+			$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->_models['user']->userID, 60 * 60 * 24 * 7);
+
+			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
+			$f3->reroute('/');
+		}
 	}
 }

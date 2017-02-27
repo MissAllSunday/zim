@@ -51,22 +51,21 @@ class User extends \DB\SQL\Mapper
 		return $loaded;
 	}
 
-	function generateData($user = [])
+	function createUser($data = [])
 	{
-		$data = [];
+		$f3 = \Base::instance();
 
-		// Set a proper avatar.
-		switch ($user['avatarType'])
-		{
-			case 'value':
-				# code...
-				break;
+		if (empty($data))
+			return false;
 
-			default:
-				# code...
-				break;
-		}
+		// Get what we need
+		$data = array_map(function($var) use($f3){
+			return $f3->clean($var);
+		}, array_intersect_key(array_flip($this->fields())));
 
-		return $data;
+		$this->copyfrom($data);
+
+		// Thats pretty much it.
+		$this->save();
 	}
 }
