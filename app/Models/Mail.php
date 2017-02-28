@@ -48,7 +48,7 @@ class Mail extends \Prefab
 			$this->mail->isHTML(false);
 			$this->mail->addAddress($data['to']);
 			$this->mail->Subject = $data['subject'];
-			$this->mail->Body    = $data['body'];
+			$this->mail->Body = $data['body'];
 
 			// To infinity... and beyond!!!
 			if(!$this->mail->send())

@@ -35,6 +35,15 @@ $f3->route([
 	'GET /board/@name/page/@page',
 ],'\Controllers\Board->home');
 
+// mods
+$f3->route([
+	'GET /mods',
+],'\Controllers\Mods->home');
+
+$f3->route([
+	'GET /mods/@item',
+],'\Controllers\Mods->item');
+
 // Posting/Editing page.
 $f3->route([
 	'GET /post/@boardID/@topicID [sync]',
@@ -154,7 +163,8 @@ $f3->route('GET /imgerror',
 $f3->route('GET /me',
 	function($f3, $args)
 	{
-		$day = date('j');$month = date('F');
+		$day = date('j');
+		$month = date('F');
 		$path = $f3->get('_rootPath') .'suki/';
 		$image = $day <= 15 ? '1' : '2';
 		$file = '';
@@ -164,7 +174,7 @@ $f3->route('GET /me',
 			$file = 'mexico.gif';
 
 		// Marceline!
-		if (in_array($day, array(27, 28, 29, 30, 31)) && $month == 'October')
+		if (in_array($day, [27, 28, 29, 30, 31]) && $month == 'October')
 			$file = 'marceline.gif';
 
 		// Día de muertos
