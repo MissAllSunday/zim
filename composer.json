@@ -7,6 +7,9 @@
 	"require": {
 		"bcosca/fatfree-core": "dev-master",
 		"ezyang/htmlpurifier": "dev-master",
-		"simplepie/simplepie": "1.4.3"
+		"simplepie/simplepie": "1.4.3",
+		"phpmailer/phpmailer": "~5.2",
+		"knplabs/github-api": "^2.0",
+		"php-http/guzzle6-adapter": "^1.1"
 	}
 }
