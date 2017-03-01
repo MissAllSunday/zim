@@ -267,4 +267,39 @@ class Tools extends \Prefab
 		unset($base);
 		return $str;
 	}
+
+	/**
+	* timeElapsed()
+	*
+	* Gets an unix timestamp and returns a relative date from the current time.
+	* @param integer $ptime An unix timestamp
+	* @link http://www.zachstronaut.com/posts/2009/01/20/php-relative-date-time-string.html
+	* @return string
+	*/
+	function timeElapsed($ptime)
+	{
+		$f3 = \Base::instance();
+		$etime = time() - $ptime;
+
+		if ($etime < 1)
+			return $f3->get('txt.now');
+
+		$a = [
+			12 * 30 * 24 * 60 * 60	=> $f3->get('txt.year'),
+			30 * 24 * 60 * 60		=> $f3->get('txt.month'),
+			24 * 60 * 60			=> $f3->get('txt.day'),
+			60 * 60					=> $f3->get('txt.hour'),
+			60						=> $f3->get('txt.minute'),
+			1						=> $f3->get('txt.second')
+		];
+		foreach ($a as $secs => $str)
+		{
+			$d = $etime / $secs;
+			if ($d >= 1)
+			{
+				$r = round($d);
+				return $r . ' ' . $str . ($r > 1 ? $f3->get('txt.s') .' ' : ' '). $f3->get('txt.ago');
+			}
+		}
+	}
 }

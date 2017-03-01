@@ -28,6 +28,17 @@ return [
 	'topics' => 'Topics:',
 	'views' => 'Views',
 
+	// Time strings.
+	'ago' => 'ago',
+	'now' => ' just now',
+	'second' => 'second',
+	'minute' => 'minute',
+	'hour' => 'hour',
+	'day' => 'day',
+	'month' => 'month',
+	'year' => 'year',
+	's' => 's',
+
 	// Login errors
 	'error_msg' => 'There were some errors:',
 	'error_bad_token' => 'User verification failed miserably, it was probably your fault!',
