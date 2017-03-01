@@ -27,6 +27,11 @@ div.msgOptions button.btn{
 .intro-header .site-heading {
 	padding: 100px 0;
 }
+div.topic div.media-body{
+	padding:5px;
+	border: 0 2px;
+	border-left:#ccc;
+}
 
 .footer {
 	background-color: #EEEBE2;

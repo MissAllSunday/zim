@@ -60,7 +60,7 @@ class Board extends \DB\SQL\Mapper
 
 			// Date
 			$v['date'] = date("j, M, Y", $v['msgTime']);
-			$v['last_date'] =  date("j, M, Y", $v['last_msgTime']);
+			$v['last_date'] =  date("j M Y", $v['last_msgTime']);
 
 			// Build the last msg url if needed.
 			if ($v['max_count'] > $params['limit'])

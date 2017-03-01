@@ -48,13 +48,17 @@ $(function() {
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
 
 			// Show the topics that has this tag.
-			$('.tag_'+ _this.uniqueTag).css('border-left', '2px solid ' + tags[_this.uniqueTag]);
+			$('.tag_'+ _this.uniqueTag).find('.media-body').css({
+				'border-left': '2px solid ' + tags[_this.uniqueTag]
+			});
 		});
 
 		$('span.tag').on('mouseleave', function() {
 			_this = $(this);
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
-			$('.tag_'+ _this.uniqueTag).css('border-left', 'none');
+			$('.tag_'+ _this.uniqueTag).find('.media-body').css({
+				'border-left': '2px solid transparent'
+			});
 		});
 
 		// Reset

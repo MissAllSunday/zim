@@ -10,7 +10,7 @@ return [
 	'greet' => 'Hello there {0} one!',
 	'postedby' => 'By',
 	'on' => 'on',
-	'lastmessage' => 'Last message:',
+	'lastmessage' => 'Last:',
 	'lastestmessages' => 'Lastest messages:',
 	'boards' => 'Boards',
 	'onepiece' => 'One Piece',
