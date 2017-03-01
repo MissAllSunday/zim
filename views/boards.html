@@ -23,7 +23,11 @@
 			</h4>
 			<div class="col-md-2 small">{{@txt.posts }} {{@item.totalPosts}}
 			{{@txt.topics}} {{@item.totalTopics}}</div>
-			<div class="col-md-4 small">{{@txt.lastmessage}} <img src="{{@item.avatar}}" class="mini-avatar img-circle"><a href="{{@BASE}}/{{@item.msgUrl}}">{{ @item.msgTitle }}</a>
+			<div class="col-md-4 small">
+				{{@txt.lastmessage}}
+				<img src="{{@item.avatar}}" class="mini-avatar img-circle">
+				<a href="{{@BASE}}/{{@item.msgUrl}}">{{ @item.msgTitle }}</a>
+				<i class="fa fa-calendar fa-1" aria-hidden="true"></i> {{@item.msgDate}}
 			</div>
 		</div>
 		<hr>

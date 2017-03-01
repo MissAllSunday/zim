@@ -109,6 +109,8 @@ class Board extends \DB\SQL\Mapper
 
 		foreach ($r as $b)
 		{
+			$b['msgDate'] = $f3->get('Tools')->getDate($b['msgTime']);
+
 			if (empty($b['avatar']))
 				$b['avatar'] = $f3->get('BASE') .'/identicon/'. $b['userName'];
 
@@ -116,6 +118,9 @@ class Board extends \DB\SQL\Mapper
 
 			if ($b['max_count'] > $f3->get('paginationLimit'))
 				$b['msgUrl'] = $b['msgUrl'] . '/page/' . (int) ($b['max_count'] / $f3->get('paginationLimit')) . '#msg'. $b['msgID'];
+
+			else
+				$b['msgUrl'] = $b['msgUrl'] . '#msg'. $b['msgID'];
 
 			$boards[$b['boardID']] = $b;
 		}

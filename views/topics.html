@@ -28,7 +28,12 @@
 			</h4>
 			<div class="col-md-3 small topicDate">{{@item.date}}</small></div>
 			<div class="col-md-2 small topicPosts">{{@txt.posts }} {{@item.max_count}}</div>
-			<div class="col-md-7 small topicLast">{{@txt.lastmessage}} <img src="{{@item.last_avatar}}" class="mini-avatar img-circle"><a href="{{@BASE}}/{{@item.last_url}}">{{ @item.last_title }}</a></div>
+			<div class="col-md-7 small topicLast">
+				{{@txt.lastmessage}}
+				<img src="{{@item.last_avatar}}" class="mini-avatar img-circle">
+				<a href="{{@BASE}}/{{@item.last_url}}">{{ @item.last_title }}</a>
+				<i class="fa fa-calendar fa-1" aria-hidden="true"></i> {{@item.last_date}}
+			</div>
 		</div>
 		<hr>
 	</div>
