@@ -268,6 +268,14 @@ class Tools extends \Prefab
 		return $str;
 	}
 
+	function getDate($pTime)
+	{
+		$now = time();
+
+		// If the date is older than 1 month, don't use relative dates.
+		return $now - 2592000 >= $pTime ? date("j M Y", $pTime) : $this->timeElapsed($pTime);
+	}
+
 	/**
 	* timeElapsed()
 	*

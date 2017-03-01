@@ -59,8 +59,8 @@ class Board extends \DB\SQL\Mapper
 			$tags = array_merge($tags, $v['tags']);
 
 			// Date
-			$v['date'] = date("j M Y", $v['msgTime']);
-			$v['last_date'] =  date("j M Y", $v['last_msgTime']);
+			$v['date'] = $f3->get('Tools')->getDate($v['msgTime']);
+			$v['last_date'] =  $f3->get('Tools')->getDate($v['last_msgTime']);
 
 			// Build the last msg url if needed.
 			if ($v['max_count'] > $params['limit'])
@@ -112,7 +112,7 @@ class Board extends \DB\SQL\Mapper
 			if (empty($b['avatar']))
 				$b['avatar'] = $f3->get('BASE') .'/identicon/'. $b['userName'];
 
-			$b['date'] = date("j M Y", $b['msgTime']);
+			$b['date'] = $f3->get('Tools')->getDate($b['msgTime']);
 
 			if ($b['max_count'] > $f3->get('paginationLimit'))
 				$b['msgUrl'] = $b['msgUrl'] . '/page/' . (int) ($b['max_count'] / $f3->get('paginationLimit')) . '#msg'. $b['msgID'];
