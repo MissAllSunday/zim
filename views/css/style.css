@@ -32,16 +32,16 @@ div.topic div.media-body{
 	border: 0 2px;
 	border-left:#ccc;
 }
-.boardIcon-1{
+.boardIcon-1, a.boardLink-1:hover{
 	color: rgb(69, 186, 232);
 }
-.boardIcon-2{
+.boardIcon-2, a.boardLink-2:hover{
 	color: rgb(102, 3, 183);
 }
-.boardIcon-3{
+.boardIcon-3, a.boardLink-3:hover{
 	color: rgb(214, 2, 26);
 }
-.boardIcon-4{
+.boardIcon-4, a.boardLink-4:hover{
 	color: rgb(14, 114, 3);
 }
 
