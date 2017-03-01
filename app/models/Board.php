@@ -59,7 +59,7 @@ class Board extends \DB\SQL\Mapper
 			$tags = array_merge($tags, $v['tags']);
 
 			// Date
-			$v['date'] = date("j, M, Y", $v['msgTime']);
+			$v['date'] = date("j M Y", $v['msgTime']);
 			$v['last_date'] =  date("j M Y", $v['last_msgTime']);
 
 			// Build the last msg url if needed.

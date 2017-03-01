@@ -48,7 +48,7 @@ class Board extends Base
 		// Pretty tags!
 		$f3->push('site.customJS', 'randomColor.js');
 
-		$f3->set('content','boards.html');
+		$f3->set('content','topics.html');
 		echo \Template::instance()->render('home.html');
 	}
 }

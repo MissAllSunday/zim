@@ -118,6 +118,13 @@ $f3->route('GET /minify/@type',
 	3600*24
 );
 
+$f3->route('GET /testing',
+	function($f3, $args)
+	{
+		echo 'Testing!';
+	}
+);
+
 // Captcha.
 $f3->route('GET /captcha',
 	function($f3, $args)
