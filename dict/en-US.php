@@ -24,6 +24,8 @@ return [
 	'options' => 'Options',
 	'quote_select' => 'Quote selected text',
 	'confirm' => 'Are you sure?',
+	'posts' => 'Posts:',
+	'views' => 'Views',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',
@@ -141,7 +143,7 @@ Wait for something to happen...',
 		'Del dinero y de Camelia nunca más se supo nada',
 		'No hay federal de caminos que me alcance te lo juro',
 		'Por que voy a llorar cuando te vayas si alguna vez tenia que terminar este cariño ardiente como el fuego si se que el fuego se tiene que apagar',
-		'Traian las llantas del carro repletas de hierba mala'
+		'Traian las llantas del carro repletas de hierba mala',
 		'I\'ve given all I can but we\'re still on the payroll',
 		'Love has gone and made me blind I\'ve looked but I just can\'t find',
 		'Se que volverás el día en que ella te haga trizas',

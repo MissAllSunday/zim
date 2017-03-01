@@ -17,6 +17,6 @@ class Mods extends Base
 
 	function home(\Base $f3, $params)
 	{
-		$f3->set('repos', $this->client->api('user')->repositories($f3->get('GITHUB.user')), 86400);
+
 	}
 }
