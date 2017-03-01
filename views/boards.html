@@ -9,10 +9,12 @@
 <repeat group="{{ @boardList }}" value="{{ @item }}">
 	<div class="media">
 		<div class="media-left">
-			<span class="fa-stack fa-lg">
-				<i class="fa fa-circle fa-stack-2x boardIcon-{{@item.boardID}}"></i>
-				<i class="fa fa-{{@item.icon}} fa-stack-1x fa-inverse"></i>
-			</span>
+			<a href="{{@BASE}}/board/{{@item.url}}">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-circle fa-stack-2x boardIcon-{{@item.boardID}}"></i>
+					<i class="fa fa-{{@item.icon}} fa-stack-1x fa-inverse"></i>
+				</span>
+			</a>
 		</div>
 		<div class="media-body">
 			<h4 class="media-heading col-md-6">
@@ -21,7 +23,7 @@
 			</h4>
 			<div class="col-md-2 small">{{@txt.posts }} {{@item.totalPosts}}
 			{{@txt.topics}} {{@item.totalTopics}}</div>
-			<div class="col-md-4 small topicLast">{{@txt.lastmessage}} <img src="{{@item.avatar}}" class="mini-avatar img-circle"><a href="{{@BASE}}/{{@item.msgUrl}}">{{ @item.msgTitle }}</a>
+			<div class="col-md-4 small">{{@txt.lastmessage}} <img src="{{@item.avatar}}" class="mini-avatar img-circle"><a href="{{@BASE}}/{{@item.msgUrl}}">{{ @item.msgTitle }}</a>
 			</div>
 		</div>
 		<hr>
