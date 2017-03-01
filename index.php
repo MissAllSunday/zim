@@ -114,14 +114,6 @@ $f3->route('GET /minify/@type',
 		$path = $f3->get('UI') . $args['type'] .'/';
 		$files = preg_replace('/(\.+\/)/','', $f3->clean($f3->get('GET.files')));
 		echo Web::instance()->minify($files, null, true, $path);
-	},
-	3600*24
-);
-
-$f3->route('GET /testing',
-	function($f3, $args)
-	{
-		echo 'Testing!';
 	}
 );
 

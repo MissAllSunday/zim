@@ -83,4 +83,36 @@ class Board extends \DB\SQL\Mapper
 		unset($r);
 		return $topics;
 	}
+
+	function boardList()
+	{
+		$f3 = \Base::instance();
+		$boards = [];
+		$r = $this->db->exec('
+			SELECT b.boardID, b.title, b.description, b.url, b.icon, m.msgID, m.title, m.url AS msgUrl, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
+					FROM suki_c_message
+					WHERE topicID  = m.topicID) as max_count
+			FROM suki_c_board AS b
+				LEFT JOIN suki_c_message AS m ON (m.msgID = (SELECT msgID
+					FROM suki_c_message
+					WHERE boardID  = b.boardID
+					ORDER BY msgTime DESC
+					LIMIT 1))
+				LEFT JOIN suki_c_user AS u ON (m.userID = u.userID)');
+
+		foreach ($r as $b)
+		{
+			if (empty($b['avatar']))
+				$b['avatar'] = $f3->get('BASE') .'/identicon/'. $b['userName'];
+
+			$b['date'] = date("j M Y", $b['msgTime']);
+
+			if ($b['max_count'] > $f3->get('paginationLimit'))
+				$b['msgUrl'] = $b['msgUrl'] . '/page/' . (int) ($b['max_count'] / $f3->get('paginationLimit')) . '#msg'. $b['msgID'];
+
+			$boards[$b['boardID']] = $b;
+		}
+
+		return $boards;
+	}
 }
