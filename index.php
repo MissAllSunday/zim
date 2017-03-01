@@ -75,9 +75,8 @@ $f3->route([
 
 // Forum.
 $f3->route([
-	'GET /forum/',
-	'GET /forum/page/@page',
-],'\Controllers\Forum->home');
+	'GET /forum',
+],'\Controllers\Board->forum');
 
 // Sign up page
 $f3->route([

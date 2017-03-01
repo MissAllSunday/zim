@@ -89,16 +89,23 @@ class Board extends \DB\SQL\Mapper
 		$f3 = \Base::instance();
 		$boards = [];
 		$r = $this->db->exec('
-			SELECT b.boardID, b.title, b.description, b.url, b.icon, m.msgID, m.title, m.url AS msgUrl, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (SELECT COUNT(*)
-					FROM suki_c_message
-					WHERE topicID  = m.topicID) as max_count
+			SELECT b.boardID, b.title, b.description, b.url, b.icon, m.msgID, m.title AS msgTitle, m.url AS msgUrl, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar,
+			(SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE topicID  = m.topicID) as max_count,
+			(SELECT COUNT(*)
+				FROM suki_c_topic
+				WHERE boardID  = b.boardID) as totalTopics,
+			(SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE boardID  = b.boardID) as totalPosts
 			FROM suki_c_board AS b
 				LEFT JOIN suki_c_message AS m ON (m.msgID = (SELECT msgID
 					FROM suki_c_message
 					WHERE boardID  = b.boardID
 					ORDER BY msgTime DESC
 					LIMIT 1))
-				LEFT JOIN suki_c_user AS u ON (m.userID = u.userID)');
+				LEFT JOIN suki_c_user AS u ON (m.userID = u.userID)', null, 3600);
 
 		foreach ($r as $b)
 		{

@@ -25,6 +25,7 @@ return [
 	'quote_select' => 'Quote selected text',
 	'confirm' => 'Are you sure?',
 	'posts' => 'Posts:',
+	'topics' => 'Topics:',
 	'views' => 'Views',
 
 	// Login errors

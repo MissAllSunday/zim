@@ -14,7 +14,7 @@ class Board extends Base
 	function home(\Base $f3, $params)
 	{
 		$start = !empty($params['page']) ? $params['page'] : 0;
-		$limit = 10;
+		$limit = $f3->get('paginationLimit');
 
 		// Get the ID.
 		$tags = explode('-', $params['name']);
@@ -49,6 +49,23 @@ class Board extends Base
 		$f3->push('site.customJS', 'randomColor.js');
 
 		$f3->set('content','topics.html');
+		echo \Template::instance()->render('home.html');
+	}
+
+	function forum(\Base $f3, $params)
+	{
+		// Get the boards.
+		$f3->set('boardList', $this->_models['board']->boardList());
+
+		$f3->set('site', $f3->merge('site', [
+			'metaTitle' => $f3->get('txt.boards'),
+			'currentUrl' => $f3->get('boardInfo')->url,
+			'breadcrumb' => [
+				['url' => 'forum', 'title' => $f3->get('txt.boards')],
+			],
+		]));
+
+		$f3->set('content','boards.html');
 		echo \Template::instance()->render('home.html');
 	}
 }

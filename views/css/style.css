@@ -33,16 +33,16 @@ div.topic div.media-body{
 	border-left:#ccc;
 }
 .boardIcon-1{
-	background-color: rgb(69, 186, 232);
+	color: rgb(69, 186, 232);
 }
 .boardIcon-2{
-	background-color: rgb(102, 3, 183);
+	color: rgb(102, 3, 183);
 }
 .boardIcon-3{
-	background-color: rgb(214, 2, 26);
+	color: rgb(214, 2, 26);
 }
 .boardIcon-4{
-	background-color: rgb(14, 114, 3);
+	color: rgb(14, 114, 3);
 }
 
 .footer {
