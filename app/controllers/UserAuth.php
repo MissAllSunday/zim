@@ -204,7 +204,7 @@ class UserAuth extends Base
 		if (empty($data['avatar']))
 		{
 			if ($data['avatarType'] == 'gravatar')
-				$data['avatar'] = \Form::instance()->get($data['userEmail']);
+				$data['avatar'] = \Gravatar::instance()->get($data['userEmail']);
 
 			$data['avatar'] = $f3->get('BASE') .'/identicon/'. $data['userName'];
 		}
