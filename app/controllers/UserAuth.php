@@ -204,7 +204,7 @@ class UserAuth extends Base
 		if (empty($data['avatar']))
 		{
 			if ($data['avatarType'] == 'gravatar')
-				$data['avatar'] = \Form::instance->get($data['userEmail']);
+				$data['avatar'] = \Form::instance()->get($data['userEmail']);
 
 			$data['avatar'] = $f3->get('BASE') .'/identicon/'. $data['userName'];
 		}
@@ -217,7 +217,7 @@ class UserAuth extends Base
 			'title' => '',
 			'registered' => time(),
 			'posts' => 0,
-			'groupID' => 0
+			'groupID' => 0,
 			'groups' => '',
 			'lastLogin' => time(),
 			'webUrl' => '',
