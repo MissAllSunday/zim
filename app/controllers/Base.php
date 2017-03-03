@@ -28,6 +28,7 @@ class Base
 				'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
 				'groupID' => 0,
 				'groups' => '',
+				'lmsgID' => 0,
 			];
 
 		$currentUser->isBot = \Audit::instance()->isbot();

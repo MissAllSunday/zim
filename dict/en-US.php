@@ -42,6 +42,7 @@ return [
 	// Topic.
 	'topic_locked' => 'Topic is currently locked',
 	'topic_sticky' => 'Topic is sticky',
+	'new' => 'New',
 
 	// User related.
 	'no_user' => 'No user was found, better luck next time!',
