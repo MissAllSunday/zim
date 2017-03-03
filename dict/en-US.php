@@ -39,6 +39,10 @@ return [
 	'year' => 'year',
 	's' => 's',
 
+	// Topic.
+	'topic_locked' => 'Topic is currently locked',
+	'topic_sticky' => 'Topic is sticky',
+
 	// User related.
 	'no_user' => 'No user was found, better luck next time!',
 	'message' => 'Message',
