@@ -17,7 +17,7 @@ class User extends Base
 		$id = array_pop($user);
 
 		// Load the user's info.
-		$f3->set('user', $this->_models['user']->load(['userID = ?', $id]), 3600);
+		$f3->set('user', $this->_models['user']->load(['userID = ?', $id]));
 
 		// Nothing was found!
 		if ($this->_models['user']->dry())

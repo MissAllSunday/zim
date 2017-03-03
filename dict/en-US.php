@@ -41,6 +41,10 @@ return [
 
 	// User related.
 	'no_user' => 'No user was found, better luck next time!',
+	'message' => 'Message',
+	'account_settings' => 'Account Settings',
+	'online' => 'Online',
+	'offline' => 'offline',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',
