@@ -18,15 +18,17 @@ class Base
 		}
 
 		// Get current user data.
-		$currentUser = $f3->exists('SESSION.user') ? $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))) : [
-			'userID' => 0,
-			'userName' => 'Guest',
-			'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
-			'groupID' => 0,
-			'groups' => '',
-		];
+		if ($f3->exists('SESSION.user'))
+			$currentUser = $this->_models['user']->load(array('userID' => $f3->get('SESSION.user')));
 
-		$currentUser = (object) $currentUser;
+		else
+			$currentUser = (object) [
+				'userID' => 0,
+				'userName' => 'Guest',
+				'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
+				'groupID' => 0,
+				'groups' => '',
+			];
 
 		$currentUser->isBot = \Audit::instance()->isbot();
 
@@ -46,5 +48,14 @@ class Base
 
 		// Boards
 		$f3->set('boards', $this->_models['board']->getBoards());
+	}
+
+	public function afterRoute($f3)
+	{
+		if ($f3->get('currentUser')->userID)
+		{
+			$f3->get('currentUser')->last_active = time();
+			$f3->get('currentUser')->save();
+		}
 	}
 }
