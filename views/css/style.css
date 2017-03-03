@@ -192,11 +192,6 @@ User Profile Sidebar by @keenthemes
 A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
 Licensed under MIT
 ***/
-
-body {
-  background: #F1F3FA;
-}
-
 /* Profile container */
 .profile {
   margin: 20px 0;
@@ -205,7 +200,8 @@ body {
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
-  background: #fff;
+  background: #f9faf4;
+  border-right: solid 2px #E9E9E7;
 }
 
 .profile-userpic img {
@@ -296,7 +292,7 @@ body {
 
 /* Profile Content */
 .profile-content {
-  padding: 20px;
+  padding: 10px 0;
   background: #fff;
   min-height: 460px;
 }
