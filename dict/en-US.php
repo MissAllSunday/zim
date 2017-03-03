@@ -39,6 +39,9 @@ return [
 	'year' => 'year',
 	's' => 's',
 
+	// User related.
+	'no_user' => 'No user was found, better luck next time!',
+
 	// Login errors
 	'error_msg' => 'There were some errors:',
 	'error_bad_token' => 'User verification failed miserably, it was probably your fault!',

@@ -46,7 +46,7 @@ $f3->route([
 
 // User profile.
 $f3->route([
-	'GET /user/@userName/@userID',
+	'GET /user/@user',
 ],'\Controllers\User->profile');
 
 // Posting/Editing page.
