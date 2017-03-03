@@ -44,6 +44,11 @@ $f3->route([
 	'GET /mods/@item',
 ],'\Controllers\Mods->item');
 
+// User profile.
+$f3->route([
+	'GET /user/@userName/@userID',
+],'\Controllers\User->profile');
+
 // Posting/Editing page.
 $f3->route([
 	'GET /post/@boardID/@topicID [sync]',
