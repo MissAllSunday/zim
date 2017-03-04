@@ -45,7 +45,7 @@ class Base
 		$f3->set('can', $can);
 
 		// Latest messages
-		$f3->set('latestMessages', $this->_models['message']->latestMessages(), 3600);
+		$f3->set('latestMessages', $this->_models['message']->latestMessages());
 
 		// Boards
 		$f3->set('boards', $this->_models['board']->getBoards());
@@ -53,7 +53,7 @@ class Base
 
 	public function afterRoute($f3)
 	{
-		if ($f3->get('currentUser')->userID)
+		if ($f3->get('currentUser')->userID && $this->_models['user']->userID)
 		{
 			$f3->get('currentUser')->last_active = time();
 			$f3->get('currentUser')->save();

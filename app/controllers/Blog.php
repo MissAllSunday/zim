@@ -92,7 +92,7 @@ class Blog extends Base
 	{
 		// Values for pagination.
 		$start = !empty($params['page']) ? $params['page'] : 0;
-		$limit = 10;
+		$limit = $f3->get('paginationLimit');
 
 		// Ugly, I know...
 		$tags = explode('-', $params['title']);
@@ -154,6 +154,9 @@ class Blog extends Base
 				$f3->push('site.customCSS', 'summernote.css');
 			}
 		}
+
+		// Update the last message.
+		$this->_models['user']->lmsgID = $entryInfo['lmsgID'];
 
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
