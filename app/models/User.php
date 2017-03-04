@@ -7,6 +7,8 @@ class User extends \DB\SQL\Mapper
 	function __construct(\DB\SQL $db)
 	{
 		parent::__construct($db, 'suki_c_user');
+
+		$this->isOnline = "last_active >= UNIX_TIMESTAMP() - 300";
 	}
 
 	public function all()
@@ -36,7 +38,7 @@ class User extends \DB\SQL\Mapper
 	{
 		$loaded = $data = [];
 		$data = $this->db->exec('
-			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID
+			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID, last_active, (last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM suki_c_user AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			WHERE userID IN(:users)
