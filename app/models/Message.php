@@ -53,12 +53,12 @@ class Message extends \DB\SQL\Mapper
 			return $entries;
 	}
 
-	function entryInfo($id = 0)
+	function entryInfo($id = 0, $limit = 1)
 	{
 		$f3 = \Base::instance();
-		$r = [];
+		$return = [];
 
-		$r = $this->db->exec('
+		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = :topic) as max_count
@@ -68,29 +68,34 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE t.topicID = :topic
 			ORDER BY m.msgID DESC
-			LIMIT 1', [
+			LIMIT :limit', [
 				':topic' => $id,
+				':limit' => $limit
 			]);
 
-		if (empty($r))
+		if (empty($data))
 			return [];
 
-		$r = $r[0];
+		foreach ($data as $k => $r)
+		{
+			// Lets avoid issues.
+			$r['max_count'] = (int) $r['max_count'];
+			$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
 
-		// Lets avoid issues.
-		$r['max_count'] = (int) $r['max_count'];
-		$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
+			// Build the pagination stuff.
+			if ($r['max_count'] > $limit)
+				$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
 
-		// Build the pagination stuff.
-		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
+			else
+				$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
 
-		else
-			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
+			$data[$k] = $this->prepareData($r);
+		}
 
-		$r = $this->prepareData($r);
+		// Do we only want one?
+		$return = $limit == 1 ? $data[0] : $data;
 
-		return $r;
+		return $return;
 	}
 
 	function latestMessages($limit = 5)
