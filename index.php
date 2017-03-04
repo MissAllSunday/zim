@@ -108,6 +108,16 @@ $f3->route([
 	'GET /login',
 ],'\Controllers\UserAuth->loginPage');
 
+// Feed
+$f3->route([
+	'GET /atom',
+],'\Controllers\XML->atom');
+
+// Sitemap
+$f3->route([
+	'GET /sitemap',
+],'\Controllers\XML->sitemap');
+
 // Error page
 $f3->set('ONERROR', '\Controllers\Blog->error');
 

@@ -53,10 +53,50 @@ class Message extends \DB\SQL\Mapper
 			return $entries;
 	}
 
-	function entryInfo($id = 0, $limit = 1)
+	function entryInfo($id = 0)
 	{
 		$f3 = \Base::instance();
-		$return = [];
+		$r = [];
+
+		$r = $this->db->exec('
+			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE topicID = :topic) as max_count
+			FROM suki_c_topic AS t
+			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			WHERE t.topicID = :topic
+			ORDER BY m.msgID DESC
+			LIMIT 1', [
+				':topic' => $id,
+			]);
+
+		if (empty($r))
+			return [];
+
+		$r = $r[0];
+
+		// Lets avoid issues.
+		$r['max_count'] = (int) $r['max_count'];
+		$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
+
+		// Build the pagination stuff.
+		if ($r['max_count'] > $limit)
+			$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
+
+		else
+			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
+
+		$r = $this->prepareData($r);
+
+		return $r;
+	}
+
+	function latestTopics($limit = 10)
+	{
+		$f3 = \Base::instance();
+		$data = [];
 
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
@@ -67,35 +107,18 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE t.topicID = :topic
-			ORDER BY m.msgID DESC
+			ORDER BY t.topicID DESC
 			LIMIT :limit', [
-				':topic' => $id,
-				':limit' => $limit
+				':limit' => $limit,
 			]);
 
 		if (empty($data))
 			return [];
 
-		foreach ($data as $k => $r)
-		{
-			// Lets avoid issues.
-			$r['max_count'] = (int) $r['max_count'];
-			$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
+		foreach ($data as $k => $v)
+			$data[$k] = $this->prepareData($v);
 
-			// Build the pagination stuff.
-			if ($r['max_count'] > $limit)
-				$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
-
-			else
-				$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
-
-			$data[$k] = $this->prepareData($r);
-		}
-
-		// Do we only want one?
-		$return = $limit == 1 ? $data[0] : $data;
-
-		return $return;
+		return $data;
 	}
 
 	function latestMessages($limit = 5)
