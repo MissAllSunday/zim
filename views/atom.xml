@@ -9,14 +9,15 @@
 		<entry>
 			<id>tag:missallsunday.com,2008:PushEvent/{{@item.topicID}}</id>
 			<published>{{@item.microDate}}</published>
-			<link type="text/html" rel="alternate" href="{{@site.currentUrl}}/{{@item.url}}"/>
+			<updated>{{@item.microDate}}</updated>
+			<link type="text/html" rel="alternate" href="{{ @site.currentUrl}}/{{ urlencode(@item.url) }}"/>
 			<title type="html">{{@item.title}}</title>
 			<author>
 				<name>{{@item.userName}}</name>
-				<email></email>
-				<uri>{{@item.userHref}}</uri>
+				<email>atom@missallsunday.com</email>
+				<uri>{{ urlencode(@item.userHref) }}</uri>
 			</author>
-			<media:thumbnail height="30" width="30" url="{{@item.avatar}}"/>
+			<media:thumbnail height="30" width="30" url="{{ @item.avatar }}"/>
 			<content type="html">
 				<![CDATA[
 				{{@item.body}}

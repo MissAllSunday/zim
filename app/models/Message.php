@@ -221,7 +221,7 @@ class Message extends \DB\SQL\Mapper
 
 		// Provide a generic avatar
 		if (empty($d['avatar']))
-			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('BASE') .'/identicon/'. $d['userName'];
+			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('site.currentUrl') .'/identicon/'. $f3->get('Tools')->slug($d['userName']);
 
 		// username link.
 		$d['userHref'] = !empty($d['userID']) ? $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($d['userName']) .'-'. $d['userID'] : '#';
