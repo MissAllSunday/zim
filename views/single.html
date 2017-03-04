@@ -18,7 +18,7 @@
 		<p class="post-meta">{{@txt.postedby}}
 				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<img src="{{@entryInfo.avatar}}" alt="{{@txt.view_profile, @entryInfo.userName | format}}" class="img-circle mini-avatar">
-					<a rel="author" itemprop="url" href="#" title="{{@txt.view_profile, @entryInfo.userName | format}}">
+					<a rel="author" itemprop="url" href="{{@entryInfo.userHref}}" title="{{@txt.view_profile, @entryInfo.userName | format}}">
 						<span itemprop="name">{{@entryInfo.userName}}</span>
 					</a>
 				</span>
@@ -46,7 +46,7 @@
 				<article itemscope itemtype="http://schema.org/Comment">
 					<div class="media">
 						<div class="media-left">
-							<a href="#">
+							<a href="{{@item.userHref}}">
 								<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle media-object media-avatar">
 							</a>
 						</div>

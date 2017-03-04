@@ -14,7 +14,7 @@
 			<author>
 				<name>{{@item.userName}}</name>
 				<email></email>
-				<uri>{{@site.currentUrl}}/user/{{@item.userName}}-{{@item.userID}}</uri>
+				<uri>{{@item.userHref}}</uri>
 			</author>
 			<media:thumbnail height="30" width="30" url="{{@item.avatar}}"/>
 			<content type="html">

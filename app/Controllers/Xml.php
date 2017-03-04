@@ -19,7 +19,7 @@ class Xml extends Base
 	function sitemap(\Base $f3, $params)
 	{
 		// Get the items.
-		$f3->set('sitemapItems', $this->_models['message']->latestTopics(100), 3600);
+		$f3->set('sitemapItems', $this->_models['message']->latestTopics(200), 86400);
 
 		echo \Template::instance()->render('sitemap.xml', 'application/xml');
 	}

@@ -224,7 +224,7 @@ class Message extends \DB\SQL\Mapper
 			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('BASE') .'/identicon/'. $d['userName'];
 
 		// username link.
-		$d['userName'] = $f3->get('Tools')->slug($d['userName']);
+		$d['userHref'] = !empty($d['userID']) ? $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($d['userName']) .'-'. $d['userID'] : '#';
 
 		// Parse the body
 		if (!empty($d['body']))
