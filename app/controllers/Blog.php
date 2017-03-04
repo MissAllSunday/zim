@@ -155,7 +155,7 @@ class Blog extends Base
 			}
 		}
 
-		// Update the last message.
+		// Update the last message saw by the current user.
 		$this->_models['user']->lmsgID = $entryInfo['lmsgID'];
 
 		$f3->set('content','single.html');

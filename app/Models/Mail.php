@@ -15,7 +15,7 @@ class Mail extends \Prefab
 		$this->logger = new \Log('mailError.log');
 
 		// Get the credentials.
-		$this->_options = $f3->get('EMAIL');
+		$this->_options = $this->f3->get('EMAIL');
 
 		$this->init();
 	}
@@ -46,7 +46,7 @@ class Mail extends \Prefab
 		try
 		{
 			$this->mail->isHTML(false);
-			$this->mail->addAddress($data['to']);
+			$this->mail->addAddress(!empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to');
 			$this->mail->Subject = $data['subject'];
 			$this->mail->Body = $data['body'];
 

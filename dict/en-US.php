@@ -51,6 +51,10 @@ return [
 	'online' => 'Online',
 	'offline' => 'offline',
 
+	// Mail stuff.
+	'mail_new_user_subject' => 'New member registered',
+	'mail_new_user_body' => 'User {0} has created a new account.',
+
 	// Login errors
 	'error_msg' => 'There were some errors:',
 	'error_bad_token' => 'User verification failed miserably, it was probably your fault!',

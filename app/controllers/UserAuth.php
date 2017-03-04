@@ -235,6 +235,13 @@ class UserAuth extends Base
 			$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->_models['user']->userID, 60 * 60 * 24 * 7);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
+
+			// All done, lets go tell her.
+			\Models\Mail::instance()->send([
+				'subject' => $f3->get('mail_new_user_subject'),
+				'body' => $f3->get('mail_new_user_body', $this->_models['user']->userName)
+			]);
+
 			$f3->reroute('/');
 		}
 	}
