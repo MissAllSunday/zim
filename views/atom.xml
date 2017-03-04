@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+	<id>tag:missallsunday.com,2008:/MissAllSunday</id>
+	<link type="text/html" rel="alternate" href="https://missallsunday.com"/>
+	<link type="application/atom+xml" rel="self" href="https://missallsunday.com/atom"/>
+	<title>{{@txt.atom_title}}</title>
+	<updated>{{@atomUpdated}}</updated>
+	<repeat group="{{ @atomItems }}" value="{{ @item }}">
+		<entry>
+			<id>tag:missallsunday.com,2008:PushEvent/{{@item.topicID}}</id>
+			<published>{{@item.atomDate}}</published>
+			<link type="text/html" rel="alternate" href="{{@BASE}}/{{@item.url}}"/>
+			<title type="html">{{@item.title}}</title>
+			<author>
+				<name>{{@item.userName}}</name>
+				<email></email>
+				<uri>{{@BASE}}/user/{{@item.userName}}-{{@item.userID}}</uri>
+			</author>
+			<media:thumbnail height="30" width="30" url="{{@item.avatar}}"/>
+			<content type="html">
+				{{@item.body}}
+			</content>
+		</entry>
+	</repeat>
 </feed>

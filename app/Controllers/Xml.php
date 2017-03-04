@@ -12,7 +12,12 @@ class Xml extends Base
 	function atom(\Base $f3, $params)
 	{
 		// Get the items.
-		$f3->set('atomItem', $this->_models['message']->latestTopics(30), 3600);
+		$items = $this->_models['message']->latestTopics(30), 3600;
+
+		// Get the update time.
+		$set('atomUpdated', $items[0]['atomDate']);
+
+		$f3->set('atomItems', $this->_models['message']->latestTopics(30), 3600);
 		echo \Template::instance()->render('atom.xml');
 	}
 

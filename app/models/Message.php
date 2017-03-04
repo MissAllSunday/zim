@@ -116,7 +116,11 @@ class Message extends \DB\SQL\Mapper
 			return [];
 
 		foreach ($data as $k => $v)
+		{
+			// Atom date.
+			$v['atomDate'] = date(\DateTime::ATOM, $v['msgTime']);
 			$data[$k] = $this->prepareData($v);
+		}
 
 		return $data;
 	}
