@@ -115,7 +115,15 @@ class Message extends \DB\SQL\Mapper
 			return [];
 
 		foreach ($data as $k => $v)
+		{
+			if (empty($data[$k]['topicID']))
+			{
+				unset($data[$k]);
+				continue;
+			}
+
 			$data[$k] = $this->prepareData($v);
+		}
 
 		return $data;
 	}

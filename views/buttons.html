@@ -1,14 +1,16 @@
-<div class="btn-group content pull-right" role="group" aria-label="...">
-	<button type="button" class="btn btn-sm hidden selectText" id="selectText{{@entryInfo.msgID}}">{{@txt.quote_select}}</button>
-	<check if="{{@can.post }}">
-		<a href="{{@BASE}}/post/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
-	</check>
-	<check if="{{@can.editTopic }}">
-		<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>
-	</check>
-	<check if="{{@can.deleteTopic }}">
-		<a href="{{@BASE}}/deleteTopic/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}" class="you_sure" data-confirm="{{@txt.confirm}}">
-		<button type="button" class="btn btn-sm">{{@txt.delete}}</button>
-		</a>
-	</check>
+<div class="row">
+	<div class="btn-group content pull-right" role="group" aria-label="...">
+		<button type="button" class="btn btn-sm hidden selectText" id="selectText{{@entryInfo.msgID}}">{{@txt.quote_select}}</button>
+		<check if="{{@can.post }}">
+			<a href="{{@BASE}}/post/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
+		</check>
+		<check if="{{@can.editTopic }}">
+			<a href="{{@BASE}}/edit/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}/{{@entryInfo.msgID}}"><button type="button" class="btn btn-sm">{{@txt.modify}}</button></a>
+		</check>
+		<check if="{{@can.deleteTopic }}">
+			<a href="{{@BASE}}/deleteTopic/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}" class="you_sure" data-confirm="{{@txt.confirm}}">
+			<button type="button" class="btn btn-sm">{{@txt.delete}}</button>
+			</a>
+		</check>
+	</div>
 </div>

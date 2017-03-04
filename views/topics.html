@@ -6,11 +6,13 @@
 		<span class="label label-primary tag"><a>{{@tag}}</a></span>
 	</repeat>
 </h4>
-<div class="col-md-12">
-	<div class=" btn-group pull-right" role="group" aria-label="...">
-		<check if="{{@can.postTopic }}">
-			<a href="{{@BASE}}/post/{{@boardInfo.boardID}}">	<button type="button" class="btn btn-sm">{{@txt.newtopic}}</button></a>
-		</check>
+<div class="row">
+	<div class="col-md-12">
+		<div class=" btn-group pull-right" role="group" aria-label="...">
+			<check if="{{@can.postTopic }}">
+				<a href="{{@BASE}}/post/{{@boardInfo.boardID}}">	<button type="button" class="btn btn-sm">{{@txt.newtopic}}</button></a>
+			</check>
+		</div>
 	</div>
 </div>
 <br>
