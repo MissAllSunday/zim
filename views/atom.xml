@@ -8,7 +8,7 @@
 	<repeat group="{{ @atomItems }}" value="{{ @item }}">
 		<entry>
 			<id>tag:missallsunday.com,2008:PushEvent/{{@item.topicID}}</id>
-			<published>{{@item.atomDate}}</published>
+			<published>{{@item.microDate}}</published>
 			<link type="text/html" rel="alternate" href="{{@BASE}}/{{@item.url}}"/>
 			<title type="html">{{@item.title}}</title>
 			<author>
