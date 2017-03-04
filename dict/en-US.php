@@ -54,7 +54,7 @@ return [
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
 	'mail_new_user_body' => 'User {0} has created a new account.',
-	'mail_welcome' => 'Welcome aboard {0}!'
+	'mail_welcome' => 'Welcome aboard {0}!',
 
 	// XML
 	'atom_title' => 'missallsunday.com’s Activity',

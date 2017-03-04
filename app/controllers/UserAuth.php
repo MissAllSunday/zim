@@ -243,7 +243,7 @@ class UserAuth extends Base
 				'body' => $f3->get('mail_new_user_body', $this->_models['user']->userName)
 			]);
 
-			// Send a nice (and quite possible) unwanted email.
+			// Send a nice (and quite possible) unwanted welcome email.
 			$f3->set('wmail', [
 				'userName' => $this->_models['user']->userName,
 				'password' => $refPass,
