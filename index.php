@@ -111,12 +111,12 @@ $f3->route([
 // Feed
 $f3->route([
 	'GET /atom',
-],'\Controllers\XML->atom');
+],'\Controllers\Xml->atom');
 
 // Sitemap
 $f3->route([
 	'GET /sitemap',
-],'\Controllers\XML->sitemap');
+],'\Controllers\Xml->sitemap');
 
 // Error page
 $f3->set('ONERROR', '\Controllers\Blog->error');
@@ -130,14 +130,6 @@ $f3->route('GET /minify/@type',
 		echo Web::instance()->minify($files, null, true, $path);
 	},
 	86400
-);
-
-$f3->route('GET /testing',
-	function($f3, $args)
-	{
-		$e = new \Models\Message($f3->get('DB'));
-		var_dump($e->latestTopics());
-	}
 );
 
 // Captcha.
