@@ -209,6 +209,7 @@ class UserAuth extends Base
 			$data['avatar'] = $f3->get('BASE') .'/identicon/'. $data['userName'];
 		}
 
+		$refPass = $data['passwd'];
 		$data['passwd'] = password_hash($data['passwd']);
 
 		// Lets fill up some things.
@@ -240,6 +241,18 @@ class UserAuth extends Base
 			\Models\Mail::instance()->send([
 				'subject' => $f3->get('mail_new_user_subject'),
 				'body' => $f3->get('mail_new_user_body', $this->_models['user']->userName)
+			]);
+
+			// Send a nice (and quite possible) unwanted email.
+			$f3->set('wmail', [
+				'userName' => $this->_models['user']->userName,
+				'password' => $refPass,
+				'link' => $f3->get('site.currentUrl') .'/user/'. $f3->get('Tools')->slug($this->_models['user']->userName) .'-'. $this->_models['user']->userID,
+			]);
+			\Models\Mail::instance()->send([
+				'html' => true,
+				'subject' => $f3->get('mail_welcome', $this->_models['user']->userName),
+				'body' => \Template::instance()->render('mail_welcome.html','text/html'),
 			]);
 
 			$f3->reroute('/');

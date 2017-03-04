@@ -45,7 +45,7 @@ class Mail extends \Prefab
 
 		try
 		{
-			$this->mail->isHTML(false);
+			$this->mail->isHTML(isset($data['html']));
 			$this->mail->addAddress(!empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to');
 			$this->mail->Subject = $data['subject'];
 			$this->mail->Body = $data['body'];
