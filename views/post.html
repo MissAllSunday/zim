@@ -19,6 +19,22 @@
 		<input type="hidden" name="topicID" value="{{ @posting.topicID }}"/>
 		<input type="hidden" name="msgID" value="{{ @posting.msgID }}"/>
 		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
+		<check if="{{ !@posting.topicID || @isTopic}}">
+			<div class="checkbox-inline">
+				<label>
+					<input type="hidden" name="locked" value="0"/>
+					<input type="checkbox" value="{{ @posting.locked }}" name="locked" {{!@posting.locked ? '' : 'checked' }}>
+					{{@txt.post_lock}}
+				</label>
+			</div>
+			<div class="checkbox-inline">
+				<label>
+					<input type="hidden" name="sticky" value="0"/>
+					<input type="checkbox" value="{{ @posting.sticky }}" name="sticky" }}>
+					{{@txt.post_sticky}}
+				</label>
+			</div>
+		</check>
 	</div>
 	<check if="{{ !@currentUser->userID }}">
 		<div class="form-group">

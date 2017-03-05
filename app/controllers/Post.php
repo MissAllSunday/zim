@@ -14,7 +14,7 @@ class Post extends Base
 		$this->_defaultModels[] = 'board';
 
 		// Get the default fields.
-		$this->_rows = \Models\Message::$rows;
+		$this->_rows = array_merge(\Models\Message::$rows, \Models\Message::$topicRows);
 	}
 
 	function post(\Base $f3, $params)
@@ -52,6 +52,8 @@ class Post extends Base
 		if ($f3->get('isEditing') && !empty($params['msgID']))
 		{
 			$this->_models['message']->reset();
+			$this->_models['message']->locked = $topicInfo['locked'];
+			$this->_models['message']->sticky = $topicInfo['sticky'];
 			$this->_rows = $this->_models['message']->load(['msgID = ?', $params['msgID']]);
 			$f3->set('isTopic', ($this->_rows['msgID'] == $topicInfo['msgID']));
 		}

@@ -116,6 +116,8 @@ Wait for something to happen...',
 	'post_action_deleted' => 'deleted',
 	'post_action_edited' => 'edited',
 	'post_action_posted' => 'posted',
+	'post_lock' => 'Lock topic',
+	'post_sticky' => 'Set as sticky',
 
 	// Signup errors
 	'signup_userName_used' => 'It appears that the username you want to use is of high demand for some unknown reasons. Try a different one like: ottersarecool',

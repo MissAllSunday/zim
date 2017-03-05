@@ -22,6 +22,10 @@ class Message extends \DB\SQL\Mapper
 		'tags' => '',
 		'url' => '',
 	];
+	public static $topicRows = [
+		'locked' => 0,
+		'sticky' => 0,
+	];
 
 	function __construct(\DB\SQL $db)
 	{
@@ -263,6 +267,10 @@ class Message extends \DB\SQL\Mapper
 		if (!empty($params['tags']))
 			$params['tags'] =  $f3->get('Tools')->commaSeparated($params['tags']);
 
+		$topicParams = array_map(function($var) use($f3){
+			return $f3->get('Tools')->sanitize($var);
+		}, array_intersect_key($params, self::$topicRows));
+
 		// Be nice.
 		$params = array_map(function($var) use($f3){
 			return $f3->get('Tools')->sanitize($var);
@@ -301,6 +309,7 @@ class Message extends \DB\SQL\Mapper
 		// No? then create it.
 		else
 		{
+			$topicModel->copyFrom($topicParams);
 			$topicModel->fmsgID = $this->msgID;
 			$topicModel->lmsgID = $this->msgID;
 			$topicModel->boardID = $this->boardID;
