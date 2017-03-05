@@ -251,6 +251,7 @@ class UserAuth extends Base
 			]);
 			\Models\Mail::instance()->send([
 				'html' => true,
+				'to' => $this->_models['user']->userEmail,
 				'subject' => $f3->get('mail_welcome', $this->_models['user']->userName),
 				'body' => \Template::instance()->render('mail_welcome.html','text/html'),
 			]);
