@@ -57,7 +57,7 @@ return [
 	'mail_welcome' => 'Welcome aboard {0}!',
 
 	// XML
-	'atom_title' => 'missallsunday.com’s Activity',
+	'atom_title' => 'missallsunday.com Activity',
 
 	// Login errors
 	'error_msg' => 'There were some errors:',

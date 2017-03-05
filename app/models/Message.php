@@ -150,9 +150,11 @@ class Message extends \DB\SQL\Mapper
 			// Lets avoid issues.
 			$r['pages'] = (int) ceil((int) $r['max_count'] / $f3->get('paginationLimit'));
 
+			$r['pages'] = $r['pages'] >= 2 ? ($r['pages'] - 1) : $r['pages'];
+
 			// Build the pagination stuff.
 			if ($r['max_count'] > $f3->get('paginationLimit'))
-				$r['last_url'] = $r['url'] . '/page/' . (count($r['pages']) >= 2 ? ($r['pages'] - 1) : 1) .'#msg'. $r['msgID'];
+				$r['last_url'] = $r['url'] . '/page/' . $r['pages'] .'#msg'. $r['msgID'];
 
 			else
 				$r['last_url'] = $r['url'] .'#msg'. $r['msgID'];
