@@ -23,14 +23,14 @@
 			<div class="checkbox-inline">
 				<label>
 					<input type="hidden" name="locked" value="0"/>
-					<input type="checkbox" value="{{ @posting.locked }}" name="locked" {{!@posting.locked ? '' : 'checked' }}>
+					<input type="checkbox" value="1" name="locked" {{!@posting.locked ? '' : 'checked' }}>
 					{{@txt.post_lock}}
 				</label>
 			</div>
 			<div class="checkbox-inline">
 				<label>
-					<input type="hidden" name="sticky" value="0"/>
-					<input type="checkbox" value="{{ @posting.sticky }}" name="sticky" }}>
+					<input type="hidden" name="sticky" value=""/>
+					<input type="checkbox" value="1" name="sticky" {{!@posting.sticky ? '' : 'checked' }}>
 					{{@txt.post_sticky}}
 				</label>
 			</div>

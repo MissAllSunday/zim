@@ -26,6 +26,8 @@
 		</div>
 		<div class="media-body">
 			<h4 class="media-heading">
+				{{@item.locked ? '🔐' : ''}}
+				{{@item.sticky ? '📌' : ''}}
 				<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
 			</h4>
 			<div class="col-md-3 small topicDate">{{@item.date}}</small></div>

@@ -294,6 +294,7 @@ class Message extends \DB\SQL\Mapper
 		}
 
 		$this->copyFrom($params);
+		$topicModel->copyFrom($topicParams);
 
 		// Save.
 		$this->save();
@@ -309,7 +310,6 @@ class Message extends \DB\SQL\Mapper
 		// No? then create it.
 		else
 		{
-			$topicModel->copyFrom($topicParams);
 			$topicModel->fmsgID = $this->msgID;
 			$topicModel->lmsgID = $this->msgID;
 			$topicModel->boardID = $this->boardID;
