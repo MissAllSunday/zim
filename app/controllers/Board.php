@@ -22,12 +22,17 @@ class Board extends Base
 
 		$f3->set('boardInfo', $this->_models['board']->load(['boardID = ?', $id]));
 
-		// Get the data.
-		$f3->set('entries', $this->_models['board']->topicList([
+		$entries = $this->_models['board']->topicList([
 			'limit' => $limit,
 			'start' => $start,
 			'board' => $f3->get('boardInfo')->boardID,
-		]));
+		]);
+
+		// Sticky first!
+		\Matrix::instance()->sort($entries, 'sticky', SORT_DESC);
+
+		// Get the data.
+		$f3->set('entries', $entries);
 
 		$f3->set('pag', [
 			'start' => $start,
