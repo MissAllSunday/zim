@@ -2,12 +2,12 @@
 	<article itemprop="mainEntity" itemscope itemtype="http://schema.org/BlogPosting">
 		<check if="{{ @entryInfo.sticky }}">
 			<p class="alert alert-info" role="alert">
-				<i class="fa fa-sticky-note-o fa-2x" aria-hidden="true"></i> {{@txt.topic_sticky}}
+				📌 {{@txt.topic_sticky}}
 			</p>
 		</check>
 		<check if="{{ @entryInfo.locked }}">
 			<p class="alert alert-danger" role="alert">
-				<i class="fa fa-lock fa-2x" aria-hidden="true"></i> {{@txt.topic_locked}}
+				🔐 {{@txt.topic_locked}}
 			</p>
 		</check>
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{@entryInfo.url}}" />
