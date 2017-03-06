@@ -49,7 +49,7 @@ class Board extends \DB\SQL\Mapper
 			':limit' => $params['limit'],
 			':start' => ($params['start'] * $params['limit']),
 			':board' => $params['board'],
-		]);
+		], 300);
 
 		// TopicID as key.
 		foreach ($r as $v)

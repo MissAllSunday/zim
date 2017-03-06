@@ -48,7 +48,7 @@ class Message extends \DB\SQL\Mapper
 			':limit' => $params['limit'],
 			':start' => ($params['start'] * $params['limit']),
 			':board' => $params['board'],
-		]);
+		], 300);
 
 		// Add a nice description and a real date.
 		foreach ($entries as $k => $v)
@@ -74,7 +74,7 @@ class Message extends \DB\SQL\Mapper
 			ORDER BY m.msgID DESC
 			LIMIT 1', [
 				':topic' => $id,
-			]);
+			], 300);
 
 		if (empty($r))
 			return [];
@@ -102,6 +102,7 @@ class Message extends \DB\SQL\Mapper
 		$f3 = \Base::instance();
 		$data = [];
 
+		// Cache is set on call.
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM suki_c_message
@@ -136,6 +137,7 @@ class Message extends \DB\SQL\Mapper
 	{
 		$f3 = \Base::instance();
 
+		// Five minutes cache.
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM suki_c_message
@@ -147,7 +149,7 @@ class Message extends \DB\SQL\Mapper
 			ORDER BY m.msgID DESC
 			LIMIT :limit', [
 				':limit' => $limit,
-			]);
+			], 300);
 
 		foreach ($data as $k => $r)
 		{
@@ -184,7 +186,7 @@ class Message extends \DB\SQL\Mapper
 			WHERE m.topicID = :topic
 				AND msgID != :msg
 			ORDER BY msgID ASC
-			LIMIT :start, :limit', $params);
+			LIMIT :start, :limit', $params, 300);
 
 		foreach ($data as $k => $v)
 		{
@@ -241,7 +243,7 @@ class Message extends \DB\SQL\Mapper
 			$d['body'] = $f3->get('Tools')->parser($d['body']);
 		}
 
-		// Get the detes
+		// Get the dates
 		$d['date'] = $f3->get('Tools')->getDate($d['msgTime']);
 		$d['microDate'] =  date("c", $d['msgTime']);
 
