@@ -200,8 +200,7 @@ Licensed under MIT
 /* Profile sidebar */
 .profile-sidebar {
   padding: 20px 0 10px 0;
-  background: #f9faf4;
-  border-right: solid 2px #E9E9E7;
+  border-right: solid 3px #ccc;
 }
 
 .profile-userpic img {

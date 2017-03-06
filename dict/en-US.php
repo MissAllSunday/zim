@@ -50,6 +50,10 @@ return [
 	'account_settings' => 'Account Settings',
 	'online' => 'Online',
 	'offline' => 'offline',
+	'user_overview' => 'Overview',
+	'user_settings' => 'Account Settings',
+	'user_topics' => 'Topics',
+	'user_messages' => 'Messages',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
@@ -97,7 +101,7 @@ return [
 Consider my moves and deserve the reward
 To hold you in my arms and wait, wait
 Wait for something to happen...',
-	'site_keywords' => 'miss all sunday, one piece, theories, manga, capitulos, film gold, online, episodes, arcs, Suki, SMF, free, mods, php, jquery,',
+	'site_keywords' => 'miss all sunday, one piece, theories, manga, chapters, film gold, online, episodes, arcs, Suki, SMF, free, mods, php, jquery, nico, robin, zoro',
 
 	// Posting.
 	'post_submit' => 'Submit',

@@ -20,7 +20,6 @@ class Auth
 				$this->_models[$m] = new $class($f3->get('DB'));
 			}
 
-
 		// Get current user data.
 		$f3->set('currentUser', $this->_models['user']->load(array('userID' => $f3->get('SESSION.user'))));
 		$this->_models['user']->reset();

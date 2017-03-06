@@ -31,24 +31,24 @@ Licensed under MIT
 			<div class="profile-usermenu">
 				<ul class="nav">
 					<li class="active">
-						<a href="#">
-						<i class="glyphicon glyphicon-home"></i>
-						Overview </a>
+						<a href="#profile-home" aria-controls="profile-home" role="tab" data-toggle="tab">
+						🏠
+						{{@txt.user_overview}} </a>
 					</li>
 					<li>
-						<a href="#">
-						<i class="glyphicon glyphicon-user"></i>
-						Account Settings </a>
+						<a href="#profile-settings" aria-controls="profile-settings" role="tab" data-toggle="tab">
+						⚙️
+						{{@txt.user_settings}}</a>
 					</li>
 					<li>
-						<a href="#" target="_blank">
-						<i class="glyphicon glyphicon-ok"></i>
-						Tasks </a>
+						<a href="#profile-topics" aria-controls="profile-topics" role="tab" data-toggle="tab">
+						📜
+						{{@txt.user_topics}}</a>
 					</li>
 					<li>
-						<a href="#">
-						<i class="glyphicon glyphicon-flag"></i>
-						Help </a>
+						<a href="#profile-messages" aria-controls="profile-messages" role="tab" data-toggle="tab">
+						📝
+						{{@txt.user_messages}}</a>
 					</li>
 				</ul>
 			</div>
@@ -56,8 +56,19 @@ Licensed under MIT
 		</div>
 	</div>
 	<div class="col-md-9">
-		<div class="profile-content">
-			content
+		<div class="profile-content tab-content">
+			<div role="tabpanel" class="tab-pane active" id="profile-home">
+				<h3>{{@txt.user_overview}}</h3>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="profile-settings">
+				<h3>{{@txt.user_settings}}</h3>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="profile-topics">
+				<h3>{{@txt.user_topics}}</h3>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="profile-messages">
+				<h3>{{@txt.user_messages}}</h3>
+			</div>
 		</div>
 	</div>
 </div>
