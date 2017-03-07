@@ -27,15 +27,10 @@ class User extends Base
 		}
 
 		// Latest topics.
-		$f3->set('profileTopics', $this->_models['message']->latestTopics([
-			':where' => 'm.userID = '. $this->_models['user']->userID)
-		]);
+		$f3->set('profileTopics', []);
 
 		// Latest messages.latestMessages
-		$f3->set('profileMessages', $this->_models['message']->latestMessages([
-			':limit' => 10,
-			':where' => 'm.userID = '. $this->_models['user']->userID)
-		]);
+		$f3->set('profileMessages', []);
 
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),

@@ -45,7 +45,7 @@ class Base
 		$f3->set('can', $can);
 
 		// Latest messages
-		$f3->set('latestMessages', $this->_models['message']->latestMessages());
+		$f3->set('latestMessages', $this->_models['message']->latestMessages(5, 600));
 
 		// Boards
 		$f3->set('boards', $this->_models['board']->getBoards());

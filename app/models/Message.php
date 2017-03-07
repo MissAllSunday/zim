@@ -97,24 +97,22 @@ class Message extends \DB\SQL\Mapper
 		return $r;
 	}
 
-	function latestTopics($params = [], $ttl = 300)
+	function latestTopics($limit = 10, $ttl = 300)
 	{
 		$f3 = \Base::instance();
 		$data = [];
-		$params[':limit'] = isset($params[':limit']) ? $params[':limit'] : 10;
 
 		// Cache is set on call.
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE topicID = m.topicID) as max_count
-			FROM suki_c_topic AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			FROM suki_c_message AS m
+			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
-			'. ($params[':where'] ? 'WHERE '. $params[':where'] : '') .'
 			ORDER BY t.topicID DESC
-			LIMIT :limit', $params, $ttl);
+			LIMIT 10', [], $ttl);
 
 		if (empty($data))
 			return [];
@@ -133,11 +131,10 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
-	function latestMessages($params = [], $ttl = 300)
+	function latestMessages($limit = 5, $ttl = 300)
 	{
 		$f3 = \Base::instance();
 		$data = [];
-		$params[':limit'] = isset($params[':limit']) ? $params[':limit'] : 5;
 
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
@@ -147,9 +144,8 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
-			'. ($params[':where'] ? 'WHERE '. $params[':where'] : '') .'
 			ORDER BY m.msgID DESC
-			LIMIT :limit', $params, $ttl);
+			LIMIT 5', [], $ttl);
 
 		foreach ($data as $k => $r)
 		{
