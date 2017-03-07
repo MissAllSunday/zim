@@ -6,7 +6,7 @@ class Topic extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, 'suki_c_topic');
+				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'topic');
 	}
 
 	function all()

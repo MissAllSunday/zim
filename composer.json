@@ -10,6 +10,7 @@
 		"simplepie/simplepie": "1.4.3",
 		"phpmailer/phpmailer": "~5.2",
 		"knplabs/github-api": "^2.0",
-		"php-http/guzzle6-adapter": "^1.1"
+		"php-http/guzzle6-adapter": "^1.1",
+		"birke/rememberme": "^1.0"
 	}
 }

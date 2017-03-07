@@ -6,7 +6,7 @@ class User extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, 'suki_c_user');
+				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'user');
 
 		$this->isOnline = "last_active >= UNIX_TIMESTAMP() - 300";
 	}

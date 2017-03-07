@@ -6,6 +6,6 @@ class Cron extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, 'suki_c_cron');
+				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'cron');
 	}
 }

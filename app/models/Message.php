@@ -29,7 +29,7 @@ class Message extends \DB\SQL\Mapper
 
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, 'suki_c_message');
+				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'message');
 	}
 
 	function entries($params = [])
