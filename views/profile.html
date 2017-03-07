@@ -7,8 +7,8 @@ Licensed under MIT
 	<div class="col-md-3">
 		<div class="profile-sidebar">
 			<!-- SIDEBAR USERPIC -->
-			<div class="profile-userpic">
-				<img src="{{@user->avatar}}" class="img-responsive" alt="">
+			<div class="">
+				<img src="{{@user->avatar}}" class="img-responsive media-avatar img-circle" alt="">
 			</div>
 			<!-- END SIDEBAR USERPIC -->
 			<!-- SIDEBAR USER TITLE -->
@@ -22,10 +22,10 @@ Licensed under MIT
 			</div>
 			<!-- END SIDEBAR USER TITLE -->
 			<!-- SIDEBAR BUTTONS -->
-			<div class="profile-userbuttons">
+			<!-- <div class="profile-userbuttons">
 				<button type="button" class="btn btn-success btn-sm">Follow</button>
 				<button type="button" class="btn btn-danger btn-sm">Message</button>
-			</div>
+			</div> -->
 			<!-- END SIDEBAR BUTTONS -->
 			<!-- SIDEBAR MENU -->
 			<div class="profile-usermenu">
@@ -65,6 +65,22 @@ Licensed under MIT
 			</div>
 			<div role="tabpanel" class="tab-pane" id="profile-topics">
 				<h3>{{@txt.user_topics}}</h3>
+				<repeat group="{{ @profileTopics }}" value="{{ @item }}">
+					<div class="media">
+						<div class="media-left">
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">
+								{{@item.locked ? '🔐' : ''}}
+								{{@item.sticky ? '📌' : ''}}
+								<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
+							</h4>
+							<div class="col-md-6 small topicDate">{{@item.date}}</small></div>
+							<div class="col-md-6 small topicPosts">{{@txt.posts }} {{@item.max_count}}</div>
+						</div>
+						<hr>
+					</div>
+				</repeat>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="profile-messages">
 				<h3>{{@txt.user_messages}}</h3>

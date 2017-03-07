@@ -97,10 +97,11 @@ class Message extends \DB\SQL\Mapper
 		return $r;
 	}
 
-	function latestTopics($limit = 10)
+	function latestTopics($params = [], $ttl = 300)
 	{
 		$f3 = \Base::instance();
 		$data = [];
+		$params[':limit'] = isset($params[':limit']) ? $params[':limit'] : 10;
 
 		// Cache is set on call.
 		$data = $this->db->exec('
@@ -111,10 +112,9 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			'. ($params[':where'] ? 'WHERE '. $params[':where'] : '') .'
 			ORDER BY t.topicID DESC
-			LIMIT :limit', [
-				':limit' => $limit,
-			]);
+			LIMIT :limit', $params, $ttl);
 
 		if (empty($data))
 			return [];
@@ -133,11 +133,12 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
-	function latestMessages($limit = 5)
+	function latestMessages($params = [], $ttl = 300)
 	{
 		$f3 = \Base::instance();
+		$data = [];
+		$params[':limit'] = isset($params[':limit']) ? $params[':limit'] : 5;
 
-		// Five minutes cache.
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM suki_c_message
@@ -146,10 +147,9 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			'. ($params[':where'] ? 'WHERE '. $params[':where'] : '') .'
 			ORDER BY m.msgID DESC
-			LIMIT :limit', [
-				':limit' => $limit,
-			], 300);
+			LIMIT :limit', $params, $ttl);
 
 		foreach ($data as $k => $r)
 		{
@@ -186,7 +186,7 @@ class Message extends \DB\SQL\Mapper
 			WHERE m.topicID = :topic
 				AND msgID != :msg
 			ORDER BY msgID ASC
-			LIMIT :start, :limit', $params, 300);
+			LIMIT :start, :limit', $params);
 
 		foreach ($data as $k => $v)
 		{

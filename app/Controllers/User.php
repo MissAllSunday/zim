@@ -26,6 +26,24 @@ class User extends Base
 			$f3->reroute('/');
 		}
 
+		// Latest topics.
+		$f3->set('profileTopics', $this->_models['message']->latestTopics([
+			':where' => 'm.userID = '. $this->_models['user']->userID)
+		]);
+
+		// Latest messages.latestMessages
+		$f3->set('profileMessages', $this->_models['message']->latestMessages([
+			':limit' => 10,
+			':where' => 'm.userID = '. $this->_models['user']->userID)
+		]);
+
+		$f3->set('site', $f3->merge('site', [
+			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),
+			'breadcrumb' => [
+				['url' => $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($this->_models['user']->userName) .'-'. $this->_models['user']->userID, 'title' => $f3->get('txt.view_profile', $this->_models['user']->userName), 'active' => true],
+			],
+		]));
+
 		$f3->set('content','profile.html');
 		echo \Template::instance()->render('home.html');
 	}

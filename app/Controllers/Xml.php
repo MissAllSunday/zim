@@ -7,7 +7,7 @@ class Xml extends Base
 	function atom(\Base $f3, $params)
 	{
 		// Get the items.
-		$items = $this->_models['message']->latestTopics(30);
+		$items = $this->_models['message']->latestTopics([':limit' => 30]);
 
 		// Get the update time.
 		$f3->set('atomUpdated', $items[0]['microDate']);
@@ -19,7 +19,7 @@ class Xml extends Base
 	function sitemap(\Base $f3, $params)
 	{
 		// Get the items.
-		$f3->set('sitemapItems', $this->_models['message']->latestTopics(200), 86400);
+		$f3->set('sitemapItems', $this->_models['message']->latestTopics([':limit' => 200]), 86400);
 
 		echo \Template::instance()->render('sitemap.xml', 'application/xml');
 	}
