@@ -10,7 +10,7 @@
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<check if="{{ is_array(@msg.text) }}">
 						<true>
-							<p>{{@txt.error_msg}}</p>
+							<p>😱 {{@txt.error_msg}}</p>
 							<ul class="list-unstyled">
 								<repeat group="@msg.text" value="{{ @item }}">
 								<li>- {{ @txt["error_". @item] | raw }}</li>

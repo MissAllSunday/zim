@@ -135,6 +135,7 @@ Wait for something to happen...',
 	'error_invalid_board' => 'The board you requested doesn\'t exists.',
 	'error_invalid_topic' => 'The topic you requested doesn\'t exists.',
 	'error_invalid_message' => 'The message you requested doesn\'t exists.',
+	'error_already_used' => 'The username or the email you provided are already been used by a registered user, please either login or use another name/mail.',
 
 	// Permissions error messages.
 	'perm_error_post' => 'You aren\'t allowed to post messages.',

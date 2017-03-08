@@ -135,6 +135,15 @@ class Post extends Base
 		if (!empty($data['userEmail']) && !$audit->email($data['userEmail'], true))
 			$errors[] = 'bad_email';
 
+		// Guest posting? check that they aren't using an already registered user/mail
+		if (!$f3->get('currentUser')->userID)
+		{
+			$found = $this->_models['user']->find(['userName = ? OR userEmail = ?', $data['userName'], $data['userEmail']]);
+
+			if(!empty($found))
+				$errors[] = 'already_used';
+		}
+
 		// Clean up the tags.
 		$data['tags'] = !empty($data['tags']) ? $f3->get('Tools')->commaSeparated($data['tags']) : '';
 
