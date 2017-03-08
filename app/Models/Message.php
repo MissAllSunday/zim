@@ -112,7 +112,7 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			ORDER BY t.topicID DESC
-			LIMIT 10', [], $ttl);
+			LIMIT :limit', [':limit' => $limit], $ttl);
 
 		if (empty($data))
 			return [];
@@ -145,7 +145,7 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			ORDER BY m.msgID DESC
-			LIMIT 5', [], $ttl);
+			LIMIT :limit', [':limit' => $limit], $ttl);
 
 		foreach ($data as $k => $r)
 		{
