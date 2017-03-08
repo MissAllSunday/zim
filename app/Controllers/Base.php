@@ -18,8 +18,8 @@ class Base
 		}
 
 		// Get current user data.
-		if ($f3->exists('SESSION.user'))
-			$currentUser = $this->_models['user']->load(array('userID' => $f3->get('SESSION.user')));
+		if ($f3->get('REMEMBER')->login())
+			$currentUser = $this->_models['user']->load(['userID' => $f3->get('REMEMBER')->getUser()]);
 
 		else
 			$currentUser = (object) [

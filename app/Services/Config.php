@@ -49,10 +49,7 @@ class Config
 		$this->f3->set('site.customJS', []);
 		$this->f3->set('site.customCSS', []);
 
-		// If theres an cookie, set the session.
-		$c = md5($this->f3->get('site.title'));
-
-		if ($this->f3->exists('COOKIE.'. $c))
-			$this->f3->set('SESSION.user', $this->f3->exists('COOKIE.'. $c));
+		// Get the user if theres any.
+		$this->f3->set('REMEMBER', new \Models\Remember($this->f3->get('DB')));
 	}
 }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab5192bf2cbcc69854a6b9a40c3beccf",
-    "content-hash": "6a642846f12b0d1608108d69e7f0064a",
+    "hash": "43dff720524e4e91499e2fd92681f231",
+    "content-hash": "a5a9dc9239741b831ae59c9171277ca5",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "cf0602fb7f52599c4cc8a9407b02b484617dd583"
+                "reference": "5e7eeb4713b137389ba4a28e8d488166287098e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/cf0602fb7f52599c4cc8a9407b02b484617dd583",
-                "reference": "cf0602fb7f52599c4cc8a9407b02b484617dd583",
+                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/5e7eeb4713b137389ba4a28e8d488166287098e7",
+                "reference": "5e7eeb4713b137389ba4a28e8d488166287098e7",
                 "shasum": ""
             },
             "require": {
@@ -36,52 +36,7 @@
             ],
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
-            "time": "2017-02-15 22:53:19"
-        },
-        {
-            "name": "birke/rememberme",
-            "version": "1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gbirke/rememberme.git",
-                "reference": "810473852eb4823098e47e23376a19b77ba0c165"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gbirke/rememberme/zipball/810473852eb4823098e47e23376a19b77ba0c165",
-                "reference": "810473852eb4823098e47e23376a19b77ba0c165",
-                "shasum": ""
-            },
-            "require": {
-                "paragonie/random_compat": "^1.1.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Birke\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gabriel Birke",
-                    "email": "gb@birke-software.de"
-                }
-            ],
-            "description": "Secure \"Remember Me\" functionality",
-            "homepage": "https://github.com/gbirke/rememberme",
-            "keywords": [
-                "cookie",
-                "remember",
-                "security"
-            ],
-            "time": "2017-02-12 12:43:00"
+            "time": "2017-03-07 17:26:24"
         },
         {
             "name": "clue/stream-filter",
@@ -181,21 +136,21 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.2.2",
+            "version": "6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "ebf29dee597f02f09f4d5bbecc68230ea9b08f60"
+                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ebf29dee597f02f09f4d5bbecc68230ea9b08f60",
-                "reference": "ebf29dee597f02f09f4d5bbecc68230ea9b08f60",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8d6c6cc55186db87b7dc5009827429ba4e9dc006",
+                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.3.1",
+                "guzzlehttp/psr7": "^1.4",
                 "php": ">=5.5"
             },
             "require-dev": {
@@ -239,7 +194,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-10-08 15:01:37"
+            "time": "2017-02-28 22:50:30"
         },
         {
             "name": "guzzlehttp/promises",
@@ -424,54 +379,6 @@
             "time": "2016-12-13 13:09:53"
         },
         {
-            "name": "paragonie/random_compat",
-            "version": "v1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
-                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
-            },
-            "suggest": {
-                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/random.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paragon Initiative Enterprises",
-                    "email": "security@paragonie.com",
-                    "homepage": "https://paragonie.com"
-                }
-            ],
-            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-            "keywords": [
-                "csprng",
-                "pseudorandom",
-                "random"
-            ],
-            "time": "2016-03-18 20:34:03"
-        },
-        {
             "name": "php-http/cache-plugin",
             "version": "v1.2.0",
             "source": {
@@ -590,16 +497,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "cc5669d9cb51170ad0278a3b984cd3c7894d6ff9"
+                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/cc5669d9cb51170ad0278a3b984cd3c7894d6ff9",
-                "reference": "cc5669d9cb51170ad0278a3b984cd3c7894d6ff9",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/6b33475a3239439bc7ced287d0de0bb82e04d2f0",
+                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +555,7 @@
                 "message",
                 "psr7"
             ],
-            "time": "2017-02-12 08:49:24"
+            "time": "2017-03-02 06:56:00"
         },
         {
             "name": "php-http/guzzle6-adapter",

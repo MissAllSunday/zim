@@ -80,13 +80,9 @@ class UserAuth extends Base
 		// Do the actual check.
 		elseif(password_verify($data['passwd'], $this->_models['user']->passwd))
 		{
-			$f3->set('SESSION.user', $this->_models['user']->userID);
-
 			// Wanna stay for a bit?
 			if (!empty($data['remember']))
-			{
-				$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->_models['user']->userID, 60 * 60 * 24 * 7);
-			}
+				$f3->get('REMEMBER')->setCookie($this->_models['user']->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
@@ -101,9 +97,9 @@ class UserAuth extends Base
 
 	function doLogout(\Base $f3, $params)
 	{
-		$f3->clear('COOKIE.'. md5($f3->get('site.title')));
-		$this->_models['user']->reset();
-		$f3->clear('SESSION');
+		$f3->get('REMEMBER')->clearCookie($f3->get('currentUser')->userID);
+		$f3->clear('currentUser');
+
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
 		$f3->reroute('/');
 	}
