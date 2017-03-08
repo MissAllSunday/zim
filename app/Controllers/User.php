@@ -35,7 +35,7 @@ class User extends Base
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),
 			'breadcrumb' => [
-				['url' => $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($this->_models['user']->userName) .'-'. $this->_models['user']->userID, 'title' => $f3->get('txt.view_profile', $this->_models['user']->userName), 'active' => true],
+				['url' => '', 'title' => $f3->get('txt.view_profile', $this->_models['user']->userName), 'active' => true],
 			],
 		]));
 

@@ -64,7 +64,7 @@ class Message extends \DB\SQL\Mapper
 
 		$r = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. $this->table() .'
 				WHERE topicID = :topic) as max_count
 			FROM suki_c_topic AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
@@ -105,9 +105,9 @@ class Message extends \DB\SQL\Mapper
 		// Cache is set on call.
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. $this->table() .'
 				WHERE topicID = m.topicID) as max_count
-			FROM suki_c_message AS m
+			FROM '. $this->table() .' AS m
 			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -138,9 +138,9 @@ class Message extends \DB\SQL\Mapper
 
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. $this->table() .'
 				WHERE topicID = m.topicID) as max_count
-			FROM suki_c_message AS m
+			FROM '. $this->table() .' AS m
 			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
 			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
@@ -176,7 +176,7 @@ class Message extends \DB\SQL\Mapper
 
 		$data = $this->db->exec('
 			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, t.locked, t.sticky
-			FROM suki_c_message AS m
+			FROM '. $this->table() .' AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			LEFT JOIN suki_c_topic AS t ON (t.topicID = m.topicID)
 			WHERE m.topicID = :topic
@@ -200,7 +200,7 @@ class Message extends \DB\SQL\Mapper
 
 	function deleteMessages($ids = [])
 	{
-		$this->db->exec('DELETE FROM suki_c_message WHERE msgID IN(:ids)', [':ids' => implode(',', $ids)]);
+		$this->db->exec('DELETE FROM '. $this->table() .' WHERE msgID IN(:ids)', [':ids' => implode(',', $ids)]);
 	}
 
 	function getMessageIDs($id = 0)
@@ -208,7 +208,7 @@ class Message extends \DB\SQL\Mapper
 		$ids = [];
 		$data = $this->db->exec('
 			SELECT msgID
-			FROM suki_c_message
+			FROM '. $this->table() .'
 			WHERE topicID = :topic',[
 				':topic' => $id,
 			]);

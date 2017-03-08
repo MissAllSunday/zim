@@ -13,7 +13,7 @@ class Board extends \DB\SQL\Mapper
 	{
 		return $this->db->exec('
 			SELECT *
-			FROM suki_c_board', null, 604800);
+			FROM '. $this->table() .'', null, 604800);
 	}
 
 	function countTopics($id)
@@ -99,7 +99,7 @@ class Board extends \DB\SQL\Mapper
 			(SELECT COUNT(*)
 				FROM suki_c_message
 				WHERE boardID  = b.boardID) as totalPosts
-			FROM suki_c_board AS b
+			FROM '. $this->table() .' AS b
 				LEFT JOIN suki_c_message AS m ON (m.msgID = (SELECT msgID
 					FROM suki_c_message
 					WHERE boardID  = b.boardID

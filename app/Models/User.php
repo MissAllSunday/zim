@@ -39,7 +39,7 @@ class User extends \DB\SQL\Mapper
 		$loaded = $data = [];
 		$data = $this->db->exec('
 			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID, last_active, (last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
-			FROM suki_c_user AS t
+			FROM '. $this->table() .' AS t
 			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
 			WHERE userID IN(:users)
 			AND is_active = 1', [
