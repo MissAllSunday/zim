@@ -4,11 +4,19 @@ namespace Models;
 
 class User extends \DB\SQL\Mapper
 {
+	public $userHref;
+
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, \Base::instance()->get('_db.prefix') . 'user');
+		$f3 = \Base::instance();
+
+		parent::__construct($db, $f3->get('_db.prefix') . 'user');
 
 		$this->isOnline = "last_active >= UNIX_TIMESTAMP() - 300";
+
+		$this->onload(function($self) use($f3){
+			$self->userHref = $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($self->userName) .'-'. $self->userID;
+		});
 	}
 
 	public function getById($id = 0)
