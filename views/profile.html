@@ -7,8 +7,9 @@ Licensed under MIT
 	<div class="col-md-3">
 		<div class="profile-sidebar">
 			<!-- SIDEBAR USERPIC -->
-			<div class="">
-				<img src="{{@user->avatar}}" class="img-responsive media-avatar img-circle" alt="">
+			<div class="userAvatar">
+				<div class="{{@user->isOnline ? 'online' : 'offline'}}"></div>
+				<img src="{{@user->avatar}}" class="img-responsive media-avatar img-circle center-block userImg" data-toggle="tooltip" data-placement="top" title="{{ @txt.user_is, (@user->isOnline ? @txt.user_online : @txt.user_offline) | format}}">
 			</div>
 			<!-- END SIDEBAR USERPIC -->
 			<!-- SIDEBAR USER TITLE -->
@@ -59,6 +60,12 @@ Licensed under MIT
 		<div class="profile-content tab-content">
 			<div role="tabpanel" class="tab-pane active" id="profile-home">
 				<h3>{{@txt.user_overview}}</h3>
+				<ul class="list-group stripes">
+					<li class="list-group-item">{{@txt.posts}} {{@user->posts}}</li>
+					<li class="list-group-item">{{@txt.user_registered}} {{date("j M Y", @user->registered)}}</li>
+					<li class="list-group-item">{{@txt.user_last_active}} {{@Tools->timeElapsed(@user->last_active)}}</li>
+
+				</ul>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="profile-settings">
 				<h3>{{@txt.user_settings}}</h3>

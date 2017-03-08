@@ -54,6 +54,12 @@ return [
 	'user_settings' => 'Account Settings',
 	'user_topics' => 'Topics',
 	'user_messages' => 'Messages',
+	'user_last_active' => 'Last active:',
+	'user_registered' => 'Registered:',
+	'user_is' => 'User is {0}',
+	'user_online' => 'online',
+	'user_offline' => 'offline',
+
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
