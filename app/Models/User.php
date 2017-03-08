@@ -6,22 +6,14 @@ class User extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
-				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'user');
+		parent::__construct($db, \Base::instance()->get('_db.prefix') . 'user');
 
 		$this->isOnline = "last_active >= UNIX_TIMESTAMP() - 300";
 	}
 
-	public function all()
-	{
-		$this->load();
-		return $this->query;
-	}
-
 	public function getById($id = 0)
 	{
-		$this->load(array('userID = ?', $id));
-
-		return $this->query;
+		return $this->load(array('userID = ?', $id));
 	}
 
 	public function getByName($name = 0)
