@@ -24,7 +24,6 @@ class UserAuth extends Base
 		// Set the needed metatags stuff.
 
 		$f3->set('content','login.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function doLogin(\Base $f3, $params)
@@ -149,7 +148,6 @@ class UserAuth extends Base
 		$f3->push('site.customJS', 'signup.js');
 
 		$f3->set('content','form.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function doSignup(\Base $f3, $params)

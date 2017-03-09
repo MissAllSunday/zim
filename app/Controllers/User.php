@@ -40,7 +40,6 @@ class User extends Base
 		]));
 
 		$f3->set('content','profile.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function settings(\Base $f3, $params)

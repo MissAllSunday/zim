@@ -78,7 +78,6 @@ class Post extends Base
 		$f3->push('site.customCSS', 'summernote.css');
 
 		$f3->set('content','post.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function create(\Base $f3, $params)

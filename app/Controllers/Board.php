@@ -54,7 +54,6 @@ class Board extends Base
 		$f3->push('site.customJS', 'randomColor.js');
 
 		$f3->set('content','topics.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function forum(\Base $f3, $params)
@@ -71,6 +70,5 @@ class Board extends Base
 		]));
 
 		$f3->set('content','boards.html');
-		echo \Template::instance()->render('home.html');
 	}
 }

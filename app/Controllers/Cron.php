@@ -114,7 +114,6 @@ class Cron extends Base
 			return 'github cron disabled';
 
 		$this->simplePie->set_feed_url($this->_models['cron']->url);
-		echo 'set url: '. $this->_models['cron']->url . PHP_EOL;
 
 		// Run.
 		$this->init();

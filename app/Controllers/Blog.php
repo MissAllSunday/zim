@@ -22,7 +22,6 @@ class Blog extends Base
 		));
 
 		$f3->set('content','blog.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function error(\Base $f3, $params)
@@ -159,7 +158,6 @@ class Blog extends Base
 		$this->_models['user']->lmsgID = $entryInfo['lmsgID'];
 
 		$f3->set('content','single.html');
-		echo \Template::instance()->render('home.html');
 	}
 
 	function about(\Base $f3, $params)
@@ -190,6 +188,5 @@ class Blog extends Base
 		]);
 
 		$f3->set('content','about.html');
-		echo \Template::instance()->render('home.html');
 	}
 }

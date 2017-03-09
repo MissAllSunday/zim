@@ -53,10 +53,13 @@ class Base
 
 	public function afterRoute($f3)
 	{
-		if ($f3->get('currentUser')->userID && $f3->get('currentUser')->userID == $this->_models['user']->userID)
+		if ($f3->get('currentUser')->userID)
 		{
 			$f3->get('currentUser')->last_active = time();
 			$f3->get('currentUser')->save();
 		}
+
+		if ($f3->exists('content'));
+			echo \Template::instance()->render('home.html');
 	}
 }
