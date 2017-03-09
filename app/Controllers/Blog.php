@@ -173,6 +173,22 @@ class Blog extends Base
 			],
 		]));
 
+		$f3->set('stuff', [
+			'https://fatfreeframework.com' => 'Fat-Free Framework',
+			'http://getbootstrap.com' => 'Bootstrap',
+			'http://fontawesome.io' => 'Font Awesome',
+			'https://jquery.com' => 'jQuery',
+			'http://summernote.org' => 'summernote',
+			'https://highlightjs.org' => 'highlight.js',
+			'http://htmlpurifier.org' => 'HTML Purifier',
+			'http://simplepie.org' => 'SimplePie',
+			'https://github.com/PHPMailer/PHPMailer' => 'PHPMailer',
+			'https://github.com/KnpLabs/php-github-api' => 'PHP GitHub API 2.0',
+			'https://startbootstrap.com' => 'Start Bootstrap Clean Blog template',
+			'https://github.com/davidmerfield/randomColor/' => 'randomColor',
+			'https://github.com/filamentgroup/loadCSS' => 'loadCSS',
+		]);
+
 		$f3->set('content','about.html');
 		echo \Template::instance()->render('home.html');
 	}
