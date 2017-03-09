@@ -27,6 +27,7 @@ return [
 	'posts' => 'Posts:',
 	'topics' => 'Topics:',
 	'views' => 'Views',
+	'about' => 'About',
 
 	// Time strings.
 	'ago' => 'ago',

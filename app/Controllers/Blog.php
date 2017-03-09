@@ -161,4 +161,19 @@ class Blog extends Base
 		$f3->set('content','single.html');
 		echo \Template::instance()->render('home.html');
 	}
+
+	function about(\Base $f3, $params)
+	{
+		$f3->set('site', $f3->merge('site', [
+			'metaTitle' => $f3->get('txt.about'),
+			'description' => $f3->get('txt.about'),
+			'currentUrl' => $f3->get('BASE') .'/about',
+			'breadcrumb' => [
+				['url' => '', 'title' => $f3->get('txt.about'), 'active' => true],
+			],
+		]));
+
+		$f3->set('content','about.html');
+		echo \Template::instance()->render('home.html');
+	}
 }

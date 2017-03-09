@@ -108,6 +108,11 @@ $f3->route([
 	'GET /login',
 ],'\Controllers\UserAuth->loginPage');
 
+// About
+$f3->route([
+	'GET /about',
+],'\Controllers\Blog->about');
+
 // Feed
 $f3->route([
 	'GET /atom',
