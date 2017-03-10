@@ -24,22 +24,8 @@ class Topic extends \DB\SQL\Mapper
 			ORDER BY t.topicID DESC
 			LIMIT :limit', $params, $ttl);
 
-		foreach ($data as $k => $r)
-		{
-			// Lets avoid issues.
-			$r['pages'] = (int) ceil((int) $r['max_count'] / $f3->get('paginationLimit'));
-
-			$r['pages'] = $r['pages'] >= 2 ? ($r['pages'] - 1) : $r['pages'];
-
-			// Build the pagination stuff.
-			if ($r['max_count'] > $f3->get('paginationLimit'))
-				$r['last_url'] = $r['url'] . '/page/' . $r['pages'] .'#msg'. $r['msgID'];
-
-			else
-				$r['last_url'] = $r['url'] .'#msg'. $r['msgID'];
-
-			$data[$k] = $this->prepareData($r);
-		}
+		foreach ($data as $k => $v)
+			$data[$k] = $f3->get('Tools')->prepareData($v);
 
 		return $data;
 	}

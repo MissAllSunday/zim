@@ -52,9 +52,9 @@ class Message extends \DB\SQL\Mapper
 
 		// Add a nice description and a real date.
 		foreach ($entries as $k => $v)
-			$entries[$k] = $this->prepareData($v);
+			$entries[$k] = $f3->get('Tools')->prepareData($v);
 
-			return $entries;
+		return $entries;
 	}
 
 	function entryInfo($id = 0)
@@ -81,20 +81,7 @@ class Message extends \DB\SQL\Mapper
 
 		$r = $r[0];
 
-		// Lets avoid issues.
-		$r['max_count'] = (int) $r['max_count'];
-		$r['pages'] = (int) ceil($r['max_count'] / $f3->get('paginationLimit'));
-
-		// Build the pagination stuff.
-		if ($r['max_count'] > $limit)
-			$r['last_url'] = $r['url'] . (($r['pages'] - 1) != 0 ? '/page/' . ($r['pages'] - 1) : '') .'#msg'. $r['lmsgID'];
-
-		else
-			$r['last_url'] = $r['url'] .'#msg'. $r['lmsgID'];
-
-		$r = $this->prepareData($r);
-
-		return $r;
+		return $f3->get('Tools')->prepareData($r);
 	}
 
 	function latestTopics($limit = 10, $ttl = 300)
@@ -125,7 +112,7 @@ class Message extends \DB\SQL\Mapper
 				continue;
 			}
 
-			$data[$k] = $this->prepareData($v);
+			$data[$k] = $f3->get('Tools')->prepareData($v);
 		}
 
 		return $data;
@@ -148,21 +135,7 @@ class Message extends \DB\SQL\Mapper
 			LIMIT :limit', [':limit' => $limit], $ttl);
 
 		foreach ($data as $k => $r)
-		{
-			// Lets avoid issues.
-			$r['pages'] = (int) ceil((int) $r['max_count'] / $f3->get('paginationLimit'));
-
-			$r['pages'] = $r['pages'] >= 2 ? ($r['pages'] - 1) : $r['pages'];
-
-			// Build the pagination stuff.
-			if ($r['max_count'] > $f3->get('paginationLimit'))
-				$r['last_url'] = $r['url'] . '/page/' . $r['pages'] .'#msg'. $r['msgID'];
-
-			else
-				$r['last_url'] = $r['url'] .'#msg'. $r['msgID'];
-
-			$data[$k] = $this->prepareData($r);
-		}
+			$data[$k] = $f3->get('Tools')->prepareData($r);
 
 		return $data;
 	}
@@ -186,7 +159,7 @@ class Message extends \DB\SQL\Mapper
 
 		foreach ($data as $k => $v)
 		{
-			$data[$k] = $this->prepareData($v);
+			$data[$k] = $f3->get('Tools')->prepareData($v);
 
 			if (!empty($page))
 				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
