@@ -26,10 +26,12 @@ class Message extends \DB\SQL\Mapper
 		'locked' => 0,
 		'sticky' => 0,
 	];
+	private static $_prefix;
 
 	function __construct(\DB\SQL $db)
 	{
-				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'message');
+		self::$_prefix = \Base::instance()->get('_db.prefix');
+		parent::__construct($db, self::$_prefix . 'message');
 	}
 
 	function entries($params = [])
@@ -39,9 +41,9 @@ class Message extends \DB\SQL\Mapper
 
 		$entries = $this->db->exec('
 			SELECT t.locked, t.sticky, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
-			FROM suki_c_topic AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			FROM '. self::$_prefix .'topic AS t
+			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			WHERE t.boardID = :board
 			ORDER BY m.msgID DESC
 			LIMIT :start, :limit', $params, 300);
@@ -62,10 +64,10 @@ class Message extends \DB\SQL\Mapper
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.url, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
 				FROM '. $this->table() .'
 				WHERE topicID = :topic) as max_count
-			FROM suki_c_topic AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
-			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			FROM '. self::$_prefix .'topic AS t
+			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			WHERE t.topicID = :topic
 			ORDER BY m.msgID DESC
 			LIMIT 1', [
@@ -91,9 +93,9 @@ class Message extends \DB\SQL\Mapper
 				FROM '. $this->table() .'
 				WHERE topicID = m.topicID) as max_count
 			FROM '. $this->table() .' AS m
-			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
-			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
+			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			ORDER BY t.topicID DESC
 			LIMIT :limit', [':limit' => $limit], $ttl);
 
@@ -124,9 +126,9 @@ class Message extends \DB\SQL\Mapper
 				FROM '. $this->table() .'
 				WHERE topicID = m.topicID) as max_count
 			FROM '. $this->table() .' AS m
-			LEFT JOIN suki_c_topic AS t ON (t.fmsgID = m.msgID)
-			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
+			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			ORDER BY m.msgID DESC
 			LIMIT :limit', [':limit' => $limit], $ttl);
 
@@ -146,8 +148,8 @@ class Message extends \DB\SQL\Mapper
 				FROM '. $this->table() .'
 				WHERE topicID = m.topicID) as max_count, t.locked, t.sticky
 			FROM '. $this->table() .' AS m
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
-			LEFT JOIN suki_c_topic AS t ON (t.topicID = m.topicID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.topicID = m.topicID)
 			WHERE m.topicID = :topic
 			ORDER BY msgID ASC
 			LIMIT :start, :limit', $params);

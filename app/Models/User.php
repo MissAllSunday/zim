@@ -8,13 +8,13 @@ class User extends \DB\SQL\Mapper
 
 	function __construct(\DB\SQL $db)
 	{
-		$f3 = \Base::instance();
-
-		parent::__construct($db, $f3->get('_db.prefix') . 'user');
+		self::$_prefix = \Base::instance()->get('_db.prefix');
+		parent::__construct($db, self::$_prefix . 'user');
 
 		$this->isOnline = "last_active >= UNIX_TIMESTAMP() - 300";
 
-		$this->onload(function($self) use($f3){
+		$this->onload(function($self){
+			$f3 = \Base::instance();
 			$self->userHref = $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($self->userName) .'-'. $self->userID;
 		});
 	}
@@ -40,7 +40,7 @@ class User extends \DB\SQL\Mapper
 		$data = $this->db->exec('
 			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID, last_active, (last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
 			WHERE userID IN(:users)
 			AND is_active = 1', [
 			':users' => implode(',', $users),

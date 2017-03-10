@@ -4,9 +4,12 @@ namespace Models;
 
 class Board extends \DB\SQL\Mapper
 {
+	private static $_prefix;
+
 	function __construct(\DB\SQL $db)
 	{
-				parent::__construct($db, \Base::instance()->get('_db.prefix') . 'board');
+		self::$_prefix = \Base::instance()->get('_db.prefix');
+		parent::__construct($db, self::$_prefix . 'board');
 	}
 
 	function getBoards()
@@ -20,42 +23,28 @@ class Board extends \DB\SQL\Mapper
 	{
 		$f3 = \Base::instance();
 		$boards = [];
+
 		$r = $this->db->exec('
 			SELECT b.boardID, b.title, b.description, b.url, b.icon, m.msgID, m.title AS msgTitle, m.url AS msgUrl, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar,
 			(SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. self::$_prefix .'message
 				WHERE topicID  = m.topicID) as max_count,
 			(SELECT COUNT(*)
-				FROM suki_c_topic
+				FROM '. self::$_prefix .'topic
 				WHERE boardID  = b.boardID) as totalTopics,
 			(SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. self::$_prefix .'message
 				WHERE boardID  = b.boardID) as totalPosts
 			FROM '. $this->table() .' AS b
-				LEFT JOIN suki_c_message AS m ON (m.msgID = (SELECT msgID
-					FROM suki_c_message
+				LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = (SELECT msgID
+					FROM '. self::$_prefix .'message
 					WHERE boardID  = b.boardID
 					ORDER BY msgTime DESC
 					LIMIT 1))
-				LEFT JOIN suki_c_user AS u ON (m.userID = u.userID)', null, 3600);
+				LEFT JOIN '. self::$_prefix .'user AS u ON (m.userID = u.userID)', null, 3600);
 
 		foreach ($r as $b)
-		{
-			$b['msgDate'] = $f3->get('Tools')->getDate($b['msgTime']);
-
-			if (empty($b['avatar']))
-				$b['avatar'] = $f3->get('BASE') .'/identicon/'. $b['userName'];
-
-			$b['date'] = $f3->get('Tools')->getDate($b['msgTime']);
-
-			if ($b['max_count'] > $f3->get('paginationLimit'))
-				$b['msgUrl'] = $b['msgUrl'] . '/page/' . (int) ($b['max_count'] / $f3->get('paginationLimit')) . '#msg'. $b['msgID'];
-
-			else
-				$b['msgUrl'] = $b['msgUrl'] . '#msg'. $b['msgID'];
-
-			$boards[$b['boardID']] = $b;
-		}
+			$boards[$b['boardID']] = $f3->get('Tools')->prepareData($b);
 
 		return $boards;
 	}

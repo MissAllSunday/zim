@@ -6,7 +6,8 @@ class Topic extends \DB\SQL\Mapper
 {
 	function __construct(\DB\SQL $db)
 	{
-		parent::__construct($db, \Base::instance()->get('_db.prefix') . 'topic');
+		self::$_prefix = \Base::instance()->get('_db.prefix');
+		parent::__construct($db, self::$_prefix . 'topic');
 	}
 
 	function getByUser($params = [], $ttl = 0)
@@ -17,9 +18,9 @@ class Topic extends \DB\SQL\Mapper
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS t
-			LEFT JOIN suki_c_message AS m ON (m.msgID = t.fmsgID)
-			LEFT JOIN suki_c_board AS b ON (b.boardID = t.boardID)
-			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
+			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
+			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			WHERE m.userID = :user
 			ORDER BY t.topicID DESC
 			LIMIT :limit', $params, $ttl);
@@ -50,13 +51,13 @@ class Topic extends \DB\SQL\Mapper
 		$topics = [];
 		$r = $this->db->exec('
 			SELECT t.topicID, t.locked, t.sticky, mf.title, mf.url, mf.tags, mf.msgTime, ml.msgID AS last_msg, ml.title AS last_title, ml.url AS last_url, ml.msgTime AS last_msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.avatar, "") AS avatar, IFNULL(ul.userID, 0) AS last_userID, IFNULL(ul.userName, ml.userName) AS last_userName, IFNULL(ul.avatar, "") AS last_avatar, (SELECT COUNT(*)
-				FROM suki_c_message
+				FROM '. self::$_prefix .'message
 				WHERE topicID  = t.topicID) as max_count
 			FROM '. $this->table() .' AS t
-			LEFT JOIN suki_c_message AS mf ON (mf.msgID = t.fmsgID)
-			LEFT JOIN suki_c_message AS ml ON (ml.msgID = t.lmsgID)
-			LEFT JOIN suki_c_user AS u ON (mf.userID = u.userID)
-			LEFT JOIN suki_c_user AS ul ON (ml.userID = ul.userID)
+			LEFT JOIN '. self::$_prefix .'message AS mf ON (mf.msgID = t.fmsgID)
+			LEFT JOIN '. self::$_prefix .'message AS ml ON (ml.msgID = t.lmsgID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (mf.userID = u.userID)
+			LEFT JOIN '. self::$_prefix .'user AS ul ON (ml.userID = ul.userID)
 			WHERE mf.boardID = :board
 			ORDER BY last_msgTime DESC
 			LIMIT :start, :limit', $params, 300);
