@@ -9,6 +9,54 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
+	function prepareData($d = [])
+	{
+		$f3 = \Base::instance();
+
+		// Lets avoid issues.
+		if (!empty($d['max_count']))
+		{
+			$d['pages'] = (int) ceil((int) $d['max_count'] / $f3->get('paginationLimit'));
+
+			$d['pages'] = $d['pages'] >= 2 ? ($d['pages'] - 1) : $d['pages'];
+		}
+
+		else
+		{
+			$d['max_count'] = 0;
+			$d['pages'] = false;
+		}
+
+		// Build the pagination stuff.
+		if ($d['max_count'] > $f3->get('paginationLimit'))
+			$d['last_url'] = $d['url'] . '/page/' . $d['pages'] .'#msg'. $d['msgID'];
+
+		else
+			$d['last_url'] = $d['url'] .'#msg'. $d['msgID'];
+
+		// Provide a generic avatar
+		if (empty($d['avatar']))
+			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('site.currentUrl') .'/identicon/'. $f3->get('Tools')->slug($d['userName']);
+
+		// username link.
+		$d['userHref'] = !empty($d['userID']) ? $f3->get('BASE') .'/user/'. $this->slug($d['userName']) .'-'. $d['userID'] : '#';
+
+		// Parse the body
+		if (!empty($d['body']))
+		{
+			// Create a description
+			$d['desc'] = $this->metaDescription($d['body'], 60);
+
+			$d['body'] = $this->parser($d['body']);
+		}
+
+		// Get the dates
+		$d['date'] = $f3->this->getDate($d['msgTime']);
+		$d['microDate'] =  date("c", $d['msgTime']);
+
+		return $d;
+	}
+
 	function slug($str = '')
 	{
 		if (empty($str) || !is_string($str))

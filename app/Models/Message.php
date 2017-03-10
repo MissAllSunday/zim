@@ -219,33 +219,6 @@ class Message extends \DB\SQL\Mapper
 		return $ids;
 	}
 
-	function prepareData($d = [])
-	{
-		$f3 = \Base::instance();
-
-		// Provide a generic avatar
-		if (empty($d['avatar']))
-			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('site.currentUrl') .'/identicon/'. $f3->get('Tools')->slug($d['userName']);
-
-		// username link.
-		$d['userHref'] = !empty($d['userID']) ? $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($d['userName']) .'-'. $d['userID'] : '#';
-
-		// Parse the body
-		if (!empty($d['body']))
-		{
-			// Create a description
-			$d['desc'] = $f3->get('Tools')->metaDescription($d['body'], 60);
-
-			$d['body'] = $f3->get('Tools')->parser($d['body']);
-		}
-
-		// Get the dates
-		$d['date'] = $f3->get('Tools')->getDate($d['msgTime']);
-		$d['microDate'] =  date("c", $d['msgTime']);
-
-		return $d;
-	}
-
 	function createEntry($params = [])
 	{
 		if (empty($params))
