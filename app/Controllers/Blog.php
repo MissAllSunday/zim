@@ -8,9 +8,9 @@ class Blog extends Base
 	{
 		$start = $params['page'] ? $params['page'] : 0;
 		$entries = $this->_models['message']->entries([
-			'limit' => 10,
-			'start' => $start,
-			'board' => 1
+			':limit' => $f3->get('paginationLimit'),
+			':start' => $start * $f3->get('paginationLimit'),
+			':board' => 1
 		]);
 
 		$f3->set('messages', $entries);
@@ -103,17 +103,22 @@ class Blog extends Base
 		$entryInfo = $this->_models['message']->entryInfo($id);
 
 		if (empty($entryInfo))
-			$f3->error(404);
+			return $f3->error(404);
 
 		$f3->set('entryInfo', $entryInfo);
 
 		// Get the data.
-		$f3->set('comments', $this->_models['message']->single([
+		$comments = $this->_models['message']->comments([
 			':topic' => $id,
-			':start' => $start,
+			':start' => $start * $limit,
 			':limit' => $limit,
-			':msg' => $entryInfo['msgID']
-		]));
+		]);
+
+		// Don't need the first msg.
+		if (isset($comments[$entryInfo['msgID']]))
+			unset($comments[$entryInfo['msgID']]);
+
+		$f3->set('comments', $comments);
 
 		$f3->set('pag', [
 			'start' => $start,

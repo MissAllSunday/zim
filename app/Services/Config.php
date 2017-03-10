@@ -20,7 +20,7 @@ class Config
 
 		$this->f3->mset([
 			'Logs' => 'logs/',
-			'CACHE' => $this->f3->get('_memcached'),
+			'CACHE' => false,
 			'DEBUG' => 0,
 			'PREFIX' => 'txt.',
 			'ENCODING' => 'UTF-8',

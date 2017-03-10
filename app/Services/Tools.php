@@ -18,21 +18,29 @@ class Tools extends \Prefab
 		{
 			$d['pages'] = (int) ceil((int) $d['max_count'] / $f3->get('paginationLimit'));
 
-			$d['pages'] = $d['pages'] >= 2 ? ($d['pages'] - 1) : $d['pages'];
+			$d['pageNumber'] = ($d['pages'] - 1);
+		}
+
+		else
+			$d['max_count'] = $d['pageNumber'] = $d['pages'] = 0;
+
+		// Build the pagination stuff.
+		if ($d['max_count'] > $f3->get('paginationLimit'))
+		{
+
+			if (!empty($d['last_msg']))
+				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['last_msg'];
+
+			$d['url'] = $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['msgID'];
 		}
 
 		else
 		{
-			$d['max_count'] = 0;
-			$d['pages'] = false;
+			if (!empty($d['last_msg']))
+				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '#msg'. $d['last_msg'];
+
+			$d['url'] = $f3->get('BASE') . $d['url'] .'#msg'. $d['msgID'];
 		}
-
-		// Build the pagination stuff.
-		if ($d['max_count'] > $f3->get('paginationLimit'))
-			$d['last_url'] = $d['url'] . '/page/' . $d['pages'] .'#msg'. $d['msgID'];
-
-		else
-			$d['last_url'] = $d['url'] .'#msg'. $d['msgID'];
 
 		// Provide a generic avatar
 		if (empty($d['avatar']))
@@ -51,7 +59,7 @@ class Tools extends \Prefab
 		}
 
 		// Get the dates
-		$d['date'] = $f3->this->getDate($d['msgTime']);
+		$d['date'] = $this->getDate($d['msgTime']);
 		$d['microDate'] =  date("c", $d['msgTime']);
 
 		return $d;

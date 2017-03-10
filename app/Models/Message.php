@@ -44,11 +44,7 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			WHERE t.boardID = :board
 			ORDER BY m.msgID DESC
-			LIMIT :start, :limit', [
-			':limit' => $params['limit'],
-			':start' => ($params['start'] * $params['limit']),
-			':board' => $params['board'],
-		], 300);
+			LIMIT :start, :limit', $params, 300);
 
 		// Add a nice description and a real date.
 		foreach ($entries as $k => $v)
@@ -140,33 +136,24 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
-	function single($params = [])
+	function comments($params = [])
 	{
 		$f3 = \Base::instance();
 		$data = [];
-		$page = $params[':start'];
-		$params[':start'] = $params[':start'] * $params[':limit'];
 
-		$data = $this->db->exec('
-			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, t.locked, t.sticky
+		$result = $this->db->exec('
+			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
+				FROM '. $this->table() .'
+				WHERE topicID = m.topicID) as max_count, t.locked, t.sticky
 			FROM '. $this->table() .' AS m
 			LEFT JOIN suki_c_user AS u ON (u.userID = m.userID)
 			LEFT JOIN suki_c_topic AS t ON (t.topicID = m.topicID)
 			WHERE m.topicID = :topic
-				AND msgID != :msg
 			ORDER BY msgID ASC
 			LIMIT :start, :limit', $params);
 
-		foreach ($data as $k => $v)
-		{
-			$data[$k] = $f3->get('Tools')->prepareData($v);
-
-			if (!empty($page))
-				$data[$k]['url'] .= '/page/'. $page .'#msg'. $v['msgID'];
-
-			else
-				$data[$k]['url'] .= '#msg'. $v['msgID'];
-		}
+		foreach ($result as $k => $v)
+			$data[$v['msgID']] = $f3->get('Tools')->prepareData($v);
 
 		return $data;
 	}
