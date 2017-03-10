@@ -4,6 +4,8 @@ namespace Models;
 
 class Topic extends \DB\SQL\Mapper
 {
+	private static $_prefix;
+
 	function __construct(\DB\SQL $db)
 	{
 		self::$_prefix = \Base::instance()->get('_db.prefix');

@@ -5,6 +5,7 @@ namespace Models;
 class User extends \DB\SQL\Mapper
 {
 	public $userHref;
+	private static $_prefix;
 
 	function __construct(\DB\SQL $db)
 	{
