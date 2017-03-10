@@ -8,7 +8,7 @@ class Board extends Base
 	function __construct()
 	{
 		// Need some extra stuff.
-		$this->_defaultModels[] = 'board';
+		$this->_defaultModels[] = 'topic';
 	}
 
 	function home(\Base $f3, $params)
@@ -23,9 +23,9 @@ class Board extends Base
 		$f3->set('boardInfo', $this->_models['board']->load(['boardID = ?', $id]));
 
 		$entries = $this->_models['board']->topicList([
-			'limit' => $limit,
-			'start' => $start,
-			'board' => $f3->get('boardInfo')->boardID,
+			':limit' => $limit,
+			':start' => $start * $limit,
+			':board' => $f3->get('boardInfo')->boardID,
 		]);
 
 		// Sticky first!

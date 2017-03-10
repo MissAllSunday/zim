@@ -29,4 +29,50 @@ class Topic extends \DB\SQL\Mapper
 
 		return $data;
 	}
+
+	function countTopics($id)
+	{
+		$data = $this->db->exec('
+			SELECT t.topicID
+			FROM '. $this->table() .' AS t
+			WHERE t.boardID = :board', [
+			':board' => $id,
+		], 300);
+
+		return count($data);
+	}
+
+	function topicList($params = [])
+	{
+		$f3 = \Base::instance();
+		$tags = [];
+
+		$topics = [];
+		$r = $this->db->exec('
+			SELECT t.topicID, t.locked, t.sticky, mf.title, mf.url, mf.tags, mf.msgTime, ml.msgID AS last_msg, ml.title AS last_title, ml.url AS last_url, ml.msgTime AS last_msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.avatar, "") AS avatar, IFNULL(ul.userID, 0) AS last_userID, IFNULL(ul.userName, ml.userName) AS last_userName, IFNULL(ul.avatar, "") AS last_avatar, (SELECT COUNT(*)
+				FROM suki_c_message
+				WHERE topicID  = t.topicID) as max_count
+			FROM '. $this->table() .' AS t
+			LEFT JOIN suki_c_message AS mf ON (mf.msgID = t.fmsgID)
+			LEFT JOIN suki_c_message AS ml ON (ml.msgID = t.lmsgID)
+			LEFT JOIN suki_c_user AS u ON (mf.userID = u.userID)
+			LEFT JOIN suki_c_user AS ul ON (ml.userID = ul.userID)
+			WHERE mf.boardID = :board
+			ORDER BY last_msgTime DESC
+			LIMIT :start, :limit', $params, 300);
+
+		// TopicID as key.
+		foreach ($r as $v)
+		{
+			// Tags
+			$v['tags'] = empty($v['tags']) ? [] : array_filter(array_unique(explode(',', $v['tags'])));
+			$tags = array_merge($tags, $v['tags']);
+
+			$topics[$v['topicID']] = $f3->get('Tools')->prepareData($v);
+		}
+
+		$f3->set('tags', array_filter(array_unique($tags)));
+
+		return $topics;
+	}
 }
