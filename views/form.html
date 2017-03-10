@@ -1,4 +1,5 @@
-<form class="form-{{@_form.options.type}}" action="{{@BASE}}/{{@_form.options.action}}" accept-charset="{{@_form.options.charset}}" method="{{@_form.options.method}}" enctype="{{@_form.options.enctype}}" target="{{@_form.options.target}}">
+<div class="row">
+<form class="col-md-12 form-{{@_form.options.type}}" action="{{@BASE}}/{{@_form.options.action}}" accept-charset="{{@_form.options.charset}}" method="{{@_form.options.method}}" enctype="{{@_form.options.enctype}}" target="{{@_form.options.target}}">
 	<repeat group="{{ @_form.items }}" value="{{ @item }}">
 		<div class="form-group">
 		<switch expr="{{ @item.type }}">
@@ -100,3 +101,4 @@
 	</repeat>
 	</div>
 </form>
+</div>
