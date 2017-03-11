@@ -278,6 +278,9 @@ class Message extends \DB\SQL\Mapper
 		// Done.
 		$topicModel->save();
 
+		// Update the number of replies.
+		$topicModel->updateNumReplies($topicModel->topicID);
+
 		// Now that we have the topic ID, create the slug.
 		$this->url = $f3->get('Tools')->slug($params['title']) .'-'. $topicModel->topicID;
 

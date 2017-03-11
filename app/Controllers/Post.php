@@ -256,6 +256,9 @@ class Post extends Base
 		// Perform.
 		$this->_models['message']->erase();
 
+		// Update the number of replies.
+		$this->_models['topic']->updateNumReplies($params['topicID']);
+
 		// Get the topic info and be done already.
 		$entryInfo = $this->_models['message']->entryInfo($params['topicID']);
 
