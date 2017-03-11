@@ -80,7 +80,7 @@ class Topic extends \DB\SQL\Mapper
 	function updateNumReplies($id = 0)
 	{
 		$this->db->exec('
-			UPDATE ' $this->table() ' SET numReplies = (SELECT COUNT(*)
+			UPDATE '. $this->table() .' SET numReplies = (SELECT COUNT(*)
 			FROM '. self::$_prefix .'message
 			WHERE topicID = '. $id .')
 			WHERE topicID = '. $id
