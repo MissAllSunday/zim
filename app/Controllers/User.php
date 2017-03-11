@@ -30,7 +30,10 @@ class User extends Base
 		$f3->set('profileTopics', []);
 
 		// Latest messages.latestMessages
-		$f3->set('profileMessages', []);
+		$f3->set('profileMessages', $this->_models['message']->userMessages([
+			':user' => $id,
+			':limit' => 5,
+		]));
 
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),

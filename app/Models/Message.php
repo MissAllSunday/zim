@@ -160,6 +160,31 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
+	function userMessages($params = [], $ttl = 300)
+	{
+		$f3 = \Base::instance();
+		$data = [];
+
+		$params[':order'] = !empty($params[':order']) ? $params[':order'] : 'm.msgTime DESC';
+
+		$data = $this->db->exec('
+			SELECT t.locked, t.sticky, t.lmsgID, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, (SELECT COUNT(*)
+				FROM '. $this->table() .'
+				WHERE topicID = m.topicID) as max_count
+			FROM '. $this->table() .' AS m
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
+			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
+			WHERE m.userID = :user
+			ORDER BY :order
+			LIMIT :limit', $params, $ttl);
+
+		foreach ($data as $k => $r)
+			$data[$k] = $f3->get('Tools')->prepareData($r);
+
+		return $data;
+	}
+
 	function deleteMessages($ids = [])
 	{
 		$this->db->exec('DELETE FROM '. $this->table() .' WHERE msgID IN(:ids)', [':ids' => implode(',', $ids)]);
