@@ -14,18 +14,18 @@ class Tools extends \Prefab
 		$f3 = \Base::instance();
 
 		// Lets avoid issues.
-		if (!empty($d['max_count']))
+		if (!empty($d['numReplies']))
 		{
-			$d['pages'] = (int) ceil((int) $d['max_count'] / $f3->get('paginationLimit'));
+			$d['pages'] = (int) ceil((int) $d['numReplies'] / $f3->get('paginationLimit'));
 
 			$d['pageNumber'] = ($d['pages'] - 1);
 		}
 
 		else
-			$d['max_count'] = $d['pageNumber'] = $d['pages'] = 0;
+			$d['numReplies'] = $d['pageNumber'] = $d['pages'] = 0;
 
 		// Build the pagination stuff.
-		if ($d['max_count'] > $f3->get('paginationLimit'))
+		if ($d['numReplies'] > $f3->get('paginationLimit'))
 		{
 
 			if (!empty($d['last_msg']))
