@@ -22,24 +22,27 @@ class Tools extends \Prefab
 		}
 
 		else
-			$d['numReplies'] = $d['pageNumber'] = $d['pages'] = 0;
+		{
+			$d['pageNumber'] = 0;
+			$d['pages'] = 0;
+			$d['numReplies'] = 1;
+		}
 
 		// Build the pagination stuff.
 		if ($d['numReplies'] > $f3->get('paginationLimit'))
 		{
-
 			if (!empty($d['lmsgID']))
 				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['lmsgID'];
 
-			$d['url'] = $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['msgID'];
+			$d['url'] = $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. (!empty($d['fmsgID']) ? $d['fmsgID'] : $d['msgID']);
 		}
 
 		else
 		{
-			if (!empty($d['last_msg']))
-				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '#msg'. $d['last_msg'];
+			if (!empty($d['lmsgID']))
+				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '#msg'. $d['lmsgID'];
 
-			$d['url'] = $f3->get('BASE') . $d['url'] .'#msg'. $d['msgID'];
+			$d['url'] = $f3->get('BASE') . $d['url'] .'#msg'. (!empty($d['fmsgID']) ? $d['fmsgID'] : $d['msgID']);
 		}
 
 		// Provide a generic avatar

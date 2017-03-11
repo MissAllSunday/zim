@@ -40,7 +40,7 @@ class Message extends \DB\SQL\Mapper
 		$entries = [];
 
 		$entries = $this->db->exec('
-			SELECT t.locked, t.sticky, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
+			SELECT t.locked, t.sticky, t.numReplies, m.msgID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.url, m.body, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. self::$_prefix .'topic AS t
 			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
@@ -118,10 +118,9 @@ class Message extends \DB\SQL\Mapper
 		$data = [];
 
 		$data = $this->db->exec('
-			SELECT t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
+			SELECT t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS m
-			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
-			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.topicID = m.topicID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			ORDER BY m.msgID DESC
 			LIMIT :limit', [':limit' => $limit], $ttl);
