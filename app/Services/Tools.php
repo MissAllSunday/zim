@@ -28,8 +28,8 @@ class Tools extends \Prefab
 		if ($d['numReplies'] > $f3->get('paginationLimit'))
 		{
 
-			if (!empty($d['last_msg']))
-				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['last_msg'];
+			if (!empty($d['lmsgID']))
+				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['lmsgID'];
 
 			$d['url'] = $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['msgID'];
 		}
