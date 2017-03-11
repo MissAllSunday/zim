@@ -28,7 +28,7 @@ class Board extends \DB\SQL\Mapper
 			SELECT b.boardID, b.title, b.description, b.url, b.icon, m.msgID, m.title AS msgTitle, m.url AS msgUrl, m.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar,
 			(SELECT COUNT(*)
 				FROM '. self::$_prefix .'message
-				WHERE topicID  = m.topicID) as max_count,
+				WHERE topicID  = m.topicID) as numReplies,
 			(SELECT COUNT(*)
 				FROM '. self::$_prefix .'topic
 				WHERE boardID  = b.boardID) as totalTopics,

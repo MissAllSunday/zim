@@ -52,9 +52,7 @@ class Topic extends \DB\SQL\Mapper
 
 		$topics = [];
 		$r = $this->db->exec('
-			SELECT t.topicID, t.locked, t.sticky, mf.title, mf.url, mf.tags, mf.msgTime, ml.msgID AS last_msg, ml.title AS last_title, ml.url AS last_url, ml.msgTime AS last_msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.avatar, "") AS avatar, IFNULL(ul.userID, 0) AS last_userID, IFNULL(ul.userName, ml.userName) AS last_userName, IFNULL(ul.avatar, "") AS last_avatar, (SELECT COUNT(*)
-				FROM '. self::$_prefix .'message
-				WHERE topicID  = t.topicID) as max_count
+			SELECT t.topicID, t.locked, t.sticky, t.numReplies, mf.title, mf.url, mf.tags, mf.msgTime, ml.msgID AS last_msg, ml.title AS last_title, ml.url AS last_url, ml.msgTime AS last_msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.avatar, "") AS avatar, IFNULL(ul.userID, 0) AS last_userID, IFNULL(ul.userName, ml.userName) AS last_userName, IFNULL(ul.avatar, "") AS last_avatar
 			FROM '. $this->table() .' AS t
 			LEFT JOIN '. self::$_prefix .'message AS mf ON (mf.msgID = t.fmsgID)
 			LEFT JOIN '. self::$_prefix .'message AS ml ON (ml.msgID = t.lmsgID)
