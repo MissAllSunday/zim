@@ -22,7 +22,7 @@ class Board extends Base
 
 		$f3->set('boardInfo', $this->_models['board']->load(['boardID = ?', $id]));
 
-		$entries = $this->_models['board']->topicList([
+		$entries = $this->_models['topic']->topicList([
 			':limit' => $limit,
 			':start' => $start * $limit,
 			':board' => $f3->get('boardInfo')->boardID,
@@ -37,7 +37,7 @@ class Board extends Base
 		$f3->set('pag', [
 			'start' => $start,
 			'limit' => $limit,
-			'pages' => ceil($this->_models['board']->countTopics($id) / $limit),
+			'pages' => ceil($this->_models['topic']->countTopics($id) / $limit),
 		]);
 
 		$f3->set('site', $f3->merge('site', [
