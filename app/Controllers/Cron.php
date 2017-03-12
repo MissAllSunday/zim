@@ -170,8 +170,6 @@ class Cron extends Base
 		else
 			return false;
 
-		$this->_models['message']->createEntry($news);
-
 		// Remove the message.
 		$doc->documentElement->removeChild($message);
 
