@@ -28,7 +28,7 @@ class User extends \DB\SQL\Mapper
 	function loadUsers($users = [])
 	{
 		$loaded = $data = [];
-		$data = $this->find(['userID IN(?)', implode(',', $users]);
+		$data = $this->find(['userID IN(?)', implode(',', $users)]);
 
 		if (!empty($data))
 			foreach ($data as $d)
