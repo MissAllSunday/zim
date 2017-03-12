@@ -20,36 +20,19 @@ class User extends \DB\SQL\Mapper
 		});
 	}
 
-	public function getById($id = 0)
+	public function getOnline($params = [], $ttl = 300)
 	{
-		return $this->load(array('userID = ?', $id));
-	}
-
-	public function getByName($name = 0)
-	{
-		return $this->load(array('name = ?', $name));
-	}
-
-	public function getByEmail($email = '')
-	{
-		return $this->load(array('userEmail = ?', $email));
+		return $this->find(['userID >= UNIX_TIMESTAMP() - ?', $params['time']], ['limit' => $params['limit']]);
 	}
 
 	function loadUsers($users = [])
 	{
 		$loaded = $data = [];
-		$data = $this->db->exec('
-			SELECT userID, userName, avatar, avatarType, webUrl, webSite, lmsgID, last_active, (last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
-			FROM '. $this->table() .' AS t
-			LEFT JOIN '. self::$_prefix .'message AS m ON (m.msgID = t.fmsgID)
-			WHERE userID IN(:users)
-			AND is_active = 1', [
-			':users' => implode(',', $users),
-		]);
+		$data = $this->find(['userID IN(?)', implode(',', $users]);
 
 		if (!empty($data))
 			foreach ($data as $d)
-				$loaded[$d['userID']] = $d;
+				$loaded[$d->userID] = $d;
 
 		return $loaded;
 	}
@@ -57,6 +40,7 @@ class User extends \DB\SQL\Mapper
 	function createUser($data = [])
 	{
 		$f3 = \Base::instance();
+		$this->reset();
 
 		if (empty($data))
 			return false;
