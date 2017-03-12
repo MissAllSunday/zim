@@ -33,7 +33,7 @@ class UserAuth extends Base
 			return $f3->reroute('/');
 
 		$data = [
-			'email' => '',
+			'userEmail' => '',
 			'passwd' => '',
 			'remember' => 0,
 		];
@@ -49,24 +49,24 @@ class UserAuth extends Base
 			$error[] = 'bad_captcha';
 
 		// Set the needed vars.
-		$data = array_intersect_key($f3->clean($f3->get('POST')), $data);
+		$data = $f3->clean($f3->get('POST'));
 
 		// Check the POST fields.
-		if (empty($data['email']))
+		if (empty($data['userEmail']))
 			$error[] = 'empty_email';
 
 		if (empty($data['passwd']))
 			$error[] = 'empty_password';
 
 		// Need a valid email.
-		if (!\Audit::instance()->email($data['email']))
+		if (!\Audit::instance()->email($data['userEmail']))
 			$error[] = 'bad_email';
 
 		// Get the user's data.
-		$this->_models['user']->getByEmail($data['email']);
+		$found = $this->_models['user']->findone(['userEmail = ?', $data['userEmail']]);
 
 		// No user was found, try again.
-		if($this->_models['user']->dry())
+		if(empty($found))
 			$error[] = 'no_user';
 
 		// Any errors?
@@ -77,11 +77,11 @@ class UserAuth extends Base
 		}
 
 		// Do the actual check.
-		elseif(password_verify($data['passwd'], $this->_models['user']->passwd))
+		elseif(password_verify($data['passwd'], $found->passwd))
 		{
 			// Wanna stay for a bit?
 			if (!empty($data['remember']))
-				$f3->get('REMEMBER')->setCookie($this->_models['user']->userID);
+				$f3->get('REMEMBER')->setCookie($found->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
@@ -105,26 +105,36 @@ class UserAuth extends Base
 
 	function signupPage(\Base $f3, $params)
 	{
+		$data = [];
+
+		// If theres SESSION data, use that.
+		if ($f3->exists('SESSION.signup'))
+		{
+			$data = $f3->get('SESSION.signup');
+
+			$f3->clear('SESSION.signup');
+		}
+
 		$form = \Form::instance();
 		$form->setOptions([
 			'action' => 'signup',
 			'group' => 'data',
 		]);
 
-		foreach ($this->_requiredFields as $f)
+		foreach ($this->_requiredFields as $v)
 			$form->addText([
-				'name' => $f,
-				'value' => '',
-				'text' => $f3->get('txt.login_'. $f),
+				'name' => $v,
+				'value' => (!empty($data[$v]) ? $data[$v] : ''),
+				'text' => $f3->get('txt.login_'. $v),
 			]);
 
 		// Avatar
 		$form->addRadios([
 			'name' => 'avatarType',
 			'values' => [
-				'identicon' => [$f3->get('txt.login_avatar_generic'), true],
-				'gravatar' => [$f3->get('txt.login_avatar_gravatar')],
-				'url' => [$f3->get('txt.login_url')]
+				'identicon' => [$f3->get('txt.login_avatar_generic'), (!empty($data['avatarType']) && $data['avatarType'] == 'identicon' ? true : false)],
+				'gravatar' => [$f3->get('txt.login_avatar_gravatar'), (!empty($data['avatarType']) && $data['avatarType'] == 'gravatar' ? true : false)],
+				'url' => [$f3->get('txt.login_url'), (!empty($data['avatarType']) && $data['avatarType'] == 'url' ? true : false)]
 			],
 			'text' => $f3->get('txt.login_avatar'),
 			'desc' => $f3->get('txt.login_avatar_desc'),
@@ -155,11 +165,15 @@ class UserAuth extends Base
 		$errors = [];
 
 		// Get the needed data.
-		$data = array_intersect_key($f3->clean($f3->get('POST')), $this->_requiredFields);
+		$data = $f3->clean($f3->get('POST.data'));
 
 		// Captcha.
-		if ($f3->exists('POST.captcha') && $f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
+		if (empty($data['captcha']) || $data['captcha'] != $f3->get('SESSION.captcha_code'))
 			$errors[] = 'bad_captcha';
+
+		// Token.
+		if (empty($data['token']) || $data['token'] != $f3->get('SESSION.csrf'))
+			$errors[] = 'bad_token';
 
 		// Check for empty fields.
 		foreach ($this->_requiredFields as $v)
@@ -180,10 +194,6 @@ class UserAuth extends Base
 
 		$this->_models['user']->reset();
 
-		// Avatar stuff is not required but needs to be included anyway.
-		$data['avatar'] = $f3->clean($f3->get('POST.avatar'));
-		$data['avatarType'] = $f3->clean($f3->get('POST.avatarType'));
-
 		// Go back and try again.
 		if (!empty($errors))
 		{
@@ -200,11 +210,12 @@ class UserAuth extends Base
 			if ($data['avatarType'] == 'gravatar')
 				$data['avatar'] = \Gravatar::instance()->get($data['userEmail']);
 
-			$data['avatar'] = $f3->get('BASE') .'/identicon/'. $data['userName'];
+			else
+				$data['avatar'] = $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->slug($data['userName']);
 		}
 
 		$refPass = $data['passwd'];
-		$data['passwd'] = password_hash($data['passwd']);
+		$data['passwd'] = password_hash($data['passwd'], PASSWORD_DEFAULT);
 
 		// Lets fill up some things.
 		$this->_models['user']->createUser(array_merge([
@@ -225,16 +236,14 @@ class UserAuth extends Base
 		// User was created, set the cookie
 		if($this->_models['user']->userID)
 		{
-			$f3->set('SESSION.user', $this->_models['user']->userID);
-
-			$f3->set('COOKIE.'. md5($f3->get('site.title')), $this->_models['user']->userID, 60 * 60 * 24 * 7);
+			$f3->get('REMEMBER')->setCookie($this->_models['user']->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 
 			// All done, lets go tell her.
 			\Models\Mail::instance()->send([
 				'subject' => $f3->get('mail_new_user_subject'),
-				'body' => $f3->get('mail_new_user_body', $this->_models['user']->userName)
+				'body' => $f3->get('txt.mail_new_user_body', $this->_models['user']->userName)
 			]);
 
 			// Send a nice (and quite possible) unwanted welcome email.
@@ -243,10 +252,12 @@ class UserAuth extends Base
 				'password' => $refPass,
 				'link' => $f3->get('site.currentUrl') .'/user/'. $f3->get('Tools')->slug($this->_models['user']->userName) .'-'. $this->_models['user']->userID,
 			]);
-			\Models\Mail::instance()->send([
+			$mail = new \Models\Mail;
+			$mail->send([
 				'html' => true,
 				'to' => $this->_models['user']->userEmail,
-				'subject' => $f3->get('mail_welcome', $this->_models['user']->userName),
+				'toName' => $this->_models['user']->userName,
+				'subject' => $f3->get('txt.mail_welcome', $this->_models['user']->userName),
 				'body' => \Template::instance()->render('mail_welcome.html','text/html'),
 			]);
 

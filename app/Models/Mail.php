@@ -26,7 +26,7 @@ class Mail extends \Prefab
 		if (!empty($options))
 			$this->_options = array_merge($this->_options, $options);
 
-		$this->mail = new PHPMailer(true);
+		$this->mail = new \PHPMailer(true);
 		$this->mail->isSMTP();
 		$this->mail->Host = $this->_options['host'];
 		$this->mail->SMTPAuth = true;
@@ -43,10 +43,13 @@ class Mail extends \Prefab
 		if (empty($data))
 			return false;
 
+		$data['to'] = !empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to');
+		$data['toName'] = !empty($data['toName']) ? $data['toName'] : $this->f3->get('EMAIL.toName');
+
 		try
 		{
 			$this->mail->isHTML(isset($data['html']));
-			$this->mail->addAddress(!empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to');
+			$this->mail->addAddress($data['to'], $data['toName']);
 			$this->mail->Subject = $data['subject'];
 			$this->mail->Body = $data['body'];
 

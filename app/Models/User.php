@@ -62,9 +62,7 @@ class User extends \DB\SQL\Mapper
 			return false;
 
 		// Get what we need
-		$data = array_map(function($var) use($f3){
-			return $f3->clean($var);
-		}, array_intersect_key(array_flip($this->fields())));
+		$data = array_intersect_key($data, array_flip($this->fields()));
 
 		$this->copyfrom($data);
 

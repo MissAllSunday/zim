@@ -28,19 +28,13 @@ class Remember extends \DB\SQL\Mapper
 			return false;
 
 		$token = $f3->get($cookie);
-		$stored = $this->load(['token = ?', $token]);
+		$stored = $this->findone(['token = ?', $token]);
 
-		if ($this->userID)
-			$f3->set('SESSION.user', $this->userID);
 
-		return $this->dry();
-	}
+		if ($stored->userID)
+			$f3->set('SESSION.user', $stored->userID);
 
-	function getUser()
-	{
-		$f3 = \Base::instance();
-
-		return $f3->exists('SESSION.user') ? $f3->get('SESSION.user') : $this->userID;
+		return $stored->userID;
 	}
 
 	function setCookie($id = 0)
@@ -62,16 +56,17 @@ class Remember extends \DB\SQL\Mapper
 
 		$f3->set('SESSION.user', $id);
 		$f3->set('COOKIE.'. md5($f3->get('site.home')), $token, self::$expires);
+		$this->reset();
 	}
 
 	function clearCookie($id = 0)
 	{
 		$f3 = \Base::instance();
 
-		$stored = $this->load(['userID = ?', $id]);
+		$stored = $this->find(['userID = ?', $id]);
 		$cookie = 'COOKIE.'. md5($f3->get('site.home'));
 
-		if ($this->dry() || !$f3->exists($cookie))
+		if (empty($stored) || !$f3->exists($cookie))
 			return false;
 
 		$f3->clear($cookie);
