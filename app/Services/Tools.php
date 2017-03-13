@@ -49,10 +49,19 @@ class Tools extends \Prefab
 
 		// Provide a generic avatar
 		if (empty($d['avatar']))
-			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('site.currentUrl') .'/identicon/'. $f3->get('Tools')->slug($d['userName']);
+			$d['avatar'] = !empty($d['userEmail']) ? \Gravatar::instance()->get($d['userEmail']) : $f3->get('URL') .'identicon/'. $f3->get('Tools')->slug($d['userName']);
 
 		// username link.
 		$d['userHref'] = !empty($d['userID']) ? $f3->get('BASE') .'/user/'. $this->slug($d['userName']) .'-'. $d['userID'] : '#';
+
+		// Luser time!
+		$d['luserHref'] = !empty($d['luserID']) ? $f3->get('BASE') .'/user/'. $this->slug($d['luserName']) .'-'. $d['luserID'] : '#';
+
+		if (empty($d['lavatar']))
+			$d['lavatar'] = !empty($d['luserEmail']) ? \Gravatar::instance()->get($d['luserEmail']) : $f3->get('URL') .'identicon/'. $f3->get('Tools')->slug($d['luserName']);
+
+		$d['ldate'] = !empty($d['lmsgTime']) ? $this->getDate($d['lmsgTime']) : 0;
+		$d['lmicroDate'] =  !empty($d['lmsgTime']) ? date("c", $d['lmsgTime']) : 0;
 
 		// Parse the body
 		if (!empty($d['body']))
