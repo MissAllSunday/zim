@@ -7,13 +7,14 @@ class Cron extends Base
 	function __construct()
 	{
 		$this->f3 = \Base::instance();
-		$this->_defaultModels[] = 'cron';
 
-		// Fake the route.
-		$this->beforeRoute($this->f3);
+		foreach (['cron', 'message'] as $m)
+		{
+			$class = '\Models\\'. ucfirst($m);
+			$this->_models[$m] = new $class($this->f3->get('DB'));
+		}
 
 		$this->simplePie = new \SimplePie;
-
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
 		$this->simplePie->enable_cache(false);
 		$this->simplePie->strip_htmltags(false);
@@ -40,7 +41,7 @@ class Cron extends Base
 			if ($item->get_title() === null)
 				continue;
 
-			// Keyword search??
+			// Keyword search?
 			if ($this->_models['cron']->keywords && !$this->_keywords($this->_models['cron']->keywords, $item->get_title() . ($item->get_content() !== null ? ' ' . $item->get_content() : '')))
 				continue;
 
