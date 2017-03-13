@@ -13,6 +13,8 @@ class Tools extends \Prefab
 	{
 		$f3 = \Base::instance();
 
+		$d['pagUrl'] = $d['url'];
+
 		// Lets avoid issues.
 		if (!empty($d['numReplies']))
 		{

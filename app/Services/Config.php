@@ -19,6 +19,7 @@ class Config
 		));
 
 		$this->f3->mset([
+			'URL' => 'https://missallsunday.com/',
 			'Logs' => 'logs/',
 			'CACHE' => $this->f3->get('_memcached'),
 			'DEBUG' => 0,
@@ -40,7 +41,7 @@ class Config
 		$this->f3->set('Tools', new \Services\Tools($this->f3));
 
 		// Set default metadata tags and/or other common HTML tags.
-		$this->f3->set('site.currentUrl', 'https://missallsunday.com');
+		$this->f3->set('site.currentUrl', $this->f3->get('URL'));
 		$this->f3->set('site.metaTitle', 'Miss All Sunday - Index');
 		$this->f3->set('site.keywords', $this->f3->get('txt.site_keywords'));
 		$this->f3->set('site.description', $this->f3->get('txt.site_desc'));

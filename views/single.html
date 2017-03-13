@@ -12,7 +12,7 @@
 		</check>
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{@entryInfo.url}}" />
 			<h2 class="post-title" itemprop="name headline" id="msg{{@entryInfo.msgID}}">
-				<a href="{{@BASE}}/{{@entryInfo.url}}" rel="bookmark">{{@entryInfo.title}}</a>
+				<a href="{{@BASE}}/{{@entryInfo.pagUrl}}" rel="bookmark">{{@entryInfo.title}}</a>
 			</h2>
 		</a>
 		<p class="post-meta">{{@txt.postedby}}
@@ -120,10 +120,10 @@
 					<loop from="{{ @i = 0 }}" to="{{ @i < @entryInfo.pages }}" step="{{ @i++ }}">
 						<check if="{{ @i == 0}}">
 							<true>
-								<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}">{{@txt.home}}</a></li>
+								<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@URL}}{{@entryInfo.pagUrl}}">{{@txt.home}}</a></li>
 							</true>
 							<false>
-								<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@BASE}}/{{@entryInfo.url}}/page/{{@i}}#comments">{{ (@i == @pag.pages ? @txt.last :  @i) }}</a></li>
+								<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@URL}}{{@entryInfo.pagUrl}}/page/{{@i}}#comments">{{ (@i == @pag.pages ? @txt.last :  @i) }}</a></li>
 							</false>
 						</check>
 					</loop>
