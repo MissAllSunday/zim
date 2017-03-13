@@ -290,7 +290,7 @@ class Tools extends \Prefab
 				{
 					$params = urlencode(json_encode(['video_id' => $matches[1], 'title' => '']));
 
-					return '<div class="oharaEmbed youtube" data-ohara_youtube="'. $params .'" id="oh_youtube_'. $matches[1] .'"></div>';
+					return '<noscript>'. $matches[0] .'</noscript><div class="oharaEmbed youtube" data-ohara_youtube="'. $params .'" id="oh_youtube_'. $matches[1] .'"></div>';
 				}
 			},
 			$str

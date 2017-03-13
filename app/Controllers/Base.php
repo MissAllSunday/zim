@@ -59,7 +59,7 @@ class Base
 			$f3->get('currentUser')->save();
 		}
 
-		if ($f3->exists('content'));
+		if ($f3->exists('content'))
 			echo \Template::instance()->render('home.html');
 	}
 }
