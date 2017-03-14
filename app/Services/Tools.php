@@ -34,7 +34,7 @@ class Tools extends \Prefab
 		if ($d['numReplies'] > $f3->get('paginationLimit'))
 		{
 			if (!empty($d['lmsgID']))
-				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['lmsgID'];
+				$d['lurl'] =  $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. $d['lmsgID'];
 
 			$d['url'] = $f3->get('BASE') . $d['url'] . '/page/' . $d['pageNumber'] .'#msg'. (!empty($d['fmsgID']) ? $d['fmsgID'] : $d['msgID']);
 		}
@@ -42,7 +42,7 @@ class Tools extends \Prefab
 		else
 		{
 			if (!empty($d['lmsgID']))
-				$d['last_url'] =  $f3->get('BASE') . $d['url'] . '#msg'. $d['lmsgID'];
+				$d['lurl'] =  $f3->get('BASE') . $d['url'] . '#msg'. $d['lmsgID'];
 
 			$d['url'] = $f3->get('BASE') . $d['url'] .'#msg'. (!empty($d['fmsgID']) ? $d['fmsgID'] : $d['msgID']);
 		}
