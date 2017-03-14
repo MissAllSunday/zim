@@ -188,7 +188,7 @@ class Post extends Base
 		\Flash::instance()->addMessage($f3->get('txt.post_done', $f3->get('txt.post_action_'. (!empty($data['msgID']) ? 'edited' : 'posted'))), 'success');
 
 		// Reroute.
-		return $f3->reroute('/'. $topicInfo['last_url']);
+		return $f3->reroute('/'. $topicInfo['lurl']);
 	}
 
 	function preview(\Base $f3, $params)

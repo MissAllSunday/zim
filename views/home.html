@@ -29,7 +29,7 @@
 				<set breadCount="{{ 0 }}" />
 				<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
 					<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-						<a href="{{@BASE}}/" itemprop="item">
+						<a href="{{@URL}}" itemprop="item">
 							<span itemprop="name">{{@site.home}}</span>
 						</a>
 						<meta itemprop="position" content="{{++@breadCount}}" />
@@ -38,7 +38,7 @@
 							<li {{ @item.active ? 'class="active"' : '' }} itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
 							<check if="{{ @item.url }}">
 								<true>
-									<a href="{{@BASE}}/{{@item.url}}" itemprop="item">
+									<a href="{{@item.url}}" itemprop="item">
 										<span itemprop="name">{{@item.title}}</span>
 									</a>
 									<meta itemprop="position" content="{{++@breadCount}}" />

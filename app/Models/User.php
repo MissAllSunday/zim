@@ -16,7 +16,7 @@ class User extends \DB\SQL\Mapper
 
 		$this->onload(function($self){
 			$f3 = \Base::instance();
-			$self->userHref = $f3->get('BASE') .'/user/'. $f3->get('Tools')->slug($self->userName) .'-'. $self->userID;
+			$self->userHref = 'user/'. $f3->get('Tools')->slug($self->userName) .'-'. $self->userID;
 		});
 	}
 

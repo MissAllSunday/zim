@@ -37,10 +37,12 @@ class User extends Base
 
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),
-			'breadcrumb' => [
-				['url' => '', 'title' => $f3->get('txt.view_profile', $this->_models['user']->userName), 'active' => true],
-			],
+			'currentUrl' => $this->_models['user']->userHref,
 		]));
+		$f3->set('site.breadcrumb', [
+			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('site.metaTitle'), 'active' => true],
+		]);
+		$f3->set('site.description', $f3->get('site.metaTitle'));
 
 		$f3->set('content','profile.html');
 	}
