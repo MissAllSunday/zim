@@ -301,6 +301,10 @@ Wait for something to happen...',
 		'See the animal in his cage that you built, are you sure what side you\'re on?',
 		'What if everything around you, isn\'t quite as it seems? What if all the world you think you know, is an elaborate dream?',
 		'If more of us valued food and cheer and song above hoarded gold, it would be a merrier world',
+		'Why you looking for a harmony? There is harmony in everything It\'s a butterfly who waits for the world',
+		'If you\'re looking for a dream girl I\'ll never be your dream girl Living in the real worldLooking for a dream girl',
+		'Oh, and I feel that nothing in life could ever be like this again \'Cause your love kept me alive and made me insane',
+		'Oh, baby, every morning there are mountains to climb. Taking all my time Oh, when I get up, this is what I see. Welcome to reality',
 	],
 
 	// 404 text.
