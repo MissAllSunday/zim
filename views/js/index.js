@@ -17,7 +17,7 @@ $(function() {
 	{
 		var tags = [];
 		$('.topic').each(function( index, value ) {
-			_thisTopic = $(this);
+			var _thisTopic = $(this);
 
 			$.each(_thisTopic.data('tags'), function( index, value ) {
 				_thisTopic.addClass('tag_' + value.replace(' ', ''));
@@ -25,7 +25,7 @@ $(function() {
 		});
 
 		$('span.tag').each(function( index, value ) {
-			_this = $(this);
+			var _this = $(this);
 			_this.randomColor = randomColor();
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
 			_this.css('background-color', _this.randomColor);
@@ -33,7 +33,7 @@ $(function() {
 		});
 
 		$('span.tag').on('click', function() {
-			_this = $(this);
+			var _this = $(this);
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
 
 			// Hide everything.
@@ -44,7 +44,7 @@ $(function() {
 		});
 
 		$('span.tag').on('mouseenter', function() {
-			_this = $(this);
+			var _this = $(this);
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
 
 			// Show the topics that has this tag.
@@ -54,7 +54,7 @@ $(function() {
 		});
 
 		$('span.tag').on('mouseleave', function() {
-			_this = $(this);
+			var _this = $(this);
 			_this.uniqueTag = _this.find('a').html().replace(' ', '');
 			$('.tag_'+ _this.uniqueTag).find('.media-body').css('border-left', '#fff');
 		});
