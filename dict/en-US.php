@@ -300,6 +300,7 @@ Wait for something to happen...',
 		'No pienses que olvido lo que me ha dado tu querer lo llevo conmigo así me puedo sentir bien',
 		'See the animal in his cage that you built, are you sure what side you\'re on?',
 		'What if everything around you, isn\'t quite as it seems? What if all the world you think you know, is an elaborate dream?',
+		'If more of us valued food and cheer and song above hoarded gold, it would be a merrier world',
 	],
 
 	// 404 text.
