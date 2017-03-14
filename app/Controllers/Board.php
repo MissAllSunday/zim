@@ -38,6 +38,7 @@ class Board extends Base
 			'start' => $start,
 			'limit' => $limit,
 			'pages' => ceil($this->_models['topic']->countTopics($id) / $limit),
+			'url' => 'board/'. $f3->get('boardInfo')->url,
 		]);
 
 		$f3->set('site', $f3->merge('site', [

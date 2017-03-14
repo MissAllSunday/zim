@@ -124,6 +124,8 @@ class Blog extends Base
 			'start' => $start,
 			'limit' => $limit,
 			'pages' => $entryInfo['pages'],
+			'url' => $entryInfo['pagUrl'],
+			'extra' => '#comments',
 		]);
 
 		// Build some keywords!  This should be automatically set but meh... maybe later
