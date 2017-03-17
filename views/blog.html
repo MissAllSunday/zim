@@ -1,7 +1,7 @@
 <repeat group="{{ @messages }}" value="{{ @item }}">
 	<article class="post-preview" itemscope itemType="http://schema.org/BlogPosting">
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{ @item.url }}" />
-		<a href="{{@BASE}}/{{ @item.url }}" rel="bookmark">
+		<a href="{{@BASE}}/{{ @item.pagUrl }}" rel="bookmark">
 			<h2 class="post-title" itemprop="name headline">
 				{{ @item.title }}
 			</h2>
