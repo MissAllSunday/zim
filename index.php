@@ -35,14 +35,20 @@ $f3->route([
 	'GET /board/@name/page/@page',
 ],'\Controllers\Board->home');
 
-// mods
+// Goodies
 $f3->route([
-	'GET /mods',
-],'\Controllers\Mods->home');
+	'GET /goodies',
+],'\Controllers\Goodies->home');
 
+// Some moar goodies
 $f3->route([
-	'GET /mods/@item',
-],'\Controllers\Mods->item');
+	'GET /goodies/@item',
+],'\Controllers\goodies->item');
+
+// Even moar goodies.
+$f3->route([
+	'GET /goodies/@search [ajax]',
+],'\Controllers\goodies->search');
 
 // User profile.
 $f3->route([

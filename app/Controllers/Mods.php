@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class Mods extends Base
+class Goodies extends Base
 {
 	protected $client,
 		$f3;

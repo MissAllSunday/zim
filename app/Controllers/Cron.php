@@ -26,7 +26,7 @@ class Cron extends Base
 
 		// Is there a error? @todo log it.
 		if ($this->simplePie->error())
-			return 'error:'. $this->simplePie->error();
+			return $this->emit($this->simplePie->error());
 
 		$itemCount = 0;
 
@@ -57,7 +57,7 @@ class Cron extends Base
 
 		// Nothing to post.
 		if (empty($toPost))
-			return;
+			return $this->emit('No new items found');
 
 		// Get the last item.
 		$item = array_pop($toPost);
@@ -77,6 +77,8 @@ class Cron extends Base
 		$feedTitle = $this->simplePie->get_title() !== null ? $this->simplePie->get_title() : '';
 		$body = $item->get_content() !== null ? $item->get_content() : $item->get_title();
 		$title = $item->get_title();
+
+		$this->emit('posting item:'. $title);
 
 		// These should be set as callbacks but I don't care!
 		if($this->f3->exists('CRON.spoilerReference') && $path = stristr($body, $this->f3->get('CRON.spoilerReference'), true))
@@ -112,9 +114,11 @@ class Cron extends Base
 
 		// Theres no such thing. @todo log it. How? I dunno...
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
-			return 'github cron disabled';
+			return $this->emit('github cron disabled');
 
 		$this->simplePie->set_feed_url($this->_models['cron']->url);
+
+		$this->emit('loading cronjob: github');
 
 		// Run.
 		$this->init();
@@ -126,9 +130,11 @@ class Cron extends Base
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
-			return false;
+			return $this->emit('manga cron disabled');
 
 		$this->simplePie->set_feed_url($this->_models['cron']->url);
+
+		$this->emit('loading cronjob: manga');
 
 		// Run.
 		$this->init();
@@ -140,9 +146,11 @@ class Cron extends Base
 
 		// Theres no such thing.
 		if ($this->_models['cron']->dry() || !$this->_models['cron']->enabled)
-			return false;
+			return $this->emit('spoiler cron disabled');
 
 		$this->simplePie->set_feed_url($this->_models['cron']->url);
+
+		$this->emit('loading cronjob: spoiler');
 
 		// Run.
 		$this->init();
@@ -169,7 +177,9 @@ class Cron extends Base
 			];
 
 		else
-			return false;
+			return $this->emit('blog file is empty');
+
+		$this->emit('create entry:'. $news['title']);
 
 		// Remove the message.
 		$doc->documentElement->removeChild($message);
@@ -195,27 +205,34 @@ class Cron extends Base
 	}
 
 	protected function _keywords($keywords, $string)
+	{
+		if (function_exists('mb_strtolower'))
+			$string = mb_strtolower($string, $this->f3->get('ENCODING'));
+
+		else
+			$string = strtolower($string);
+
+		if (!is_array($keywords))
+			$keywords = explode(",", $keywords);
+
+		foreach($keywords as $keyword)
 		{
 			if (function_exists('mb_strtolower'))
-				$string = mb_strtolower($string, $this->f3->get('ENCODING'));
+				$keyword = mb_strtolower($keyword, $this->f3->get('ENCODING'));
 
 			else
-				$string = strtolower($string);
+				$keyword = strtolower($keyword);
 
-			if (!is_array($keywords))
-				$keywords = explode(",", $keywords);
-
-			foreach($keywords as $keyword)
-			{
-				if (function_exists('mb_strtolower'))
-					$keyword = mb_strtolower($keyword, $this->f3->get('ENCODING'));
-
-				else
-					$keyword = strtolower($keyword);
-
-				if (strpos($string, trim($keyword)) !== false)
-					return true;
-			}
-			return false;
+			if (strpos($string, trim($keyword)) !== false)
+				return true;
 		}
+		return false;
+	}
+
+	protected function emit($message)
+	{
+		echo $this->f3->get('txt.cron_'. $message) ?: $message .'<br>';
+
+		return false;
+	}
 }
