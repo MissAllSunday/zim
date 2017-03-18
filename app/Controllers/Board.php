@@ -42,14 +42,15 @@ class Board extends Base
 		]);
 
 		$f3->set('site', $f3->merge('site', [
-			'metaTitle' => $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : ''),
 			'keywords' => $f3->get('Tools')->metaKeywords(array_merge($tags, $f3->get('tags'))),
 			'currentUrl' => $f3->get('URL') . $f3->get('boardInfo')->url . ($start ? '/page/'. $start : ''),
 		]));
 
+		$f3->concat('site.metaTitle', $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : ''));
+
 		$f3->set('site.description', $f3->get('site.metaTitle') . ' '. $f3->get('Tools')->metaDescription($f3->get('boardInfo')->description));
 		$f3->set('site.breadcrumb', [
-			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('site.metaTitle')],
+			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : '')],
 		]);
 
 		// Pretty tags!
@@ -64,12 +65,13 @@ class Board extends Base
 		$f3->set('boardList', $this->_models['board']->boardList());
 
 		$f3->set('site', $f3->merge('site', [
-			'metaTitle' => $f3->get('txt.boards'),
 			'currentUrl' => $f3->get('boardInfo')->url,
 			'breadcrumb' => [
 				['url' => 'forum', 'title' => $f3->get('txt.boards')],
 			],
 		]));
+
+		$f3->concat('site.metaTitle', $f3->get('txt.boards'));
 
 		$f3->set('content','boards.html');
 	}

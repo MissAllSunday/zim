@@ -35,13 +35,15 @@ class User extends Base
 			':limit' => 5,
 		]));
 
+		$title = $f3->get('txt.view_profile', $this->_models['user']->userName);
 		$f3->set('site', $f3->merge('site', [
-			'metaTitle' => $f3->get('txt.view_profile', $this->_models['user']->userName),
 			'currentUrl' => $this->_models['user']->userHref,
 		]));
 		$f3->set('site.breadcrumb', [
-			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('site.metaTitle'), 'active' => true],
+			['url' => $f3->get('site.currentUrl'), 'title' => $title, 'active' => true],
 		]);
+
+		$f3->concat('site.metaTitle', $title);
 		$f3->set('site.description', $f3->get('site.metaTitle'));
 
 		$f3->set('content','profile.html');

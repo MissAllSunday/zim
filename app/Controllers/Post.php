@@ -61,11 +61,13 @@ class Post extends Base
 		$this->_models['board']->load(['boardID = ?', $this->_rows['boardID']]);
 
 		// The title one is tricky
-		$f3->set('site.metaTitle', !$this->_rows['title'] ? $f3->get('txt.newtopic') : ($f3->get('isEditing') ? $f3->get('txt.post_editing', $this->_rows['title']) : $f3->get('txt.post_replyto', $topicInfo['title'])));
+		$title = !$this->_rows['title'] ? $f3->get('txt.newtopic') : ($f3->get('isEditing') ? $f3->get('txt.post_editing', $this->_rows['title']) : $f3->get('txt.post_replyto', $topicInfo['title']));
+
+		$f3->concat('site.metaTitle', $title);
 
 		$f3->set('site.breadcrumb', [
 			['url' => 'board/'. $this->_models['board']->url, 'title' => $this->_models['board']->title],
-			['url' => '', 'title' => $f3->get('site.metaTitle'), 'active' => true],
+			['url' => '', 'title' => $title, 'active' => true],
 		]);
 
 		// All good.

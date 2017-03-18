@@ -101,6 +101,8 @@ return [
 	'login_url' => 'Url',
 	'login_avatar_gravatar' => 'Gravatar',
 	'login_avatar_generic' => 'Generic',
+	'signup_desc' => 'Create a new account on {0} to get full access to all the resources this site provides',
+	'signin_desc' => 'Sign in to {0} to get full access to all the resources this site provides',
 
 
 	// Default site texts
@@ -220,7 +222,7 @@ Wait for something to happen...',
 		'And there seems to be no sign of intelligent life anywhere',
 		'This is the perfect time to panic!',
 		'This isn\'t flying, this is falling with style',
-		'Excuse me, I think the word you\'re searching for is "Space Ranger".',
+		'Excuse me, I think the word you\'re searching for is "Space Ranger"',
 		'Because of you, the security of this entire universe is in jeopardy!',
 		'People don\'t realize this, but loneliness is underrated',
 		'Just because she likes the same bizzaro crap you do doesn\'t mean she\'s your soul mate',

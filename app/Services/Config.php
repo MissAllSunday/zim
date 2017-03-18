@@ -42,7 +42,7 @@ class Config
 
 		// Set default metadata tags and/or other common HTML tags.
 		$this->f3->set('site.currentUrl', $this->f3->get('URL'));
-		$this->f3->set('site.metaTitle', 'Miss All Sunday - Index');
+		$this->f3->set('site.metaTitle', 'Miss All Sunday - ');
 		$this->f3->set('site.keywords', $this->f3->get('txt.site_keywords'));
 		$this->f3->set('site.description', $this->f3->get('txt.site_desc'));
 

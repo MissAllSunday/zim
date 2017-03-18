@@ -22,6 +22,15 @@ class UserAuth extends Base
 			return $f3->reroute('/');
 
 		// Set the needed metatags stuff.
+		$title = $f3->get('txt.signin');
+		$f3->set('site', $f3->merge('site', [
+			'currentUrl' => $f3->get('URL') .'login',
+		]));
+		$f3->set('site.breadcrumb', [
+			['url' => $f3->get('site.currentUrl'), 'title' => $title, 'active' => true],
+		]);
+		$f3->concat('site.metaTitle', $title);
+		$f3->set('site.description', $f3->get('txt.signin_desc', $f3->get('site.title')));
 
 		$f3->set('content','login.html');
 	}
@@ -105,6 +114,17 @@ class UserAuth extends Base
 
 	function signupPage(\Base $f3, $params)
 	{
+		// Set the needed metatags stuff.
+		$title = $f3->get('txt.signup');
+		$f3->set('site', $f3->merge('site', [
+			'currentUrl' => $f3->get('URL') .'signup',
+		]));
+		$f3->set('site.breadcrumb', [
+			['url' => $f3->get('site.currentUrl'), 'title' => $title, 'active' => true],
+		]);
+		$f3->concat('site.metaTitle', $title);
+		$f3->set('site.description', $f3->get('txt.signup_desc', $f3->get('site.title')));
+
 		$data = [];
 
 		// If theres SESSION data, use that.

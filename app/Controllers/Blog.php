@@ -21,13 +21,15 @@ class Blog extends Base
 			'previous' => ($start ? $start - 1 : 0),
 		));
 
+		$f3->concat('site.metaTitle', $f3->get('txt.home'));
+
 		$f3->set('content','blog.html');
 	}
 
 	function error(\Base $f3, $params)
 	{
+		$f3->concat('site.metaTitle', urldecode($f3->get('ERROR.text')));
 		$f3->set('site', $f3->merge('site', [
-			'metaTitle' => urldecode($f3->get('ERROR.text')),
 			'breadcrumb' => [
 				['url' => '', 'title' => $f3->get('ERROR.code'), 'active' => true],
 			],
