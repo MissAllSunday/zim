@@ -334,8 +334,6 @@ class Tools extends \Prefab
 			$str = str_replace($find, $replace, $str);
 		}
 
-		$str = nl2br($str, false);
-
 		unset($base);
 		return $str;
 	}
