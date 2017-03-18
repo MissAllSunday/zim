@@ -73,9 +73,12 @@ class Post extends Base
 		$f3->set('quickReply', false);
 
 		// We need these for the editor stuff!
-		$f3->push('site.customJS', 'summernote.min.js');
-		$f3->push('site.customJS', 'summernote-image-attributes.js');
-		$f3->push('site.customCSS', 'summernote.css');
+		if ($f3->get('currentUser')->userID)
+		{
+			$f3->push('site.customJS', 'summernote.min.js');
+			$f3->push('site.customJS', 'summernote-image-attributes.js');
+			$f3->push('site.customCSS', 'summernote.css');
+		}
 
 		$f3->set('content','post.html');
 	}
