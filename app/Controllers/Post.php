@@ -158,6 +158,11 @@ class Post extends Base
 			return $f3->reroute('/post/'. $data['boardID'] .'/'. $data['topicID']);
 		}
 
+		// This is here because plain textareas can't handle br tags.
+		// Guest posting hackish hack is hackish...
+		if (!$f3->get('currentUser')->userID)
+			$data['body'] = nl2br($data['body'], false);
+
 		// Are we editing? if so, load the data.
 		if ($f3->get('isEditing') && !empty($data['msgID']))
 		{
