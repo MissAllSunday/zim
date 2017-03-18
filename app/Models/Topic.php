@@ -52,7 +52,7 @@ class Topic extends \DB\SQL\Mapper
 
 		$topics = [];
 		$r = $this->db->exec('
-			SELECT t.topicID, t.locked, t.sticky, t.numReplies, t.lmsgID, mf.title, mf.url, mf.tags, mf.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.userEmail, mf.userEmail) AS userEmail, IFNULL(u.avatar, "") AS avatar, ml.msgID AS lmsgID, ml.title AS ltitle, ml.url AS lurl, ml.msgTime AS lmsgTime, IFNULL(ul.userID, 0) AS luserID, IFNULL(ul.userName, ml.userName) AS luserName, IFNULL(ul.userEmail, ml.userEmail) AS luserEmail, IFNULL(ul.avatar, "") AS lavatar
+			SELECT t.topicID, t.locked, t.sticky, t.numReplies, t.fmsgID, t.lmsgID, mf.title, mf.url, mf.tags, mf.msgTime, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, mf.userName) AS userName, IFNULL(u.userEmail, mf.userEmail) AS userEmail, IFNULL(u.avatar, "") AS avatar, ml.msgID AS lmsgID, ml.title AS ltitle, ml.url AS lurl, ml.msgTime AS lmsgTime, IFNULL(ul.userID, 0) AS luserID, IFNULL(ul.userName, ml.userName) AS luserName, IFNULL(ul.userEmail, ml.userEmail) AS luserEmail, IFNULL(ul.avatar, "") AS lavatar
 			FROM '. $this->table() .' AS t
 			LEFT JOIN '. self::$_prefix .'message AS mf ON (mf.msgID = t.fmsgID)
 			LEFT JOIN '. self::$_prefix .'message AS ml ON (ml.msgID = t.lmsgID)
