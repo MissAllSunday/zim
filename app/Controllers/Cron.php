@@ -196,12 +196,16 @@ class Cron extends Base
 	{
 		// Remove entries older than 7 days.
 		$time = time() - 604800;
+		$db = $this->f3->get('DB');
 
-		// Reuse the cron model.
-		$this->_models['cron']->exec('DELETE FROM '. $this->f3->get('_db.prefix') .'remember WHERE expires < :time', [':time' => $time]);
+		$r = $db->exec('DELETE FROM '. $this->f3->get('_db.prefix') .'remember WHERE expires > :time', [':time' => $time]);
+
+		$this->emit('deleted:'. $r .' entries from remember table');
 
 		// Do the same for sessions
-		$this->_models['cron']->exec('DELETE FROM '. $this->f3->get('_db.prefix') .'ses WHERE stamp < :time', [':time' => $time]);
+		$s = $db->exec('DELETE FROM '. $this->f3->get('_db.prefix') .'ses WHERE stamp > :time', [':time' => $time]);
+
+		$this->emit('deleted:'. $s .' entries from session table');
 	}
 
 	protected function _keywords($keywords, $string)
