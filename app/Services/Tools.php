@@ -380,4 +380,22 @@ class Tools extends \Prefab
 			}
 		}
 	}
+
+	function checkSpam($data = [])
+	{
+		if (empty($data))
+			return false;
+
+		$request = \Web::instance()->request('http://api.stopforumspam.org/api?'. http_build_query($data) .'&json');
+
+		if (!$request || empty($request['body']))
+			return false;
+
+		$r = json_decode($request['body']);
+
+		if ($r->username->appears || $r->email->appears || $r->ip->appears)
+			return true;
+
+		return false;
+	}
 }
