@@ -142,6 +142,14 @@ class Post extends Base
 		// Guest posting? check that they aren't using an already registered user/mail
 		if (!$f3->get('currentUser')->userID)
 		{
+			// Before doing that, lets see if you're a naughty spammer...
+			if ($f3->get('Tools')->checkSpam([
+				'ip' => $f3->ip(),
+				'username' => $data['userName'],
+				'email' => $data['userEmail'],
+			]))
+				return $f3->reroute('/');
+
 			$found = $this->_models['user']->find(['userName = ? OR userEmail = ?', $data['userName'], $data['userEmail']]);
 
 			if(!empty($found))

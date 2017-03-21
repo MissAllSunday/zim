@@ -224,6 +224,14 @@ class UserAuth extends Base
 			return $f3->reroute('/signup');
 		}
 
+		// spammer check
+		if ($f3->get('Tools')->checkSpam([
+			'ip' => $f3->ip(),
+			'username' => $data['userName'],
+			'email' => $data['userEmail'],
+		]))
+			return $f3->reroute('/');
+
 		// What kind of avatar do you want to use?
 		if (empty($data['avatar']))
 		{
