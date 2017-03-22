@@ -70,7 +70,7 @@ class Post extends Base
 		$f3->concat('site.metaTitle', $title);
 
 		$f3->set('site.breadcrumb', [
-			['url' => 'board/'. $this->_models['board']->url, 'title' => $this->_models['board']->title],
+			['url' => $f3->get('URL') . 'board/'. $this->_models['board']->url, 'title' => $this->_models['board']->title],
 			['url' => '', 'title' => $title, 'active' => true],
 		]);
 
