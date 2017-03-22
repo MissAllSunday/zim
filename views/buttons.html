@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="btn-group content pull-right" role="group" aria-label="...">
 		<button type="button" class="btn btn-sm hidden selectText" id="selectText{{@entryInfo.msgID}}">{{@txt.quote_select}}</button>
-		<check if="{{@can.post && @currentUser->userID}}">
+		<check if="{{@can.post && @currentUser->userID && !@entryInfo.locked}}">
 			<a href="{{@BASE}}/post/{{@entryInfo.boardID}}/{{@entryInfo.topicID}}">	<button type="button" class="btn btn-sm">{{@txt.reply}}</button></a>
 		</check>
 		<check if="{{@can.editTopic }}">

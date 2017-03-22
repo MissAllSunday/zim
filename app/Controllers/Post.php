@@ -58,6 +58,10 @@ class Post extends Base
 			$f3->set('isTopic', ($this->_rows['msgID'] == $topicInfo['msgID']));
 		}
 
+		// Check for locked status.
+		if (!$f3->get('isEditing') && $topicInfo['locked'])
+			return $f3->reroute('/'. $topicInfo['pagUrl']);
+
 		$this->_models['board']->load(['boardID = ?', $this->_rows['boardID']]);
 
 		// The title one is tricky
