@@ -107,10 +107,6 @@ class Post extends Base
 
 		$errors = [];
 
-		// Captcha.
-		if ($f3->exists('POST.captcha') && $f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
-			$errors[] = 'bad_captcha';
-
 		// Token check.
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
 			$errors[] = 'bad_token';

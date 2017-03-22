@@ -53,10 +53,6 @@ class UserAuth extends Base
 		if ($f3->get('POST.token')!= $f3->get('SESSION.csrf'))
 			$error[] = 'bad_token';
 
-		// Captcha check.
-		if ($f3->get('POST.captcha') != $f3->get('SESSION.captcha_code'))
-			$error[] = 'bad_captcha';
-
 		// Set the needed vars.
 		$data = $f3->clean($f3->get('POST'));
 
@@ -160,12 +156,6 @@ class UserAuth extends Base
 			'desc' => $f3->get('txt.login_avatar_desc'),
 		]);
 
-		$form->addCaptcha([
-			'name' => 'captcha',
-			'url' => 'captcha',
-			'text' => $f3->get('txt.login_captcha'),
-		]);
-
 		$form->addHiddenField('token', $f3->get('SESSION.csrf'));
 
 		$form->addButton([
@@ -186,10 +176,6 @@ class UserAuth extends Base
 
 		// Get the needed data.
 		$data = $f3->clean($f3->get('POST.data'));
-
-		// Captcha.
-		if (empty($data['captcha']) || $data['captcha'] != $f3->get('SESSION.captcha_code'))
-			$errors[] = 'bad_captcha';
 
 		// Token.
 		if (empty($data['token']) || $data['token'] != $f3->get('SESSION.csrf'))

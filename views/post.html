@@ -42,13 +42,6 @@
 			<input type="text" class="form-control" name="userName" id="postUsername" placeholder="" value="{{ @posting.userName }}">
 			<label for="postEmail">{{@txt.login_userEmail}}</label>
 			<input type="email" class="form-control" name="userEmail" id="postEmail" placeholder="" value="{{ @posting.email }}">
-			<label for="loginCaptcha">{{@txt.login_captcha}}</label>
-			<div class="panel panel-default site-login">
-				<div class="panel-body">
-					<img src="{{@BASE}}/captcha" />
-				</div>
-			</div>
-			<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
 		</div>
 	</check>
 	<div class="form-group">
