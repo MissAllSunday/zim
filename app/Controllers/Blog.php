@@ -77,14 +77,10 @@ class Blog extends Base
 
 		// Try and show a list of similar topics.
 		if ($f3->get('ERROR.code') == 404 && !empty($like))
-		{
-			$s = $this->_models['message']->find(['replace(title, " ", "") LIKE ?', '%'. $like .'%'], [
+			$f3->set('similarTopics', $this->_models['message']->find(['replace(title, " ", "") LIKE ?', '%'. $like .'%'], [
 				'order' => 'msgID DESC',
 				'limit' => 10,
-			]);
-
-			$f3->set('similarTopics', $s);
-		}
+			]));
 
 		echo \Template::instance()->render('error.html');
 	}
