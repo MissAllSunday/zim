@@ -19,9 +19,9 @@ class Config
 		));
 
 		$this->f3->mset([
-			'URL' => 'https://missallsunday.com/',
+			'URL' => 'https://missallsunday.com',
 			'Logs' => 'logs/',
-			'CACHE' => $this->f3->get('_memcached'),
+			'CACHE' => false,
 			'DEBUG' => 0,
 			'PREFIX' => 'txt.',
 			'ENCODING' => 'UTF-8',

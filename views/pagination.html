@@ -4,10 +4,10 @@
 			<loop from="{{ @i = 0 }}" to="{{ @i < @pag.pages }}" step="{{ @i++ }}">
 				<check if="{{ @i == 0}}">
 					<true>
-						<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@URL}}{{@pag.url}}">{{@txt.home}}</a></li>
+						<li id="pag_{{@i}}" class="first pag{{ (@i == @PARAMS.page ? ' active' : '') }}"><a href="{{@URL}}/{{@pag.url}}">{{@txt.home}}</a></li>
 					</true>
 					<false>
-						<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@URL}}{{@pag.url}}/page/{{@i}}{{@pag.extra}}">{{ (@i == @pag.pages ? @txt.last :  @i) }}</a></li>
+						<li id="pag_{{@i}}" class="pag{{ (@i == @PARAMS.page ? ' active' : '') }} {{ (@i == (@pag.count - 1) ? ' last' : '') }}"><a href="{{@URL}}/{{@pag.url}}/page/{{@i}}{{@pag.extra}}">{{ (@i == @pag.pages ? @txt.last :  @i) }}</a></li>
 					</false>
 				</check>
 			</loop>

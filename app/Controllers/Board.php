@@ -43,7 +43,7 @@ class Board extends Base
 
 		$f3->set('site', $f3->merge('site', [
 			'keywords' => $f3->get('Tools')->metaKeywords(array_merge($tags, $f3->get('tags'))),
-			'currentUrl' => $f3->get('URL') . $f3->get('boardInfo')->url . ($start ? '/page/'. $start : ''),
+			'currentUrl' => $f3->get('URL') .'/'. $f3->get('boardInfo')->url . ($start ? '/page/'. $start : ''),
 		]));
 
 		$f3->concat('site.metaTitle', $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : ''));

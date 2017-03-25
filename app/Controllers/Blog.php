@@ -131,9 +131,9 @@ class Blog extends Base
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
 			'description' => $entryInfo['desc'],
 			'keywords' => $f3->get('Tools')->metaKeywords($tags),
-			'currentUrl' => $f3->get('BASE') .'/'. $entryInfo['url'],
+			'currentUrl' => $f3->get('URL') .'/'. $entryInfo['url'],
 			'breadcrumb' => [
-				['url' => $f3->get('URL') . 'board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
+				['url' => $f3->get('URL') . '/board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
 				['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 			],
 		]));

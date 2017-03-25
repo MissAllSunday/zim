@@ -24,7 +24,7 @@ class UserAuth extends Base
 		// Set the needed metatags stuff.
 		$title = $f3->get('txt.signin');
 		$f3->set('site', $f3->merge('site', [
-			'currentUrl' => $f3->get('URL') .'login',
+			'currentUrl' => $f3->get('URL') .'/login',
 		]));
 		$f3->set('site.breadcrumb', [
 			['url' => $f3->get('site.currentUrl'), 'title' => $title, 'active' => true],
@@ -113,7 +113,7 @@ class UserAuth extends Base
 		// Set the needed metatags stuff.
 		$title = $f3->get('txt.signup');
 		$f3->set('site', $f3->merge('site', [
-			'currentUrl' => $f3->get('URL') .'signup',
+			'currentUrl' => $f3->get('URL') .'/signup',
 		]));
 		$f3->set('site.breadcrumb', [
 			['url' => $f3->get('site.currentUrl'), 'title' => $title, 'active' => true],
