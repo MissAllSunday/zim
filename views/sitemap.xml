@@ -1,11 +1,25 @@
 {{'<?xml version="1.0" encoding="UTF-8"?>'}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-	<repeat group="{{ @sitemapItems }}" value="{{ @item }}">
 	<url>
-		<loc>{{@URL}}/{{ @item.url}}</loc>
-		<lastmod>{{ date(\DateTime::W3C, @item.msgTime)}}</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.5</priority>
+		<loc>{{@URL}}</loc>
+		<lastmod>{{ date(\DateTime::W3C, strtotime('-1 day', time()))}}</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.8</priority>
 	</url>
+	<repeat group="{{ @sitemapItems }}" value="{{ @item }}">
+		<url>
+			<loc>{{@URL}}/{{ @item.url}}</loc>
+			<lastmod>{{ date(\DateTime::W3C, @item.msgTime)}}</lastmod>
+			<changefreq>{{ (@item.msgTime > (time() - 86400) ? 'daily' : 'weekly') }}</changefreq>
+			<priority>{{ (@item.msgTime > (time() - 86400) ? '0.6' : '0.5') }}</priority>
+		</url>
+	</repeat>
+	<repeat group="{{ @sitemapBoards }}" value="{{ @item }}">
+		<url>
+			<loc>{{@URL}}/{{ @item.url}}</loc>
+			<lastmod>{{ date(\DateTime::W3C, strtotime('-1 month', time()))}}</lastmod>
+			<changefreq>monthly</changefreq>
+			<priority>0.4</priority>
+		</url>
 	</repeat>
 </urlset>

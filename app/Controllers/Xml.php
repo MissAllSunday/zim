@@ -21,6 +21,9 @@ class Xml extends Base
 		// Get the items.
 		$f3->set('sitemapItems', $this->_models['message']->latestTopics(200, 86400));
 
+		// Boards
+		$f3->set('sitemapBoards', $this->_models['board']->getBoards());
+
 		echo \Template::instance()->render('sitemap.xml', 'application/xml');
 	}
 }
