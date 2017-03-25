@@ -15,6 +15,13 @@ class Blog extends Base
 
 		$f3->set('messages', $entries);
 
+		// Get some moar tags
+		$tags = '';
+		foreach($entries as $entry)
+			$tags .= $entry['desc'] .' ';
+
+		$tags = $f3->get('Tools')->generateKeywords($tags);
+
 		// Don't need no fancy pagination.
 		$f3->set('pagination', array(
 			'next' => $start + 1,
@@ -22,6 +29,7 @@ class Blog extends Base
 		));
 
 		$f3->concat('site.metaTitle', $f3->get('txt.home'));
+		$f3->set('site.keywords', $tags);
 
 		$f3->set('content','blog.html');
 	}
@@ -102,6 +110,9 @@ class Blog extends Base
 
 		if (empty($entryInfo))
 			return $f3->error(404);
+
+		// Get some moar tags
+		$tags = array_unique(array_merge($tags, explode(',', $entryInfo['tags']), explode(',', $f3->get('Tools')->generateKeywords($entryInfo['desc']))));
 
 		$f3->set('entryInfo', $entryInfo);
 

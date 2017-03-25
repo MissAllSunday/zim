@@ -72,6 +72,9 @@ class Tools extends \Prefab
 			$d['body'] = $this->parser($d['body']);
 		}
 
+		if (!empty($d['tags']))
+			$d['tags'] = $this->metaKeywords(explode(',', $d['tags']));
+
 		// Get the dates
 		$d['date'] = $this->getDate($d['msgTime']);
 		$d['microDate'] =  date("c", $d['msgTime']);
@@ -397,5 +400,35 @@ class Tools extends \Prefab
 			return true;
 
 		return false;
+	}
+
+	function generateKeywords($str = '', $limit = 100)
+	{
+		if (empty($str))
+			return '';
+
+		// work with arrays
+		$a = array_map('strtolower', array_unique(explode(' ', $str)));
+		$words = array_count_values($a);
+		arsort($words);
+
+		return $this->truncateString($this->metaKeywords(array_keys($words)), $limit, ',', '');
+	}
+
+	public function truncateString($str, $limit = 30, $break = ' ', $pad = '...')
+	{
+		if(empty($str))
+			return '';
+
+		// return with no change if string is shorter than $limit
+		if(strlen($str) <= $limit)
+			return $str;
+
+		// is $break present between $limit and the end of the string?
+		if(false !== ($breakpoint = strpos($str, $break, $limit)))
+			if($breakpoint < strlen($str) - 1)
+				$str = substr($str, 0, $breakpoint) . $pad;
+
+		return $str;
 	}
 }
