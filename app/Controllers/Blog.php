@@ -129,7 +129,7 @@ class Blog extends Base
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
-			'description' => $entryInfo['desc'],
+			'description' => $entryInfo['desc'] . ($start ? $f3->get('txt.page', $start) : ''),
 			'keywords' => $f3->get('Tools')->metaKeywords($tags),
 			'currentUrl' => $f3->get('URL') .'/'. $entryInfo['url'],
 			'breadcrumb' => [

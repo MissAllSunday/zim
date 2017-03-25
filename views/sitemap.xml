@@ -16,7 +16,7 @@
 	</repeat>
 	<repeat group="{{ @sitemapBoards }}" value="{{ @item }}">
 		<url>
-			<loc>{{@URL}}/{{ @item.url}}</loc>
+			<loc>{{@URL}}/board/{{ @item.url}}</loc>
 			<lastmod>{{ date(\DateTime::W3C, strtotime('-1 month', time()))}}</lastmod>
 			<changefreq>monthly</changefreq>
 			<priority>0.4</priority>
