@@ -72,7 +72,7 @@ class Tools extends \Prefab
 			$d['body'] = $this->parser($d['body']);
 		}
 
-		if (!empty($d['tags']))
+		if (!empty($d['tags']) && is_string($d['tags']))
 			$d['tags'] = $this->metaKeywords(explode(',', $d['tags']));
 
 		// Get the dates
