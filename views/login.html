@@ -8,16 +8,6 @@
 		<input type="password" class="form-control site-login" name="passwd" id="loginPass" placeholder="">
 		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
 	</div>
-	<div class="form-group">
-		<label for="loginCaptcha">{{@txt.login_captcha}}</label>
-		<div class="panel panel-default site-login">
-			<div class="panel-body">
-				<img src="{{@BASE}}/captcha" />
-			</div>
-		</div>
-		<input type="text" class="form-control site-login" name="captcha" id="loginCaptcha" placeholder="">
-		<input type="hidden" name="token" value="{{ @SESSION.csrf }}"/>
-	</div>
 	<div class="checkbox">
 		<label>
 			<input type="hidden" name="remember" value="0" />

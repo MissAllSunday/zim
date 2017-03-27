@@ -74,6 +74,13 @@ class UserAuth extends Base
 		if(empty($found))
 			$error[] = 'no_user';
 
+		// Spam check.
+		if ($f3->get('Tools')->checkSpam([
+			'ip' => $f3->ip(),
+			'email' => $data['userEmail'],
+		]))
+			return $f3->reroute('/');
+
 		// Any errors?
 		if ($error)
 		{
