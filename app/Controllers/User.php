@@ -4,6 +4,11 @@ namespace Controllers;
 
 class User extends Base
 {
+	function __construct()
+	{
+		// Need a few extra things.
+		$this->_defaultModels[] = 'topic';
+	}
 	function profile(\Base $f3, $params)
 	{
 		// No user? redirect to the main page.
@@ -27,12 +32,15 @@ class User extends Base
 		}
 
 		// Latest topics.
-		$f3->set('profileTopics', []);
+		$f3->set('profileTopics', $this->_models['topic']->getByUser([
+			':user' => $this->_models['user']->userID,
+			':limit' => 10
+		]));
 
-		// Latest messages.latestMessages
+		// Latest messages.
 		$f3->set('profileMessages', $this->_models['message']->userMessages([
 			':user' => $id,
-			':limit' => 5,
+			':limit' => 10,
 		]));
 
 		$title = $f3->get('txt.view_profile', $this->_models['user']->userName);

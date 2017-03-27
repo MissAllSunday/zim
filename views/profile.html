@@ -73,17 +73,13 @@ Licensed under MIT
 			<div role="tabpanel" class="tab-pane" id="profile-topics">
 				<h3>{{@txt.user_topics}}</h3>
 				<repeat group="{{ @profileTopics }}" value="{{ @item }}">
-					<div class="media">
-						<div class="media-left">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">
-								{{@item.locked ? '🔐' : ''}}
-								{{@item.sticky ? '📌' : ''}}
-								<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
-								<small>{{@item.date}}</small>
-							</h4>
-						</div>
+					<div >
+						<h4 class="media-heading">
+							{{@item.locked ? '🔐' : ''}}
+							{{@item.sticky ? '📌' : ''}}
+							<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
+							<small>{{@item.date}}</small>
+						</h4>
 						<hr>
 					</div>
 				</repeat>
