@@ -194,18 +194,16 @@ class UserAuth extends Base
 				$errors[] = 'empty_'. $v;
 
 		// Is there already an user with this email?
-		$this->_models['user']->findone(['userEmail = ?', $data['userEmail']]);
+		$foundMail = $this->_models['user']->findone(['userEmail = ?', $data['userEmail']]);
 
-		if (!$this->_models['user']->dry())
+		if (!$foundMail)
 			$errors[] = 'signup_userName_used';
 
 		// Or perhaps the same userName?
-		$this->_models['user']->findone(['userName = ?', $data['userName']]);
+		$foundName = $this->_models['user']->findone(['userName = ?', $data['userName']]);
 
-		if (!$this->_models['user']->dry())
+		if (!$foundName)
 			$errors[] = 'signup_userEmail_used';
-
-		$this->_models['user']->reset();
 
 		// Go back and try again.
 		if (!empty($errors))
