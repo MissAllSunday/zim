@@ -352,10 +352,11 @@ class Tools extends \Prefab
 
 	function getDate($pTime)
 	{
+		$f3 = \Base::instance();
 		$now = time();
 
 		// If the date is older than 1 month, don't use relative dates.
-		return $now - 2592000 >= $pTime ? date("j M Y", $pTime) : $this->timeElapsed($pTime);
+		return $now - 2592000 >= $pTime ? $f3->get('txt.on') .' '. date("j M Y", $pTime) : $this->timeElapsed($pTime);
 	}
 
 	/**

@@ -22,7 +22,7 @@
 						<span itemprop="name">{{@entryInfo.userName}}</span>
 					</a>
 				</span>
-				{{@txt.on}} {{@entryInfo.date}}
+				{{@entryInfo.date}}
 				<meta itemprop="datePublished" content="{{@entryInfo.microDate}}" />
 				<meta itemprop="dateModified" content="{{@entryInfo.msgModified ? date('c', @entryInfo.msgModified) : @entryInfo.microDate}}" />
 		</p>
@@ -55,7 +55,7 @@
 								<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
 							</h3>
 							<h4>
-								{{@txt.postedby}} <a href="{{@item.userHref}}">{{@item.userName}}</a> {{@txt.on}} {{@item.date}}
+								{{@txt.postedby}} <a href="{{@item.userHref}}">{{@item.userName}}</a> {{@item.date}}
 							</h4>
 						</div>
 					</div>
