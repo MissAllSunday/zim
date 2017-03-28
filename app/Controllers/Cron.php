@@ -167,7 +167,7 @@ class Cron extends Base
 		if (!empty($message) && is_object($message))
 			$news = [
 				'title' => $message->getElementsByTagName('title')->item(0)->nodeValue,
-				'body' => $message->getElementsByTagName('body')->item(0)->nodeValue,
+				'body' => nl2br($message->getElementsByTagName('body')->item(0)->nodeValue),
 				'tags' => $message->getElementsByTagName('tags')->item(0)->nodeValue,
 				'boardID' => $this->f3->get('CRON.blogBoardID'),
 				'topicID' => $this->f3->get('CRON.blogTopicID'),
