@@ -73,7 +73,7 @@ Licensed under MIT
 			<div role="tabpanel" class="tab-pane" id="profile-topics">
 				<h3>{{@txt.user_topics}}</h3>
 				<repeat group="{{ @profileTopics }}" value="{{ @item }}">
-					<div >
+					<div>
 						<h4 class="media-heading">
 							{{@item.locked ? '🔐' : ''}}
 							{{@item.sticky ? '📌' : ''}}
@@ -86,6 +86,15 @@ Licensed under MIT
 			</div>
 			<div role="tabpanel" class="tab-pane" id="profile-messages">
 				<h3>{{@txt.user_messages}}</h3>
+				<repeat group="{{ @profileMessages }}" value="{{ @item }}">
+					<div>
+						<h4 class="media-heading">
+							<a href="{{@BASE}}/{{@item.url}}">{{ @item.title }}</a>
+							<small>{{@item.date}}</small>
+						</h4>
+						<hr>
+					</div>
+				</repeat>
 			</div>
 		</div>
 	</div>

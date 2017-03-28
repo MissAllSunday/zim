@@ -46,11 +46,11 @@ class Board extends Base
 			'currentUrl' => $f3->get('URL') .'/board/'. $f3->get('boardInfo')->url . ($start ? '/page/'. $start : ''),
 		]));
 
-		$f3->concat('site.metaTitle', $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : ''));
+		$f3->concat('site.metaTitle', $f3->get('boardInfo')->title .' '. $f3->get('txt.board') . ($start ? $f3->get('txt.page', $start) : ''));
 
 		$f3->set('site.description', $f3->get('site.metaTitle') . ' '. $f3->get('Tools')->metaDescription($f3->get('boardInfo')->description));
 		$f3->set('site.breadcrumb', [
-			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('boardInfo')->title . ($start ? $f3->get('txt.page', $start) : '')],
+			['url' => $f3->get('site.currentUrl'), 'title' => $f3->get('boardInfo')->title .' '. $f3->get('txt.board') . ($start ? $f3->get('txt.page', $start) : '')],
 		]);
 
 		// Pretty tags!
