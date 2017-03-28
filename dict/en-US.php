@@ -321,15 +321,15 @@ Wait for something to happen...',
 			<span itemprop="name">{1}</span>
 		</a>
 		<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-		<meta itemprop="url" content="https://i.imgur.com/pmbxkUa.png">
+		<meta itemprop="url" content="https://i.imgur.com/6CnW7sL.jpg">
 		<meta itemprop="width" content="400"><meta itemprop="height" content="175">
 		</span>
 	</span>',
-		'image' => '<span class="hidden" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-			<img src="https://i.imgur.com/6CnW7sL.jpg" alt="Miss All Sunday"/>
+		'image' => '<span itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+			<img src="{0}" alt="Miss All Sunday" class="media-avatar"/>
 			<meta itemprop="url" content="http://i.imgur.com/6CnW7sL.jpg">
-			<meta itemprop="width" content="400">
-			<meta itemprop="height" content="175">
+			<meta itemprop="width" content="{1}">
+			<meta itemprop="height" content="{2}">
 		</span>',
 	],
 ];

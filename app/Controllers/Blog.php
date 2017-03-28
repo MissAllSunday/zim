@@ -13,14 +13,51 @@ class Blog extends Base
 			':board' => 1
 		]);
 
-		$f3->set('messages', $entries);
-
-		// Get some moar tags
+		// Extract the images if there are any.
 		$tags = '';
-		foreach($entries as $entry)
+		$doc = new \DOMDocument;
+		$internalErrors = libxml_use_internal_errors(true);
+		foreach($entries as $k => $entry)
+		{
 			$tags .= $entry['desc'] .' ';
 
+			$doc->loadHTML($entry['body']);
+
+			// Lets get the first image, it is usually the only one anyways.
+			$metaTags = $doc->getElementsByTagName('meta');
+
+			// Fill up some generic data in case the one we need doens't exists.
+			$entries[$k]['image'] = [
+				'url' => 'https://i.imgur.com/6CnW7sL.jpg',
+				'width' => 400,
+				'height' => 175,
+			];
+
+			// This largely depends on me doing my fair share of work...
+			if (!empty($metaTags))
+				foreach ($metaTags as $meta)
+					switch ($meta->getAttribute('itemprop'))
+					{
+						case 'url':
+						$entries[$k]['image']['url'] = $meta->getAttribute('content');
+						break;
+						case 'width':
+						$entries[$k]['image']['width'] = $meta->getAttribute('content');
+						break;
+						case 'height':
+						$entries[$k]['image']['height'] = $meta->getAttribute('content');
+						break;
+					}
+		}
+
+		// bye bye!
+		unset($doc);
+
+
+		// Get some moar tags
 		$tags = $f3->get('Tools')->generateKeywords($tags);
+
+		$f3->set('messages', $entries);
 
 		// Don't need no fancy pagination.
 		$f3->set('pagination', array(
