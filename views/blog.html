@@ -3,7 +3,7 @@
 		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{ @item.url }}" />
 		<a href="{{@BASE}}/{{ @item.pagUrl }}" rel="bookmark">
 			<h2 class="post-title" itemprop="name headline">
-				{{@txt.microData.image, @item.image.url, @item.image.width, @item.image.height  | format,raw}}
+				{{@txt.microData.image, @item.image.url, @item.image.width, @item.image.height, str_replace(',', ' ', @item.tags)  | format,raw}}
 				{{ @item.title }}
 			</h2>
 			<h3 class="post-subtitle" itemprop="description">
