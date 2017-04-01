@@ -33,13 +33,25 @@ class Blog extends Base
 				'height' => 175,
 			];
 
+			$thumb = '/images/thumbnails/tn_';
+
 			// This largely depends on me doing my fair share of work...
 			if (!empty($metaTags))
 				foreach ($metaTags as $meta)
 					switch ($meta->getAttribute('itemprop'))
 					{
 						case 'url':
-						$entries[$k]['image']['url'] = $meta->getAttribute('content');
+						// thumbnail anyone?
+						$file = $thumb . basename(parse_url($meta->getAttribute('content'))['path']);
+
+						if (file_exists($f3->get('_rootPath') . $file))
+							$entries[$k]['image']['url'] = $f3->get('URL') . $file;
+
+						// No? fine then!
+						else
+							$entries[$k]['image']['url'] = $meta->getAttribute('content');
+
+							$entries[$k]['image']['fullUrl'] = $meta->getAttribute('content');
 						break;
 						case 'width':
 						$entries[$k]['image']['width'] = $meta->getAttribute('content');

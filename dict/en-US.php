@@ -335,7 +335,7 @@ Wait for something to happen...',
 	</span>',
 		'image' => '<span itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 			<img src="{0}" alt="{3}" title="{3}" class="media-avatar"/>
-			<meta itemprop="url" content="https://i.imgur.com/6CnW7sL.jpg">
+			<meta itemprop="url" content="{4}">
 			<meta itemprop="width" content="{1}">
 			<meta itemprop="height" content="{2}">
 		</span>',
