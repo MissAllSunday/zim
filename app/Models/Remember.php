@@ -73,4 +73,13 @@ class Remember extends \DB\SQL\Mapper
 		$f3->clear('SESSION');
 		$this->db->exec('DELETE FROM '. $this->table() .' WHERE userID = :user', [':user' => $id]);
 	}
+
+	function onSuspect()
+	{
+		$f3->get('REMEMBER')->clearCookie($f3->get('currentUser')->userID);
+		$f3->clear('currentUser');
+
+		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
+		$f3->reroute('/');
+	}
 }

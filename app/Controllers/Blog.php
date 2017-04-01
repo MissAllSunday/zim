@@ -26,9 +26,9 @@ class Blog extends Base
 			// Lets get the first image, it is usually the only one anyways.
 			$metaTags = $doc->getElementsByTagName('meta');
 
-			// Fill up some generic data in case the one we need doens't exists.
+			// Fill up some generic data in case the one we need doesn't exists.
 			$entries[$k]['image'] = [
-				'url' => 'https://i.imgur.com/6CnW7sL.jpg',
+				'url' => 'https://missallsunday.com/images/default.jpg',
 				'width' => 400,
 				'height' => 175,
 			];
@@ -69,65 +69,6 @@ class Blog extends Base
 		$f3->set('site.keywords', $tags);
 
 		$f3->set('content','blog.html');
-	}
-
-	function error(\Base $f3, $params)
-	{
-		$f3->concat('site.metaTitle', urldecode($f3->get('ERROR.text')));
-		$f3->set('site', $f3->merge('site', [
-			'breadcrumb' => [
-				['url' => '', 'title' => $f3->get('ERROR.code'), 'active' => true],
-			],
-		]));
-
-		if (strpos($f3->get('ERROR.text'), '_spoiler') !== false)
-		{
-			$like = str_replace([strrchr($f3->get('ERROR.text'), 'spoiler'), 'HTTP 404 (GET'], ['', ''], $f3->get('ERROR.text'));
-
-			if (strpos($like, '_spoiler') !== false)
-				$like = str_replace(strrchr($like, 'spoiler'), '', $like);
-
-			$like = strrchr($like, '/');
-			$like = trim(str_replace([' ', 'spoiler', '/', '_', 'one', 'piece'], ['', '[Spoiler]','', '', 'One', 'Piece'], $like));
-		}
-
-		else
-		{
-			$char = strpos($f3->get('ERROR.text'), '_') !== false ? '_' : '-';
-			$like =
-			explode(' ', preg_replace(
-							'/[^\00-\255]+/u', '', str_replace(
-				['/', $char], ['',' '],
-							strrchr(
-								str_replace(
-									[strrchr(
-										$f3->get('ERROR.text'), $char
-									), 'one', 'piece', 'spoiler','manga', 'streams'], ['', 'One','Piece', 'Spoiler', '', ''],
-										urldecode(
-											$f3->get('ERROR.text')
-										)
-								), '/'
-							)
-				)
-			));
-
-			if (in_array('Spoiler', $like))
-			{
-				array_shift($like);
-				array_pop($like);
-			}
-
-			$like = implode('', $like);
-		}
-
-		// Try and show a list of similar topics.
-		if ($f3->get('ERROR.code') == 404 && !empty($like))
-			$f3->set('similarTopics', $this->_models['message']->find(['replace(title, " ", "") LIKE ?', '%'. $like .'%'], [
-				'order' => 'msgID DESC',
-				'limit' => 10,
-			]));
-
-		echo \Template::instance()->render('error.html');
 	}
 
 	function single(\Base $f3, $params)
@@ -211,6 +152,70 @@ class Blog extends Base
 		$this->_models['user']->lmsgID = $entryInfo['lmsgID'];
 
 		$f3->set('content','single.html');
+	}
+
+	function error(\Base $f3, $params)
+	{
+		$f3->concat('site.metaTitle', urldecode($f3->get('ERROR.text')));
+		$f3->set('site', $f3->merge('site', [
+			'breadcrumb' => [
+				['url' => '', 'title' => $f3->get('ERROR.code'), 'active' => true],
+			],
+		]));
+
+		if (strpos($f3->get('ERROR.text'), '_spoiler') !== false)
+		{
+			$like = str_replace([strrchr($f3->get('ERROR.text'), 'spoiler'), 'HTTP 404 (GET'], ['', ''], $f3->get('ERROR.text'));
+
+			if (strpos($like, '_spoiler') !== false)
+				$like = str_replace(strrchr($like, 'spoiler'), '', $like);
+
+			$like = strrchr($like, '/');
+			$like = trim(str_replace([' ', 'spoiler', '/', '_', 'one', 'piece'], ['', '[Spoiler]','', '', 'One', 'Piece'], $like));
+		}
+
+		else
+		{
+			$char = strpos($f3->get('ERROR.text'), '_') !== false ? '_' : '-';
+			$like =
+			explode(' ', preg_replace(
+							'/[^\00-\255]+/u', '', str_replace(
+				['/', $char], ['',' '],
+							strrchr(
+								str_replace(
+									[strrchr(
+										$f3->get('ERROR.text'), $char
+									), 'one', 'piece', 'spoiler','manga', 'streams'], ['', 'One','Piece', 'Spoiler', '', ''],
+										urldecode(
+											$f3->get('ERROR.text')
+										)
+								), '/'
+							)
+				)
+			));
+
+			if (in_array('Spoiler', $like))
+			{
+				array_shift($like);
+				array_pop($like);
+			}
+
+			$like = implode('', $like);
+		}
+
+		// Try and show a list of similar topics.
+		if ($f3->get('ERROR.code') == 404 && !empty($like))
+			$f3->set('similarTopics', $this->_models['message']->find(['replace(title, " ", "") LIKE ?', '%'. $like .'%'], [
+				'order' => 'msgID DESC',
+				'limit' => 10,
+			]));
+
+		echo \Template::instance()->render('error.html');
+	}
+
+	function search(\Base $f3, $params)
+	{
+		$f3->set('content','search.html');
 	}
 
 	function about(\Base $f3, $params)
