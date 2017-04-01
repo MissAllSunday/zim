@@ -215,6 +215,14 @@ class Blog extends Base
 
 	function search(\Base $f3, $params)
 	{
+		$f3->set('site', $f3->merge('site', [
+			'metaTitle' => $f3->concat('site.metaTitle', $f3->get('txt.search')),
+			'description' => $f3->get('txt.search_desc'),
+			'currentUrl' => $f3->get('BASE') .'/about',
+			'breadcrumb' => [
+				['url' => '', 'title' => $f3->get('txt.search'), 'active' => true],
+			],
+		]));
 		$f3->set('content','search.html');
 	}
 

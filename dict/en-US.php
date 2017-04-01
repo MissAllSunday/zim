@@ -153,6 +153,11 @@ Wait for something to happen...',
 	'perm_error_delete' => 'You aren\'t allowed to delete messages.',
 	'perm_error_deleteTopic' => 'You aren\'t allowed to delete topics.',
 
+	// Search
+	'search' => 'Search',
+	'search_desc' => 'and search some more then search again til you say no more!',
+
+
 	// Random lines.
 	'randomLines' => [
 		'La Patria es primero',
@@ -308,6 +313,9 @@ Wait for something to happen...',
 		'If you\'re looking for a dream girl I\'ll never be your dream girl Living in the real worldLooking for a dream girl',
 		'Oh, and I feel that nothing in life could ever be like this again \'Cause your love kept me alive and made me insane',
 		'Oh, baby, every morning there are mountains to climb. Taking all my time Oh, when I get up, this is what I see. Welcome to reality',
+		'It is the time you have wasted for your rose that makes your rose so important',
+		'Well, I must endure the presence of a few caterpillars if I wish to become acquainted with the butterflies',
+		'But the vain man did not hear him. Vain men never hear anything but praise',
 	],
 
 	// 404 text.
