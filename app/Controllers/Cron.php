@@ -162,6 +162,11 @@ class Cron extends Base
 		$doc = new \DOMDocument;
 		$doc->load($file);
 
+		// Create the thumb if there is an image.
+		$image = $message->getElementsByTagName('image')->item(0)->nodeValue;
+
+		$this->f3->get('Tools')->createThumb($image);
+
 		$message = $doc->documentElement->getElementsByTagName('message')->item(0);
 
 		if (!empty($message) && is_object($message))

@@ -28,12 +28,9 @@ class Tools extends \Prefab
 		$imgO->resize($width, null, false);
 
 		// Write it.
-		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.jpg', $imgO->dump('jpeg', 65));
+		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.jpg', $imgO->dump('jpeg', 75));
 
-		return [
-			'image' => file_exists($imagesPath . $fileName .'.jpg'),
-			'thumb' => file_exists($thumbsPath . 'tn_' . $fileName .'.jpg')
-		];
+		return file_exists($thumbsPath . 'tn_' . $fileName .'.jpg');
 	}
 
 	function prepareData($d = [])
