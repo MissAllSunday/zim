@@ -44,7 +44,7 @@ class Blog extends Base
 						// thumbnail anyone?
 						$file = $thumb . basename(parse_url($meta->getAttribute('content'))['path']);
 
-						if (file_exists($f3->get('_rootPath') . $file))
+						if (file_exists($f3->get('ROOT') . $file))
 							$entries[$k]['image']['url'] = $f3->get('URL') . $file;
 
 						// No? fine then!

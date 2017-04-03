@@ -9,6 +9,33 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
+	function createThumb($imgStr = '', $width = 150)
+	{
+		$imagesPath = $this->f3->get('ROOT') . '/images/';
+		$thumbsPath = $imagesPath .'thumbnails/';
+		$imgSource = $imagesPath . $imgStr;
+
+		// Theres nothing to work with.
+		if (empty($imgSource))
+			return false;
+
+		$fileName = pathinfo($imgSource, PATHINFO_FILENAME);
+
+		// Cool beans
+		$imgO = new \Image($imgSource, true, '');
+
+		// Create the thumb.
+		$imgO->resize($width, null, false);
+
+		// Write it.
+		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.jpg', $imgO->dump('jpeg', 65));
+
+		return [
+			'image' => file_exists($imagesPath . $fileName .'.jpg'),
+			'thumb' => file_exists($thumbsPath . 'tn_' . $fileName .'.jpg')
+		];
+	}
+
 	function prepareData($d = [])
 	{
 		$f3 = \Base::instance();

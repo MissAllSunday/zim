@@ -179,7 +179,7 @@ $(function() {
 				['para', ['style', 'ul', 'ol', 'paragraph']],
 				['insert', ['microDataImg', 'picture', 'link', 'table', 'hr']],
 				['height', ['height']],
-				['misc', ['undo', 'redo', 'help']],
+				['misc', ['undo', 'redo', 'help', 'codeview']],
 				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
 			]
 		});
