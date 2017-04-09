@@ -5,7 +5,7 @@
 						<ul class="list-inline text-center">
 							<check if="{{ !@currentUser->isBot }}">
 								<li>
-									<a href="mailto:suki@missallsunday.com">
+									<a href="{{@BASE}}/about">
 										<span class="fa-stack fa-lg">
 											<i class="fa fa-circle fa-stack-2x"></i>
 											<i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
@@ -30,7 +30,7 @@
 								</a>
 							</li>
 							<li class="copyright text-muted">
-								<a href="{{@BASE}}/about">Copyright &copy; Jessica González {{date('Y')}}</a>
+								Copyright &copy; Jessica González {{date('Y')}}
 							</li>
 						</ul>
 					</div>
