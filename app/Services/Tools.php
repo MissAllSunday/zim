@@ -20,6 +20,7 @@ class Tools extends \Prefab
 			return false;
 
 		$fileName = pathinfo($imgSource, PATHINFO_FILENAME);
+		$ext = pathinfo($imgSource, PATHINFO_EXTENSION);
 
 		// Cool beans
 		$imgO = new \Image($imgSource, true, '');
@@ -28,9 +29,9 @@ class Tools extends \Prefab
 		$imgO->resize($width, null, false);
 
 		// Write it.
-		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.jpg', $imgO->dump('jpeg', 80));
+		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.'. $ext, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), 80));
 
-		return file_exists($thumbsPath . 'tn_' . $fileName .'.jpg');
+		return file_exists($thumbsPath . 'tn_' . $fileName .'.'. $ext);
 	}
 
 	function prepareData($d = [])
