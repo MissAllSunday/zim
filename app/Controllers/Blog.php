@@ -15,56 +15,15 @@ class Blog extends Base
 
 		// Extract the images if there are any.
 		$tags = '';
-		$doc = new \DOMDocument;
-		$internalErrors = libxml_use_internal_errors(true);
+		$images = new \Models\Images;
+
 		foreach($entries as $k => $entry)
 		{
 			$tags .= $entry['desc'] .' ';
 
-			$doc->loadHTML($entry['body']);
-
-			// Lets get the first image, it is usually the only one anyways.
-			$metaTags = $doc->getElementsByTagName('meta');
-
-			// Fill up some generic data in case the one we need doesn't exists.
-			$entries[$k]['image'] = [
-				'url' => 'https://missallsunday.com/images/default.jpg',
-				'width' => 400,
-				'height' => 175,
-			];
-
-			$thumb = '/images/thumbnails/tn_';
-
-			// This largely depends on me doing my fair share of work...
-			if (!empty($metaTags))
-				foreach ($metaTags as $meta)
-					switch ($meta->getAttribute('itemprop'))
-					{
-						case 'url':
-						// thumbnail anyone?
-						$file = $thumb . basename(parse_url($meta->getAttribute('content'))['path']);
-
-						if (file_exists($f3->get('ROOT') . $file))
-							$entries[$k]['image']['url'] = $f3->get('URL') . $file;
-
-						// No? fine then!
-						else
-							$entries[$k]['image']['url'] = $meta->getAttribute('content');
-
-							$entries[$k]['image']['fullUrl'] = $meta->getAttribute('content');
-						break;
-						case 'width':
-						$entries[$k]['image']['width'] = $meta->getAttribute('content');
-						break;
-						case 'height':
-						$entries[$k]['image']['height'] = $meta->getAttribute('content');
-						break;
-					}
+			// Get the image.
+			$entries[$k]['image'] = $images->extractImage($entry['body']);
 		}
-
-		// bye bye!
-		unset($doc);
-
 
 		// Get some moar tags
 		$tags = $f3->get('Tools')->generateKeywords($tags);

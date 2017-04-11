@@ -9,31 +9,6 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
-	function createThumb($imgStr = '', $width = 150)
-	{
-		$imagesPath = $this->f3->get('ROOT') . '/images/';
-		$thumbsPath = $imagesPath .'thumbnails/';
-		$imgSource = $imagesPath . $imgStr;
-
-		// Theres nothing to work with.
-		if (empty($imgSource))
-			return false;
-
-		$fileName = pathinfo($imgSource, PATHINFO_FILENAME);
-		$ext = pathinfo($imgSource, PATHINFO_EXTENSION);
-
-		// Cool beans
-		$imgO = new \Image($imgSource, true, '');
-
-		// Create the thumb.
-		$imgO->resize($width, null, false);
-
-		// Write it.
-		$this->f3->write($thumbsPath . 'tn_' . $fileName .'.'. $ext, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), 80));
-
-		return file_exists($thumbsPath . 'tn_' . $fileName .'.'. $ext);
-	}
-
 	function prepareData($d = [])
 	{
 		$f3 = \Base::instance();
