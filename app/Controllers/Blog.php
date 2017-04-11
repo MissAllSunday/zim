@@ -6,7 +6,7 @@ class Blog extends Base
 {
 	function home(\Base $f3, $params)
 	{
-		$start = $params['page'] ? $params['page'] : 0;
+		$start = $params['page'] ?: 0;
 		$entries = $this->_models['message']->entries([
 			':limit' => $f3->get('paginationLimit'),
 			':start' => $start * $f3->get('paginationLimit'),
@@ -36,7 +36,9 @@ class Blog extends Base
 			'previous' => ($start ? $start - 1 : 0),
 		));
 
-		$f3->concat('site.metaTitle', $f3->get('txt.home'));
+		$home = $f3->get('txt.home') . ($start ? $f3->get('txt.page', $start) : '');
+
+		$f3->concat('site.metaTitle', $home);
 		$f3->set('site.keywords', $tags);
 
 		$f3->set('content','blog.html');
