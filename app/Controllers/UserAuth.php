@@ -10,10 +10,7 @@ class UserAuth extends Base
 		'passwd',
 	];
 
-	function __construct()
-	{
-
-	}
+	function __construct(){}
 
 	function loginPage(\Base $f3, $params)
 	{
@@ -91,9 +88,8 @@ class UserAuth extends Base
 		// Do the actual check.
 		elseif(password_verify($data['passwd'], $found->passwd))
 		{
-			// Wanna stay for a bit?
-			if (!empty($data['remember']))
-				$f3->get('REMEMBER')->setCookie($found->userID);
+			// Set all the needed stuff.
+			$f3->get('REMEMBER')->setSession($found->userID, $data['remember']);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');

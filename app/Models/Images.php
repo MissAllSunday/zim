@@ -123,14 +123,19 @@ class Images
 		$fileName = pathinfo($imgSource, PATHINFO_FILENAME);
 		$ext = pathinfo($imgSource, PATHINFO_EXTENSION);
 
+		// Why bother?
+		if (file_exists($this->_thumbPath . '/'. $this->_pf . $fileName .'.'. $ext))
+			return true;
+
 		// Cool beans
 		$imgO = new \Image($imgSource, true, '');
 
 		// Create the thumb.
 		$imgO->resize($width, null, false);
+		$thumbName = $this->_thumbPath .'/'. $this->_pf . $fileName .'.'. $ext;
 
 		// Write it.
-		$this->f3->write($this->_thumbPath .'/'. $this->_pf . $fileName .'.'. $ext, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), ($ext == 'jpg' ? 75 : 6)));
+		$this->f3->write(, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), ($ext == 'jpg' ? 75 : 6)));
 
 		return file_exists($this->_thumbPath . '/'. $this->_pf . $fileName .'.'. $ext);
 	}

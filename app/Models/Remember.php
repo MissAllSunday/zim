@@ -4,82 +4,97 @@ namespace Models;
 
 class Remember extends \DB\SQL\Mapper
 {
-	protected static $expires = 604800;
+	protected static $expires = 432000;
 	protected static $length = 16;
+	protected $_cookieName = '';
+	protected $_token = '';
+	public $f3;
 
 	function __construct(\DB\SQL $db)
 	{
-		$f3 = \Base::instance();
+		$this->f3 = \Base::instance();
+		$this->_cookieName = 'COOKIE.'. md5($this->f3->get('site.home'));
+		$this->generateToken();
 
-		parent::__construct($db, $f3->get('_db.prefix') . 'remember');
+		parent::__construct($db, $this->f3->get('_db.prefix') . 'remember');
 	}
 
-	function login()
+	function login($remember = false)
 	{
-		$f3 = \Base::instance();
-
 		// If theres a session, use that.
-		if ($f3->exists('SESSION.user'))
+		if ($this->f3->exists('SESSION.user'))
 			return true;
 
-		$cookie = 'COOKIE.'. md5($f3->get('site.home'));
-
-		if (!$f3->exists($cookie))
+		if (!$this->f3->exists($this->_cookieName))
 			return false;
 
-		$token = $f3->get($cookie);
+		$token = $this->f3->get($this->_cookieName);
 		$stored = $this->findone(['token = ?', $token]);
 
-
+		// User was found, set some new stuff.
 		if ($stored->userID)
-			$f3->set('SESSION.user', $stored->userID);
+			$this->setSession($stored->userID, $remember);
 
 		return $stored->userID;
 	}
 
-	function setCookie($id = 0)
+	function setSession($id = 0, $remember = false)
 	{
-		$f3 = \Base::instance();
-
 		if (!$id)
 			return false;
 
-		$token = bin2hex(random_bytes(self::$length));
+		// Clear up any previous one.
+		$this->clearData($id);
 
 		$this->reset();
 		$this->copyfrom([
 			'userID' => $id,
-			'token' => $token,
-			'expires' => self::$expires
+			'token' => $this->_token,
+			'expires' => ($expires ?: self::$expires)
 		]);
 		$this->save();
 
-		$f3->set('SESSION.user', $id);
-		$f3->set('COOKIE.'. md5($f3->get('site.home')), $token, self::$expires);
-		$this->reset();
+		// Wanna stay for a bit?
+		if ($remember)
+			$this->setCookie();
+
+		$this->f3->set('SESSION.user', $id);
 	}
 
-	function clearCookie($id = 0)
+	function setCookie()
 	{
-		$f3 = \Base::instance();
+		return $this->f3->set('COOKIE.'. md5($this->f3->get('site.home')), $this->_token, self::$expires);
+	}
 
+	function clearData($id = 0)
+	{
 		$stored = $this->find(['userID = ?', $id]);
-		$cookie = 'COOKIE.'. md5($f3->get('site.home'));
 
-		if (empty($stored) || !$f3->exists($cookie))
+		if (empty($stored))
 			return false;
 
-		$f3->clear($cookie);
-		$f3->clear('SESSION');
+		$this->f3->clear($this->_cookieName);
+		$this->f3->clear('SESSION');
 		$this->db->exec('DELETE FROM '. $this->table() .' WHERE userID = :user', [':user' => $id]);
 	}
 
 	function onSuspect()
 	{
-		$f3->get('REMEMBER')->clearCookie($f3->get('currentUser')->userID);
-		$f3->clear('currentUser');
+		$this->f3->get('REMEMBER')->clearCookie($this->f3->get('currentUser')->userID);
+		$this->f3->clear('currentUser');
 
-		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
-		$f3->reroute('/');
+		\Flash::instance()->addMessage($this->f3->get('txt.logout_success'), 'success');
+		$this->f3->reroute('/');
+	}
+
+	function generateToken()
+	{
+		// Should catch the Exception but meh
+		return $this->$_token = bin2hex(random_bytes(self::$length));
+	}
+
+	function guest($data = [])
+	{
+
 	}
 }
