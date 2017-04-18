@@ -49,8 +49,5 @@ class Config
 		// Declare these as an empty array.
 		$this->f3->set('site.customJS', []);
 		$this->f3->set('site.customCSS', []);
-
-		// Get the user if theres any.
-		$this->f3->set('REMEMBER', new \Models\Remember($this->f3->get('DB')));
 	}
 }

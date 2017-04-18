@@ -5,7 +5,7 @@ namespace Controllers;
 class Base
 {
 	protected $_models = [];
-	protected $_defaultModels = ['message', 'user', 'allow', 'board'];
+	protected $_defaultModels = ['auth', 'message', 'user', 'allow', 'board'];
 
 	public function beforeRoute($f3)
 	{
@@ -17,8 +17,8 @@ class Base
 			$this->_models[$m] = new $class($f3->get('DB'));
 		}
 
-		// Get current user data or set the user as guest, whatever happens first!
-		$f3->get('REMEMBER')->login();
+		// Recurrent user?
+		$this->_models['auth']->login();
 
 		// Permissions.
 		$can = [];

@@ -87,14 +87,14 @@ class UserAuth extends Base
 		}
 
 		// Do the actual check.
-		elseif($f3->get('REMEMBER')->verify($data['passwd'], $found->passwd))
+		elseif($this->_models['auth']->verify($data['passwd'], $found->passwd))
 		{
 			// Set all the needed stuff.
-			$f3->get('REMEMBER')->setSession($found->userID);
+			$this->_models['auth']->setSession($found->userID);
 
 			// Wanna stay for a bit?
 			if ($data['remember'])
-				$f3->get('REMEMBER')->setCookie();
+				$this->_models['auth']->setCookie();
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
@@ -109,7 +109,7 @@ class UserAuth extends Base
 
 	function doLogout(\Base $f3, $params)
 	{
-		$f3->get('REMEMBER')->clearCookie($f3->get('currentUser')->userID);
+		$this->_models['auth']->clearCookie($f3->get('currentUser')->userID);
 		$f3->clear('currentUser');
 
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
@@ -235,7 +235,7 @@ class UserAuth extends Base
 		}
 
 		$refPass = $data['passwd'];
-		$data['passwd'] = $f3->get('REMEMBER')->generate($data['passwd']);
+		$data['passwd'] = $this->_models['auth']->generate($data['passwd']);
 
 		// Lets fill up some things.
 		$this->_models['user']->createUser(array_merge([
@@ -256,7 +256,7 @@ class UserAuth extends Base
 		// User was created, set the cookie
 		if($this->_models['user']->userID)
 		{
-			$f3->get('REMEMBER')->setCookie($this->_models['user']->userID);
+			$this->_models['auth']->setCookie($this->_models['user']->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 
