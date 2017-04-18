@@ -135,7 +135,7 @@ class Images
 		$thumbName = $this->_thumbPath .'/'. $this->_pf . $fileName .'.'. $ext;
 
 		// Write it.
-		$this->f3->write(, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), ($ext == 'jpg' ? 75 : 6)));
+		$this->f3->write($fileName . $ext, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), ($ext == 'jpg' ? 75 : 6)));
 
 		return file_exists($this->_thumbPath . '/'. $this->_pf . $fileName .'.'. $ext);
 	}

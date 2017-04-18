@@ -10,7 +10,8 @@ class UserAuth extends Base
 		'passwd',
 	];
 
-	function __construct(){}
+	function __construct()
+	{}
 
 	function loginPage(\Base $f3, $params)
 	{
@@ -86,10 +87,14 @@ class UserAuth extends Base
 		}
 
 		// Do the actual check.
-		elseif(password_verify($data['passwd'], $found->passwd))
+		elseif($f3->get('REMEMBER')->verify($data['passwd'], $found->passwd))
 		{
 			// Set all the needed stuff.
-			$f3->get('REMEMBER')->setSession($found->userID, $data['remember']);
+			$f3->get('REMEMBER')->setSession($found->userID);
+
+			// Wanna stay for a bit?
+			if ($data['remember'])
+				$f3->get('REMEMBER')->setCookie();
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
@@ -230,7 +235,7 @@ class UserAuth extends Base
 		}
 
 		$refPass = $data['passwd'];
-		$data['passwd'] = password_hash($data['passwd'], PASSWORD_DEFAULT);
+		$data['passwd'] = $f3->get('REMEMBER')->generate($data['passwd']);
 
 		// Lets fill up some things.
 		$this->_models['user']->createUser(array_merge([

@@ -17,24 +17,8 @@ class Base
 			$this->_models[$m] = new $class($f3->get('DB'));
 		}
 
-		// Get current user data.
-		if ($f3->get('REMEMBER')->login())
-			$currentUser = $this->_models['user']->findone(['userID = ?', $f3->get('SESSION.user')]);
-
-		else
-			$currentUser = (object) [
-				'userID' => 0,
-				'userName' => 'Guest',
-				'avatar' => $f3->get('BASE') .'/identicon/'. $f3->get('Tools')->randomString(),
-				'groupID' => 0,
-				'groups' => '',
-				'lmsgID' => 0,
-			];
-
-		$currentUser->isBot = \Audit::instance()->isbot();
-
-		$f3->set('currentUser', $currentUser);
-		$this->_models['user']->reset();
+		// Get current user data or set the user as guest, whatever happens first!
+		$f3->get('REMEMBER')->login();
 
 		// Permissions.
 		$can = [];
