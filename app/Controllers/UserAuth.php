@@ -94,7 +94,7 @@ class UserAuth extends Base
 
 			// Wanna stay for a bit?
 			if ($data['remember'])
-				$this->_models['auth']->setCookie();
+				$this->_models['auth']->setCookie($found->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 			return $f3->reroute('/');
