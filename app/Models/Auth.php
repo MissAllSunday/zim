@@ -20,9 +20,10 @@ class Auth extends \DB\SQL\Mapper
 		parent::__construct($db, $f3->get('_db.prefix') . 'remember');
 	}
 
-	function login($remember = false)
+	function login()
 	{
 		$f3 = \Base::instance();
+		$user = new \Models\User($f3->get('DB'));
 
 		// Default stuff.
 		$f3->set('currentUser', (object) [
@@ -34,6 +35,10 @@ class Auth extends \DB\SQL\Mapper
 			'lmsgID' => 0,
 			'isBot' => \Audit::instance()->isbot(),
 		]);
+
+		// Active session?
+		if ($f3->exists('SESSION.user'))
+			return $f3->set('currentUser',  $user->findone(['userID = ?', $f3->get('SESSION.user')]));
 
 		$cookieData = $this->getCookie();
 
@@ -53,7 +58,6 @@ class Auth extends \DB\SQL\Mapper
 					$this->setSession($stored->userID);
 
 					// Load the user's data
-					$user = new \Models\User($f3->get('DB'));
 					$currentUser = $user->findone(['userID = ?', $stored->userID]);
 
 					if ($currentUser)
@@ -77,8 +81,6 @@ class Auth extends \DB\SQL\Mapper
 		if (!$id)
 			return false;
 
-		// Clear up any previous one.
-		$this->clearData($id);
 		$f3->set('SESSION.user', $id);
 	}
 

@@ -109,7 +109,7 @@ class UserAuth extends Base
 
 	function doLogout(\Base $f3, $params)
 	{
-		$this->_models['auth']->clearCookie($f3->get('currentUser')->userID);
+		$this->_models['auth']->clearData($f3->get('currentUser')->userID);
 		$f3->clear('currentUser');
 
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');
