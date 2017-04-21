@@ -159,8 +159,8 @@ class Cron extends Base
 	function blog()
 	{
 		// Only do this on Sunday.
-		if(date('w', time()) != '3')
-			return $this->emit('today is not sunday you uncultured peasant!');
+		if(date('w', time()) != '6')
+			return $this->emit('today is not Saturday you uncultured peasant!');
 
 		$file = $this->f3->get('CRON.blogFile');
 		$doc = new \DOMDocument;
