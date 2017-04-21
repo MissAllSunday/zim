@@ -87,10 +87,9 @@ class Message extends \DB\SQL\Mapper
 
 		// Cache is set on call.
 		$data = $this->db->exec('
-			SELECT fm.url, t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
+			SELECT t.locked, t.sticky, t.fmsgID, t.lmsgID, t.numReplies, m.msgID, m.url m.topicID, m.msgTime, m.title, m.msgModified, m.reason, m.reasonBy, m.tags, m.boardID, m.body, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS m
 			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
-			LEFT JOIN '. self::$_prefix .'message AS fm ON (fm.msgID = t.fmsgID)
 			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			ORDER BY t.topicID DESC
@@ -119,9 +118,10 @@ class Message extends \DB\SQL\Mapper
 		$data = [];
 
 		$data = $this->db->exec('
-			SELECT t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
+			SELECT fm.url, t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.boardID, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS m
 			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.topicID = m.topicID)
+			LEFT JOIN '. self::$_prefix .'message AS fm ON (fm.msgID = t.fmsgID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			ORDER BY m.msgID DESC
 			LIMIT :limit', [':limit' => $limit], $ttl);
