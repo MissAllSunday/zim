@@ -317,6 +317,7 @@ Wait for something to happen...',
 		'It is the time you have wasted for your rose that makes your rose so important',
 		'Well, I must endure the presence of a few caterpillars if I wish to become acquainted with the butterflies',
 		'But the vain man did not hear him. Vain men never hear anything but praise',
+		'Pero hoy como ha habido redada en el 33 mario vuelve a las cinco menos diez'
 	],
 
 	// 404 text.
