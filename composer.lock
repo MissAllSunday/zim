@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "43dff720524e4e91499e2fd92681f231",
-    "content-hash": "a5a9dc9239741b831ae59c9171277ca5",
+    "content-hash": "989611e85ec5fe9d339616ca5af6b2b0",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -85,7 +84,7 @@
                 "stream_filter_append",
                 "stream_filter_register"
             ],
-            "time": "2015-11-08 23:41:30"
+            "time": "2015-11-08T23:41:30+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -132,7 +131,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2017-02-04 00:54:51"
+            "time": "2017-02-04T00:54:51+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -194,7 +193,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-02-28 22:50:30"
+            "time": "2017-02-28T22:50:30+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -245,7 +244,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20 10:07:11"
+            "time": "2016-12-20T10:07:11+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -310,7 +309,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27 10:51:17"
+            "time": "2017-02-27T10:51:17+00:00"
         },
         {
             "name": "knplabs/github-api",
@@ -376,7 +375,7 @@
                 "gist",
                 "github"
             ],
-            "time": "2016-12-13 13:09:53"
+            "time": "2016-12-13T13:09:53+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -432,7 +431,7 @@
                 "httplug",
                 "plugin"
             ],
-            "time": "2016-08-16 12:12:50"
+            "time": "2016-08-16T12:12:50+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -493,7 +492,7 @@
                 "http",
                 "httplug"
             ],
-            "time": "2017-02-20 14:20:20"
+            "time": "2017-02-20T14:20:20+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -555,7 +554,7 @@
                 "message",
                 "psr7"
             ],
-            "time": "2017-03-02 06:56:00"
+            "time": "2017-03-02T06:56:00+00:00"
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -615,7 +614,7 @@
                 "Guzzle",
                 "http"
             ],
-            "time": "2016-05-10 06:13:32"
+            "time": "2016-05-10T06:13:32+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -671,7 +670,7 @@
                 "client",
                 "http"
             ],
-            "time": "2016-08-31 08:30:17"
+            "time": "2016-08-31T08:30:17+00:00"
         },
         {
             "name": "php-http/message",
@@ -740,7 +739,7 @@
                 "message",
                 "psr-7"
             ],
-            "time": "2017-02-14 08:58:37"
+            "time": "2017-02-14T08:58:37+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -790,7 +789,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2015-12-19 14:08:53"
+            "time": "2015-12-19T14:08:53+00:00"
         },
         {
             "name": "php-http/promise",
@@ -840,7 +839,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-01-26 13:27:02"
+            "time": "2016-01-26T13:27:02+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -900,7 +899,53 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2017-01-09 09:33:47"
+            "time": "2017-01-09T09:33:47+00:00"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple, a simple Dependency Injection Container",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "time": "2015-09-11T15:10:35+00:00"
         },
         {
             "name": "psr/cache",
@@ -946,7 +991,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/http-message",
@@ -996,7 +1041,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -1056,7 +1101,7 @@
                 "feeds",
                 "rss"
             ],
-            "time": "2016-11-27 01:39:18"
+            "time": "2016-11-27T01:39:18+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -1110,7 +1155,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2017-01-02 20:32:22"
+            "time": "2017-01-02T20:32:22+00:00"
         }
     ],
     "packages-dev": [],
