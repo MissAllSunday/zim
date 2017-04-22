@@ -12,7 +12,7 @@
 		</noscript>
 		<check if="{{ @site.customCSS }}">
 			<repeat group="{{ @site.customCSS }}" value="{{ @item }}">
-		<link rel="stylesheet" type="text/css" href="{{@BASE}}/{{@UI}}/css/{{ @item }}" />
+		<link rel="stylesheet" type="text/css" href="{{@BASE}}/{{@UI}}css/{{ @item }}" />
 			</repeat>
 		</check>
 		<link rel="stylesheet" type="text/css" href="{{@BASE}}/minify/css?files=clean-blog.min.css,style.css" />
