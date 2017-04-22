@@ -102,7 +102,7 @@ $f3->route([
 // Login
 $f3->route([
 	'POST /login',
-],'\Controllers\UserAuth->doLogin');
+],'\Controllers\UserAuth->doLogin', 0, 64);
 
 // Logout
 $f3->route([
