@@ -12,7 +12,9 @@ $f3->set('Config', new \Services\Config($f3));
 
 $f3->get('Config')->init();
 
-$f3->set('USER', new \DB\SQL\Session($f3->get('DB'), $f3->get('_db.prefix') . 'ses', true, [$f3->get('REMEMBER'), 'onSuspect']));
+$f3->set('USER', new \DB\SQL\Session($f3->get('DB'), $f3->get('_db.prefix') . 'ses', true, function($session){
+		return true;
+	}));
 
 if (!$f3->exists('SESSION.csrf'))
 	$f3->set('SESSION.csrf', $f3->get('USER')->csrf());
@@ -97,7 +99,7 @@ $f3->route([
 // Sign up page
 $f3->route([
 	'POST /signup',
-],'\Controllers\UserAuth->doSignup');
+],'\Controllers\UserAuth->doSignup', 0, 64);
 
 // Login
 $f3->route([
@@ -145,7 +147,7 @@ $f3->route('GET /minify/@type',
 		$files = preg_replace('/(\.+\/)/','', $f3->clean($f3->get('GET.files')));
 		echo Web::instance()->minify($files, null, true, $path);
 	},
-	86400
+	604800
 );
 
 // Captcha.
@@ -177,7 +179,7 @@ $f3->route('GET /background',
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);
-	}, 432000);
+	}, 604800);
 
 // img error
 $f3->route('GET /imgerror',
@@ -187,7 +189,7 @@ $f3->route('GET /imgerror',
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);
-	}, 432000);
+	}, 604800);
 
 // Me!
 $f3->route('GET /me',
@@ -216,7 +218,7 @@ $f3->route('GET /me',
 
 		header('Content-Type: image/gif');
 		echo $f3->read($path . $file);
-	}, 86400);
+	}, 604800);
 
 // Crons.
 \Cron::instance();
