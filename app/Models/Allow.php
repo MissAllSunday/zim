@@ -13,7 +13,7 @@ class Allow extends \DB\SQL\Mapper
 	function getAll()
 	{
 		$perms = [];
-		$data = $this->db->exec('SELECT name, groups from suki_c_allow',NULL,86400);
+		$data = $this->db->exec('SELECT name, groups from '. $this->table() ,NULL,86400);
 
 		foreach ($data as $key => $p)
 			$perms[$p['name']] = array_map('intval', explode(',', $p['groups']));

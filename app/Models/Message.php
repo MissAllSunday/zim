@@ -157,8 +157,6 @@ class Message extends \DB\SQL\Mapper
 		$f3 = \Base::instance();
 		$data = [];
 
-		$params[':order'] = !empty($params[':order']) ? $params[':order'] : 'm.msgTime DESC';
-
 		$data = $this->db->exec('
 			SELECT t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
 			FROM '. $this->table() .' AS m
@@ -166,7 +164,7 @@ class Message extends \DB\SQL\Mapper
 			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			WHERE m.userID = :user
-			ORDER BY :order
+			ORDER BY m.msgID DESC
 			LIMIT :limit', $params, $ttl);
 
 		foreach ($data as $k => $r)

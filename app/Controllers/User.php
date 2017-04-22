@@ -41,7 +41,6 @@ class User extends Base
 		$f3->set('profileMessages', $this->_models['message']->userMessages([
 			':user' => $id,
 			':limit' => 10,
-			':order' => 'm.msgID DESC',
 		]));
 
 		$title = $f3->get('txt.view_profile', $this->_models['user']->userName);
