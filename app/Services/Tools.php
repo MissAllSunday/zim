@@ -99,10 +99,6 @@ class Tools extends \Prefab
 		// Make custom replacements
 		$str = preg_replace(array_keys($options['replacements']), $options['replacements'], $str);
 
-		// Transliterate characters to ASCII
-		if ($options['transliterate'])
-			$str = $this->normalizeWords($str);
-
 		// Replace non-alphanumeric characters with our delimiter
 		$str = preg_replace('/[^\p{L}\p{Nd}]+/u', $options['delimiter'], $str);
 
@@ -110,12 +106,16 @@ class Tools extends \Prefab
 		$str = preg_replace('/(' . preg_quote($options['delimiter'], '/') . '){2,}/', '$1', $str);
 
 		// Truncate slug to max. characters
-		$str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, 'UTF-8')), 'UTF-8');
+		$str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, $this->f3->get('ENCODING'))), $this->f3->get('ENCODING'));
 
 		// Remove delimiter from ends
 		$str = trim($str, $options['delimiter']);
 
-		return $options['lowercase'] ? mb_strtolower($str, 'UTF-8') : $str;
+		// Transliterate characters to ASCII
+		if ($options['transliterate'])
+			$str = $this->normalizeWords($str);
+
+		return $options['lowercase'] ? mb_strtolower($str, $this->f3->get('ENCODING')) : $str;
 	}
 
 	function metaKeywords($tags = [])
@@ -144,7 +144,7 @@ class Tools extends \Prefab
 			return '';
 
 		// Make sure string is in UTF-8 and strip invalid UTF-8 characters
-		$str = mb_convert_encoding((string) $str, 'UTF-8', mb_list_encodings());
+		$str = mb_convert_encoding((string) $str, $this->f3->get('ENCODING'), mb_list_encodings());
 
 		$char_map = array(
 			// Latin
@@ -212,7 +212,7 @@ class Tools extends \Prefab
 	function sanitize($str = '')
 	{
 		$config = \HTMLPurifier_Config::createDefault();
-		$config->set('Core', 'Encoding', 'UTF-8');
+		$config->set('Core', 'Encoding', $this->f3->get('ENCODING'));
 		$def = $config->getHTMLDefinition(true);
 		$meta = $def->addElement(
 			'meta',
@@ -238,14 +238,14 @@ class Tools extends \Prefab
 	}
 
 	function randomString($length = 10) {
-	$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	$charactersLength = strlen($characters);
-	$randomString = '';
-	for ($i = 0; $i < $length; $i++)
-		$randomString .= $characters[rand(0, $charactersLength - 1)];
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++)
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
 
-	return $randomString;
-}
+		return $randomString;
+	}
 
 	/**
 	 * Checks and returns a comma separated string.
@@ -303,6 +303,9 @@ class Tools extends \Prefab
 	public function parser($str = '')
 	{
 		$f3 = \Base::instance();
+
+		// Emoji stuff
+		$str = \UTF::instance()->emojify($str);
 
 		// Youtube.
 		$str =  preg_replace_callback(

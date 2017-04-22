@@ -19,7 +19,8 @@ class Config
 		));
 
 		$this->f3->mset([
-			'URL' => 'https://missallsunday.com',
+			'XFRAME' => 'DENY',
+			'URL' => '//missallsunday.com',
 			'Logs' => 'logs/',
 			'CACHE' => $this->f3->get('_memcached'),
 			'DEBUG' => 0,
