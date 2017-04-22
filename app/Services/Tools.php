@@ -304,9 +304,6 @@ class Tools extends \Prefab
 	{
 		$f3 = \Base::instance();
 
-		// Emoji stuff
-		$str = \UTF::instance()->emojify($str);
-
 		// Youtube.
 		$str =  preg_replace_callback(
 			'~(?<=[\s>\.(;\'"]|^)(?:http|https):\/\/[\w\-_%@:|]?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})(?:[^\s|\<|\[]+)?(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a> ))[?=&+%\w.-]*[\/\w\-_\~%@\?;=#}\\\\]?~ix',
