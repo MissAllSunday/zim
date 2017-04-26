@@ -86,6 +86,56 @@ $(function() {
 
 	// Summernote.
 	if (typeof $.summernote !== 'undefined'){
+
+		$.extend($.summernote.options, {
+		  sEmoji: {
+		    icon: '<span class="note-current-emoji">😀</span> ',
+		    tooltip: 'Insert Emoji',
+		    list: ['😀', '😃', '😂', '😊', '😉', '😋', '😎', '🙁', '😡', '😐', '😲', '😱', '😴', '🙄 ', '😈']
+		  }
+		});
+
+		$.extend($.summernote.plugins, {
+		  'sEmoji': function(context) {
+		    var options, sEmojiOptions, ui;
+		    ui = $.summernote.ui;
+		    options = context.options;
+		    sEmojiOptions = options.sEmoji;
+		    return context.memo('button.sEmoji', function() {
+		      var emojiButton;
+		      emojiButton = ui.buttonGroup([
+		        ui.button({
+		          className: 'dropdown-toggle',
+		          contents: sEmojiOptions.icon + ui.icon(options.icons.caret, 'span'),
+		          tooltip: sEmojiOptions.tooltip
+		        }, {
+		          data: {
+		            toggle: 'dropdown'
+		          }
+		        }), ui.dropdownCheck({
+		          className: 'dropdown-emoji',
+		          items: sEmojiOptions.list,
+		          template: function(item) {
+		            return item;
+		          },
+		          callback: function($dropdown) {
+		            return $dropdown.find('a').each(function() {
+		              $(this).on('click', function(e) {
+		                e.preventDefault();
+		                context.invoke('editor.restoreRange');
+		                context.invoke('editor.focus');
+		                context.invoke('editor.insertText', this.textContent);
+		                return false;
+		              });
+		            });
+		          }
+		        })
+		      ]);
+		      return emojiButton.render();
+		    });
+		  }
+		});
+
 		$.extend($.summernote.options,{
 			microDataImg:{
 				icon:'<i class="note-icon-pencil"/>',
@@ -179,7 +229,7 @@ $(function() {
 				['para', ['style', 'ul', 'ol', 'paragraph']],
 				['insert', ['microDataImg', 'picture', 'link', 'table', 'hr']],
 				['height', ['height']],
-				['misc', ['undo', 'redo', 'help', 'codeview']],
+				['misc', ['undo', 'redo', 'help', 'codeview', 'sEmoji']],
 				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
 			]
 		});

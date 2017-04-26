@@ -20,7 +20,7 @@ class Config
 
 		$this->f3->mset([
 			'XFRAME' => 'DENY',
-			'URL' => '//missallsunday.com',
+			'URL' => 'https://missallsunday.com',
 			'Logs' => 'logs/',
 			'CACHE' => $this->f3->get('_memcached'),
 			'DEBUG' => 0,
