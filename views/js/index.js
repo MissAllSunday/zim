@@ -95,6 +95,13 @@ $(function() {
 		  }
 		});
 
+		$.extend($.summernote.options, {
+		  sEmoji: {
+		    tooltip: 'Insert Emoji',
+		    list: ['😀', '😃', '😂', '😊', '😉', '😋', '😎', '🙁', '😡', '😐', '😲', '😱', '😴', '🙄 ', '😈']
+		  }
+		});
+
 		$.extend($.summernote.plugins, {
 		  'sEmoji': function(context) {
 		    var options, sEmojiOptions, ui;
@@ -106,7 +113,7 @@ $(function() {
 		      emojiButton = ui.buttonGroup([
 		        ui.button({
 		          className: 'dropdown-toggle',
-		          contents: sEmojiOptions.icon + ui.icon(options.icons.caret, 'span'),
+		          contents: ("<span class='note-current-emoji'>" + sEmojiOptions.list[0] + "</span> ") + ui.icon(options.icons.caret, 'span'),
 		          tooltip: sEmojiOptions.tooltip
 		        }, {
 		          data: {

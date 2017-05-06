@@ -1,4 +1,3 @@
 ## Zim
 
-A simple blog plus some pages using Fatfree framework
-
+Blog platform for my website, not really a full blogging platform. 
