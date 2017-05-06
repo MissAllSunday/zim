@@ -1,3 +1,3 @@
 ## Zim
 
-Blog platform for my website, not really a full blogging platform. 
+Code for my personal website, not really a full blogging platform. 
