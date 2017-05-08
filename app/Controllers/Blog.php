@@ -78,6 +78,13 @@ class Blog extends Base
 		if (isset($comments[$entryInfo['msgID']]))
 			unset($comments[$entryInfo['msgID']]);
 
+		if ($start)
+		{
+			$firstComment = current($comments);
+			$f3->set('entryInfo.date', $firstComment['date']);
+			$f3->set('entryInfo.microDate', $firstComment['microDate']);
+		}
+
 		$f3->set('comments', $comments);
 
 		$f3->set('pag', [

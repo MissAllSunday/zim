@@ -36,6 +36,8 @@
 				<hr>
 				<small>{{@txt.post_last_edited, @entryInfo.reasonBy, @entryInfo.reason, date("j M Y, g:i a", @entryInfo.msgModified) | format}}</small>
 			</check>
+			<meta itemprop="pageStart" content="{{@pag.start}}" />
+			<meta itemprop="pageEnd" content="{{@pag.pages}}" />
 		</div>
 		<div class="row">
 			<include href="buttons.html" />

@@ -1,30 +1,32 @@
-<repeat group="{{ @messages }}" value="{{ @item }}">
-	<article class="post-preview" itemscope itemType="http://schema.org/BlogPosting">
-		<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{ @item.url }}" />
-		<a href="{{@BASE}}/{{ @item.pagUrl }}" rel="bookmark">
-			<h2 class="post-title" itemprop="name headline">
-				{{@txt.microData.image, @item.image.thumbUrl, @item.image.width, @item.image.height, str_replace(',', ' ', @item.tags), @item.image.imageUrl  | format,raw}}
-				{{ @item.title }}
-			</h2>
-			<h3 class="post-subtitle" itemprop="description">
-				{{ @item.desc }}
-			</h3>
-		</a>
-		<p class="post-meta">{{@txt.postedby}}
+<main aria-label="Main content" itemscope itemtype="http://schema.org/Blog">
+	<repeat group="{{ @messages }}" value="{{ @item }}">
+		<article class="post-preview" itemscope itemType="http://schema.org/BlogPosting">
+			<link itemprop="mainEntityOfPage" href="{{@BASE}}/{{ @item.url }}" />
+			<a href="{{@BASE}}/{{ @item.pagUrl }}" rel="bookmark">
+				<h2 class="post-title" itemprop="name headline">
+					{{@txt.microData.image, @item.image.thumbUrl, @item.image.width, @item.image.height, str_replace(',', ' ', @item.tags), @item.image.imageUrl  | format,raw}}
+					{{ @item.title }}
+				</h2>
+				<h3 class="post-subtitle" itemprop="description">
+					{{ @item.desc }}
+				</h3>
+			</a>
+			<p class="post-meta">{{@txt.postedby}}
 				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<img src="{{@item.avatar}}" alt="{{@txt.view_profile, @item.userName | format}}" class="img-circle mini-avatar">
 					<a rel="author" itemprop="url" href="{{@item.userHref}}" title="{{@txt.view_profile, @item.userName | format}}">
 						<span itemprop="name">{{@item.userName}}</span>
 					</a>
 				</span>
-				 {{@item.date}}
+				{{@item.date}}
 				<meta itemprop="datePublished" content="{{@item.microDate}}" />
 				<meta itemprop="dateModified" content="{{@item.microDate}}" />
-		</p>
-		{{@txt.microData.publisher,  @item.userHref, @item.userName | format,raw}}
-	</article>
-	<hr>
-</repeat>
+			</p>
+			{{@txt.microData.publisher,  @item.userHref, @item.userName | format,raw}}
+		</article>
+		<hr>
+	</repeat>
+</main>
 <div class="content">
 	<nav aria-label="...">
 		<ul class="pager">
