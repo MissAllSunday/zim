@@ -412,6 +412,11 @@ class Tools extends \Prefab
 		return false;
 	}
 
+	function arrayEnd($array = [])
+	{
+		return end($array);
+	}
+
 	function generateKeywords($str = '', $limit = 100)
 	{
 		if (empty($str))
