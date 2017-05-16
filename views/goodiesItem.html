@@ -10,14 +10,14 @@
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="desc">
-				{{@repoDesc | raw}}
+				{{@repo.desc | raw}}
 			</div>
 			<div role="tabpanel" class="tab-pane" id="releases">
-				<check if="{{ is_array(@repoReleases) }}">
+				<check if="{{ !empty(@repo.releases) }}">
 					<true>
 						<div class="row">
 							<p></p>
-						<repeat group="{{ @repoReleases }}" value="{{ @item }}">
+						<repeat group="{{ @repo.releases }}" value="{{ @item }}">
 							<div class="col-sm-8 col-md-12">
 								<div class="well">
 									<h3 class="text-muted">
@@ -41,12 +41,12 @@
 					</div>
 					</true>
 					<false>
-						<p>{{@repoReleases}}</p>
+						<p>{{@txt.goodies_no_releases}}</p>
 					</false>
 				</check>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="info">
-				<pre>{{var_dump(@repoInfo)}}</pre>
+				<pre>{{var_dump(@repo.languages)}}</pre>
 			</div>
 		</div>
 	</div>

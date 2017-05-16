@@ -6,10 +6,21 @@
 	<button type="submit" class="btn btn-primary">{{@txt.post_submit}}</button>
 </form>
 <p>
-	<check if="{{ @repoInfo }}">
-		<h2><a href="{{@repoInfo.html_url}}">{{@repoInfo.name}}</a><small>{{@repoInfo.full_name}}</small</h2>
-		<check if="{{ @repoInfo.fork }}">
-			<span class="label label-primary">{{@txt.goodies_fork'}}</span>
+	<check if="{{ @repo.info }}">
+	<h2>
+		<a href="{{@repo.info.html_url}}">
+			{{@repo.info.name}}
+		</a>
+		<small>{{@repo.info.full_name}}
+		<check if="{{ @repo.info.fork }}">
+			<span class="label label-primary">{{@txt.goodies_fork}}</span>
 		</check>
+		</small>
+	</h2>
+	<p>
+	<repeat group="{{ @repo.languages }}" value="{{ @lines }}" key="{{@tag}}">
+		<span class="label label-default lang-{{@tag}}" data-toggle="tooltip" data-placement="bottom" title="{{@lines}} {{@txt.goodies_lines}}">{{@tag}}</span>
+	</repeat>
+	</p>
 	</check>
 </p>

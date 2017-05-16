@@ -49,17 +49,19 @@ class Goodies extends Base
 		}
 
 		$f3->set('repo', [
-			'contributors' => $client->api('repo')->contributors($this->user, $params['item']),
-			'languages' => $client->api('repo')->languages($this->user, $params['item']),
+			'contributors' => $this->client->api('repo')->contributors($this->user, $params['item']),
 			'info' => $repo,
+			'languages' => $this->client->api('repo')->languages($this->user, $params['item']),
 		]);
 
+		// Description
 		$readMe = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
 
 		$readMe = is_array($readMe) && !empty($readMe['content']) ? \Markdown::instance()->convert(base64_decode($readMe['content'])) : $repo['description'];
 
 		$f3->set('repo.desc', $readMe);
 
+		// Releases
 		$releases = $this->client->api('repo')->releases()->all($this->user, $params['item']);
 
 		if (is_array($releases))
@@ -67,6 +69,8 @@ class Goodies extends Base
 				$releases[$k]['body'] = \Markdown::instance()->convert($r['body']);
 
 		$f3->set('repo.releases', $releases);
+
+		$f3->push('site.customJS', 'randomColor.js');
 		$f3->set('content','goodiesItem.html');
 	}
 

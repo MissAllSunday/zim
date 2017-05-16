@@ -76,6 +76,7 @@ return [
 	'goodies_no_releases' => 'This repo has no releases yet.',
 	'goodies_downloads' => 'Downloads',
 	'goodies_prerelease' => 'Pre-release',
+	'goodies_lines' => 'lines',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
