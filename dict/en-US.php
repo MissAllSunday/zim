@@ -62,6 +62,15 @@ return [
 	'user_online' => 'online',
 	'user_offline' => 'offline',
 
+	// Goodies
+	'goodies_title' => 'Goodies',
+	'goodies_desc' => 'Description',
+	'goodies_releases' => 'Releases',
+	'goodies_last_update' => 'Last update:',
+	'goodies_created' => 'Created:',
+	'goodies_search' => 'Search for a specific repo',
+	'goodies_no_item' => 'You kinda need to type something',
+	'goodies_no_item_found' => 'No items were found, try a different search param',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',

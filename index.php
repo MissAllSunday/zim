@@ -40,17 +40,18 @@ $f3->route([
 // Goodies
 $f3->route([
 	'GET /goodies',
+	'GET /goodies/page/@page',
 ],'\Controllers\Goodies->home');
 
 // Some moar goodies
 $f3->route([
 	'GET /goodies/@item',
-],'\Controllers\goodies->item');
+],'\Controllers\Goodies->item');
 
 // Even moar goodies.
 $f3->route([
 	'GET /goodies/@search [ajax]',
-],'\Controllers\goodies->search');
+],'\Controllers\Goodies->search');
 
 // User profile.
 $f3->route([

@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-6 col-md-4">
+		<include href="goodiesSide.html" />
+	</div>
+	<div class="col col-md-8">
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">{{@txt.goodies_desc}}</a></li>
+			<li role="presentation"><a href="#releases" aria-controls="releases" role="tab" data-toggle="tab">{{@txt.goodies_releases}}</a></li>
+		</ul>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="desc">{{@repoDesc | raw}}</div>
+			<div role="tabpanel" class="tab-pane" id="releases"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,21 @@
+<div class="alert alert-info" role="alert">
+	These are all the public repositories I have, some of them are forked repos from someone else, some are unfinished doodles and some, I dare to say, are working products.
+</div>
+<div class="row">
+	<div class="col-6 col-md-4">
+		<include href="goodiesSide.html" />
+	</div>
+	<div class="col col-md-8">
+		<div class="list-group">
+			<repeat group="{{ @repos }}" value="{{ @item }}">
+				<a href="{{@URL}}/goodies/{{@item.name}}" class="list-group-item list-group-item-action flex-column align-items-start">
+					<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">{{@item.name}} <small>{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@item.created_at))}}</small></h5>
+					</div>
+					<p class="mb-1">{{@item.description}}</p>
+					<small>{{@txt.goodies_last_update}} {{@Tools->getDate(strtotime(@item.updated_at))}}</small>
+				</a>
+			</repeat>
+		</div>
+	</div>
+</div>
