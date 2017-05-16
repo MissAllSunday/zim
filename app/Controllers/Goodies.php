@@ -56,9 +56,17 @@ class Goodies extends Base
 
 		$releases = $this->client->api('repo')->releases()->all($this->user, $params['item']);
 
-		$f3->set('repoReleases', $releases);
-		echo '<pre>';
-var_dump($releases);
-		// $f3->set('content','goodiesItem.html');
+		if (is_array($releases))
+			foreach ($releases as $k => $r)
+				$releases[$k]['body'] = \Markdown::instance()->convert($r['body']);
+
+		$f3->set('repoReleases', !empty($releases) ? $releases : $f3->get('txt.goodies_no_releases'));
+
+		$f3->set('content','goodiesItem.html');
+	}
+
+	function search(\Base $f3, $params)
+	{
+
 	}
 }

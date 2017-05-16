@@ -8,8 +8,42 @@
 			<li role="presentation"><a href="#releases" aria-controls="releases" role="tab" data-toggle="tab">{{@txt.goodies_releases}}</a></li>
 		</ul>
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="desc">{{@repoDesc | raw}}</div>
-			<div role="tabpanel" class="tab-pane" id="releases"></div>
+			<div role="tabpanel" class="tab-pane active" id="desc">
+				{{@repoDesc | raw}}
+			</div>
+			<div role="tabpanel" class="tab-pane" id="releases">
+				<check if="{{ is_array(@repoReleases) }}">
+					<true>
+						<div class="row">
+							<p></p>
+						<repeat group="{{ @repoReleases }}" value="{{ @item }}">
+							<div class="col-sm-8 col-md-12">
+								<div class="well">
+									<h2 class="text-muted">
+										<a href="{{@item.html_url}}">{{@item.name}}</a>
+										<small>{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@item.created_at))}}</small>
+									</h2>
+									<check if="{{ @item.prerelease }}">
+										<p><span class="label label-danger">{{@txt.goodies_prerelease}}</span></p>
+									</check>
+									<p>{{@item.body | raw}}</p>
+									<hr>
+									<h3>{{@txt.goodies_downloads}}</h3>
+									<p>
+										<repeat group="{{ @item.assets }}" value="{{ @a }}">
+											<a class="btn btn-default" href="{{@a.browser_download_url}}" data-toggle="tooltip" data-placement="bottom" title="{{@a.download_count}} {{@txt.goodies_downloads}}">{{@a.name}}<br><small>{{@Tools->formatBytes(@a.size, true)}}</small></a>
+										</repeat>
+									</p>
+								</div>
+							</div>
+						</repeat>
+					</div>
+					</true>
+					<false>
+						<p>{{@repoReleases}}</p>
+					</false>
+				</check>
+			</div>
 		</div>
 	</div>
 </div>

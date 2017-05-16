@@ -71,6 +71,9 @@ return [
 	'goodies_search' => 'Search for a specific repo',
 	'goodies_no_item' => 'You kinda need to type something',
 	'goodies_no_item_found' => 'No items were found, try a different search param',
+	'goodies_no_releases' => 'This repo has no releases yet.',
+	'goodies_downloads' => 'Downloads',
+	'goodies_prerelease' => 'Pre-release',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
