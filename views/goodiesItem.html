@@ -6,6 +6,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">{{@txt.goodies_desc}}</a></li>
 			<li role="presentation"><a href="#releases" aria-controls="releases" role="tab" data-toggle="tab">{{@txt.goodies_releases}}</a></li>
+			<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">{{@txt.goodies_info}}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="desc">
@@ -19,10 +20,10 @@
 						<repeat group="{{ @repoReleases }}" value="{{ @item }}">
 							<div class="col-sm-8 col-md-12">
 								<div class="well">
-									<h2 class="text-muted">
+									<h3 class="text-muted">
 										<a href="{{@item.html_url}}">{{@item.name}}</a>
 										<small>{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@item.created_at))}}</small>
-									</h2>
+									</h3>
 									<check if="{{ @item.prerelease }}">
 										<p><span class="label label-danger">{{@txt.goodies_prerelease}}</span></p>
 									</check>
@@ -43,6 +44,9 @@
 						<p>{{@repoReleases}}</p>
 					</false>
 				</check>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="info">
+				<pre>{{var_dump(@repoInfo)}}</pre>
 			</div>
 		</div>
 	</div>

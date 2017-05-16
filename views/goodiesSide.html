@@ -5,4 +5,11 @@
 	</div>
 	<button type="submit" class="btn btn-primary">{{@txt.post_submit}}</button>
 </form>
-<p></p>
+<p>
+	<check if="{{ @repoInfo }}">
+		<h2><a href="{{@repoInfo.html_url}}">{{@repoInfo.name}}</a><small>{{@repoInfo.full_name}}</small</h2>
+		<check if="{{ @repoInfo.fork }}">
+			<span class="label label-primary">{{@txt.goodies_fork'}}</span>
+		</check>
+	</check>
+</p>

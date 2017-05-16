@@ -55,12 +55,15 @@ class Goodies extends Base
 		$f3->set('repoDesc', $readMe);
 
 		$releases = $this->client->api('repo')->releases()->all($this->user, $params['item']);
+		$contributors = $client->api('repo')->contributors($this->user, $params['item']);
+		$languages = $client->api('repo')->languages($this->user, $params['item']);
 
 		if (is_array($releases))
 			foreach ($releases as $k => $r)
 				$releases[$k]['body'] = \Markdown::instance()->convert($r['body']);
 
 		$f3->set('repoReleases', !empty($releases) ? $releases : $f3->get('txt.goodies_no_releases'));
+		$f3->set('repoInfo', $repo);
 
 		$f3->set('content','goodiesItem.html');
 	}

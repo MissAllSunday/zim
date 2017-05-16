@@ -66,6 +66,8 @@ return [
 	'goodies_title' => 'Goodies',
 	'goodies_desc' => 'Description',
 	'goodies_releases' => 'Releases',
+	'goodies_info' => 'Info',
+	'goodies_fork' => 'Fork',
 	'goodies_last_update' => 'Last update:',
 	'goodies_created' => 'Created:',
 	'goodies_search' => 'Search for a specific repo',
