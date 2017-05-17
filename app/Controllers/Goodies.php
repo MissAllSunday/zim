@@ -48,7 +48,7 @@ class Goodies extends Base
 				return $f3->reroute('/goodies');
 		}
 
-		$apiList = ['contributors', 'languages', 'activity'];
+		$apiList = ['contributors', 'languages'];
 		$repo = [];
 
 		foreach ($apiList as $name)
@@ -89,6 +89,18 @@ class Goodies extends Base
 		{
 			// something here, dunno
 		}
+
+		// Commits
+		try
+		{
+			$repo['commits'] = $this->client->api('repo')->commits()->all($this->user, $params['item'], ['sha' => $repo['info']['default_branch']]);
+		}
+		catch (Exception $e)
+		{
+
+		}
+
+
 
 		$f3->set('repo', $repo);
 		$f3->set('content','goodiesItem.html');
