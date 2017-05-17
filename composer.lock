@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "99e1762a41f8bd4c44995e26f7e13c2eaf7bb3ae"
+                "reference": "ab0d078b50a0ce9c9641e85798ab9eae86af0d5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/99e1762a41f8bd4c44995e26f7e13c2eaf7bb3ae",
-                "reference": "99e1762a41f8bd4c44995e26f7e13c2eaf7bb3ae",
+                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/ab0d078b50a0ce9c9641e85798ab9eae86af0d5a",
+                "reference": "ab0d078b50a0ce9c9641e85798ab9eae86af0d5a",
                 "shasum": ""
             },
             "require": {
@@ -35,7 +35,7 @@
             ],
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
-            "time": "2017-05-10 04:47:19"
+            "time": "2017-05-16 00:33:31"
         },
         {
             "name": "clue/stream-filter",

@@ -22,7 +22,7 @@ class Config
 			'XFRAME' => 'DENY',
 			'URL' => 'https://missallsunday.com',
 			'Logs' => 'logs/',
-			'CACHE' => false,
+			'CACHE' => $this->f3->get('_memcached'),
 			'DEBUG' => 0,
 			'PREFIX' => 'txt.',
 			'ENCODING' => 'UTF-8',

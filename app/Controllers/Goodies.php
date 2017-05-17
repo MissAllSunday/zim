@@ -40,37 +40,57 @@ class Goodies extends Base
 			return $f3->reroute('/goodies');
 		}
 
-		$repo = $this->client->api('repo')->show($this->user, $params['item']);
+		$repoInfo = $this->client->api('repo')->show($this->user, $params['item']);
 
-		if (empty($repo))
+		if (empty($repoInfo))
 		{
 			\Flash::instance()->addMessage($f3->get('txt.goodies_no_item_found'), 'danger');
 				return $f3->reroute('/goodies');
 		}
 
-		$f3->set('repo', [
-			'contributors' => $this->client->api('repo')->contributors($this->user, $params['item']),
-			'info' => $repo,
-			'languages' => $this->client->api('repo')->languages($this->user, $params['item']),
-		]);
+		$apiList = ['contributors', 'languages'];
+		$repo = [];
+
+		foreach ($apiList as $name)
+		{
+			try
+			{
+				$repo[$name] = $this->client->api('repo')->{$name}($this->user, $params['item']);
+			}
+			catch(ExceptionA $e)
+			{
+				// something here, dunno
+			}
+		}
+
+		$repo['info'] = $repoInfo;
 
 		// Description
-		$readMe = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
+		try
+		{
+			$repo['desc'] = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
+			$repo['desc'] = is_array($repo['desc']) && !empty($repo['desc']['content']) ? \Markdown::instance()->convert(base64_decode($repo['desc']['content'])) : $repoInfo['description'];
 
-		$readMe = is_array($readMe) && !empty($readMe['content']) ? \Markdown::instance()->convert(base64_decode($readMe['content'])) : $repo['description'];
-
-		$f3->set('repo.desc', $readMe);
+		}
+		catch (Exception $e)
+		{
+			// something here, dunno
+		}
 
 		// Releases
-		$releases = $this->client->api('repo')->releases()->all($this->user, $params['item']);
+		try
+		{
+			$repo['releases'] = $this->client->api('repo')->releases()->all($this->user, $params['item']);
 
-		if (is_array($releases))
-			foreach ($releases as $k => $r)
-				$releases[$k]['body'] = \Markdown::instance()->convert($r['body']);
+			foreach ($repo['releases'] as $k => $r)
+				$repo['releases'][$k]['body'] = \Markdown::instance()->convert($r['body']);
+		}
+		catch (Exception $e)
+		{
+			// something here, dunno
+		}
 
-		$f3->set('repo.releases', $releases);
-
-		$f3->push('site.customJS', 'randomColor.js');
+		$f3->set('repo', $repo);
 		$f3->set('content','goodiesItem.html');
 	}
 
