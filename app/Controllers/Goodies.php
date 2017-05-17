@@ -48,7 +48,7 @@ class Goodies extends Base
 				return $f3->reroute('/goodies');
 		}
 
-		$apiList = ['contributors', 'languages'];
+		$apiList = ['contributors', 'languages', 'activity'];
 		$repo = [];
 
 		foreach ($apiList as $name)

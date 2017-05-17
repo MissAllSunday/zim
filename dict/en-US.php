@@ -68,8 +68,8 @@ return [
 	'goodies_releases' => 'Releases',
 	'goodies_info' => 'Info',
 	'goodies_fork' => 'Fork',
-	'goodies_last_update' => 'Last update:',
-	'goodies_created' => 'Created:',
+	'goodies_last_update' => 'Last update',
+	'goodies_created' => 'Created',
 	'goodies_search' => 'Search for a specific repo',
 	'goodies_no_item' => 'You kinda need to type something',
 	'goodies_no_item_found' => 'No items were found, try a different search param',
@@ -77,6 +77,7 @@ return [
 	'goodies_downloads' => 'Downloads',
 	'goodies_prerelease' => 'Pre-release',
 	'goodies_lines' => 'lines',
+	'goodies_commits' => 'Commits',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',

@@ -7,6 +7,7 @@
 			<li role="presentation" class="active"><a href="#desc" aria-controls="desc" role="tab" data-toggle="tab">{{@txt.goodies_desc}}</a></li>
 			<li role="presentation"><a href="#releases" aria-controls="releases" role="tab" data-toggle="tab">{{@txt.goodies_releases}}</a></li>
 			<li role="presentation"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">{{@txt.goodies_info}}</a></li>
+			<li role="presentation"><a href="#commits" aria-controls="commits" role="tab" data-toggle="tab">{{@txt.goodies_commits}}</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="desc">
@@ -46,7 +47,12 @@
 				</check>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="info">
-				<pre>{{var_dump(@repo.languages)}}</pre>
+				<ul class="list-group latestMessages">
+					<li class="list-group-item">{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@repo.info.created_at))}}</li>
+				</ul>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="commits">
+				<pre>{{var_dump(@repo.activity)}}</pre>
 			</div>
 		</div>
 	</div>
