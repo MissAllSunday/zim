@@ -226,7 +226,6 @@ class Blog extends Base
 			'https://highlightjs.org' => 'highlight.js',
 			'http://htmlpurifier.org' => 'HTML Purifier',
 			'http://simplepie.org' => 'SimplePie',
-			'https://github.com/PHPMailer/PHPMailer' => 'PHPMailer',
 			'https://github.com/KnpLabs/php-github-api' => 'PHP GitHub API 2.0',
 			'https://startbootstrap.com' => 'Start Bootstrap Clean Blog template',
 			'https://github.com/davidmerfield/randomColor/' => 'randomColor',

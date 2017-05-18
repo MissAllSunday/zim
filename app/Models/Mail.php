@@ -12,7 +12,6 @@ class Mail extends \Prefab
 	function __construct()
 	{
 		$this->f3 = \Base::instance();
-		$this->logger = new \Log('mailError.log');
 
 		// Get the credentials.
 		$this->_options = $this->f3->get('EMAIL');
@@ -26,15 +25,7 @@ class Mail extends \Prefab
 		if (!empty($options))
 			$this->_options = array_merge($this->_options, $options);
 
-		$this->mail = new \PHPMailer(true);
-		$this->mail->isSMTP();
-		$this->mail->Host = $this->_options['host'];
-		$this->mail->SMTPAuth = true;
-		$this->mail->Username = $this->_options['userName'];
-		$this->mail->Password = $this->_options['password'];
-		$this->mail->SMTPSecure = 'ssl';
-		$this->mail->Port = $this->_options['port'];
-		$this->mail->setFrom($this->_options['from'], 'Info');
+		$this->mail = new \SMTP($this->_options['host'], $this->_options['port'], 'ssl', $this->_options['userName'], $this->_options['password']);
 	}
 
 	function send($data = [])
@@ -43,28 +34,15 @@ class Mail extends \Prefab
 		if (empty($data))
 			return false;
 
-		$data['to'] = !empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to');
-		$data['toName'] = !empty($data['toName']) ? $data['toName'] : $this->f3->get('EMAIL.toName');
+		$data['to'] = (!empty($data['to']) ? $data['to'] : $this->f3->get('EMAIL.to'));
 
-		try
-		{
-			$this->mail->isHTML(isset($data['html']));
-			$this->mail->addAddress($data['to'], $data['toName']);
-			$this->mail->Subject = $data['subject'];
-			$this->mail->Body = $data['body'];
+		$data['from'] = (!empty($data['from']) ? $data['from'] : $this->f3->get('EMAIL.from'));
 
-			// To infinity... and beyond!!!
-			if(!$this->mail->send())
-				$this->logger->write($this->mail->ErrorInfo);
-		}
+		$this->mail->set('Content-Type','text/html; charset="UTF-8"');
+		$this->mail->set('From', $data['from']);
+		$this->mail->set('To', $data['to']);
+		$this->mail->set('Subject', $data['subject']);
 
-		catch (phpmailerException $e)
-		{
-			$this->logger->write($e->errorMessage());
-		}
-		catch (Exception $e)
-		{
-			$this->logger->write($e->getMessage());
-		}
+		return $this->mail->send($data['body'], true);
 	}
 }

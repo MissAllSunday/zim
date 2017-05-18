@@ -254,15 +254,17 @@ class UserAuth extends Base
 		], $data));
 
 		// User was created, set the cookie
-		if($this->_models['user']->userID)
+		if ($this->_models['user']->userID)
 		{
 			$this->_models['auth']->setCookie($this->_models['user']->userID);
 
 			\Flash::instance()->addMessage($f3->get('txt.login_success'), 'success');
 
+			$mail = \Models\Mail::instance();
+
 			// All done, lets go tell her.
-			\Models\Mail::instance()->send([
-				'subject' => $f3->get('mail_new_user_subject'),
+			$mail->send([
+				'subject' => $f3->get('txt.mail_new_user_subject'),
 				'body' => $f3->get('txt.mail_new_user_body', $this->_models['user']->userName)
 			]);
 
@@ -272,7 +274,7 @@ class UserAuth extends Base
 				'password' => $refPass,
 				'link' => $f3->get('site.currentUrl') .'/user/'. $f3->get('Tools')->slug($this->_models['user']->userName) .'-'. $this->_models['user']->userID,
 			]);
-			$mail = new \Models\Mail;
+
 			$mail->send([
 				'html' => true,
 				'to' => $this->_models['user']->userEmail,
