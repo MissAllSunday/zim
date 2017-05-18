@@ -94,13 +94,18 @@ class Goodies extends Base
 		try
 		{
 			$repo['commits'] = $this->client->api('repo')->commits()->all($this->user, $params['item'], ['sha' => $repo['info']['default_branch']]);
+
+			foreach ($repo['commits'] as $k => $v)
+			{
+				$m =
+				$repo['commits'][$k]['commit']['message'] = stristr(str_replace(['\n', '\r', '\n\r'], '', $repo['commits'][$k]['commit']['message']), 'Signed-off-by', true);
+			}
+
 		}
 		catch (Exception $e)
 		{
 
 		}
-
-
 
 		$f3->set('repo', $repo);
 		$f3->set('content','goodiesItem.html');
