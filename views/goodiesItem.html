@@ -61,7 +61,7 @@
 				<repeat group="{{ @repo.contributors }}" value="{{ @user }}">
 					<li class="list-group-item">
 						<img src="{{@user.avatar_url}}" class="mini-avatar img-circle">
-						<a href="{{@user.html_url}}"> {{@user.login}}</a> {{@user.contributions}} <span class="badge">{{@txt.goodies_contributions}}</span>
+						<a href="{{@user.html_url}}"> {{@user.login}}</a> {{@user.contributions}} {{@txt.goodies_contributions}}
 					</li>
 				</repeat>
 				</ul>
