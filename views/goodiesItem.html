@@ -47,8 +47,23 @@
 				</check>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="info">
-				<ul class="list-group latestMessages">
+				<ul class="list-group  latestMessages">
 					<li class="list-group-item">{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@repo.info.created_at))}}</li>
+					<li class="list-group-item">{{@txt.goodies_last_update}} {{@Tools->getDate(strtotime(@repo.info.updated_at))}}</li>
+					<li class="list-group-item">
+						<span class="label label-danger">{{@txt.goodies_issues}} {{@repo.info.open_issues}}</span>
+						<span class="label label-success">{{@txt.goodies_watchers}} {{@repo.info.stargazers_count}}</span>
+						<span class="label label-info">{{@txt.goodies_forks}} {{@repo.info.forks_count}}</span>
+					</li>
+				</ul>
+				<h4>{{@txt.goodies_contributors}}</h4>
+				<ul class="list-group  latestMessages">
+				<repeat group="{{ @repo.contributors }}" value="{{ @user }}">
+					<li class="list-group-item">
+						<img src="{{@user.avatar_url}}" class="mini-avatar img-circle">
+						<a href="{{@user.html_url}}"> {{@user.login}}</a> {{@user.contributions}} <span class="badge">{{@txt.goodies_contributions}}</span>
+					</li>
+				</repeat>
 				</ul>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="commits">

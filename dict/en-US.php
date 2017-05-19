@@ -78,6 +78,13 @@ return [
 	'goodies_prerelease' => 'Pre-release',
 	'goodies_lines' => 'lines',
 	'goodies_commits' => 'Commits',
+	'goodies_issues' => 'issues',
+	'goodies_watchers' => 'watchers',
+	'goodies_subscribers' => 'subscribers',
+	'goodies_forks' => 'forks',
+	'goodies_open' => 'open',
+	'goodies_contributors' => 'Contributors',
+	'goodies_contributions' => 'contributions',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
