@@ -85,6 +85,7 @@ return [
 	'goodies_open' => 'open',
 	'goodies_contributors' => 'Contributors',
 	'goodies_contributions' => 'contributions',
+	'goodies_commit' => 'commit',
 
 	// Mail stuff.
 	'mail_new_user_subject' => 'New member registered',
