@@ -19,8 +19,18 @@ class Goodies extends Base
 
 	function home(\Base $f3, $params)
 	{
-		$paginator  = new \Github\ResultPager($this->client);
-		$f3->set('repos', (!empty($params['page']) ? $paginator->fetchNext() : $paginator->fetch($this->client->api('user'), 'repositories', [$this->user])));
+		$cache = \Cache::instance();
+
+		if (!$cache->exists('repos'))
+		{
+			$repos = $this->client->api('repo')->all();
+			$cache->set('repos', $repos, 86400);
+		}
+
+		else
+			$repos = $cache->get('repos');
+
+		$f3->set('repos', $repos);
 
 		$f3->concat('site.metaTitle', $f3->get('txt.goodies_title'));
 
@@ -105,6 +115,13 @@ class Goodies extends Base
 		}
 
 		$f3->set('repo', $repo);
+
+		$f3->concat('site.metaTitle', $repo['info']['name']);
+
+		$f3->set('site.breadcrumb', [
+			['url' => $f3->get('URL') . '/goodies/', 'title' => $f3->get('txt.goodies_title')],
+			['url' => $f3->get('URL') . '/goodies/'. $params['item'], 'title' => $repo['info']['name'], 'active' => true],
+		]);
 		$f3->set('content','goodiesItem.html');
 	}
 
