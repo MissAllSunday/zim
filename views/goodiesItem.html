@@ -85,19 +85,16 @@
 			<div role="tabpanel" class="tab-pane" id="commits">
 				<p></p>
 				<repeat group="{{ @repo.commits }}" value="{{ @item }}">
-					<div class="media">
-						<div class="media-body">
-							<h4 class="media-heading">
-								<a href="{{@item.html_url}}">{{ @item.commit.message }}</a>
-							</h4>
-							<div class="col-md-4 small topicDate">{{@Tools->getDate(strtotime(@item.commit.committer.date))}}</div>
-							<div class="col-md-8 small topicLast">
-								<img src="{{@item.committer.avatar_url}}" class="mini-avatar img-circle">
-								<a href="{{@item.committer.html_url}}"> {{@item.committer.login}} </a>
-							</div>
-						</div>
-						<hr>
-					</div>
+					<h4 class="media-heading">
+						<a href="{{@item.html_url}}">{{ @item.commit.message }}</a>
+					</h4>
+					<ul class="list-group  latestMessages">
+						<li class="list-group-item">
+							<img src="{{@item.committer.avatar_url}}" class="mini-avatar img-circle">
+							<a href="{{@item.committer.html_url}}"> {{@item.committer.login}}</a> {{@Tools->getDate(strtotime(@item.commit.committer.date))}}
+						</li>
+					</ul>
+				<hr>
 				</repeat>
 			</div>
 		</div>
