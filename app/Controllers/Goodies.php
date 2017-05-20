@@ -41,11 +41,11 @@ class Goodies extends Base
 
 		$f3->set('repos', $repos);
 
-		$f3->concat('site.metaTitle', $f3->get('txt.goodies_title'));
+		$f3->concat('site.metaTitle', $f3->get('txt.goodies_title') . ($start ? $f3->get('txt.page', $start) : ''));
 
 		$pagUrl = $f3->get('URL') . '/goodies'. (!empty($start) ? '/page/'. $start : '');
 		$f3->set('site.breadcrumb', [
-			['url' => $pagUrl, 'title' => $f3->get('txt.goodies_title'), 'active' => true],
+			['url' => $pagUrl, 'title' => $f3->get('txt.goodies_title')  . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 		]);
 
 		$f3->set('pag', [
@@ -60,6 +60,8 @@ class Goodies extends Base
 
 	function item(\Base $f3, $params)
 	{
+		$cache = \Cache::instance();
+
 		// Need something to work with
 		if (empty($params['item']))
 		{
@@ -67,69 +69,77 @@ class Goodies extends Base
 			return $f3->reroute('/goodies');
 		}
 
-		$repoInfo = $this->client->api('repo')->show($this->user, $params['item']);
-
-		if (empty($repoInfo))
+		if (!$cache->exists('repo'. $params['item']))
 		{
-			\Flash::instance()->addMessage($f3->get('txt.goodies_no_item_found'), 'danger');
-				return $f3->reroute('/goodies');
-		}
+			$repoInfo = $this->client->api('repo')->show($this->user, $params['item']);
 
-		$apiList = ['contributors', 'languages'];
-		$repo = [];
+			if (empty($repoInfo))
+			{
+				\Flash::instance()->addMessage($f3->get('txt.goodies_no_item_found'), 'danger');
+					return $f3->reroute('/goodies');
+			}
 
-		foreach ($apiList as $name)
-		{
+			$apiList = ['contributors', 'languages'];
+			$repo = [];
+
+			foreach ($apiList as $name)
+			{
+				try
+				{
+					$repo[$name] = $this->client->api('repo')->{$name}($this->user, $params['item']);
+				}
+				catch(ExceptionA $e)
+				{
+					// something here, dunno
+				}
+			}
+
+			$repo['info'] = $repoInfo;
+
+			// Description
 			try
 			{
-				$repo[$name] = $this->client->api('repo')->{$name}($this->user, $params['item']);
+				$repo['desc'] = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
+				$repo['desc'] = is_array($repo['desc']) && !empty($repo['desc']['content']) ? \Markdown::instance()->convert(base64_decode($repo['desc']['content'])) : $repoInfo['description'];
+
 			}
-			catch(ExceptionA $e)
+			catch (Exception $e)
 			{
 				// something here, dunno
 			}
+
+			// Releases
+			try
+			{
+				$repo['releases'] = $this->client->api('repo')->releases()->all($this->user, $params['item']);
+
+				foreach ($repo['releases'] as $k => $r)
+					$repo['releases'][$k]['body'] = \Markdown::instance()->convert($r['body']);
+			}
+			catch (Exception $e)
+			{
+				// something here, dunno
+			}
+
+			// Commits
+			try
+			{
+				$repo['commits'] = $this->client->api('repo')->commits()->all($this->user, $params['item'], ['sha' => $repo['info']['default_branch']]);
+
+				foreach ($repo['commits'] as $k => $v)
+					$repo['commits'][$k]['commit']['message'] = stristr(str_replace(['\n', '\r', '\n\r'], '', $repo['commits'][$k]['commit']['message']), 'Signed-off-by', true);
+
+			}
+			catch (Exception $e)
+			{
+
+			}
+
+			$cache->set('repo'. $params['item'], $repo, 86400);
 		}
 
-		$repo['info'] = $repoInfo;
-
-		// Description
-		try
-		{
-			$repo['desc'] = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
-			$repo['desc'] = is_array($repo['desc']) && !empty($repo['desc']['content']) ? \Markdown::instance()->convert(base64_decode($repo['desc']['content'])) : $repoInfo['description'];
-
-		}
-		catch (Exception $e)
-		{
-			// something here, dunno
-		}
-
-		// Releases
-		try
-		{
-			$repo['releases'] = $this->client->api('repo')->releases()->all($this->user, $params['item']);
-
-			foreach ($repo['releases'] as $k => $r)
-				$repo['releases'][$k]['body'] = \Markdown::instance()->convert($r['body']);
-		}
-		catch (Exception $e)
-		{
-			// something here, dunno
-		}
-
-		// Commits
-		try
-		{
-			$repo['commits'] = $this->client->api('repo')->commits()->all($this->user, $params['item'], ['sha' => $repo['info']['default_branch']]);
-
-			foreach ($repo['commits'] as $k => $v)
-				$repo['commits'][$k]['commit']['message'] = stristr(str_replace(['\n', '\r', '\n\r'], '', $repo['commits'][$k]['commit']['message']), 'Signed-off-by', true);
-
-		}
-		catch (Exception $e)
-		{
-
-		}
+		else
+			$repo = $cache->get('repo'. $params['item']);
 
 		$f3->set('repo', $repo);
 
