@@ -20,22 +20,39 @@ class Goodies extends Base
 	function home(\Base $f3, $params)
 	{
 		$cache = \Cache::instance();
+		$start = $params['page'] ?: 0;
+		$limit = 10;
 
 		if (!$cache->exists('repos'))
 		{
-			$repos = $this->client->api('repo')->all();
-			$cache->set('repos', $repos, 86400);
+			$paginator  = new \Github\ResultPager($this->client);
+
+			$allRepos = $paginator->fetch($this->client->api('user'), 'repositories',[$this->user]);
+			$allRepos = array_merge($allRepos, $paginator->fetchNext());
+			$cache->set('repos', $allRepos, 86400);
 		}
 
 		else
-			$repos = $cache->get('repos');
+			$allRepos = $cache->get('repos');
+
+		$count = count($allRepos);
+		$allRepos = array_chunk($allRepos, $limit);
+		$repos = $allRepos[$start];
 
 		$f3->set('repos', $repos);
 
 		$f3->concat('site.metaTitle', $f3->get('txt.goodies_title'));
 
+		$pagUrl = $f3->get('URL') . '/goodies'. (!empty($start) ? '/page/'. $start : '');
 		$f3->set('site.breadcrumb', [
-			['url' => $f3->get('URL') . '/goodies/', 'title' => $f3->get('txt.goodies_title'), 'active' => true],
+			['url' => $pagUrl, 'title' => $f3->get('txt.goodies_title'), 'active' => true],
+		]);
+
+		$f3->set('pag', [
+			'start' => $start,
+			'limit' => $limit,
+			'pages' => $count / $limit,
+			'url' => 'goodies',
 		]);
 
 		$f3->set('content','goodies.html');
