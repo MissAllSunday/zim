@@ -48,11 +48,6 @@ $f3->route([
 	'GET /goodies/@item',
 ],'\Controllers\Goodies->item');
 
-// Even moar goodies.
-$f3->route([
-	'GET /goodies/@search [ajax]',
-],'\Controllers\Goodies->search');
-
 // User profile.
 $f3->route([
 	'GET /user/@user',

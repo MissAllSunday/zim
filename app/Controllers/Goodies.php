@@ -144,16 +144,10 @@ class Goodies extends Base
 		$f3->set('repo', $repo);
 
 		$f3->concat('site.metaTitle', $repo['info']['name']);
-
 		$f3->set('site.breadcrumb', [
 			['url' => $f3->get('URL') . '/goodies/', 'title' => $f3->get('txt.goodies_title')],
 			['url' => $f3->get('URL') . '/goodies/'. $params['item'], 'title' => $repo['info']['name'], 'active' => true],
 		]);
 		$f3->set('content','goodiesItem.html');
-	}
-
-	function search(\Base $f3, $params)
-	{
-
 	}
 }
