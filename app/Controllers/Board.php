@@ -42,7 +42,7 @@ class Board extends Base
 		]);
 
 		$f3->set('site', $f3->merge('site', [
-			'keywords' => $f3->get('Tools')->truncateString($f3->get('Tools')->metaKeywords(array_merge($tags, $f3->get('tags'))), 140, ',', ''),
+			'keywords' => $f3->get('tags'),
 			'currentUrl' => $f3->get('URL') .'/board/'. $f3->get('boardInfo')->url . ($start ? '/page/'. $start : ''),
 		]));
 

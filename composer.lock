@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "db6e3dbb65087238fb2d191e95ebeaed",
+    "content-hash": "483c9575ef0d51bd6fbc0f836804b508",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcosca/fatfree-core.git",
-                "reference": "ab0d078b50a0ce9c9641e85798ab9eae86af0d5a"
+                "reference": "c9a0f7d8ebe0652656f02e17c1a2b9d99fd51598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/ab0d078b50a0ce9c9641e85798ab9eae86af0d5a",
-                "reference": "ab0d078b50a0ce9c9641e85798ab9eae86af0d5a",
+                "url": "https://api.github.com/repos/bcosca/fatfree-core/zipball/c9a0f7d8ebe0652656f02e17c1a2b9d99fd51598",
+                "reference": "c9a0f7d8ebe0652656f02e17c1a2b9d99fd51598",
                 "shasum": ""
             },
             "require": {
@@ -35,7 +35,7 @@
             ],
             "description": "A powerful yet easy-to-use PHP micro-framework designed to help you build dynamic and robust Web applications - fast!",
             "homepage": "http://fatfreeframework.com/",
-            "time": "2017-05-16 00:33:31"
+            "time": "2017-05-24 11:44:30"
         },
         {
             "name": "clue/stream-filter",
@@ -378,6 +378,51 @@
                 "github"
             ],
             "time": "2017-05-10T13:37:39+00:00"
+        },
+        {
+            "name": "peterkahl/multibyte-keyword-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/peterkahl/multibyte-keyword-generator.git",
+                "reference": "f2770d1dc6943cb6a3e21202ef7ff5d1a3ee2d53"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/peterkahl/multibyte-keyword-generator/zipball/f2770d1dc6943cb6a3e21202ef7ff5d1a3ee2d53",
+                "reference": "f2770d1dc6943cb6a3e21202ef7ff5d1a3ee2d53",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "peterkahl\\KeywordGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache License Version 2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Kahl",
+                    "email": "peter.kahl@colossalmind.com",
+                    "homepage": "https://www.colossalmind.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generates keywords based on the contents of a text string.",
+            "homepage": "https://github.com/peterkahl/multibyte-keyword-generator",
+            "keywords": [
+                "keyphrases",
+                "keywords",
+                "multibyte-strings",
+                "multilingual"
+            ],
+            "time": "2017-04-30 06:49:10"
         },
         {
             "name": "php-http/cache-plugin",
@@ -1059,7 +1104,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "bcosca/fatfree-core": 20,
-        "ezyang/htmlpurifier": 20
+        "ezyang/htmlpurifier": 20,
+        "peterkahl/multibyte-keyword-generator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

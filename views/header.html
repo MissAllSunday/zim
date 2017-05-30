@@ -41,7 +41,7 @@
 		<link rel="manifest" href="/manifest.json">
 		<meta property="og:site_name" content="{{@site.title}}">
 		<meta property="og:title" content="{{ @site.metaTitle ? @site.metaTitle : @site.title }}">
-		<meta property="og:image" content="https://i.imgur.com/6CnW7sL.jpg">
+		<meta property="og:image" content="{{@site.image ?: "//i.imgur.com/6CnW7sL.jpg"}}">
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="{{ @site.currentUrl ? @site.currentUrl : @BASE }}">
 		<meta property="og:description" content="{{ @site.description }}">
@@ -77,7 +77,7 @@
 							<a href="{{@BASE}}/search"><i class="fa fa-search" aria-hidden="true"></i></a>
 						</li>
 						<li>
-							<a href="{{@BASE}}/board/one-piece-3">{{@txt.onepiece}}</a>
+							<a href="{{@BASE}}/goodies">{{@txt.goodies_title}}</a>
 						</li>
 						<check if="{{ !@currentUser->userID }}">
 						<li>

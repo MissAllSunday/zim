@@ -102,6 +102,8 @@ class Goodies extends Base
 				$repo['desc'] = $this->client->api('repo')->contents()->readme($this->user, $params['item']);
 				$repo['desc'] = is_array($repo['desc']) && !empty($repo['desc']['content']) ? \Markdown::instance()->convert(base64_decode($repo['desc']['content'])) : $repoInfo['description'];
 
+				$repo['keywords'] = $f3->get('Tools')->extractKeyWords($repo['desc']);
+
 			}
 			catch (Exception $e)
 			{
@@ -146,12 +148,21 @@ class Goodies extends Base
 			$repo = $cache->get('repo'. $params['item']);
 
 		$f3->set('repo', $repo);
+		$currentUrl = $f3->get('URL') . '/goodies/'. $params['item'];
+		$title = $repo['info']['name'];
 
-		$f3->concat('site.metaTitle', $repo['info']['name']);
-		$f3->set('site.breadcrumb', [
-			['url' => $f3->get('URL') . '/goodies/', 'title' => $f3->get('txt.goodies_title')],
-			['url' => $f3->get('URL') . '/goodies/'. $params['item'], 'title' => $repo['info']['name'], 'active' => true],
-		]);
+		$f3->concat('site.metaTitle', $title);
+
+		$f3->set('site', $f3->merge('site', [
+			'breadcrumb' => [
+				['url' => $f3->get('URL') . '/goodies/', 'title' => $f3->get('txt.goodies_title')],
+				['url' => $f3->get('URL') . '/goodies/'. $params['item'], 'title' => $repo['info']['name'], 'active' => true]],
+			'description' => $repo['info']['description'],
+			'currentUrl' => $currentUrl,
+			'keywords' => ($repo['keywords'] .','. implode(',', array_keys($repo['languages']))),
+			'image' => $f3->get('URL') .'/images/'. strtolower(str_replace(' ', '', array_keys($repo['languages'])[0])) .'.png',
+		]));
+
 		$f3->set('content','goodiesItem.html');
 	}
 }

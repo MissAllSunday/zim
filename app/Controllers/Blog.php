@@ -16,6 +16,7 @@ class Blog extends Base
 		// Extract the images if there are any.
 		$tags = '';
 		$images = new \Models\Images;
+		$allMsg = '';
 
 		foreach($entries as $k => $entry)
 		{
@@ -23,10 +24,8 @@ class Blog extends Base
 
 			// Get the image.
 			$entries[$k]['image'] = $images->extractImage($entry['body']);
+			$allMsg .= $entry['body'];
 		}
-
-		// Get some moar tags
-		$tags = $f3->get('Tools')->generateKeywords($tags);
 
 		$f3->set('messages', $entries);
 
@@ -39,7 +38,7 @@ class Blog extends Base
 		$home = $f3->get('txt.home') . ($start ? $f3->get('txt.page', $start) : '');
 
 		$f3->concat('site.metaTitle', $home);
-		$f3->set('site.keywords', $tags);
+		$f3->set('site.keywords', $f3->get('Tools')->extractKeyWords($allMsg));
 
 		$f3->set('content','blog.html');
 	}
@@ -61,9 +60,6 @@ class Blog extends Base
 
 		if (empty($entryInfo))
 			return $f3->error(404);
-
-		// Get some moar tags
-		$tags = array_unique(array_merge($tags, explode(',', $entryInfo['tags']), explode(',', $f3->get('Tools')->generateKeywords($entryInfo['desc']))));
 
 		$f3->set('entryInfo', $entryInfo);
 
@@ -95,16 +91,19 @@ class Blog extends Base
 			'extra' => '#comments',
 		]);
 
+		$images = new \Models\Images;
+
 		// Build some keywords!  This should be automatically set but meh... maybe later
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
 			'description' => $entryInfo['desc'] . ($start ? $f3->get('txt.page', $start) : ''),
-			'keywords' => $f3->get('Tools')->metaKeywords($tags),
+			'keywords' => ($entryInfo['keywords'] ?: $entryInfo['tags']),
 			'currentUrl' => $f3->get('URL') .'/'. $entryInfo['url'],
 			'breadcrumb' => [
 				['url' => $f3->get('URL') . '/board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
 				['url' => '', 'title' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''), 'active' => true],
 			],
+			'image' => $images->extractImage($entryInfo['body'])['imageUrl'],
 		]));
 
 		// Set some vars for the quick Reply option.

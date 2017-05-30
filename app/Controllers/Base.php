@@ -17,7 +17,7 @@ class Base
 			$this->_models[$m] = new $class($f3->get('DB'));
 		}
 
-		// Recurrent user?
+		// Recurrent user? @todo find out why the cookie isn't been pick up
 		$this->_models['auth']->login();
 
 		// Permissions.

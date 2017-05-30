@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" itemscope itemtype="http://schema.org/SoftwareSourceCode">
 	<div class="col-6 col-md-4">
 		<check if="{{ @repo.info }}">
 		<h2>
@@ -13,10 +13,11 @@
 		</h2>
 		<p>
 		<repeat group="{{ @repo.languages }}" value="{{ @lines }}" key="{{@tag}}">
-			<span class="label label-default lang-{{@tag}}" data-toggle="tooltip" data-placement="bottom" title="{{@lines}} {{@txt.goodies_lines}}">{{@tag}}</span>
+			<span class="label label-default lang-{{@tag}}" data-toggle="tooltip" data-placement="bottom" title="{{@lines}} {{@txt.goodies_lines}}" itemprop="programmingLanguage" content="{{@tag}}">{{@tag}}</span>
 		</repeat>
 		</p>
 		</check>
+		<include href="goodiesAds.html" />
 	</div>
 	<div class="col col-md-8">
 		<ul class="nav nav-tabs" role="tablist">
@@ -26,7 +27,7 @@
 			<li role="presentation"><a href="#commits" aria-controls="commits" role="tab" data-toggle="tab">{{@txt.goodies_commits}}</a></li>
 		</ul>
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="desc">
+			<div role="tabpanel" class="tab-pane active" id="desc" itemprop="description">
 				{{@repo.desc | raw}}
 			</div>
 			<div role="tabpanel" class="tab-pane" id="releases">
@@ -64,8 +65,8 @@
 			</div>
 			<div role="tabpanel" class="tab-pane" id="info">
 				<ul class="list-group  latestMessages">
-					<li class="list-group-item">{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@repo.info.created_at))}}</li>
-					<li class="list-group-item">{{@txt.goodies_last_update}} {{@Tools->getDate(strtotime(@repo.info.updated_at))}}</li>
+					<li class="list-group-item" itemprop="datePublished" content="{{@repo.info.created_at}}">{{@txt.goodies_created}} {{@Tools->getDate(strtotime(@repo.info.created_at))}}</li>
+					<li class="list-group-item" itemprop="dateModified" content="{{@repo.info.updated_at}}">{{@txt.goodies_last_update}} {{@Tools->getDate(strtotime(@repo.info.updated_at))}}</li>
 					<li class="list-group-item">
 						<span class="label label-danger">{{@txt.goodies_issues}} {{@repo.info.open_issues}}</span>
 						<span class="label label-success">{{@txt.goodies_watchers}} {{@repo.info.stargazers_count}}</span>

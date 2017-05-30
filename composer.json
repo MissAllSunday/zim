@@ -9,6 +9,7 @@
 		"ezyang/htmlpurifier": "dev-master",
 		"simplepie/simplepie": "1.4.3",
 		"knplabs/github-api": "^2.0",
-		"php-http/guzzle6-adapter": "^1.1"
+		"php-http/guzzle6-adapter": "^1.1",
+		"peterkahl/multibyte-keyword-generator": "dev-master"
 	}
 }

@@ -88,53 +88,55 @@ $(function() {
 	if (typeof $.summernote !== 'undefined'){
 
 		$.extend($.summernote.options, {
-		  sEmoji: {
-		    tooltip: 'Insert Emoji',
-		    list: ['😀', '😃', '😂', '😊', '😉', '😋', '😎', '🙁', '😡', '😐', '😲', '😱', '😴', '🙄 ', '😈']
-		  }
-		});
-
-		$.extend($.summernote.plugins, {
-		  'sEmoji': function(context) {
-		    var options, sEmojiOptions, ui;
-		    ui = $.summernote.ui;
-		    options = context.options;
-		    sEmojiOptions = options.sEmoji;
-		    return context.memo('button.sEmoji', function() {
-		      var emojiButton;
-		      emojiButton = ui.buttonGroup([
-		        ui.button({
-		          className: 'dropdown-toggle',
-		          contents: ("<span class='note-current-emoji'>" + sEmojiOptions.list[0] + "</span> ") + ui.icon(options.icons.caret, 'span'),
-		          tooltip: sEmojiOptions.tooltip
-		        }, {
-		          data: {
-		            toggle: 'dropdown'
-		          }
-		        }), ui.dropdownCheck({
-		          className: 'dropdown-emoji',
-		          items: sEmojiOptions.list,
-		          template: function(item) {
-		            return item;
-		          },
-		          callback: function($dropdown) {
-		            return $dropdown.find('a').each(function() {
-		              $(this).on('click', function(e) {
-		                e.preventDefault();
-		                context.invoke('editor.restoreRange');
-		                context.invoke('editor.focus');
-		                context.invoke('editor.insertText', this.textContent);
-		                return false;
-		              });
-		            });
-		          }
-		        })
-		      ]);
-		      return emojiButton.render();
-		    });
-		  }
-		});
-
+	      sEmoji: {
+	        icon: '😀',
+	        tooltip: 'Insert Emoji',
+	        list: ['😀', '😃', '😂', '😊', '😉', '😋', '😎', '🙁', '😡', '😐', '😲', '😱', '😴', '🙄 ', '😈']
+	      }
+	    });
+	    $.extend($.summernote.plugins, {
+	      'sEmoji': function(context) {
+	        var options, sEmojiOptions, ui;
+	        ui = $.summernote.ui;
+	        options = context.options;
+	        sEmojiOptions = options.sEmoji;
+	        return context.memo('button.sEmoji', function() {
+	          var buttonIcon, emojiButton;
+	          buttonIcon = sEmojiOptions.icon ? sEmojiOptions.icon : sEmojiOptions.list[0];
+	          emojiButton = ui.buttonGroup([
+	            ui.button({
+	              className: 'dropdown-toggle',
+	              contents: "<span class='note-current-emoji'>" + buttonIcon + "</span>",
+	              tooltip: sEmojiOptions.tooltip,
+	              data: {
+	                toggle: 'dropdown'
+	              }
+	            }), ui.dropdownCheck({
+	              className: 'dropdown-emoji',
+	              items: sEmojiOptions.list,
+	              template: function(item) {
+	                return item;
+	              },
+	              callback: function($dropdown) {
+	                $dropdown.find('a').each(function() {
+	                  var selfButton;
+	                  selfButton = $(this);
+	                  return selfButton.on('click', function(e) {
+	                    e.preventDefault();
+	                    context.invoke('editor.restoreRange');
+	                    context.invoke('editor.focus');
+	                    context.invoke('editor.insertText', selfButton.text());
+	                    return false;
+	                  });
+	                });
+	              }
+	            })
+	          ]);
+	          return emojiButton.render();
+	        });
+	      }
+	    });
+	
 		$.extend($.summernote.options,{
 			microDataImg:{
 				icon:'<i class="note-icon-pencil"/>',
