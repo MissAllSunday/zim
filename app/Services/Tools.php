@@ -204,7 +204,6 @@ class Tools extends \Prefab
 	function sanitize($str = '')
 	{
 		$config = \HTMLPurifier_Config::createDefault();
-		$config->set('HTML.Allowed', 'pre,p,b,a[href],i');
 		$config->set('Core', 'Encoding', $this->f3->get('ENCODING'));
 		$def = $config->getHTMLDefinition(true);
 		$meta = $def->addElement(

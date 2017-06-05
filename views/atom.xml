@@ -15,7 +15,7 @@
 			<author>
 				<name>{{@item.userName}}</name>
 				<email>atom@missallsunday.com</email>
-				<uri>{{ @URL}}/{{ @item.userHref }}</uri>
+				<uri>{{ @URL}}{{ @item.userHref }}</uri>
 			</author>
 			<media:thumbnail height="30" width="30" url="{{ @item.avatar }}"/>
 			<content type="html">

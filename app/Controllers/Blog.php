@@ -97,7 +97,7 @@ class Blog extends Base
 		$f3->set('site', $f3->merge('site', [
 			'metaTitle' => $entryInfo['title'] . ($start ? $f3->get('txt.page', $start) : ''),
 			'description' => $entryInfo['desc'] . ($start ? $f3->get('txt.page', $start) : ''),
-			'keywords' => ($entryInfo['keywords'] ?: $entryInfo['tags']),
+			'keywords' => ($entryInfo['keywords'] ? ($entryInfo['keywords'] .','. $entryInfo['tags']) : $entryInfo['tags']),
 			'currentUrl' => $f3->get('URL') .'/'. $entryInfo['url'],
 			'breadcrumb' => [
 				['url' => $f3->get('URL') . '/board/'. $entryInfo['boardUrl'], 'title' => $entryInfo['boardTitle']],
