@@ -136,7 +136,7 @@ $(function() {
 	        });
 	      }
 	    });
-	
+
 		$.extend($.summernote.options,{
 			microDataImg:{
 				icon:'<i class="note-icon-pencil"/>',
@@ -230,7 +230,7 @@ $(function() {
 				['para', ['style', 'ul', 'ol', 'paragraph']],
 				['insert', ['microDataImg', 'picture', 'link', 'table', 'hr']],
 				['height', ['height']],
-				['misc', ['undo', 'redo', 'help', 'codeview', 'sEmoji']],
+				['misc', ['undo', 'redo', 'help', 'codeview', 'sEmoji', 'sDraftsLoad', 'sDraftsSave']],
 				['font', ['fontsize', 'color', 'bold', 'italic', 'underline', 'clear']],
 			]
 		});

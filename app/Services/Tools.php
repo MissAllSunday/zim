@@ -335,12 +335,22 @@ class Tools extends \Prefab
 				$replace[] = '<a href="'. $match .'" '. $noFollow .'>'. str_replace($scheme .'://', '', $match) .'</a>';
 			}
 
-			$str = str_replace($find, $replace, $str);
+			$str = str_replace(array_unique($find), array_unique($replace), $str);
 		}
 
 		unset($base);
 		return $str;
 	}
+
+	function str_replace_first($find = '', $replace = '', $str = '')
+	{var_dump($find);
+		$pos = strpos($str, $find);
+
+		if ($pos !== false)
+			return substr_replace($str, $replace, $pos, strlen($find));
+
+		return $str;
+}
 
 	function getDate($pTime)
 	{

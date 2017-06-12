@@ -171,7 +171,7 @@ $f3->route('GET /identicon/@str',
 $f3->route('GET /background',
 	function($f3, $args)
 	{
-		$file = $f3->get('UI') .'img/'. rand(1, 24) .'.jpg';
+		$file = $f3->get('UI') .'img/'. rand(1, 26) .'.jpg';
 
 		header('Content-Type: image/jpeg');
 		echo $f3->read($file);
