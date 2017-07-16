@@ -49,6 +49,7 @@ class Config
 
 		// Declare these as an empty array.
 		$this->f3->set('site.customJS', []);
+		$this->f3->set('site.customExternalJS', []);
 		$this->f3->set('site.customCSS', []);
 	}
 }

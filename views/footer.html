@@ -48,6 +48,11 @@
 		<script async type="text/javascript" src="{{@BASE}}/{{@UI}}js/{{ @item }}"></script>
 			</repeat>
 		</check>
+		<check if="{{ @site.customExternalJS }}">
+			<repeat group="{{ @site.customExternalJS }}" value="{{ @item }}">
+		<script async type="text/javascript" src="{{ @item }}"></script>
+			</repeat>
+		</check>
 		<script async type="text/javascript" src="{{@BASE}}/minify/js?files=index.js,ohvideos.min.js,select.js"></script>
 		<include href="analytics.html" />
 	</body>
