@@ -158,7 +158,7 @@ class Cron extends Base
 
 	function blog()
 	{
-		// Only do this on Sunday.
+		// Only do this on Saturday.
 		if(date('w', time()) != '6')
 			return $this->emit('today is not Saturday you uncultured peasant!');
 

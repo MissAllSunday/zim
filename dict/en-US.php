@@ -341,7 +341,32 @@ Wait for something to happen...',
 		'It is the time you have wasted for your rose that makes your rose so important',
 		'Well, I must endure the presence of a few caterpillars if I wish to become acquainted with the butterflies',
 		'But the vain man did not hear him. Vain men never hear anything but praise',
-		'Pero hoy como ha habido redada en el 33 mario vuelve a las cinco menos diez'
+		'Pero hoy como ha habido redada en el 33 mario vuelve a las cinco menos diez',
+		'I can go with the flow
+But don\'t say it doesn\'t matter anymore
+I can go with the flow
+Do you believe it in your head?',
+		'Quisiera cantarte, una canción que te enamore de mi
+Te diga qué siento, te diga quién soy
+Y cuánto te haré feliz ',
+		'Y todo lo que nunca fue
+Y lo que no dejamos ser
+Tratamos de taparlo con un dedo ',
+		'Y sigue todo igual
+Sigue lento sigue frío
+Sigue sin parecer tener algo divino ',
+		'Night time
+Sympathize
+I\'ve been working on
+White lies',
+		'No seria a ti, no seria a ti
+Esta vez ya no seria a ti
+No supiste dar lo que yo te di
+No supiste ver lo que hay en mi',
+		'Where do all the lovers meet with one another,
+In an effort to uncover what has happened to the silent days?
+Despite ones on the corner, dream of something warmer
+A semblance of our old ways, what has happened to our handmade days?',
 	],
 
 	// 404 text.
