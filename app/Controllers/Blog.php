@@ -39,7 +39,6 @@ class Blog extends Base
 
 		$f3->concat('site.metaTitle', $home);
 		$f3->set('site.keywords', $f3->get('Tools')->extractKeyWords($allMsg));
-		$f3->push('site.customExternalJS', 'https://widget.battleforthenet.com/widget.js');
 
 		$f3->set('content','blog.html');
 	}
