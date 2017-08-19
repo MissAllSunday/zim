@@ -161,6 +161,7 @@ class Goodies extends Base
 			'currentUrl' => $currentUrl,
 			'keywords' => ($repo['keywords'] .','. implode(',', array_keys($repo['languages']))),
 			'image' => $f3->get('URL') .'/images/'. strtolower(str_replace(' ', '', array_keys($repo['languages'])[0])) .'.png',
+			'metaTitle' => $repo['info']['name'],
 		]));
 
 		$f3->set('content','goodiesItem.html');
