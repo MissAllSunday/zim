@@ -132,22 +132,23 @@ class Message extends \DB\SQL\Mapper
 		return $data;
 	}
 
-	function comments($params = [])
+	function comments($params = [], $page = 0)
 	{
 		$f3 = \Base::instance();
 		$data = [];
 
 		$result = $this->db->exec('
-			SELECT m.msgID, m.topicID, m.body, m.title, m.url, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, t.locked, t.sticky, t.numReplies
+			SELECT fm.url, m.msgID, m.topicID, m.body, m.title, m.msgTime, m.msgModified, m.reason, m.reasonBy, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline, t.locked, t.sticky, t.numReplies
 			FROM '. $this->table() .' AS m
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.topicID = m.topicID)
+			LEFT JOIN '. $this->table() .' AS fm ON (fm.msgID = t.fmsgID)
 			WHERE m.topicID = :topic
 			ORDER BY msgID ASC
 			LIMIT :start, :limit', $params);
 
 		foreach ($result as $k => $v)
-			$data[$v['msgID']] = $f3->get('Tools')->prepareData($v);
+			$data[$v['msgID']] = $f3->get('Tools')->prepareData($v, $page);
 
 		return $data;
 	}

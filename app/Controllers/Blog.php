@@ -124,6 +124,7 @@ class Blog extends Base
 				$f3->push('site.customJS', 'summernote.min.js');
 				$f3->push('site.customJS', 'summernote-image-attributes.js');
 				$f3->push('site.customJS', 'summernoteDrafts.js');
+				$f3->push('site.customJS', 'store.min.js');
 				$f3->push('site.customCSS', 'summernote.css');
 			}
 		}

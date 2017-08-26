@@ -9,7 +9,7 @@ class Tools extends \Prefab
 		$this->f3 = $f3;
 	}
 
-	function prepareData($d = [])
+	function prepareData($d = [], $page = 0)
 	{
 		$f3 = \Base::instance();
 
@@ -29,6 +29,9 @@ class Tools extends \Prefab
 			$d['pages'] = 0;
 			$d['numReplies'] = 1;
 		}
+
+		// If a hardcoded page number was passed, better use it!
+		$d['pageNumber'] = $page ?: $d['pageNumber'];
 
 		// Build the pagination stuff.
 		if ($d['numReplies'] > $f3->get('paginationLimit'))
