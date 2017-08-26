@@ -159,9 +159,10 @@ class Message extends \DB\SQL\Mapper
 		$data = [];
 
 		$data = $this->db->exec('
-			SELECT t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.url, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
-			FROM '. $this->table() .' AS m
-			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = m.msgID)
+			SELECT fm.url, t.locked, t.sticky, t.lmsgID, t.numReplies, m.msgID, m.topicID, m.msgTime, m.title, m.tags, m.boardID, b.title AS boardTitle, b.url AS boardUrl, m.userEmail, IFNULL(u.userID, 0) AS userID, IFNULL(u.userName, m.userName) AS userName, IFNULL(u.avatar, "") AS avatar, (u.last_active >= UNIX_TIMESTAMP() - 300) AS isOnline
+			FROM '. $this->table() .' AS fm
+			LEFT JOIN '. self::$_prefix .'topic AS t ON (t.fmsgID = fm.msgID)
+			LEFT JOIN '. $this->table() .' AS m ON (m.msgID = t.lmsgID)
 			LEFT JOIN '. self::$_prefix .'board AS b ON (b.boardID = t.boardID)
 			LEFT JOIN '. self::$_prefix .'user AS u ON (u.userID = m.userID)
 			WHERE m.userID = :user
