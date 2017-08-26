@@ -8,14 +8,13 @@ Licensed under MIT
 		<div class="profile-sidebar">
 			<!-- SIDEBAR USERPIC -->
 			<div class="userAvatar">
-				<div class="{{@user->isOnline ? 'online' : 'offline'}}"></div>
 				<img src="{{@user->avatar}}" class="img-responsive media-avatar img-circle center-block userImg" data-toggle="tooltip" data-placement="top" title="{{ @txt.user_is, (@user->isOnline ? @txt.user_online : @txt.user_offline) | format}}">
 			</div>
 			<!-- END SIDEBAR USERPIC -->
 			<!-- SIDEBAR USER TITLE -->
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">
-					{{@user->userName}}
+					<div class="{{@user->isOnline ? 'online' : 'offline'}}"></div> {{@user->userName}}
 				</div>
 				<div class="profile-usertitle-job">
 					{{@user->title}}

@@ -22,28 +22,22 @@ left: 0;
 }
 
 div.online {
-	position: absolute;
-	top: 0px;
-	left: 90px;
 	border-radius: 50%;
-	width: 20px;
-	height: 20px;
+	width: 12px;
+	height: 12px;
 	background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
 	color: #fff;
 	background-color: #28a745;
-	z-index: 3;
+	display: inline-block;
 }
 div.offline {
-	position: absolute;
-	top: 0px;
-	left: 90px;
 	border-radius: 50%;
-	width: 20px;
-	height: 20px;
+	width: 12px;
+	height: 12px;
 	background-image: linear-gradient(-180deg, #ce4844 0%, #ce4844 90%);
 	color: #fff;
 	background-color: #ce4844;
-	z-index: 3;
+	display: inline-block;
 }
 
 ul.stripes > li:nth-of-type(odd)
