@@ -112,7 +112,7 @@ class Images
 		return $image;
 	}
 
-	function createThumb($imgStr = '', $width = 150)
+	function createThumb($imgStr = '', $width = 64)
 	{
 		$imgSource = $this->_imagePath .'/'. $imgStr;
 
