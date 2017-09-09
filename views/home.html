@@ -3,7 +3,6 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			<div class="site-main">
-				<!-- Generic alert message.  -->
 				<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
 					<div class="alert alert-{{ @msg.status }} alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -22,8 +21,6 @@
 						</check>
 					</div>
 				</repeat>
-
-				<!-- Breadcrumb is a funny word. -->
 				<check if="{{ @site.breadcrumb }}">
 				<set breadCount="{{ 0 }}" />
 				<ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
