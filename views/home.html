@@ -3,7 +3,6 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			<div class="site-main">
-				<include href="ads.html" />
 				<!-- Generic alert message.  -->
 				<repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
 					<div class="alert alert-{{ @msg.status }} alert-dismissable">
@@ -53,7 +52,6 @@
 				</ol>
 				</check>
 				<include href="{{ @content }}" />
-				<include href="ads.html" />
 			</div>
 		</div>
 		<include href="extra.html" />

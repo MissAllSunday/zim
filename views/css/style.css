@@ -11,6 +11,8 @@ html {
 body {
 	margin-bottom: 90px;
 	color:#594F4F;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
 }
 a {
 	color:#000;
