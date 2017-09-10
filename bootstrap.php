@@ -10,8 +10,7 @@ $f3->set('DB', new \DB\SQL(
 	$f3->get('_db.password'),
 	[\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4;']
 ));
-$f3->set('Config', new \Services\Config($f3));
-$f3->get('Config')->init();
+
 $f3->set('USER', new \DB\SQL\Session($f3->get('DB'), $f3->get('_db.prefix') . 'ses', true, function($session){
 		return true;
 	}));

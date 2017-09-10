@@ -13,6 +13,21 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 		$this->assertClassHasAttribute('_defaultModels', '\Controllers\Base');
 	}
 
+	public function testSite()
+	{
+		$f3 = Base::instance();
+		$base = new \Controllers\Base;
+		$base->beforeRoute($f3);
+
+		$this->assertArrayHasKey('currentUrl', $f3->get('site'));
+		$this->assertArrayHasKey('metaTitle', $f3->get('site'));
+		$this->assertArrayHasKey('keywords', $f3->get('site'));
+		$this->assertArrayHasKey('description', $f3->get('site'));
+		$this->assertArrayHasKey('customJS', $f3->get('site'));
+		$this->assertArrayHasKey('customExternalJS', $f3->get('site'));
+		$this->assertArrayHasKey('customCSS', $f3->get('site'));
+	}
+
 	public function testModels()
 	{
 		$f3 = Base::instance();
