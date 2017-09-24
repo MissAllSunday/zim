@@ -11,12 +11,13 @@ SET time_zone = "+00:00";
 
 # Create DB
 CREATE DATABASE IF NOT EXISTS `test_zim` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `root`;
+USE `travis`;
+USE test_zim;
 --
 -- Table structure for table `suki_c_allow`
 --
 
-CREATE TABLE `test_zim.suki_c_allow` (
+CREATE TABLE `suki_c_allow` (
   `allowID` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `groups` text COLLATE utf8mb4_unicode_ci NOT NULL
@@ -28,7 +29,7 @@ CREATE TABLE `test_zim.suki_c_allow` (
 -- Table structure for table `suki_c_board`
 --
 
-CREATE TABLE `test_zim.suki_c_board` (
+CREATE TABLE `suki_c_board` (
   `boardID` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE `test_zim.suki_c_board` (
 -- Table structure for table `suki_c_cron`
 --
 
-CREATE TABLE `test_zim.suki_c_cron` (
+CREATE TABLE `suki_c_cron` (
   `cronID` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `itemLimit` int(10) NOT NULL,
@@ -67,7 +68,7 @@ CREATE TABLE `test_zim.suki_c_cron` (
 -- Table structure for table `suki_c_message`
 --
 
-CREATE TABLE `test_zim.suki_c_message` (
+CREATE TABLE `suki_c_message` (
   `msgID` int(10) UNSIGNED NOT NULL,
   `msgTime` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `msgModified` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -92,7 +93,7 @@ CREATE TABLE `test_zim.suki_c_message` (
 -- Table structure for table `suki_c_remember`
 --
 
-CREATE TABLE `test_zim.suki_c_remember` (
+CREATE TABLE `suki_c_remember` (
   `userID` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   `expires` int(11) NOT NULL,
@@ -105,7 +106,7 @@ CREATE TABLE `test_zim.suki_c_remember` (
 -- Table structure for table `suki_c_ses`
 --
 
-CREATE TABLE `test_zim.suki_c_ses` (
+CREATE TABLE `suki_c_ses` (
   `session_id` varchar(255) NOT NULL DEFAULT '',
   `data` text,
   `ip` varchar(45) DEFAULT NULL,
@@ -119,7 +120,7 @@ CREATE TABLE `test_zim.suki_c_ses` (
 -- Table structure for table `suki_c_topic`
 --
 
-CREATE TABLE `test_zim.suki_c_topic` (
+CREATE TABLE `suki_c_topic` (
   `topicID` int(10) UNSIGNED NOT NULL,
   `fmsgID` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `lmsgID` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -136,7 +137,7 @@ CREATE TABLE `test_zim.suki_c_topic` (
 -- Table structure for table `suki_c_user`
 --
 
-CREATE TABLE `test_zim.suki_c_user` (
+CREATE TABLE `suki_c_user` (
   `userID` int(10) UNSIGNED NOT NULL,
   `userName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `userEmail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
