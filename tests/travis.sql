@@ -1,6 +1,6 @@
 
 # Create DB
-CREATE DATABASE IF NOT EXISTS `test_zim` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `test_zim` DEFAULT CHARACTER SET utf8 COLLATE utf8mb4_unicode_ci;
 USE `travis;
 --
 -- Table structure for table `suki_c_allow`
