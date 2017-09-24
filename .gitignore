@@ -24,7 +24,6 @@
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
 *.session
 *.cfg
@@ -43,7 +42,7 @@ thumbs.db
 
 # Test / Private files #
 ########################
-/*.xml
+/fun.xml
 /nbproject/private/
 /nbproject/
 .directory
