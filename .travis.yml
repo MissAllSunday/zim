@@ -1,0 +1,14 @@
+language: php
+
+php:
+  - 7.0
+
+services:
+  - mysql
+
+before_install:
+  - mysql -u travis --password="" < test/travis.sql
+
+before_script: composer install
+
+script: phpunit

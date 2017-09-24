@@ -42,6 +42,5 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 			$expected = $name;
 			$this->assertInstanceOf($expected, $base->_models[strtolower(substr($name, strrpos($name, '\\') + 1))]);
 		}
-
 	}
 }

@@ -58,3 +58,4 @@ thumbs.db
 /views/goodiesAds.html
 /views/analytics.html
 /tmp/
+/phpunit.xml
