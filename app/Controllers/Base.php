@@ -4,11 +4,24 @@ namespace Controllers;
 
 class Base
 {
-	protected $_models = [];
+	public $_models = [];
 	protected $_defaultModels = ['auth', 'message', 'user', 'allow', 'board'];
 
 	public function beforeRoute($f3)
 	{
+		// This should be automatically set.... @todo
+		$f3->set('Tools', new \Services\Tools($f3));
+
+		// Set default metadata tags and/or other common HTML tags.
+		$f3->set('site.currentUrl', $f3->get('URL'));
+		$f3->set('site.keywords', $f3->get('txt.site_keywords'));
+		$f3->set('site.description', $f3->get('txt.site_desc'));
+
+		// Declare these as an empty array.
+		$f3->set('site.customJS', []);
+		$f3->set('site.customExternalJS', []);
+		$f3->set('site.customCSS', []);
+
 		// Gotta stay classy...
 		foreach ($this->_defaultModels as $m)
 		{

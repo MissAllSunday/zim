@@ -1,0 +1,13 @@
+dist: trusty
+sudo: required
+language: php
+php:
+  - 7.0
+services:
+  - mysql
+before_script:
+  - composer install
+  - cd $TRAVIS_BUILD_DIR
+before_install:
+  - mysql -u root --password="" < $TRAVIS_BUILD_DIR/tests/travis.sql
+script: phpunit

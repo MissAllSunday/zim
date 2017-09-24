@@ -24,7 +24,6 @@
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
 *.session
 *.cfg
@@ -57,4 +56,4 @@ thumbs.db
 /views/ads.html
 /views/goodiesAds.html
 /views/analytics.html
-/temp/
+/tmp/
