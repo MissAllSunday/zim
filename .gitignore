@@ -42,7 +42,7 @@ thumbs.db
 
 # Test / Private files #
 ########################
-/fun.xml
+/*.xml
 /nbproject/private/
 /nbproject/
 .directory
