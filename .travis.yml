@@ -10,4 +10,4 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
 before_install:
   - mysql -u root --password="" < $TRAVIS_BUILD_DIR/tests/travis.sql
-script: phpunit --configuration $TRAVIS_BUILD_DIR/phpunit.xml.dist
+script: phpunit
