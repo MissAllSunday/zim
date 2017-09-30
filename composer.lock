@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "483c9575ef0d51bd6fbc0f836804b508",
+    "content-hash": "1b08b726d3fd7a5ab16cf578109c1efd",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -85,6 +85,47 @@
                 "stream_filter_register"
             ],
             "time": "2015-11-08T23:41:30+00:00"
+        },
+        {
+            "name": "davgothic/smushit",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davgothic/smushit.git",
+                "reference": "cda11d08358fa36055478fffda35c1a7189f81f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davgothic/smushit/zipball/cda11d08358fa36055478fffda35c1a7189f81f4",
+                "reference": "cda11d08358fa36055478fffda35c1a7189f81f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DavGothic\\SmushIt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Hancock",
+                    "email": "davgothic@gmail.com"
+                }
+            ],
+            "description": "SmushIt is a PHP client for the popular Yahoo! image compression web service Smush.it",
+            "homepage": "https://github.com/davgothic/smushit",
+            "keywords": [
+                "image-optimization",
+                "smushit"
+            ],
+            "time": "2017-03-19T17:14:16+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
