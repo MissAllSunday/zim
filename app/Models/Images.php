@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use DavGothic\SmushIt\SmushIt;
+
 class Images
 {
 	protected $_imageUrl = '',
@@ -139,5 +141,21 @@ class Images
 		$this->f3->write($fFile, $imgO->dump(($ext == 'jpg' ? 'jpeg' : $ext), ($ext == 'jpg' ? 75 : 6)));
 
 		return file_exists($fFile);
+	}
+
+	public function smushIt($url = '')
+	{
+		$result = false;
+
+		$smushit = new SmushIt();
+
+		try
+		{
+			$result = $smushit->compress($url);
+		}
+
+		catch (Exception $e){}
+
+		return $result;
 	}
 }
