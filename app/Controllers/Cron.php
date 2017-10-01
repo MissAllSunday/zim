@@ -8,12 +8,6 @@ class Cron extends Base
 	{
 		$this->f3 = \Base::instance();
 
-		foreach (['cron', 'message'] as $m)
-		{
-			$class = '\Models\\'. ucfirst($m);
-			$this->_models[$m] = new $class($this->f3->get('DB'));
-		}
-
 		$this->simplePie = new \SimplePie;
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
 		$this->simplePie->enable_cache(false);
