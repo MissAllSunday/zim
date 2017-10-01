@@ -7,6 +7,7 @@ require_once('lib/autoload.php');
 
 $f3 = \Base::instance();
 $f3->set('AUTOLOAD', 'app/');
+$f3->set('MODELS', 'app/Models');
 $f3->set("_db.prefix", "suki_c_");
 $f3->set("paginationLimit", 10);
 $f3->set("site", [

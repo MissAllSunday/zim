@@ -4,6 +4,7 @@
 $f3 = \Base::instance();
 $f3->config('setup.ini');
 $f3->set('AUTOLOAD', 'app/');
+$f3->set('MODELS', 'app/Models');
 $f3->set('DB', new \DB\SQL(
 	$f3->get('_db.type') .':host='. $f3->get('_db.host') .';port='. $f3->get('_db.port') .';dbname='. $f3->get('_db.name') .'',
 	$f3->get('_db.user'),

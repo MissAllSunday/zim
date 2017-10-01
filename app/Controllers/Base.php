@@ -2,10 +2,12 @@
 
 namespace Controllers;
 
+use Pimple\Container;
+
 class Base
 {
-	public $_models = [];
-	protected $_defaultModels = ['auth', 'message', 'user', 'allow', 'board'];
+	public $_models;
+	protected $_defaultModels = [];
 
 	public function beforeRoute($f3)
 	{
@@ -22,12 +24,18 @@ class Base
 		$f3->set('site.customExternalJS', []);
 		$f3->set('site.customCSS', []);
 
+		$this->_defaultModels = $f3->get('Tools')->getModels();
+		$this->_models = new Container();
+
 		// Gotta stay classy...
 		foreach ($this->_defaultModels as $m)
 		{
 			// ...OK no....
-			$class = '\Models\\'. ucfirst($m);
-			$this->_models[$m] = new $class($f3->get('DB'));
+			$this->_models[strtolower($m)] = function ($c) use ($m, $f3)
+			{
+				$class = '\Models\\'. ucfirst($m);
+				return new $class($f3->get('DB'));
+			};
 		}
 
 		// Recurrent user? @todo find out why the cookie isn't been pick up

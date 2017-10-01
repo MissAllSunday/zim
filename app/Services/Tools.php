@@ -346,7 +346,7 @@ class Tools extends \Prefab
 	}
 
 	function str_replace_first($find = '', $replace = '', $str = '')
-	{var_dump($find);
+	{
 		$pos = strpos($str, $find);
 
 		if ($pos !== false)
@@ -444,5 +444,16 @@ class Tools extends \Prefab
 				$str = substr($str, 0, $breakpoint) . $pad;
 
 		return $str;
+	}
+
+	public function getModels()
+	{
+		$models = [];
+
+		foreach (new \DirectoryIterator($this->f3->get('MODELS')) as $file)
+			if ($file->isFile())
+				$models[] = $file->getBasename('.php');
+
+		return $models;
 	}
 }
