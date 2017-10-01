@@ -11,6 +11,7 @@
 		"knplabs/github-api": "^2.0",
 		"php-http/guzzle6-adapter": "^1.1",
 		"peterkahl/multibyte-keyword-generator": "dev-master",
-		"davgothic/smushit": "^2.0"
+		"davgothic/smushit": "^2.0",
+		"level-2/dice": "^2.0"
 	}
 }
