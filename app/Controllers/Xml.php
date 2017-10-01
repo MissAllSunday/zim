@@ -6,6 +6,15 @@ class Xml extends Base
 {
 	function atom(\Base $f3, $params)
 	{
+		// Fuck you datadog
+		if ($f3->get('AGENT') == 'Datadog/1.0')
+		{
+			$competitors = $f3->get('datadog');
+			$randomCompetitor = $competitors[mt_rand(0, count($competitors) - 1)];
+
+			return $f3->reroute($randomCompetitor);
+		}
+
 		// Get the items.
 		$items = $this->_models['message']->latestTopics(30);
 
