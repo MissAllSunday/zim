@@ -10,6 +10,8 @@ class Cron extends Base
 	{
 		$this->f3 = \Base::instance();
 
+		$this->beforeRoute($this->f3);
+
 		$this->simplePie = new \SimplePie;
 		$this->simplePie->set_output_encoding($this->f3->get('ENCODING'));
 		$this->simplePie->enable_cache(false);
