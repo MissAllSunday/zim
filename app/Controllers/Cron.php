@@ -4,6 +4,8 @@ namespace Controllers;
 
 class Cron extends Base
 {
+	public $simplePie;
+
 	function __construct()
 	{
 		$this->f3 = \Base::instance();
