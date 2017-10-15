@@ -13,6 +13,10 @@ class Blog extends Base
 			':board' => 1
 		]);
 
+		// Don't go rampant with the pagination.
+		if (!$entries)
+			return $f3->error(404);
+
 		// Extract the images if there are any.
 		$tags = '';
 		$images = new \Models\Images;

@@ -147,7 +147,7 @@ class Images
 	{
 		$result = false;
 
-		$smushit = new SmushIt();
+		$smushit = new \SmushIt();
 
 		try
 		{
