@@ -198,3 +198,10 @@ $f3->route('GET /me',
 		header('Content-Type: image/gif');
 		echo $f3->read($path . $file);
 	}, 604800);
+
+$f3->route('GET /onepieceraw',
+	function($f3, $args)
+	{
+		$logger = new Log('badbots.log');
+		$logger->write($f3->get('AGENT') .' - '. $f3->get('IP'));
+	});
