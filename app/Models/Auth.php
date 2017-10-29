@@ -14,7 +14,7 @@ class Auth extends \DB\SQL\Mapper
 	function __construct(\DB\SQL $db)
 	{
 		$f3 = \Base::instance();
-		self::$cookieName = 'COOKIE.'. md5($f3->get('site.home'));
+		self::$cookieName = 'COOKIE.'. str_replace(' ', '', $f3->get('site.home'));
 		self::$token = $this->generateToken();
 
 		parent::__construct($db, $f3->get('_db.prefix') . 'remember');
@@ -106,7 +106,7 @@ class Auth extends \DB\SQL\Mapper
 		]), time() + self::$expires);
 	}
 
-	function getCookie()
+	function getCookie() : array
 	{
 		$f3 = \Base::instance();
 		return $f3->exists(self::$cookieName) ? json_decode($f3->get(self::$cookieName), true) : [];
@@ -125,7 +125,7 @@ class Auth extends \DB\SQL\Mapper
 	function onSuspect()
 	{
 		$f3 = \Base::instance();
-		$f3->get('REMEMBER')->clearCookie($f3->get('currentUser')->userID);
+		$this->clearData($f3->get('currentUser')->userID);
 		$f3->clear('currentUser');
 
 		\Flash::instance()->addMessage($f3->get('txt.logout_success'), 'success');

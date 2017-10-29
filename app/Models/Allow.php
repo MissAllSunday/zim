@@ -10,7 +10,7 @@ class Allow extends \DB\SQL\Mapper
 		parent::__construct($db, \Base::instance()->get('_db.prefix') . 'allow');
 	}
 
-	function getAll()
+	function getAll() : array
 	{
 		$perms = [];
 		$data = $this->db->exec('SELECT name, groups from '. $this->table() ,NULL,86400);
