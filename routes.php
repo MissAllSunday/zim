@@ -197,7 +197,7 @@ $f3->route('GET /me',
 
 		header('Content-Type: image/gif');
 		echo $f3->read($path . $file);
-	}, 604800);
+	}, 259200);
 
 $f3->route('GET /onepieceraw',
 	function($f3, $args)
