@@ -12,6 +12,7 @@
 		"php-http/guzzle6-adapter": "^1.1",
 		"peterkahl/multibyte-keyword-generator": "dev-master",
 		"davgothic/smushit": "^2.0",
-		"pimple/pimple": "~3.0"
+		"pimple/pimple": "~3.0",
+		"php-imap/php-imap": "^3.0"
 	}
 }

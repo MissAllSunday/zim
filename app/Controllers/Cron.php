@@ -210,6 +210,28 @@ class Cron extends Base
 		$this->emit('deleted:'. $s .' entries from session table');
 	}
 
+	public function postEmail()
+	{
+		$options = $this->f3->get('POSTEMAIL');
+
+		$mailbox = new \PhpImap\Mailbox($options['host'], $options['userName'], $options['password'], __DIR__);
+
+	// Read all messaged into an array:
+$mailsIds = $mailbox->searchMailbox('ALL');
+if(!$mailsIds) {
+	die('Mailbox is empty');
+}
+
+// Get the first message and save its attachment(s) to disk:
+$mail = $mailbox->getMail(end($mailsIds));
+
+print_r($mail);
+echo "\n\nAttachments:\n";
+print_r($mail->getAttachments());
+
+		$this->emit('');
+	}
+
 	protected function _keywords($keywords, $string)
 	{
 		if (function_exists('mb_strtolower'))
